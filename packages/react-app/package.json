@@ -50,6 +50,6 @@
     "typescript": "^4.4.2"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]"
+    "*.{js,ts,tsx}": "eslint --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'"
   }
 }
