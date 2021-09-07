@@ -1,11 +1,13 @@
 {
   "name": "root",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "lerna": "^4.0.0"
   },
   "dependencies": {
-    "@types/koa": "^2.13.4",
     "husky": "^7.0.2"
   },
   "scripts": {
