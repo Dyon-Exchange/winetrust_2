@@ -7,13 +7,16 @@ import {
 import { hashSync } from "bcrypt";
 import isEmail from "validator/lib/isEmail";
 
-const salt = 24; // mamba out
+// cost factor that controls how much time is needed to calculate a single bcrypt hash
+// leave this at 12... trust
+const saltRounds = 12;
 
-// cannot use arrow function here, 'this' will not bind if arrow function
+// hash password if it's been modified
 // eslint-disable-next-line func-names
-@pre<Admin>("save", function (next) {
+@pre<AdminClass>("save", function (next) {
+  // can't use arrow function here, 'this' will not bind if arrow function is used
   if (this.isModified("password")) {
-    this.password = hashSync(this.password, salt);
+    this.password = hashSync(this.password, saltRounds);
   }
 
   next();
@@ -24,7 +27,7 @@ const salt = 24; // mamba out
     toObject: { virtuals: true },
   },
 })
-class Admin {
+export class AdminClass {
   @prop({
     required: true,
     unique: true,
@@ -39,4 +42,4 @@ class Admin {
   public password!: string;
 }
 
-export default getModelForClass(Admin);
+export default getModelForClass(AdminClass);
