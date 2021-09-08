@@ -2,7 +2,10 @@ import cors from "@koa/cors";
 import Koa from "koa";
 import BodyParser from "koa-bodyparser";
 
+import router from "./routes";
+
 const app: Koa = new Koa();
+const port = 3030;
 
 // cors setup
 app.use(cors());
@@ -14,14 +17,8 @@ app.use(
   })
 );
 
-// logger
-app.use(async (ctx: Koa.Context, next: Function) => {
-  await next();
-});
-
-app.use(async (ctx) => {
-  ctx.body = "Hello World";
-});
+// use router
+app.use(router.middleware());
 
 // error-handling
 app.on("error", (err: Error, ctx: Koa.Context) => {
@@ -29,4 +26,5 @@ app.on("error", (err: Error, ctx: Koa.Context) => {
   console.error("server error", err, ctx);
 });
 
-app.listen(3000);
+// eslint-disable-next-line no-console
+app.listen(port, () => console.log(`\nListening on ${port}\n`));
