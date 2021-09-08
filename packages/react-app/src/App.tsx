@@ -1,4 +1,3 @@
-import { Token } from "@winetrust/smart-contracts/typechain/index";
 import React from "react";
 
 import logo from "./logo.svg";
