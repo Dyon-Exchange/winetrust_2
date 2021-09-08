@@ -1,5 +1,5 @@
 {
-  "name": "koa-app",
+  "name": "@winetrust/koa-app",
   "version": "1.0.0",
   "description": "koa backend server application for the WineTrust inventory management system",
   "main": "./src/app.ts",
