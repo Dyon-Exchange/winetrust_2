@@ -1,5 +1,5 @@
 {
-  "name": "smart-contract",
+  "name": "@winetrust/smart-contracts",
   "version": "1.0.0",
   "description": "Smart contracts for the WineTrust inventory management system",
   "main": "index.js",
