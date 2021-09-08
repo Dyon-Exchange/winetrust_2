@@ -1,6 +1,7 @@
 import cors from "@koa/cors";
 import Koa from "koa";
 import BodyParser from "koa-bodyparser";
+import Logger from "koa-logger";
 
 import router from "./routes";
 
@@ -16,6 +17,9 @@ app.use(
     enableTypes: ["json", "form", "text"],
   })
 );
+
+// logger
+app.use(Logger());
 
 // use router
 app.use(router.middleware());
