@@ -1,4 +1,3 @@
-/* eslint-disable @shopify/typescript/prefer-pascal-case-enums */
 /**
  * Asset model, the individual wine/token asset which is a type of product
  */
@@ -17,9 +16,9 @@ import { ProductClass } from "./Product";
 import { WarehouseClass } from "./Warehouse";
 
 enum AssetState {
-  DUE_IN = "Due In",
-  LANDED = "Landed",
-  TOKENISED = "Tokenised",
+  DueIn = "Due In",
+  Landed = "Landed",
+  Tokenised = "Tokenised",
 }
 
 @modelOptions({
@@ -44,7 +43,7 @@ export class AssetClass extends TimeStamps {
   @prop({ required: true, ref: "WarehouseClass" })
   public warehouse: Ref<WarehouseClass>;
 
-  @prop({ enum: AssetState, default: AssetState.DUE_IN })
+  @prop({ enum: AssetState, default: AssetState.DueIn })
   public state?: AssetState;
 }
 

@@ -17,8 +17,7 @@ import isEmail from "validator/lib/isEmail";
 const saltRounds = 12;
 
 // pre hook, hash password on save
-// eslint-disable-next-line func-names
-@pre<AdminClass>("save", function (next) {
+@pre<AdminClass>("save", function preSaveHook(next) {
   // can't use arrow function here, 'this' will not bind if arrow function is used
   if (this.isModified("password")) {
     this.password = hashSync(this.password, saltRounds);
