@@ -1,12 +1,20 @@
 import cors from "@koa/cors";
+import { config } from "dotenv";
 import Koa from "koa";
 import BodyParser from "koa-bodyparser";
 import Logger from "koa-logger";
 
 import router from "./routes";
+import connect from "./services/database";
+
+// configure env file
+config({ path: `${__dirname}/../.env` });
 
 const app: Koa = new Koa();
 const port = 3030;
+
+// connect to db
+connect();
 
 // cors setup
 app.use(cors());
@@ -31,4 +39,4 @@ app.on("error", (err: Error, ctx: Koa.Context) => {
 });
 
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`\nListening on ${port}\n`));
+app.listen(port, () => console.log(`Listening on ${port}`));
