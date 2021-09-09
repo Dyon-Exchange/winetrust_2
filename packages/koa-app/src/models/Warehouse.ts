@@ -1,4 +1,9 @@
+/**
+ * Warehouse model, the warehouses storing assets for the WineTrust network
+ */
+
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import isEmail from "validator/lib/isEmail";
 
 @modelOptions({
@@ -7,18 +12,17 @@ import isEmail from "validator/lib/isEmail";
     toObject: { virtuals: true },
   },
 })
-export class WarehouseClass {
-  @prop({ default: "" })
-  public name: string;
+export class WarehouseClass extends TimeStamps {
+  @prop()
+  public name?: string;
 
-  @prop({ default: "" })
-  public address: string;
+  @prop()
+  public address?: string;
 
-  @prop({ default: "" })
-  public contactName: string;
+  @prop()
+  public contactName?: string;
 
   @prop({
-    unique: true,
     validate: {
       validator: (email: string) => isEmail(email),
       message: "Value is not an email address.",
