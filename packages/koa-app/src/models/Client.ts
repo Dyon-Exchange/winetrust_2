@@ -1,5 +1,20 @@
+/* eslint-disable max-classes-per-file */
+/**
+ * Client model, clients who own the wine/token assets, they do not use this system
+ */
+
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
+
+// phone number class, will not be turned into a model
+class PhoneNumber {
+  @prop()
+  countryCode?: string;
+
+  @prop()
+  phoneNumber?: string;
+}
 
 @modelOptions({
   schemaOptions: {
@@ -7,12 +22,12 @@ import isEthereumAddress from "validator/lib/isEthereumAddress";
     toObject: { virtuals: true },
   },
 })
-export class ClientClass {
-  @prop({ default: "" })
-  public firstName: string;
+export class ClientClass extends TimeStamps {
+  @prop()
+  public firstName?: string;
 
-  @prop({ default: "" })
-  public lastName: string;
+  @prop()
+  public lastName?: string;
 
   @prop({
     validate: {
@@ -22,8 +37,8 @@ export class ClientClass {
   })
   public ethAddress?: string;
 
-  @prop({ unique: true })
-  public phoneNumber?: string;
+  @prop()
+  public phoneNumber?: PhoneNumber;
 }
 
 export default getModelForClass(ClientClass);
