@@ -10,12 +10,12 @@ interface RefreshToken {
   exp: number;
 }
 
-const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.TOKEN_SECRET,
-};
-
 export default (p: { use: (arg0: Strategy) => void }) => {
+  const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.TOKEN_SECRET,
+  };
+
   p.use(
     new Strategy(opts, async (payload, done) => {
       const user = await Admin.findById(payload.id);
