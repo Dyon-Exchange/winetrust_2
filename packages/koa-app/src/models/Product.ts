@@ -1,6 +1,7 @@
 /**
  * Product class, description classes for assets, assets are unique instances of a product
  */
+
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 

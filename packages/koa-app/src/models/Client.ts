@@ -10,10 +10,10 @@ import isEthereumAddress from "validator/lib/isEthereumAddress";
 // phone number class, will not be turned into a model
 class PhoneNumber {
   @prop()
-  countryCode?: string;
+  public countryCode?: string;
 
   @prop()
-  phoneNumber?: string;
+  public phoneNumber?: string;
 }
 
 @modelOptions({
