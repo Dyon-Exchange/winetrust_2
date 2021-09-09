@@ -3,9 +3,11 @@ import { config } from "dotenv";
 import Koa from "koa";
 import BodyParser from "koa-bodyparser";
 import Logger from "koa-logger";
+import Passport from "koa-passport";
 
 import router from "./routes";
 import connect from "./services/database";
+import configPassport from "./services/passport";
 
 // configure env file
 config({ path: `${__dirname}/../.env` });
@@ -25,6 +27,10 @@ app.use(
     enableTypes: ["json", "form", "text"],
   })
 );
+
+// setup passport config
+configPassport(Passport);
+app.use(Passport.initialize());
 
 // logger
 app.use(Logger());
