@@ -1,9 +1,14 @@
+/**
+ * Admin model, these are the users of the application who will be able to login and use the system
+ */
+
 import {
   getModelForClass,
   modelOptions,
   pre,
   prop,
 } from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { hashSync } from "bcrypt";
 import isEmail from "validator/lib/isEmail";
 
@@ -11,7 +16,7 @@ import isEmail from "validator/lib/isEmail";
 // leave this at 12... trust
 const saltRounds = 12;
 
-// hash password if it's been modified
+// pre hook, hash password on save
 // eslint-disable-next-line func-names
 @pre<AdminClass>("save", function (next) {
   // can't use arrow function here, 'this' will not bind if arrow function is used
@@ -27,7 +32,7 @@ const saltRounds = 12;
     toObject: { virtuals: true },
   },
 })
-export class AdminClass {
+export class AdminClass extends TimeStamps {
   @prop({
     required: true,
     unique: true,
