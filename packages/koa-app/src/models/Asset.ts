@@ -12,6 +12,7 @@ import {
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
 import { ClientClass } from "./Client";
+import { PreAdviceClass } from "./PreAdvice";
 import { ProductClass } from "./Product";
 import { WarehouseClass } from "./Warehouse";
 
@@ -31,6 +32,9 @@ export class AssetClass extends TimeStamps {
   @prop({ required: true, unique: true })
   public assetId: string;
 
+  @prop({ required: true, ref: "PreAdviceClass" })
+  public preAdvice: Ref<PreAdviceClass>;
+
   @prop({ required: true, ref: "ProductClass" })
   public product: Ref<ProductClass>;
 
@@ -42,8 +46,6 @@ export class AssetClass extends TimeStamps {
 
   @prop({ enum: AssetState, default: AssetState.DUE_IN })
   public state?: AssetState;
-
-  // TODO: add the reference to the pre-advice
 }
 
 export default getModelForClass(AssetClass);
