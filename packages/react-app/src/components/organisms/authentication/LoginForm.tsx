@@ -18,11 +18,7 @@ import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-// returns the icon shown on the toggle reveal button
-const ToggleRevealPasswordIcon = ({ reveal }: { reveal: boolean }) => {
-  if (reveal) return <ViewOffIcon />;
-  return <ViewIcon />;
-};
+import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
   // light mode and dark mode background colors for the whole app
