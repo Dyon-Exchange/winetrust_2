@@ -1,19 +1,14 @@
-import {
-  Divider,
-  Heading,
-  HStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Divider, Heading, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 
+import useThemeColors from "../../../hooks/theme/useThemeColors";
+
 const TopNavBar = () => {
-  // light mode and dark mode background colors for the whole app
-  const themeBackgroundColor = useColorModeValue("blue.600", "blue.800");
+  const { colors } = useThemeColors();
 
   return (
     <HStack
-      bgColor={themeBackgroundColor}
+      bg={colors.primary}
       px="50px"
       py="10px"
       justifyContent="space-between"

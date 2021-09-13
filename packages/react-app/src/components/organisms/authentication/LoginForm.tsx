@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -11,18 +10,18 @@ import {
   InputGroup,
   InputRightElement,
   useBoolean,
-  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
+import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
-  // light mode and dark mode background colors for the whole app
-  const themeBackgroundColor = useColorModeValue("white", "gray.600");
+  // get theme colors from zustand
+  const { colors } = useThemeColors();
 
   // state to reveal or hide password
   const [reveal, setReveal] = useBoolean(false);
@@ -55,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <Box
-      bg={themeBackgroundColor}
+      bg={colors.secondary}
       borderRadius="md"
       boxShadow="sm"
       p="50px"
