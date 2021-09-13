@@ -20,6 +20,7 @@ router.route({
       200: {
         body: {
           token: Joi.string().required(),
+          refreshToken: Joi.string().required(),
         },
       },
     },

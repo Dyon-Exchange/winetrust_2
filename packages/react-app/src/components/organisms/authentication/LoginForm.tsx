@@ -18,17 +18,20 @@ import {
 } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import login from "../../../api/authentication/login";
+import { AuthContext } from "../../../contexts/AuthContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
+
+  // get the login function from auth context
+  const { login } = useContext(AuthContext);
 
   // the form's min width
   const formMinWidth = width > 500 ? "400px" : undefined;

@@ -27,6 +27,9 @@ export default async (ctx: Context) => {
   };
 
   const token = sign(payload, process.env.TOKEN_SECRET, { expiresIn: 36000 });
+  const refreshToken = sign(payload, process.env.REFRESH_SECRET, {
+    expiresIn: "7d",
+  });
 
-  ctx.body = { token };
+  ctx.body = { token, refreshToken };
 };
