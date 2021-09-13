@@ -1,17 +1,12 @@
 import axios from "axios";
 
-export interface LoginData {
-  token: string;
-  refreshToken: string;
-}
+import { LoginData } from "./login";
 
 export default async (
-  email: string,
-  password: string
+  refreshTokenParam: string
 ): Promise<{ token: string; refreshToken: string }> => {
   const response = await axios.post("/admin/login", {
-    email,
-    password,
+    refreshToken: refreshTokenParam,
   });
   const { token, refreshToken } = response.data as LoginData;
 
