@@ -19,7 +19,7 @@ export default async (ctx: Context) => {
   }
 
   if (!(await compare(password, account.password))) {
-    ctx.throw(401, "Password is incorrect");
+    ctx.throw(401, "Email or Password is incorrect");
   }
 
   const payload = {

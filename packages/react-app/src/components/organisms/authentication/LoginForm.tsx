@@ -1,7 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
+  CloseButton,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -13,10 +17,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
-import React, { useMemo } from "react";
+import { AxiosError } from "axios";
+import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
+import login from "../../../api/authentication/login";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
@@ -29,6 +35,9 @@ const LoginForm = () => {
 
   // state to reveal or hide password
   const [reveal, setReveal] = useBoolean(false);
+
+  // state for login error
+  const [loginError, setLoginError] = useState<string | undefined>();
 
   // returns the input type for the password field depending on `reveal``
   const passwordInputType: "text" | "password" = useMemo(() => {
@@ -54,7 +63,19 @@ const LoginForm = () => {
   } = useForm<LoginForm>();
 
   // submit handler
-  const onSubmit = (data: LoginForm) => {};
+  const onSubmit = async (data: LoginForm) => {
+    // reset the login error
+    setLoginError(undefined);
+    const { email, password } = data;
+    // return if email or password is undefined
+    if (!email || !password) return;
+
+    try {
+      await login(email, password);
+    } catch (error) {
+      setLoginError((error as AxiosError).response?.data ?? "Network error.");
+    }
+  };
 
   return (
     <Box
@@ -66,6 +87,18 @@ const LoginForm = () => {
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="25px">
+          {loginError !== undefined && (
+            <Alert status="error">
+              <AlertIcon />
+              <AlertDescription fontSize="sm">{loginError}</AlertDescription>
+              <CloseButton
+                onClick={() => setLoginError(undefined)}
+                position="absolute"
+                right="8px"
+                top="8px"
+              />
+            </Alert>
+          )}
           <FormControl id="email">
             <FormLabel fontSize="sm">Email address</FormLabel>
             <Input
