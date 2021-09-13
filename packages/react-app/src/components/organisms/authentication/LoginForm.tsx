@@ -20,8 +20,7 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
-  // get theme colors from zustand
-  const { colors } = useThemeColors();
+  const colors = useThemeColors();
 
   // state to reveal or hide password
   const [reveal, setReveal] = useBoolean(false);

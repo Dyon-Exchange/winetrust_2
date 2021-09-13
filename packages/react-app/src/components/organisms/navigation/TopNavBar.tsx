@@ -4,7 +4,7 @@ import React from "react";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const TopNavBar = () => {
-  const { colors } = useThemeColors();
+  const colors = useThemeColors();
 
   return (
     <HStack

@@ -4,10 +4,8 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
 interface ThemeColorsState {
-  colors: {
-    primary: string;
-    secondary: string;
-  };
+  primary: string;
+  secondary: string;
 }
 
 const useThemeColors = (): ThemeColorsState => {
@@ -15,10 +13,8 @@ const useThemeColors = (): ThemeColorsState => {
   const secondary = useColorModeValue("secondary.light", "secondary.dark");
 
   return {
-    colors: {
-      primary,
-      secondary,
-    },
+    primary,
+    secondary,
   };
 };
 
