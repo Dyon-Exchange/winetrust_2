@@ -17,6 +17,10 @@ const theme = extendTheme({
       light: "#FFFFFF",
       dark: "#4A5568",
     },
+    error: {
+      light: "#E53E3E",
+      dark: "#FC8181",
+    },
   },
   styles: {
     global: (props: any) => ({

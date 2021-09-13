@@ -79,7 +79,7 @@ const LoginForm = () => {
               isInvalid={errors.email !== undefined}
             />
             {errors.email !== undefined && (
-              <FormHelperText color="red.500" fontSize="sm">
+              <FormHelperText color={colors.error} fontSize="sm">
                 {errors.email.message}
               </FormHelperText>
             )}
@@ -104,7 +104,7 @@ const LoginForm = () => {
               </InputRightElement>
             </InputGroup>
             {errors.password !== undefined && (
-              <FormHelperText color="red.500" fontSize="sm">
+              <FormHelperText color={colors.error} fontSize="sm">
                 {errors.password.message}
               </FormHelperText>
             )}
