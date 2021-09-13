@@ -12,6 +12,7 @@ import {
   useBoolean,
   VStack,
 } from "@chakra-ui/react";
+import { useWindowWidth } from "@react-hook/window-size";
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
@@ -21,6 +22,10 @@ import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
   const colors = useThemeColors();
+  const width = useWindowWidth();
+
+  // the form's min width
+  const formMinWidth = width > 500 ? "400px" : undefined;
 
   // state to reveal or hide password
   const [reveal, setReveal] = useBoolean(false);
@@ -57,7 +62,7 @@ const LoginForm = () => {
       borderRadius="md"
       boxShadow="sm"
       p="50px"
-      minW="400px"
+      minW={formMinWidth}
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="25px">

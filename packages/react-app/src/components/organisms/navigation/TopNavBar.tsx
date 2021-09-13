@@ -1,10 +1,12 @@
 import { Divider, Heading, HStack, Text } from "@chakra-ui/react";
+import { useWindowWidth } from "@react-hook/window-size";
 import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const TopNavBar = () => {
   const colors = useThemeColors();
+  const width = useWindowWidth();
 
   return (
     <HStack
@@ -17,10 +19,15 @@ const TopNavBar = () => {
         <Heading color="white" fontSize="2xl">
           WineTrust
         </Heading>
-        <Divider orientation="vertical" />
-        <Text color="white" fontSize="medium">
-          Inventory Management System
-        </Text>
+        {/* responsiveness */}
+        {width > 500 && (
+          <>
+            <Divider orientation="vertical" />
+            <Text color="white" fontSize="medium" noOfLines={1}>
+              Inventory Management System
+            </Text>
+          </>
+        )}
       </HStack>
     </HStack>
   );
