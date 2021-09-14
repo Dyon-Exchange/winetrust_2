@@ -1,27 +1,43 @@
-import React from "react";
+/* eslint-disable @shopify/jsx-no-complex-expressions */
+import { Box, Center } from "@chakra-ui/react";
+import React, { useContext } from "react";
+import {
+  Redirect,
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
 
-import logo from "./logo.svg";
 import "./App.css";
+import TopNavBar from "./components/organisms/navigation/TopNavBar";
+import { AuthContext } from "./contexts/AuthContext";
+import Login from "./pages/auth/Login";
 
-function App() {
+const App = () => {
+  const { loggedIn } = useContext(AuthContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // min height inherit so that the app will always fill the window height
+    <Box minH="inherit">
+      <Router>
+        <TopNavBar />
+        {!loggedIn ? (
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Redirect to="/login" />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route exact path="/">
+              <Center my="100px">Coming Soon</Center>
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        )}
+      </Router>
+    </Box>
   );
-}
-
+};
 export default App;
