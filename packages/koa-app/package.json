@@ -5,6 +5,8 @@
   "main": "./src/app.ts",
   "scripts": {
     "dev": "ts-node-dev ./src/app.ts",
+    "build": "tsc",
+    "gcp-build": "tsc -p .",
     "precommit": "npx lint-staged"
   },
   "author": "",
