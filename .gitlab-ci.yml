@@ -1,3 +1,12 @@
+variables:
+  DOCKER_DRIVER: overlay2
+
+# run pipelines on master and merge requests only
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH == "main"
+
 #########################################################
 # Backend Deployments
 #########################################################
