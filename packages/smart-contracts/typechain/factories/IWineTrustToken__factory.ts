@@ -18,7 +18,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "getTokenMetaData",
+    name: "getTokenMetadata",
     outputs: [
       {
         internalType: "string",
@@ -38,11 +38,11 @@ const _abi = [
       },
       {
         internalType: "string",
-        name: "tokenMetaDataHash",
+        name: "tokenMetadataHash",
         type: "string",
       },
     ],
-    name: "mintToken",
+    name: "mintNFT",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

@@ -21,24 +21,24 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface IWineTrustTokenInterface extends ethers.utils.Interface {
   functions: {
-    "getTokenMetaData(uint256)": FunctionFragment;
-    "mintToken(address,string)": FunctionFragment;
+    "getTokenMetadata(uint256)": FunctionFragment;
+    "mintNFT(address,string)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "getTokenMetaData",
+    functionFragment: "getTokenMetadata",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "mintToken",
+    functionFragment: "mintNFT",
     values: [string, string]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getTokenMetaData",
+    functionFragment: "getTokenMetadata",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
 
   events: {};
 }
@@ -87,38 +87,38 @@ export class IWineTrustToken extends BaseContract {
   interface: IWineTrustTokenInterface;
 
   functions: {
-    getTokenMetaData(
+    getTokenMetadata(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    mintToken(
+    mintNFT(
       account: string,
-      tokenMetaDataHash: string,
+      tokenMetadataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
-  getTokenMetaData(
+  getTokenMetadata(
     id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  mintToken(
+  mintNFT(
     account: string,
-    tokenMetaDataHash: string,
+    tokenMetadataHash: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    getTokenMetaData(
+    getTokenMetadata(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    mintToken(
+    mintNFT(
       account: string,
-      tokenMetaDataHash: string,
+      tokenMetadataHash: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -126,27 +126,27 @@ export class IWineTrustToken extends BaseContract {
   filters: {};
 
   estimateGas: {
-    getTokenMetaData(
+    getTokenMetadata(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    mintToken(
+    mintNFT(
       account: string,
-      tokenMetaDataHash: string,
+      tokenMetadataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getTokenMetaData(
+    getTokenMetadata(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    mintToken(
+    mintNFT(
       account: string,
-      tokenMetaDataHash: string,
+      tokenMetadataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -5,8 +5,10 @@ export default async (ctx: Context) => {
   const pinataKey = process.env.PINATA_API_KEY;
   const pinataSecret = process.env.PINATA_API_SECRET;
 
+  const pinataUrl = "https://api.pinata.cloud";
+
   const response = await axios.post(
-    "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+    `${pinataUrl}/pinning/pinJSONToIPFS`,
     // This request body is following the opensea meta data standard found here: https://docs.opensea.io/docs/metadata-standards
     {
       name: "Wine",

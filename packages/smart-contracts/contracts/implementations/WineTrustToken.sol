@@ -32,9 +32,9 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
     /**
      * @notice Mint a wine trust token storing the hash of it's metadata in the tokens mapping
      * @param account address of the owner for the new token
-     * @param tokenMetaDataHash a string hash of the metadata for the new token
+     * @param tokenMetadataHash a string hash of the metadata for the new token
      */
-    function mintToken(address account, string calldata tokenMetaDataHash)
+    function mintNFT(address account, string calldata tokenMetadataHash)
         external
         override
     {
@@ -46,13 +46,13 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
 
         // Check token metadata hash is not an empty string
         require(
-            bytes(tokenMetaDataHash).length > 0,
+            bytes(tokenMetadataHash).length > 0,
             "Metadata hash is required"
         );
 
         // Increment token id count and store this token's metadata hash in the tokens mapping
         tokenIdCount++;
-        tokens[tokenIdCount] = tokenMetaDataHash;
+        tokens[tokenIdCount] = tokenMetadataHash;
 
         // Mint an 1155 token
         _mint(account, tokenIdCount, 1, "");
@@ -110,7 +110,7 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
      * @param id token id of the token whose metadata will be returned
      * @return string hash of the token's metadata
      */
-    function getTokenMetaData(uint256 id)
+    function getTokenMetadata(uint256 id)
         external
         view
         override
