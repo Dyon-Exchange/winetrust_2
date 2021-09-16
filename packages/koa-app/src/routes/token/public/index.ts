@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
 
-import mint from "./mint";
+import uploadTokenMetaData from "./uploadTokenMetaData";
 
 const { Joi } = Router;
 
@@ -9,7 +9,7 @@ router.prefix("/token");
 
 router.route({
   method: "post",
-  path: "/mint",
+  path: "/upload-token-metadata",
   validate: {
     output: {
       200: {
@@ -19,7 +19,7 @@ router.route({
       },
     },
   },
-  handler: mint,
+  handler: uploadTokenMetaData,
 });
 
 export default router;
