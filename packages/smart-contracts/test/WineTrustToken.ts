@@ -98,4 +98,15 @@ describe("WineTrust token contract", () => {
       ).to.be.revertedWith("Token type does not exist");
     });
   });
+
+  describe("Get token metadata", () => {
+    it("Returns metadata hash for an existing token", async () => {
+      await hardhatToken.mintNFT(owner.address, tokenMetadata);
+      expect(await hardhatToken.getTokenMetadata(1)).to.equal(tokenMetadata);
+    });
+
+    it("Returns empty string for a non existent token", async () => {
+      expect(await hardhatToken.getTokenMetadata(1)).to.equal("");
+    });
+  });
 });
