@@ -55,9 +55,9 @@ describe("WineTrust token contract", () => {
     it("Mint override function should add to the supply of an existing WineTrust token", async () => {
       await hardhatToken.mintNFT(owner.address, tokenMetadata);
       expect(await hardhatToken.balanceOf(owner.address, 1)).to.equal(1);
-      await hardhatToken.mint(owner.address, 1, 5, []);
+      await hardhatToken.mint(owner.address, 1, 4, []);
 
-      expect(await hardhatToken.balanceOf(owner.address, 1)).to.equal(6);
+      expect(await hardhatToken.balanceOf(owner.address, 1)).to.equal(5);
     });
 
     it("Batch mint override function should add to the supply of existing WineTrust tokens", async () => {
@@ -68,6 +68,34 @@ describe("WineTrust token contract", () => {
       await hardhatToken.mintBatch(owner.address, [1, 2], [4, 9], []);
       expect(await hardhatToken.balanceOf(owner.address, 1)).to.equal(5);
       expect(await hardhatToken.balanceOf(owner.address, 2)).to.equal(10);
+    });
+  });
+
+  describe("Minting error handling", () => {
+    it("Mint NFT function should not allow any non deployer addresses mint", async () => {
+      await expect(
+        hardhatToken.connect(addr1).mintNFT(addr1.address, tokenMetadata)
+      ).to.be.revertedWith(
+        "ERC1155PresetMinterPauser: must have minter role to mint"
+      );
+    });
+
+    it("Mint NFT function should not allow empty string as the token metadata hash", async () => {
+      await expect(hardhatToken.mintNFT(owner.address, "")).to.be.revertedWith(
+        "Metadata hash is required"
+      );
+    });
+
+    it("Mint override function should not allow adding to the supply of a token with no associated metadata hash", async () => {
+      await expect(
+        hardhatToken.mint(owner.address, 1, 5, [])
+      ).to.be.revertedWith("Token type does not exist");
+    });
+
+    it("Batch mint override function should not allow adding to supply the supply of a token with no associated metadata hash", async () => {
+      await expect(
+        hardhatToken.mintBatch(owner.address, [1, 2], [5, 10], [])
+      ).to.be.revertedWith("Token type does not exist");
     });
   });
 });
