@@ -1,3 +1,12 @@
+variables:
+  DOCKER_DRIVER: overlay2
+
+# run pipelines on master and merge requests only
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH == "main"
+
 #########################################################
 # Backend Deployments
 #########################################################
@@ -8,7 +17,7 @@
   stage: deploy
   before_script:
     - apk add --update nodejs npm yarn
-    - yarn install
+    - yarn install --frozen-lockfile --cache-folder .yarn --network-timeout 1000000000
     - cd packages/koa-app
     - yarn build
     - npx gae-ayaml-env
@@ -16,6 +25,10 @@
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
   after_script:
     - rm /tmp/$CI_PIPELINE_ID.json
+  cache:
+    paths:
+    - node_modules/
+    - .yarn
 
 # main branch deployment
 deploy_backend_main:
