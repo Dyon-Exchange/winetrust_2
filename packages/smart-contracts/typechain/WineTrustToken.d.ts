@@ -31,11 +31,13 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getRoleMember(bytes32,uint256)": FunctionFragment;
     "getRoleMemberCount(bytes32)": FunctionFragment;
+    "getTokenMetaData(uint256)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address,uint256,uint256,bytes)": FunctionFragment;
     "mintBatch(address,uint256[],uint256[],bytes)": FunctionFragment;
+    "mintToken(address,string)": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
@@ -44,6 +46,8 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
+    "tokenIdCount()": FunctionFragment;
+    "tokens(uint256)": FunctionFragment;
     "unpause()": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
@@ -89,6 +93,10 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "getTokenMetaData",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "grantRole",
     values: [BytesLike, string]
   ): string;
@@ -107,6 +115,10 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "mintBatch",
     values: [string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintToken",
+    values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
@@ -133,6 +145,14 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenIdCount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokens",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
@@ -168,6 +188,10 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     functionFragment: "getRoleMemberCount",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenMetaData",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
@@ -176,6 +200,7 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mintBatch", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
@@ -199,6 +224,11 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenIdCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "tokens", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
@@ -314,6 +344,11 @@ export class WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getTokenMetaData(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -345,6 +380,12 @@ export class WineTrustToken extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    mintToken(
+      account: string,
+      tokenMetaDataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -394,6 +435,10 @@ export class WineTrustToken extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    tokenIdCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -447,6 +492,11 @@ export class WineTrustToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getTokenMetaData(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   grantRole(
     role: BytesLike,
     account: string,
@@ -478,6 +528,12 @@ export class WineTrustToken extends BaseContract {
     ids: BigNumberish[],
     amounts: BigNumberish[],
     data: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  mintToken(
+    account: string,
+    tokenMetaDataHash: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -527,6 +583,10 @@ export class WineTrustToken extends BaseContract {
     interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   unpause(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -580,6 +640,11 @@ export class WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getTokenMetaData(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -611,6 +676,12 @@ export class WineTrustToken extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    mintToken(
+      account: string,
+      tokenMetaDataHash: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -658,6 +729,10 @@ export class WineTrustToken extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
@@ -794,6 +869,11 @@ export class WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getTokenMetaData(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -825,6 +905,12 @@ export class WineTrustToken extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    mintToken(
+      account: string,
+      tokenMetaDataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -874,6 +960,10 @@ export class WineTrustToken extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -933,6 +1023,11 @@ export class WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTokenMetaData(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -964,6 +1059,12 @@ export class WineTrustToken extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintToken(
+      account: string,
+      tokenMetaDataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1011,6 +1112,13 @@ export class WineTrustToken extends BaseContract {
 
     supportsInterface(
       interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokenIdCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokens(
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

@@ -24,6 +24,10 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 
+# koa-app
+/packages/koa-app/dist
+
 # smart-contracts
 /packages/smart-contracts/artifacts
 /packages/smart-contracts/cache
+/packages/smart-contracts/deployments

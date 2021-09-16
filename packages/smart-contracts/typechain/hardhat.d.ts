@@ -72,6 +72,10 @@ declare module "hardhat/types/runtime" {
       name: "WineTrustToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WineTrustToken__factory>;
+    getContractFactory(
+      name: "IWineTrustToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWineTrustToken__factory>;
 
     // default types
     getContractFactory(

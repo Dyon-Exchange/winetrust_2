@@ -16,6 +16,7 @@ export type { ERC1155PresetMinterPauser } from "./ERC1155PresetMinterPauser";
 export type { ERC165 } from "./ERC165";
 export type { IERC165 } from "./IERC165";
 export type { WineTrustToken } from "./WineTrustToken";
+export type { IWineTrustToken } from "./IWineTrustToken";
 
 export { AccessControl__factory } from "./factories/AccessControl__factory";
 export { AccessControlEnumerable__factory } from "./factories/AccessControlEnumerable__factory";
@@ -32,3 +33,4 @@ export { ERC1155PresetMinterPauser__factory } from "./factories/ERC1155PresetMin
 export { ERC165__factory } from "./factories/ERC165__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
 export { WineTrustToken__factory } from "./factories/WineTrustToken__factory";
+export { IWineTrustToken__factory } from "./factories/IWineTrustToken__factory";
