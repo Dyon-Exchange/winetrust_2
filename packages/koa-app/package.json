@@ -4,10 +4,11 @@
   "description": "koa backend server application for the WineTrust inventory management system",
   "main": "./src/app.ts",
   "scripts": {
-    "dev": "ts-node-dev ./src/app.ts",
     "build": "tsc",
+    "dev": "ts-node-dev ./src/app.ts",
     "gcp-build": "tsc -p .",
-    "precommit": "npx lint-staged"
+    "precommit": "npx lint-staged",
+    "start": "NODE_ENV=production node ./dist/app.js"
   },
   "author": "",
   "license": "ISC",

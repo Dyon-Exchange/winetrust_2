@@ -13,7 +13,7 @@ import configPassport from "./services/passport";
 config({ path: `${__dirname}/../.env` });
 
 const app: Koa = new Koa();
-const port = 3030;
+const port = process.env.PORT || 3030;
 
 // connect to db
 connect();

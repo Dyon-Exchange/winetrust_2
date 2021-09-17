@@ -27,8 +27,8 @@ workflow:
     - rm /tmp/$CI_PIPELINE_ID.json
   cache:
     paths:
-    - node_modules/
-    - .yarn
+      - node_modules/
+      - .yarn
 
 # main branch deployment
 deploy_backend_main:
@@ -38,4 +38,4 @@ deploy_backend_main:
       changes:
         - packages/koa-app/**/*
   script:
-    - gcloud --quiet --project $PROJECT_ID_PRODUCTION app deploy
+    - gcloud app deploy --quiet --project $PROJECT_ID_PRODUCTION
