@@ -7,6 +7,9 @@ import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
 import LocalStorage from "../services/LocalStorage";
 
+// axios.defaults.baseURL = "http://localhost:3030/";
+axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
+
 interface AuthResponse {
   accessToken: string;
   refreshToken: string;
