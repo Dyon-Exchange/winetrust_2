@@ -1,5 +1,5 @@
 /* eslint-disable @shopify/jsx-no-complex-expressions */
-import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import {
   Redirect,
@@ -11,12 +11,11 @@ import {
 import "./App.css";
 import TopNavBar from "./components/organisms/navigation/TopNavBar";
 import { AuthContext } from "./contexts/AuthContext";
-import { WalletContext } from "./contexts/WalletContext";
+import ConnectWallet from "./pages/auth/ConnectWallet";
 import Login from "./pages/auth/Login";
 
 const App = () => {
   const { loggedIn } = useContext(AuthContext);
-  const { userDetails, connect } = useContext(WalletContext);
 
   return (
     // min height inherit so that the app will always fill the window height
@@ -32,22 +31,10 @@ const App = () => {
           </Switch>
         ) : (
           <Switch>
-            <Route exact path="/">
-              <Center my="100px">
-                <VStack>
-                  <Button colorScheme="blue" onClick={connect}>
-                    Connect
-                  </Button>
-                  {userDetails && (
-                    <VStack>
-                      <Text>{`User address: ${userDetails.address}`}</Text>
-                      <Text>{`User balance: ${userDetails.balance}`}</Text>
-                    </VStack>
-                  )}
-                </VStack>
-              </Center>
+            <Route path="/connect-wallet">
+              <ConnectWallet />
             </Route>
-            <Redirect to="/" />
+            <Redirect to="/connect-wallet" />
           </Switch>
         )}
       </Router>
