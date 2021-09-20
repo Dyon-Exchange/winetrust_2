@@ -14,7 +14,7 @@ const ConnectWalletButton = () => {
 
   return (
     <VStack>
-      <Heading fontSize="3xl">
+      <Heading fontSize="3xl" px="15px" textAlign="center">
         Connect your Ethereum wallet to start using WineTrust
       </Heading>
       <Image alt="MetaMask wolf" src={MetaMaskWolf} w="25%" />
