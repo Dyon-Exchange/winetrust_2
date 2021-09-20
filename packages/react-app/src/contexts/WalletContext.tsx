@@ -1,13 +1,10 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
-
-interface UserDetails {
-  address: string;
-  balance: number;
-}
+import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
   userDetails?: UserDetails;
@@ -80,6 +77,9 @@ export const WalletContextProvider = ({
       setInitialising(false);
     })();
   }, []);
+
+  // // get everything from the useWineTrustToken contract hook
+  // console.log(useWineTrustToken({ provider, userDetails }));
 
   return (
     <WalletContext.Provider
