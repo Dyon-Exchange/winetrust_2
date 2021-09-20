@@ -1,6 +1,7 @@
-import { Button, Heading, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
 
+import MetaMaskWolf from "../../../assets/icons/metamask/metamask-fox.svg";
 import { WalletContext } from "../../../contexts/WalletContext";
 
 const ConnectWalletButton = () => {
@@ -12,6 +13,7 @@ const ConnectWalletButton = () => {
       <Heading fontSize="3xl">
         Connect your Ethereum wallet to start using WineTrust
       </Heading>
+      <Image alt="MetaMask wolf" src={MetaMaskWolf} w="25%" />
       <Button
         colorScheme="blue"
         disabled={!isMetaMaskInstalled}
