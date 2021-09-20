@@ -1,12 +1,16 @@
-import { Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, Image, Spinner, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
 
 import MetaMaskWolf from "../../../assets/icons/metamask/metamask-fox.svg";
 import { WalletContext } from "../../../contexts/WalletContext";
+import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const ConnectWalletButton = () => {
   const isMetaMaskInstalled = window.ethereum;
-  const { connect, userDetails } = useContext(WalletContext);
+  const { connect, initialising } = useContext(WalletContext);
+  const colors = useThemeColors();
+
+  if (initialising) return <Spinner color={colors.primary} />;
 
   return (
     <VStack>
@@ -21,12 +25,6 @@ const ConnectWalletButton = () => {
       >
         Connect
       </Button>
-      {userDetails && (
-        <VStack>
-          <Text>{`User address: ${userDetails.address}`}</Text>
-          <Text>{`User balance: ${userDetails.balance}`}</Text>
-        </VStack>
-      )}
     </VStack>
   );
 };

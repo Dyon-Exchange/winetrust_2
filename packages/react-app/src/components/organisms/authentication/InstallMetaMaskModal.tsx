@@ -17,7 +17,7 @@ import React from "react";
 import MetaMaskHorizontal from "../../../assets/icons/metamask/metamask-fox-wordmark-horizontal.svg";
 
 const InstallMetaMaskModal = () => {
-  const isMetaMaskInstalled = window.ethereum;
+  const isMetaMaskInstalled = window.ethereum?.isMetaMask;
   const { isOpen, onClose } = useDisclosure({
     isOpen: !isMetaMaskInstalled,
   });
