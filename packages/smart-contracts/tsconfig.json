@@ -13,6 +13,6 @@
     "typeRoots": ["@types", "./node_modules/@types"],
     "emitDecoratorMetadata": true
   },
-  "include": ["./scripts", "./test"],
+  "include": ["./scripts", "./test", "./hardhat.config.ts", "./deploy"],
   "files": ["./hardhat.config.ts"]
 }
