@@ -44,7 +44,7 @@ export const WalletContextProvider = ({
     const [address] = await initialisedProvider.send("eth_requestAccounts", []);
     const balance = await initialisedProvider.getBalance(address);
 
-    setProvider(provider);
+    setProvider(initialisedProvider);
     setUserDetails({
       address,
       balance: convertWeiToNumber(balance.toString()),
