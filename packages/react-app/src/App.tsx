@@ -2,19 +2,15 @@
 /* eslint-disable @shopify/jsx-no-complex-expressions */
 import { Box } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import {
-  Redirect,
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
 import TopNavBar from "./components/organisms/navigation/TopNavBar";
 import { AuthContext } from "./contexts/AuthContext";
 import { WalletContext } from "./contexts/WalletContext";
-import ConnectWallet from "./pages/auth/ConnectWallet";
-import Login from "./pages/auth/Login";
+import AuthenticatedConnected from "./pages/routers/AuthenticatedConnected";
+import AuthenticatedNotConnected from "./pages/routers/AuthenticatedNotConnected";
+import Unauthenticated from "./pages/routers/Unauthenticated";
 
 const App = () => {
   const { loggedIn } = useContext(AuthContext);
@@ -26,27 +22,11 @@ const App = () => {
       <Router>
         <TopNavBar />
         {!loggedIn ? (
-          <Switch>
-            {/* Unauthenticated routes */}
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Redirect to="/login" />
-          </Switch>
+          <Unauthenticated />
         ) : walletConnected ? (
-          <Switch>
-            {/* Authenticated and wallet connected routes */}
-            <Route path="/dashboard">Connected</Route>
-            <Redirect to="/dashboard" />
-          </Switch>
+          <AuthenticatedConnected />
         ) : (
-          <Switch>
-            {/* Authenticated and no wallet connected routes */}
-            <Route path="/connect-wallet">
-              <ConnectWallet />
-            </Route>
-            <Redirect to="/connect-wallet" />
-          </Switch>
+          <AuthenticatedNotConnected />
         )}
       </Router>
     </Box>
