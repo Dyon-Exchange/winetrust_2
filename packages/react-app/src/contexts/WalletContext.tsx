@@ -95,9 +95,7 @@ export const WalletContextProvider = ({
     if (!window.ethereum) return;
     (window.ethereum as any).on("accountsChanged", async () => {
       // setup wallet context again with the new selected account
-      setInitialising(true);
       await connectAccount();
-      setInitialising(false);
     });
   }, []);
 
