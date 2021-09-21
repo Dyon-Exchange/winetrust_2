@@ -16,19 +16,12 @@ workflow:
   image: "google/cloud-sdk:alpine"
   stage: deploy
   before_script:
-    - apk add --update nodejs npm yarn
-    - yarn install --frozen-lockfile --cache-folder .yarn --network-timeout 1000000000
-    - cd packages/koa-app
-    - yarn build
+    - apk add --update nodejs npm 
     - npx gae-ayaml-env
     - echo $DEPLOY_KEY_FILE_PRODUCTION > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
   after_script:
     - rm /tmp/$CI_PIPELINE_ID.json
-  cache:
-    paths:
-      - node_modules/
-      - .yarn
 
 # main branch deployment
 deploy_backend_main:
