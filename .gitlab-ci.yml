@@ -16,7 +16,8 @@ workflow:
   image: "google/cloud-sdk:alpine"
   stage: deploy
   before_script:
-    - apk add --update nodejs npm 
+    - apk add --update nodejs npm
+    - cd packages/koa-app
     - npx gae-ayaml-env
     - echo $DEPLOY_KEY_FILE_PRODUCTION > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
