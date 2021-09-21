@@ -4,22 +4,23 @@ import React, { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
-import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
   userDetails?: UserDetails;
   provider?: providers.Web3Provider;
   initialising: boolean;
+  isMetaMaskInstalled?: boolean;
   walletConnected: boolean;
-  connect: () => Promise<void>;
+  connectAccount: () => Promise<void>;
 }
 
 const INITIAL_WALLET_CONTEXT = {
   userDetails: undefined,
   provider: undefined,
   initialising: true,
+  isMetaMaskInstalled: undefined,
   walletConnected: false,
-  connect: async () => {},
+  connectAccount: async () => {},
 };
 
 export const WalletContext = createContext<IWalletContext>(
@@ -39,19 +40,23 @@ export const WalletContextProvider = ({
     providers.Web3Provider | undefined
   >();
 
+  const isMetaMaskInstalled = window.ethereum?.isMetaMask;
+
   const walletConnected =
     userDetails !== undefined && provider !== undefined && !initialising;
 
-  const connect = async () => {
+  // will setup wallet context to the currently selected metamask account
+  const connectAccount = async () => {
     const webProvider = (await detectEthereumProvider({
       mustBeMetaMask: true,
     })) as providers.ExternalProvider | providers.JsonRpcFetchFunc;
 
-    const initialisedProvider = new providers.Web3Provider(webProvider);
-    const [address] = await initialisedProvider.send("eth_requestAccounts", []);
-    const balance = await initialisedProvider.getBalance(address);
+    const ethersProvider = new providers.Web3Provider(webProvider);
+    const [address] = await ethersProvider.send("eth_requestAccounts", []);
 
-    setProvider(initialisedProvider);
+    const balance = await ethersProvider.getBalance(address);
+
+    setProvider(ethersProvider);
     setUserDetails({
       address,
       balance: convertWeiToNumber(balance.toString()),
@@ -65,12 +70,19 @@ export const WalletContextProvider = ({
         mustBeMetaMask: true,
       })) as providers.ExternalProvider | providers.JsonRpcFetchFunc;
 
+      // early return if metamask isn't installed or enabled
+      if (!webProvider) {
+        // set initialising to false
+        setInitialising(false);
+        return;
+      }
+
       const initialisedProvider = new providers.Web3Provider(webProvider);
       const accounts = await initialisedProvider.listAccounts();
 
       // if any accounts exists call the connect function
       if (accounts.length > 0) {
-        await connect();
+        await connectAccount();
       }
 
       // set initialising to false
@@ -78,12 +90,27 @@ export const WalletContextProvider = ({
     })();
   }, []);
 
-  // // get everything from the useWineTrustToken contract hook
-  // console.log(useWineTrustToken({ provider, userDetails }));
+  // set up metamask account change event listener
+  useEffect(() => {
+    if (!window.ethereum) return;
+    (window.ethereum as any).on("accountsChanged", async () => {
+      // setup wallet context again with the new selected account
+      setInitialising(true);
+      await connectAccount();
+      setInitialising(false);
+    });
+  }, []);
 
   return (
     <WalletContext.Provider
-      value={{ userDetails, provider, initialising, walletConnected, connect }}
+      value={{
+        userDetails,
+        provider,
+        initialising,
+        isMetaMaskInstalled,
+        walletConnected,
+        connectAccount,
+      }}
     >
       {children}
     </WalletContext.Provider>

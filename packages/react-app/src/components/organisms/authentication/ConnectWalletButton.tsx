@@ -6,8 +6,8 @@ import { WalletContext } from "../../../contexts/WalletContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const ConnectWalletButton = () => {
-  const isMetaMaskInstalled = window.ethereum;
-  const { connect, initialising } = useContext(WalletContext);
+  const { connectAccount, initialising, isMetaMaskInstalled } =
+    useContext(WalletContext);
   const colors = useThemeColors();
 
   if (initialising) return <Spinner color={colors.primary} />;
@@ -21,7 +21,7 @@ const ConnectWalletButton = () => {
       <Button
         colorScheme="blue"
         disabled={!isMetaMaskInstalled}
-        onClick={connect}
+        onClick={connectAccount}
       >
         Connect
       </Button>

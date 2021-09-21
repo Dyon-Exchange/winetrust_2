@@ -12,12 +12,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import React from "react";
+import React, { useContext } from "react";
 
 import MetaMaskHorizontal from "../../../assets/icons/metamask/metamask-fox-wordmark-horizontal.svg";
+import { WalletContext } from "../../../contexts/WalletContext";
 
 const InstallMetaMaskModal = () => {
-  const isMetaMaskInstalled = window.ethereum?.isMetaMask;
+  const { isMetaMaskInstalled } = useContext(WalletContext);
   const { isOpen, onClose } = useDisclosure({
     isOpen: !isMetaMaskInstalled,
   });
