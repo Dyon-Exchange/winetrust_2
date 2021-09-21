@@ -23,7 +23,7 @@ const INITIAL_WALLET_CONTEXT = {
   isMetaMaskInstalled: undefined,
   walletConnected: false,
   connectAccount: async () => {},
-  isAdmin: false,
+  isAdmin: true,
 };
 
 export const WalletContext = createContext<IWalletContext>(

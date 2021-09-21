@@ -25,7 +25,7 @@ const useWineTrustToken = ({
   >();
 
   // state whether the current user's address has default admin role
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true); // initialise to true so that the warning modal doesn't show initially
 
   // destructure WineTrustToken json
   const { address } = LocalWineTrustTokenJson;
