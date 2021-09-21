@@ -75,9 +75,7 @@ describe("WineTrust token contract", () => {
     it("Mint NFT function should not allow any non deployer addresses mint", async () => {
       await expect(
         hardhatToken.connect(addr1).mintNFT(addr1.address, tokenMetadata)
-      ).to.be.revertedWith(
-        "ERC1155PresetMinterPauser: must have minter role to mint"
-      );
+      ).to.be.revertedWith("Must have minter role to mint");
     });
 
     it("Mint NFT function should not allow empty string as the token metadata hash", async () => {

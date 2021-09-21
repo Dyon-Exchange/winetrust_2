@@ -41,7 +41,7 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
         // Check if the msg.sender has minter role
         require(
             hasRole(MINTER_ROLE, _msgSender()),
-            "ERC1155PresetMinterPauser: must have minter role to mint"
+            "Must have minter role to mint"
         );
 
         // Check token metadata hash is not an empty string
