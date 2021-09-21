@@ -4,14 +4,16 @@ import React, { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
+import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
-  userDetails?: UserDetails;
-  provider?: providers.Web3Provider;
+  userDetails: UserDetails | undefined;
+  provider: providers.Web3Provider | undefined;
   initialising: boolean;
-  isMetaMaskInstalled?: boolean;
+  isMetaMaskInstalled: boolean | undefined;
   walletConnected: boolean;
   connectAccount: () => Promise<void>;
+  isAdmin: boolean;
 }
 
 const INITIAL_WALLET_CONTEXT = {
@@ -21,6 +23,7 @@ const INITIAL_WALLET_CONTEXT = {
   isMetaMaskInstalled: undefined,
   walletConnected: false,
   connectAccount: async () => {},
+  isAdmin: false,
 };
 
 export const WalletContext = createContext<IWalletContext>(
@@ -99,6 +102,9 @@ export const WalletContextProvider = ({
     });
   }, []);
 
+  // get everything from the WineTrust token hook
+  const { isAdmin } = useWineTrustToken({ provider, userDetails });
+
   return (
     <WalletContext.Provider
       value={{
@@ -108,6 +114,7 @@ export const WalletContextProvider = ({
         isMetaMaskInstalled,
         walletConnected,
         connectAccount,
+        isAdmin,
       }}
     >
       {children}
