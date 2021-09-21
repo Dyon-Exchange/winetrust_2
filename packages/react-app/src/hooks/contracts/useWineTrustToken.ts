@@ -16,7 +16,7 @@ const useWineTrustToken = ({
   provider,
   userDetails,
 }: {
-  provider: providers.Web3Provider | undefined;
+  provider: providers.JsonRpcSigner | undefined;
   userDetails: UserDetails | undefined;
 }): WineTrustTokenContractHook => {
   // state for the wine trust token contract instance

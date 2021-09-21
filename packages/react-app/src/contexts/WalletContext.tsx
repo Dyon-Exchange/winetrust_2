@@ -8,7 +8,7 @@ import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
   userDetails: UserDetails | undefined;
-  provider: providers.Web3Provider | undefined;
+  provider: providers.JsonRpcSigner | undefined;
   initialising: boolean;
   isMetaMaskInstalled: boolean | undefined;
   walletConnected: boolean;
@@ -40,7 +40,7 @@ export const WalletContextProvider = ({
 
   const [userDetails, setUserDetails] = useState<UserDetails | undefined>();
   const [provider, setProvider] = useState<
-    providers.Web3Provider | undefined
+    providers.JsonRpcSigner | undefined
   >();
 
   const isMetaMaskInstalled = window.ethereum?.isMetaMask;
@@ -59,7 +59,7 @@ export const WalletContextProvider = ({
 
     const balance = await ethersProvider.getBalance(address);
 
-    setProvider(ethersProvider);
+    setProvider(ethersProvider.getSigner());
     setUserDetails({
       address,
       balance: convertWeiToNumber(balance.toString()),
