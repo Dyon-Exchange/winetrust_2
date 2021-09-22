@@ -17,6 +17,10 @@ const theme = extendTheme({
       light: "#FFFFFF",
       dark: "#4A5568",
     },
+    tertiary: {
+      light: "#E2E8F0",
+      dark: "#2D3748",
+    },
     error: {
       light: "#E53E3E",
       dark: "#FC8181",

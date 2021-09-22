@@ -17,8 +17,8 @@ const App = () => {
   const { walletConnected } = useContext(WalletContext);
 
   return (
-    // min height inherit so that the app will always fill the window height
-    <Box minH="inherit">
+    // min height inherit and display flex so that the app will always fill the window height
+    <Box display="flex" flexDirection="column" minH="inherit">
       <Router>
         <TopNavBar />
         {!loggedIn ? (
