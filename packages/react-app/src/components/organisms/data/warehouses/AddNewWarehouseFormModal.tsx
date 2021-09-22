@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  Button,
-  FormControl,
   FormHelperText,
   FormLabel,
   Input,
@@ -14,7 +12,6 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import styled from "@emotion/styled";
 import { AxiosError } from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -22,16 +19,9 @@ import isEmail from "validator/lib/isEmail";
 
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import createWarehouse from "../../../../requests/data/warehouses/createWarehouse";
+import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
+import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
-
-const StyledButton = styled(Button)`
-  margin: 10px 5px;
-  width: 100px;
-`;
-
-const StyledFormControl = styled(FormControl)`
-  margin: 15px 0px;
-`;
 
 interface AddNewWareHouseFormModalProps {
   isOpen: boolean;
@@ -107,7 +97,7 @@ const AddNewWarehouseFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Warehouse</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <StyledFormControl id="warehouseName" isDisabled={isSubmitting}>
+              <ModalFormControl id="warehouseName" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Warehouse name</FormLabel>
                 <Input
                   {...register("warehouseName", {
@@ -122,12 +112,9 @@ const AddNewWarehouseFormModal = ({
                     {errors.warehouseName.message}
                   </FormHelperText>
                 )}
-              </StyledFormControl>
+              </ModalFormControl>
 
-              <StyledFormControl
-                id="warehouseAddress"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="warehouseAddress" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Warehouse address</FormLabel>
                 <Input
                   {...register("warehouseAddress", {
@@ -142,9 +129,9 @@ const AddNewWarehouseFormModal = ({
                     {errors.warehouseAddress.message}
                   </FormHelperText>
                 )}
-              </StyledFormControl>
+              </ModalFormControl>
 
-              <StyledFormControl id="contactName" isDisabled={isSubmitting}>
+              <ModalFormControl id="contactName" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Contact name</FormLabel>
                 <Input
                   {...register("contactName", {
@@ -159,9 +146,9 @@ const AddNewWarehouseFormModal = ({
                     {errors.contactName.message}
                   </FormHelperText>
                 )}
-              </StyledFormControl>
+              </ModalFormControl>
 
-              <StyledFormControl id="contactEmail" isDisabled={isSubmitting}>
+              <ModalFormControl id="contactEmail" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Contact email address</FormLabel>
                 <Input
                   {...register("contactEmail", {
@@ -180,24 +167,24 @@ const AddNewWarehouseFormModal = ({
                     {errors.contactEmail.message}
                   </FormHelperText>
                 )}
-              </StyledFormControl>
+              </ModalFormControl>
             </ModalBody>
             <ModalFooter>
-              <StyledButton
+              <ModalFooterButton
                 colorScheme="blue"
                 isLoading={isSubmitting}
                 type="submit"
               >
                 Add
-              </StyledButton>
-              <StyledButton
+              </ModalFooterButton>
+              <ModalFooterButton
                 colorScheme="blue"
                 disabled={isSubmitting}
                 onClick={closeModal}
                 variant="outline"
               >
                 Cancel
-              </StyledButton>
+              </ModalFooterButton>
             </ModalFooter>
           </ModalContent>
         </form>

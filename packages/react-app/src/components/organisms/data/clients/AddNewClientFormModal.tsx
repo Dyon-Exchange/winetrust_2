@@ -1,34 +1,34 @@
 import {
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import React from "react";
 
-import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
+import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 
-interface ConfirmCancelChangesModalProps {
+interface AddNewClientFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
 }
 
-const ConfirmCancelChangesModal = ({
+const AddNewClientFormModal = ({
   isOpen,
   onClose,
-  onConfirm,
-}: ConfirmCancelChangesModalProps) => (
+}: AddNewClientFormModalProps) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
     <ModalContent>
-      <ModalHeader>Are you sure?</ModalHeader>
-      <ModalBody>Changes you made may not be saved.</ModalBody>
+      <ModalHeader>Add New Client</ModalHeader>
+      <ModalBody>Implement add new client form here...</ModalBody>
+
       <ModalFooter>
-        <ModalFooterButton colorScheme="blue" onClick={onConfirm}>
-          Confirm
+        <ModalFooterButton colorScheme="blue" type="submit">
+          Add
         </ModalFooterButton>
         <ModalFooterButton
           colorScheme="blue"
@@ -42,4 +42,4 @@ const ConfirmCancelChangesModal = ({
   </Modal>
 );
 
-export default ConfirmCancelChangesModal;
+export default AddNewClientFormModal;

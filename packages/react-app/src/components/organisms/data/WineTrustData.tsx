@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 
+import AddNewClientFormModal from "./clients/AddNewClientFormModal";
 import AddNewWarehouseFormModal from "./warehouses/AddNewWarehouseFormModal";
 
 const WineTrustData = () => {
@@ -28,6 +29,14 @@ const WineTrustData = () => {
     defaultIsOpen: false,
   });
 
+  const {
+    isOpen: isAddNewClientOpen,
+    onOpen: openAddNewClient,
+    onClose: closeAddNewClient,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
+
   // tab change handler
   const handleTabChange = (index: number) => {
     setTabIndex(index);
@@ -37,6 +46,7 @@ const WineTrustData = () => {
   const openAddNew = () => {
     // open the appropriate add new modal
     if (tabIndex === 0) openAddNewWarehouse();
+    if (tabIndex === 1) openAddNewClient();
   };
 
   return (
@@ -55,11 +65,17 @@ const WineTrustData = () => {
       </Box>
 
       {/* Add new modals */}
-      {/* only render the modals when their open states ar true, so that useForm hook resets */}
+      {/* only render the modals when their open states are true, so that useForm hook resets */}
       {isAddNewWarehouseOpen && (
         <AddNewWarehouseFormModal
           isOpen={isAddNewWarehouseOpen}
           onClose={closeAddNewWarehouse}
+        />
+      )}
+      {isAddNewClientOpen && (
+        <AddNewClientFormModal
+          isOpen={isAddNewClientOpen}
+          onClose={closeAddNewClient}
         />
       )}
     </>
