@@ -1,8 +1,8 @@
-import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Heading, VStack } from "@chakra-ui/react";
+import { Box, Heading, VStack } from "@chakra-ui/react";
 import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
+import AddNewButton from "../../atoms/buttons/AddNewButton";
 
 const PreAdviceSidePanel = () => {
   const colors = useThemeColors();
@@ -11,14 +11,7 @@ const PreAdviceSidePanel = () => {
     <Box bg={colors.tertiary} minW="225px">
       <VStack alignItems="start" p="20px 25px">
         <Heading fontSize="xl">Pre-Advice</Heading>
-        <Button
-          colorScheme="blue"
-          leftIcon={<AddIcon />}
-          fontSize="xs"
-          size="sm"
-        >
-          Add New
-        </Button>
+        <AddNewButton />
       </VStack>
     </Box>
   );

@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const StyledTabButton = styled(Tab)`
+  font-size: 14px;
   width: 200px;
 `;
 
@@ -22,27 +23,26 @@ const TabNav = () => {
   };
 
   return (
-    <HStack
-      bg={colors.secondary}
-      boxShadow="sm"
-      justifyContent="space-between"
-      w="100%"
-    >
-      <Tabs onChange={handleTabChange}>
+    <Tabs onChange={handleTabChange} w="100%">
+      <HStack
+        bg={colors.secondary}
+        boxShadow="sm"
+        justifyContent="space-between"
+      >
         <TabList>
-          <StyledTabButton w="200px">Assets</StyledTabButton>
+          <StyledTabButton>Assets</StyledTabButton>
           <StyledTabButton>Data</StyledTabButton>
         </TabList>
-      </Tabs>
-      {/* Show hamburger button when pre-advice side panel shrinks */}
-      {width <= 700 && (
-        <IconButton
-          aria-label="Open pre-advice panel"
-          bg={colors.secondary}
-          icon={<HamburgerIcon />}
-        />
-      )}
-    </HStack>
+        {/* Show hamburger button when pre-advice side panel shrinks */}
+        {width <= 700 && (
+          <IconButton
+            aria-label="Open pre-advice panel"
+            bg={colors.secondary}
+            icon={<HamburgerIcon />}
+          />
+        )}
+      </HStack>
+    </Tabs>
   );
 };
 
