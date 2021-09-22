@@ -12,13 +12,16 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { AxiosError } from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import createWarehouse from "../../../../requests/data/warehouses/createWarehouse";
 import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
 
 const StyledButton = styled(Button)`
@@ -41,6 +44,7 @@ const AddNewWarehouseFormModal = ({
 }: AddNewWareHouseFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
+  const toast = useToast();
 
   // react hook form
   const {
@@ -51,7 +55,29 @@ const AddNewWarehouseFormModal = ({
 
   // submit handler
   const onSubmit = async (data: NewWarehouseForm) => {
-    // TODO: implement request to create new warehouse
+    try {
+      await createWarehouse(data);
+      toast({
+        title: "Warehouse created.",
+        description: "Warehouse created successfully.",
+        status: "success",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error creating warehouse.",
+        description:
+          (error as AxiosError).response?.data ||
+          "There was an error trying to create this warehouse, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   // state for the confirm cancel modal
@@ -157,11 +183,16 @@ const AddNewWarehouseFormModal = ({
               </StyledFormControl>
             </ModalBody>
             <ModalFooter>
-              <StyledButton colorScheme="blue" type="submit">
+              <StyledButton
+                colorScheme="blue"
+                isLoading={isSubmitting}
+                type="submit"
+              >
                 Add
               </StyledButton>
               <StyledButton
                 colorScheme="blue"
+                disabled={isSubmitting}
                 onClick={closeModal}
                 variant="outline"
               >
