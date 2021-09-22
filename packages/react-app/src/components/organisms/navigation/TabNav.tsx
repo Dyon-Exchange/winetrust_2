@@ -1,5 +1,7 @@
-import { Tab, TabList, Tabs } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { HStack, IconButton, Tab, TabList, Tabs } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { useWindowWidth } from "@react-hook/window-size";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
@@ -12,6 +14,7 @@ const StyledTabButton = styled(Tab)`
 const TabNav = () => {
   const colors = useThemeColors();
   const history = useHistory();
+  const width = useWindowWidth();
 
   // push to history on tab change
   const handleTabChange = (index: number) => {
@@ -19,12 +22,22 @@ const TabNav = () => {
   };
 
   return (
-    <Tabs bg={colors.secondary} onChange={handleTabChange} w="100%">
-      <TabList>
-        <StyledTabButton w="200px">Assets</StyledTabButton>
-        <StyledTabButton>Data</StyledTabButton>
-      </TabList>
-    </Tabs>
+    <HStack bg={colors.secondary} justifyContent="space-between" w="100%">
+      <Tabs onChange={handleTabChange}>
+        <TabList>
+          <StyledTabButton w="200px">Assets</StyledTabButton>
+          <StyledTabButton>Data</StyledTabButton>
+        </TabList>
+      </Tabs>
+      {/* Show hamburger button when pre-advice side panel shrinks */}
+      {width <= 700 && (
+        <IconButton
+          aria-label="Open pre-advice panel"
+          bg={colors.secondary}
+          icon={<HamburgerIcon />}
+        />
+      )}
+    </HStack>
   );
 };
 
