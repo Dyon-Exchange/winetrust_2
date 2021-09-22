@@ -1,6 +1,6 @@
 import { Context } from "koa";
 
-import Warehouse from "../../../models/Warehouse";
+import Warehouse, { WarehouseClass } from "../../../models/Warehouse";
 
 interface CreateWarehouseRequestBody {
   warehouseName: string;
@@ -10,9 +10,15 @@ interface CreateWarehouseRequestBody {
 }
 
 export default async (ctx: Context) => {
-  const requestBody = ctx.request.body as CreateWarehouseRequestBody;
+  const { warehouseName, warehouseAddress, contactName, contactEmail } = ctx
+    .request.body as CreateWarehouseRequestBody;
 
-  console.log(requestBody);
+  await Warehouse.create({
+    name: warehouseName,
+    address: warehouseAddress,
+    contactName,
+    contactEmail,
+  } as WarehouseClass);
 
-  ctx.body = {};
+  ctx.status = 200;
 };
