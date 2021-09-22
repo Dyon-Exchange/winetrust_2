@@ -6,6 +6,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import NotAdminWarningModal from "../../components/organisms/authentication/NotAdminWarningModal";
 import TabNav from "../../components/organisms/navigation/TabNav";
 import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSidePanel";
+import Data from "../data/Data";
 
 // Authenticated and wallet connected routes
 const AuthenticatedConnected = () => {
@@ -22,7 +23,7 @@ const AuthenticatedConnected = () => {
             Assets
           </Route>
           <Route exact path="/data">
-            Data
+            <Data />
           </Route>
           <Redirect to="/assets" />
         </Switch>

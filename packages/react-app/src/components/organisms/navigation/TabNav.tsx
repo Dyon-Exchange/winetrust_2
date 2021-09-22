@@ -22,7 +22,12 @@ const TabNav = () => {
   };
 
   return (
-    <HStack bg={colors.secondary} justifyContent="space-between" w="100%">
+    <HStack
+      bg={colors.secondary}
+      boxShadow="sm"
+      justifyContent="space-between"
+      w="100%"
+    >
       <Tabs onChange={handleTabChange}>
         <TabList>
           <StyledTabButton w="200px">Assets</StyledTabButton>
