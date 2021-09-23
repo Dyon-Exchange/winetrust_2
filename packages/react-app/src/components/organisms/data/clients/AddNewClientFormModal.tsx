@@ -12,7 +12,9 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  useToast,
 } from "@chakra-ui/react";
+import { AxiosError } from "axios";
 import CountryData from "country-data";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -20,6 +22,7 @@ import isEthereumAddress from "validator/lib/isEthereumAddress";
 import isMobilePhone from "validator/lib/isMobilePhone";
 
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import createClient from "../../../../requests/data/clients/createClient";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 
@@ -34,6 +37,7 @@ const AddNewClientFormModal = ({
 }: AddNewClientFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
+  const toast = useToast();
 
   // react hook form
   const {
@@ -43,7 +47,31 @@ const AddNewClientFormModal = ({
   } = useForm<NewClientForm>();
 
   // submit handler
-  const onSubmit = async (data: NewClientForm) => {};
+  const onSubmit = async (data: NewClientForm) => {
+    try {
+      await createClient(data);
+      toast({
+        title: "Client created.",
+        description: "Client created successfully.",
+        status: "success",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error creating client.",
+        description:
+          (error as AxiosError).response?.data ||
+          "There was an error trying to create this client, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} isCentered onClose={onClose} size="xl">
@@ -156,11 +184,16 @@ const AddNewClientFormModal = ({
             </ModalFormControl>
           </ModalBody>
           <ModalFooter>
-            <ModalFooterButton colorScheme="blue" type="submit">
+            <ModalFooterButton
+              colorScheme="blue"
+              isLoading={isSubmitting}
+              type="submit"
+            >
               Add
             </ModalFooterButton>
             <ModalFooterButton
               colorScheme="blue"
+              disabled={isSubmitting}
               onClick={onClose}
               variant="outline"
             >
