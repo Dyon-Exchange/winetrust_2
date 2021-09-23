@@ -16,10 +16,12 @@ export default async (ctx: Context) => {
   const { firstName, lastName, ethAddress, phoneNumber } = ctx.request
     .body as CreateClientRequestBody;
 
-  console.log({ firstName });
-  console.log({ lastName });
-  console.log({ ethAddress });
-  console.log({ phoneNumber });
+  await Client.create({
+    firstName,
+    lastName,
+    ethAddress,
+    phoneNumber,
+  } as ClientClass);
 
   ctx.status = 200;
 };
