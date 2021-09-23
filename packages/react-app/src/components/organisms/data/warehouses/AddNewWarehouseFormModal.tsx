@@ -153,10 +153,8 @@ const AddNewWarehouseFormModal = ({
                 <Input
                   {...register("contactEmail", {
                     required: "Contact email address is required",
-                    validate: (email?: string) =>
-                      isEmail(email || "")
-                        ? undefined
-                        : "Invalid email address",
+                    validate: (email: string) =>
+                      isEmail(email) ? undefined : "Invalid email address",
                   })}
                   fontSize="sm"
                   type="email"
