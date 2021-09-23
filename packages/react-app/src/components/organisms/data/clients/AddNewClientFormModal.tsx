@@ -38,9 +38,7 @@ const AddNewClientFormModal = ({
   } = useForm<NewClientForm>();
 
   // submit handler
-  const onSubmit = async (data: NewClientForm) => {
-    console.log(data);
-  };
+  const onSubmit = async (data: NewClientForm) => {};
 
   return (
     <Modal isOpen={isOpen} isCentered onClose={onClose} size="xl">
