@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
@@ -25,6 +26,7 @@ import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import createClient from "../../../../requests/data/clients/createClient";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
+import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
 
 interface AddNewClientFormModalProps {
   isOpen: boolean;
@@ -73,136 +75,162 @@ const AddNewClientFormModal = ({
     }
   };
 
+  // state for the confirm cancel modal
+  const {
+    isOpen: isConfirmCancelModalOpen,
+    onOpen: openConfirmCancel,
+    onClose: closeConfirmCancel,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
+
+  // close modal handler
+  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+
   return (
-    <Modal isOpen={isOpen} isCentered onClose={onClose} size="xl">
-      <ModalOverlay />
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <ModalContent>
-          <ModalHeader>Add New Client</ModalHeader>
-          <ModalBody alignSelf="center" w="80%">
-            <ModalFormControl id="firstName" isDisabled={isSubmitting}>
-              <FormLabel fontSize="sm">First name</FormLabel>
-              <Input
-                {...register("firstName", {
-                  required: "First name is required",
-                })}
-                fontSize="sm"
-                type="text"
-                isInvalid={errors.firstName !== undefined}
-              />
-              {errors.firstName !== undefined && (
-                <FormHelperText color={colors.error} fontSize="sm">
-                  {errors.firstName.message}
-                </FormHelperText>
-              )}
-            </ModalFormControl>
-
-            <ModalFormControl id="lastName" isDisabled={isSubmitting}>
-              <FormLabel fontSize="sm">Last name</FormLabel>
-              <Input
-                {...register("lastName", {
-                  required: "Last name is required",
-                })}
-                fontSize="sm"
-                type="text"
-                isInvalid={errors.lastName !== undefined}
-              />
-              {errors.lastName !== undefined && (
-                <FormHelperText color={colors.error} fontSize="sm">
-                  {errors.lastName.message}
-                </FormHelperText>
-              )}
-            </ModalFormControl>
-
-            <ModalFormControl id="ethAddress" isDisabled={isSubmitting}>
-              <FormLabel fontSize="sm">Ethereum address</FormLabel>
-              <Input
-                {...register("ethAddress", {
-                  required: "Ethereum address is required",
-                  validate: (ethAddress: string) =>
-                    isEthereumAddress(ethAddress)
-                      ? undefined
-                      : "Invalid ethereum address",
-                })}
-                fontSize="sm"
-                type="text"
-                isInvalid={errors.ethAddress !== undefined}
-              />
-              {errors.ethAddress !== undefined && (
-                <FormHelperText color={colors.error} fontSize="sm">
-                  {errors.ethAddress.message}
-                </FormHelperText>
-              )}
-            </ModalFormControl>
-
-            <ModalFormControl id="phoneNumber" isDisabled={isSubmitting}>
-              <FormLabel fontSize="sm">Phone number</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>
-                  <Select
-                    {...register("phoneNumber.countryCode", {
-                      required: "Country code is required",
-                    })}
-                    fontSize="sm"
-                    placeholder="Select"
-                    variant="flushed"
-                    isInvalid={errors.phoneNumber?.countryCode !== undefined}
-                  >
-                    {CountryData.callingCountries.all.map((country) => (
-                      <option
-                        key={country.name}
-                        value={country.countryCallingCodes[0]}
-                        label={country.countryCallingCodes[0]}
-                      />
-                    ))}
-                  </Select>
-                </InputLeftAddon>
+    <>
+      <Modal
+        closeOnEsc={!isDirty}
+        closeOnOverlayClick={!isDirty}
+        isOpen={isOpen}
+        isCentered
+        onClose={closeModal}
+        size="xl"
+      >
+        <ModalOverlay />
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <ModalContent>
+            <ModalHeader>Add New Client</ModalHeader>
+            <ModalBody alignSelf="center" w="80%">
+              <ModalFormControl id="firstName" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">First name</FormLabel>
                 <Input
-                  {...register("phoneNumber.phoneNumber", {
-                    required: "Phone number is required",
-                    validate: (phoneNumber: string) =>
-                      isMobilePhone(phoneNumber)
-                        ? undefined
-                        : "Invalid phone number",
+                  {...register("firstName", {
+                    required: "First name is required",
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.phoneNumber !== undefined}
+                  isInvalid={errors.firstName !== undefined}
                 />
-              </InputGroup>
-              {errors.phoneNumber?.countryCode !== undefined && (
-                <FormHelperText color={colors.error} fontSize="sm">
-                  {errors.phoneNumber.countryCode.message}
-                </FormHelperText>
-              )}
-              {errors.phoneNumber?.phoneNumber !== undefined &&
-                !errors.phoneNumber?.countryCode && (
+                {errors.firstName !== undefined && (
                   <FormHelperText color={colors.error} fontSize="sm">
-                    {errors.phoneNumber.phoneNumber.message}
+                    {errors.firstName.message}
                   </FormHelperText>
                 )}
-            </ModalFormControl>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterButton
-              colorScheme="blue"
-              isLoading={isSubmitting}
-              type="submit"
-            >
-              Add
-            </ModalFooterButton>
-            <ModalFooterButton
-              colorScheme="blue"
-              disabled={isSubmitting}
-              onClick={onClose}
-              variant="outline"
-            >
-              Cancel
-            </ModalFooterButton>
-          </ModalFooter>
-        </ModalContent>
-      </form>
-    </Modal>
+              </ModalFormControl>
+
+              <ModalFormControl id="lastName" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Last name</FormLabel>
+                <Input
+                  {...register("lastName", {
+                    required: "Last name is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  isInvalid={errors.lastName !== undefined}
+                />
+                {errors.lastName !== undefined && (
+                  <FormHelperText color={colors.error} fontSize="sm">
+                    {errors.lastName.message}
+                  </FormHelperText>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl id="ethAddress" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Ethereum address</FormLabel>
+                <Input
+                  {...register("ethAddress", {
+                    required: "Ethereum address is required",
+                    validate: (ethAddress: string) =>
+                      isEthereumAddress(ethAddress)
+                        ? undefined
+                        : "Invalid ethereum address",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  isInvalid={errors.ethAddress !== undefined}
+                />
+                {errors.ethAddress !== undefined && (
+                  <FormHelperText color={colors.error} fontSize="sm">
+                    {errors.ethAddress.message}
+                  </FormHelperText>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl id="phoneNumber" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Phone number</FormLabel>
+                <InputGroup>
+                  <InputLeftAddon>
+                    <Select
+                      {...register("phoneNumber.countryCode", {
+                        required: "Country code is required",
+                      })}
+                      fontSize="sm"
+                      placeholder="Select"
+                      variant="flushed"
+                      isInvalid={errors.phoneNumber?.countryCode !== undefined}
+                    >
+                      {CountryData.callingCountries.all.map((country) => (
+                        <option
+                          key={country.name}
+                          value={country.countryCallingCodes[0]}
+                          label={country.countryCallingCodes[0]}
+                        />
+                      ))}
+                    </Select>
+                  </InputLeftAddon>
+                  <Input
+                    {...register("phoneNumber.phoneNumber", {
+                      required: "Phone number is required",
+                      validate: (phoneNumber: string) =>
+                        isMobilePhone(phoneNumber)
+                          ? undefined
+                          : "Invalid phone number",
+                    })}
+                    fontSize="sm"
+                    type="text"
+                    isInvalid={errors.phoneNumber !== undefined}
+                  />
+                </InputGroup>
+                {errors.phoneNumber?.countryCode !== undefined && (
+                  <FormHelperText color={colors.error} fontSize="sm">
+                    {errors.phoneNumber.countryCode.message}
+                  </FormHelperText>
+                )}
+                {errors.phoneNumber?.phoneNumber !== undefined &&
+                  !errors.phoneNumber?.countryCode && (
+                    <FormHelperText color={colors.error} fontSize="sm">
+                      {errors.phoneNumber.phoneNumber.message}
+                    </FormHelperText>
+                  )}
+              </ModalFormControl>
+            </ModalBody>
+            <ModalFooter>
+              <ModalFooterButton
+                colorScheme="blue"
+                isLoading={isSubmitting}
+                type="submit"
+              >
+                Add
+              </ModalFooterButton>
+              <ModalFooterButton
+                colorScheme="blue"
+                disabled={isSubmitting}
+                onClick={closeModal}
+                variant="outline"
+              >
+                Cancel
+              </ModalFooterButton>
+            </ModalFooter>
+          </ModalContent>
+        </form>
+      </Modal>
+      <ConfirmCancelChangesModal
+        isOpen={isConfirmCancelModalOpen}
+        onClose={closeConfirmCancel}
+        onConfirm={onClose}
+      />
+    </>
   );
 };
 
