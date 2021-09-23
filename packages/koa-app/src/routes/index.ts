@@ -2,6 +2,7 @@ import { Context } from "koa";
 import Router from "koa-joi-router";
 
 import AdminRouter from "./admin";
+import ClientRouter from "./client";
 import TokenRouter from "./token";
 import WarehouseRouter from "./warehouse";
 
@@ -15,6 +16,8 @@ router.get("/", async (ctx: Context) => {
 router.use(
   AdminRouter.Public.middleware(),
   AdminRouter.Private.middleware(),
+  ClientRouter.Public.middleware(),
+  ClientRouter.Private.middleware(),
   TokenRouter.Public.middleware(),
   TokenRouter.Private.middleware(),
   WarehouseRouter.Public.middleware(),
