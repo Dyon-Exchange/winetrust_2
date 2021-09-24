@@ -1,8 +1,15 @@
-import { Context } from "koa";
+import { Request } from "koa";
 
 import { processRefreshToken } from "../../../services/passport";
+import ExtendedContext from "../../../types/koa/ExtendedContext";
 
-export default async (ctx: Context) => {
+interface RefreshTokenRequest extends Request {
+  body: {
+    refreshToken: string;
+  };
+}
+
+export default async (ctx: ExtendedContext<RefreshTokenRequest>) => {
   const { refreshToken } = ctx.request.body;
   ctx.body = await processRefreshToken(refreshToken);
 };
