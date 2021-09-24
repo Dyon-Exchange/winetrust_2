@@ -96,10 +96,23 @@ export const WalletContextProvider = ({
   // set up metamask account change event listener
   useEffect(() => {
     if (!window.ethereum) return;
-    (window.ethereum as any).on("accountsChanged", async () => {
+
+    const handleAccountChange = async () => {
       // setup wallet context again with the new selected account
       await connectAccount();
-    });
+    };
+
+    // setup listener
+    (window.ethereum as any).on("accountsChanged", handleAccountChange);
+
+    // remove the listener
+    // eslint-disable-next-line consistent-return
+    return () => {
+      (window.ethereum as any).removeListener(
+        "accountsChanged",
+        handleAccountChange
+      );
+    };
   }, []);
 
   // get everything from the WineTrust token hook
