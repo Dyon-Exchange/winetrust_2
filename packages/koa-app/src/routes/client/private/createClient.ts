@@ -1,20 +1,22 @@
-import { Context } from "koa";
+import { Request } from "koa";
 
 import Client, { ClientClass } from "../../../models/Client";
+import ExtendedContext from "../../../types/koa/ExtendedContext";
 
-interface CreateClientRequestBody {
-  firstName: string;
-  lastName: string;
-  ethAddress: string;
-  phoneNumber: {
-    countryCode: string;
-    phoneNumber: string;
+interface CreateClientRequest extends Request {
+  body: {
+    firstName: string;
+    lastName: string;
+    ethAddress: string;
+    phoneNumber: {
+      countryCode: string;
+      phoneNumber: string;
+    };
   };
 }
 
-export default async (ctx: Context) => {
-  const { firstName, lastName, ethAddress, phoneNumber } = ctx.request
-    .body as CreateClientRequestBody;
+export default async (ctx: ExtendedContext<CreateClientRequest>) => {
+  const { firstName, lastName, ethAddress, phoneNumber } = ctx.request.body;
 
   await Client.create({
     firstName,
