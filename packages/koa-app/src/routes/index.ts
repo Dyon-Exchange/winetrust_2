@@ -3,6 +3,7 @@ import Router from "koa-joi-router";
 
 import AdminRouter from "./admin";
 import ClientRouter from "./client";
+import ProductRouter from "./product";
 import TokenRouter from "./token";
 import WarehouseRouter from "./warehouse";
 
@@ -18,6 +19,8 @@ router.use(
   AdminRouter.Private.middleware(),
   ClientRouter.Public.middleware(),
   ClientRouter.Private.middleware(),
+  ProductRouter.Public.middleware(),
+  ProductRouter.Private.middleware(),
   TokenRouter.Public.middleware(),
   TokenRouter.Private.middleware(),
   WarehouseRouter.Public.middleware(),
