@@ -24,7 +24,7 @@ import isEmail from "validator/lib/isEmail";
 
 import { AuthContext } from "../../../contexts/AuthContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
-import ToggleRevealPasswordIcon from "../../atoms/ToggleRevealPasswordIcon";
+import ToggleRevealPasswordIcon from "../../atoms/icons/ToggleRevealPasswordIcon";
 
 const LoginForm = () => {
   const colors = useThemeColors();

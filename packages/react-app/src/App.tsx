@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
-import TopNavBar from "./components/organisms/navigation/TopNavBar";
+import TopBar from "./components/organisms/navigation/TopBar";
 import { AuthContext } from "./contexts/AuthContext";
 import { WalletContext } from "./contexts/WalletContext";
 import AuthenticatedConnected from "./pages/routers/AuthenticatedConnected";
@@ -23,10 +23,10 @@ const App = () => {
   }, [loggedIn, walletConnected]);
 
   return (
-    // min height inherit so that the app will always fill the window height
-    <Box minH="inherit">
+    // min height inherit and display flex so that the app will always fill the window height
+    <Box display="flex" flexDirection="column" minH="inherit">
       <Router>
-        <TopNavBar />
+        <TopBar />
         {route}
       </Router>
     </Box>

@@ -4,7 +4,7 @@ import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
-const TopNavBar = () => {
+const TopBar = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
 
@@ -33,4 +33,4 @@ const TopNavBar = () => {
   );
 };
 
-export default TopNavBar;
+export default TopBar;
