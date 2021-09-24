@@ -50,7 +50,7 @@ const AddNewProductFormModal = ({
 
   // controller hook for the image file input
   const {
-    field: { value, ...inputProps },
+    field: { value: imageValue, onChange: onImageChange, ...inputProps },
   } = useController({
     name: "image",
     control,
@@ -211,11 +211,17 @@ const AddNewProductFormModal = ({
                   </InputLeftElement>
                   <input
                     {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
                     ref={imageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
                   <Input
+                    // styles to make the input consistent with the other inputs but remain read only
                     css={css`
                       border-width: ${errors.image ? "3px" : "1px"};
                       :focus {
@@ -227,7 +233,7 @@ const AddNewProductFormModal = ({
                     onClick={() => imageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={value}
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     isInvalid={errors.image !== undefined}
                   />
                 </InputGroup>

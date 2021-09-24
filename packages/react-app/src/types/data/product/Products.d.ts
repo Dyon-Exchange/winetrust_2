@@ -8,5 +8,5 @@ interface NewProductForm {
   subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
-  image: any;
+  image: File;
 }
