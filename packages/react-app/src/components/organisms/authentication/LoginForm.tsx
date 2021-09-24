@@ -62,7 +62,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginForm>();
 
   // submit handler
@@ -87,13 +87,16 @@ const LoginForm = () => {
       boxShadow="sm"
       p="50px"
       minW={formMinWidth}
+      maxW="400px"
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="25px">
           {loginError !== undefined && (
             <Alert status="error">
               <AlertIcon />
-              <AlertDescription fontSize="sm">{loginError}</AlertDescription>
+              <AlertDescription fontSize="sm" maxW="200px">
+                {loginError}
+              </AlertDescription>
               <CloseButton
                 onClick={() => setLoginError(undefined)}
                 position="absolute"
@@ -102,7 +105,7 @@ const LoginForm = () => {
               />
             </Alert>
           )}
-          <FormControl id="email">
+          <FormControl id="email" isDisabled={isSubmitting}>
             <FormLabel fontSize="sm">Email address</FormLabel>
             <Input
               {...register("email", {
@@ -120,7 +123,7 @@ const LoginForm = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <FormControl id="password">
+          <FormControl id="password" isDisabled={isSubmitting}>
             <FormLabel fontSize="sm">Password</FormLabel>
             <InputGroup>
               <Input
@@ -133,6 +136,7 @@ const LoginForm = () => {
                 <IconButton
                   aria-label={passwordRevealButtonAriaLabel}
                   bg="transparent"
+                  disabled={isSubmitting}
                   size="sm"
                   icon={<ToggleRevealPasswordIcon reveal={reveal} />}
                   onClick={toggleRevealPassword}
@@ -145,7 +149,12 @@ const LoginForm = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <Button colorScheme="blue" isFullWidth type="submit">
+          <Button
+            colorScheme="blue"
+            isLoading={isSubmitting}
+            isFullWidth
+            type="submit"
+          >
             Sign in
           </Button>
         </VStack>

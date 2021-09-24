@@ -1,41 +1,33 @@
-/* eslint-disable @shopify/jsx-no-complex-expressions */
-import { Box, Center } from "@chakra-ui/react";
-import React, { useContext } from "react";
-import {
-  Redirect,
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Box } from "@chakra-ui/react";
+import React, { useContext, useMemo } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
 import TopNavBar from "./components/organisms/navigation/TopNavBar";
 import { AuthContext } from "./contexts/AuthContext";
-import Login from "./pages/auth/Login";
+import { WalletContext } from "./contexts/WalletContext";
+import AuthenticatedConnected from "./pages/routers/AuthenticatedConnected";
+import AuthenticatedNotConnected from "./pages/routers/AuthenticatedNotConnected";
+import Unauthenticated from "./pages/routers/Unauthenticated";
 
 const App = () => {
   const { loggedIn } = useContext(AuthContext);
+  const { walletConnected } = useContext(WalletContext);
+
+  const route = useMemo(() => {
+    if (loggedIn) {
+      if (walletConnected) return <AuthenticatedConnected />;
+      return <AuthenticatedNotConnected />;
+    }
+    return <Unauthenticated />;
+  }, [loggedIn, walletConnected]);
 
   return (
     // min height inherit so that the app will always fill the window height
     <Box minH="inherit">
       <Router>
         <TopNavBar />
-        {!loggedIn ? (
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Redirect to="/login" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/">
-              <Center my="100px">Coming Soon</Center>
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        )}
+        {route}
       </Router>
     </Box>
   );
