@@ -1,16 +1,19 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { Context } from "koa";
+import { Request } from "koa";
 
 import Admin from "../../../models/Admin";
+import ExtendedContext from "../../../types/koa/ExtendedContext";
 
-interface LoginRequestBody {
-  email: string;
-  password: string;
+interface LoginRequest extends Request {
+  body: {
+    email: string;
+    password: string;
+  };
 }
 
-export default async (ctx: Context) => {
-  const { email, password } = ctx.request.body as LoginRequestBody;
+export default async (ctx: ExtendedContext<LoginRequest>) => {
+  const { email, password } = ctx.request.body;
 
   const account = await Admin.findOne({ email });
 
