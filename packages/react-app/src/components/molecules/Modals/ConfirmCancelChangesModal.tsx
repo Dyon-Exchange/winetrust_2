@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -7,13 +6,9 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import styled from "@emotion/styled";
 import React from "react";
 
-const StyledButton = styled(Button)`
-  margin: 10px 5px;
-  width: 100px;
-`;
+import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 
 interface ConfirmCancelChangesModalProps {
   isOpen: boolean;
@@ -32,12 +27,16 @@ const ConfirmCancelChangesModal = ({
       <ModalHeader>Are you sure?</ModalHeader>
       <ModalBody>Changes you made may not be saved.</ModalBody>
       <ModalFooter>
-        <StyledButton colorScheme="blue" onClick={onConfirm}>
+        <ModalFooterButton colorScheme="blue" onClick={onConfirm}>
           Confirm
-        </StyledButton>
-        <StyledButton colorScheme="blue" onClick={onClose} variant="outline">
+        </ModalFooterButton>
+        <ModalFooterButton
+          colorScheme="blue"
+          onClick={onClose}
+          variant="outline"
+        >
           Cancel
-        </StyledButton>
+        </ModalFooterButton>
       </ModalFooter>
     </ModalContent>
   </Modal>

@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 const StyledTabButton = styled(Tab)`
-  font-size: 14px;
   width: 200px;
 `;
 
