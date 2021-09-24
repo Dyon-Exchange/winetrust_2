@@ -1,7 +1,5 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable @shopify/jsx-no-complex-expressions */
 import { Box } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
@@ -16,18 +14,20 @@ const App = () => {
   const { loggedIn } = useContext(AuthContext);
   const { walletConnected } = useContext(WalletContext);
 
+  const route = useMemo(() => {
+    if (loggedIn) {
+      if (walletConnected) return <AuthenticatedConnected />;
+      return <AuthenticatedNotConnected />;
+    }
+    return <Unauthenticated />;
+  }, [loggedIn, walletConnected]);
+
   return (
     // min height inherit and display flex so that the app will always fill the window height
     <Box display="flex" flexDirection="column" minH="inherit">
       <Router>
         <TopBar />
-        {!loggedIn ? (
-          <Unauthenticated />
-        ) : walletConnected ? (
-          <AuthenticatedConnected />
-        ) : (
-          <AuthenticatedNotConnected />
-        )}
+        {route}
       </Router>
     </Box>
   );

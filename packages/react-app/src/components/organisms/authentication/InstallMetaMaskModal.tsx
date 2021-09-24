@@ -17,16 +17,16 @@ import React, { useContext } from "react";
 import MetaMaskHorizontal from "../../../assets/icons/metamask/metamask-fox-wordmark-horizontal.svg";
 import { WalletContext } from "../../../contexts/WalletContext";
 
+const installMetaMask = () => {
+  const onboarding = new MetaMaskOnboarding();
+  onboarding.startOnboarding();
+};
+
 const InstallMetaMaskModal = () => {
   const { isMetaMaskInstalled } = useContext(WalletContext);
   const { isOpen, onClose } = useDisclosure({
     isOpen: !isMetaMaskInstalled,
   });
-
-  const installMetaMask = () => {
-    const onboarding = new MetaMaskOnboarding();
-    onboarding.startOnboarding();
-  };
 
   return (
     <Modal
