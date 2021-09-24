@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { AttachmentIcon } from "@chakra-ui/icons";
 import {
   FormHelperText,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -13,8 +16,9 @@ import {
   NumberInputField,
   Select,
 } from "@chakra-ui/react";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { css } from "@emotion/react";
+import React, { useRef } from "react";
+import { useController, useForm } from "react-hook-form";
 
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
@@ -35,10 +39,23 @@ const AddNewProductFormModal = ({
 
   // react hook form
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isDirty, isSubmitting },
   } = useForm<NewProductForm>();
+
+  // image file input ref
+  const imageFileInputRef = useRef<any>(null);
+
+  // controller hook for the image file input
+  const {
+    field: { value, ...inputProps },
+  } = useController({
+    name: "image",
+    control,
+    rules: { required: "Image is required" },
+  });
 
   // submit handler
   const onSubmit = async (data: NewProductForm) => {};
@@ -182,6 +199,41 @@ const AddNewProductFormModal = ({
                 {errors.dutyStatus !== undefined && (
                   <FormHelperText color={colors.error} fontSize="sm">
                     {errors.dutyStatus.message}
+                  </FormHelperText>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl id="image" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Image</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={value}
+                    isInvalid={errors.image !== undefined}
+                  />
+                </InputGroup>
+                {errors.image !== undefined && (
+                  <FormHelperText color={colors.error} fontSize="sm">
+                    {errors.image.message}
                   </FormHelperText>
                 )}
               </ModalFormControl>
