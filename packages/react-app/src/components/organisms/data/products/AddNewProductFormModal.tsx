@@ -20,6 +20,7 @@ import { css } from "@emotion/react";
 import React, { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 
+import createProduct from "../../../../api/data/products/createProduct";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
@@ -58,7 +59,9 @@ const AddNewProductFormModal = ({
   });
 
   // submit handler
-  const onSubmit = async (data: NewProductForm) => {};
+  const onSubmit = async (data: NewProductForm) => {
+    await createProduct(data);
+  };
 
   // close modal handler
   const closeModal = () => onClose();

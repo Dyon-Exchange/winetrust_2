@@ -1,5 +1,5 @@
-import { Context } from "koa";
-import Router from "koa-joi-router";
+import { Context, DefaultState } from "koa";
+import Router from "koa-router";
 
 import AdminRouter from "./admin";
 import ClientRouter from "./client";
@@ -7,7 +7,7 @@ import ProductRouter from "./product";
 import TokenRouter from "./token";
 import WarehouseRouter from "./warehouse";
 
-const router = Router();
+const router = new Router<DefaultState, Context>();
 
 router.get("/", async (ctx: Context) => {
   ctx.body =

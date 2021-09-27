@@ -1,23 +1,17 @@
+import Multer from "@koa/multer";
 import Router from "koa-joi-router";
 
 import { authRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
 
-const { Joi } = Router;
-
 const router = Router();
 authRequired(router);
+
+const multer = Multer();
+
 router.prefix("/product");
 
-router.route({
-  method: "post",
-  path: "/create",
-  validate: {
-    body: {},
-    type: "json",
-  },
-  handler: createProduct,
-});
+router.post("/create", multer.single("product-image"), createProduct);
 
 export default router;
