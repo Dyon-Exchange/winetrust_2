@@ -17,8 +17,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
+import createWarehouse from "../../../../api/data/warehouses/createWarehouse";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
-import createWarehouse from "../../../../requests/data/warehouses/createWarehouse";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";

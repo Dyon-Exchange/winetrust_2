@@ -22,8 +22,8 @@ import { useForm } from "react-hook-form";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
 import isMobilePhone from "validator/lib/isMobilePhone";
 
+import createClient from "../../../../api/data/clients/createClient";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
-import createClient from "../../../../requests/data/clients/createClient";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
