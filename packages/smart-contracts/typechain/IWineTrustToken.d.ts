@@ -21,14 +21,23 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface IWineTrustTokenInterface extends ethers.utils.Interface {
   functions: {
+    "contractURI()": FunctionFragment;
     "mintNFT(address,string)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "contractURI",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "mintNFT",
     values: [string, string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "contractURI",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
 
   events: {};
@@ -78,12 +87,16 @@ export class IWineTrustToken extends BaseContract {
   interface: IWineTrustTokenInterface;
 
   functions: {
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
+
     mintNFT(
       account: string,
       tokenMetadataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
+
+  contractURI(overrides?: CallOverrides): Promise<string>;
 
   mintNFT(
     account: string,
@@ -92,6 +105,8 @@ export class IWineTrustToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    contractURI(overrides?: CallOverrides): Promise<string>;
+
     mintNFT(
       account: string,
       tokenMetadataHash: string,
@@ -102,6 +117,8 @@ export class IWineTrustToken extends BaseContract {
   filters: {};
 
   estimateGas: {
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     mintNFT(
       account: string,
       tokenMetadataHash: string,
@@ -110,6 +127,8 @@ export class IWineTrustToken extends BaseContract {
   };
 
   populateTransaction: {
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     mintNFT(
       account: string,
       tokenMetadataHash: string,

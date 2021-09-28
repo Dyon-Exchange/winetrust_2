@@ -13,6 +13,7 @@ describe("WineTrust token contract", () => {
   let addr1: SignerWithAddress;
   let addr2: SignerWithAddress;
   let addrs: SignerWithAddress[];
+  let contractMetadata: string;
   let tokenMetadata: string;
 
   beforeEach(async () => {
@@ -20,8 +21,11 @@ describe("WineTrust token contract", () => {
     Token = await ethers.getContractFactory("WineTrustToken");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
+    // Mock a contract level metadata hash string
+    contractMetadata = "ipfs://QmQ3Ko2f7wNGRizYrQoiWpCTPQBRt3b6xYMXim9yXBLUr6";
+
     // Mock a token metadata hash string
-    tokenMetadata = "QmPmN2Q4AbetR3oDuDKbtCFMyinkJwE1dr72HeFFAgzUbG";
+    tokenMetadata = "ipfs://QmS3G61RbRmF2ENq6HtvoeA3QuswmFE1P8SP5pPB3WBMZF";
 
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens once its transaction has been
@@ -32,6 +36,10 @@ describe("WineTrust token contract", () => {
   describe("Deployment", () => {
     it("Should initiate the token id count to 0", async () => {
       expect(await hardhatToken.tokenIdCount()).to.equal(0);
+    });
+
+    it("Should initiate the contract level uri to the correct hash", async () => {
+      expect(await hardhatToken.contractURI()).to.equal(contractMetadata);
     });
   });
 
