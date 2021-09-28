@@ -12,6 +12,7 @@ dotEnvConfig();
 const {
   ALCHEMY_API_URL_GOERLI,
   ALCHEMY_API_URL_RINKEBY,
+  ALCHEMY_API_URL_POLYGON_MUMBAI,
   MNEMONIC,
   REPORT_GAS,
 } = process.env;
@@ -52,6 +53,14 @@ const config: HardhatUserConfig = {
     rinkeby: {
       url: ALCHEMY_API_URL_RINKEBY || "",
       accounts: { mnemonic: MNEMONIC || "" },
+    },
+    mumbai_testnet: {
+      url: ALCHEMY_API_URL_POLYGON_MUMBAI || "",
+      accounts: { mnemonic: MNEMONIC || "" },
+      gas: 21000000,
+      gasPrice: 80000000000,
+      chainId: 80001,
+      timeout: 100000,
     },
     coverage: {
       url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
