@@ -15,8 +15,11 @@ import {
   NumberInput,
   NumberInputField,
   Select,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
+import { AxiosError } from "axios";
 import React, { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 
@@ -25,6 +28,7 @@ import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
+import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
 
 interface AddNewProductFormModalProps {
   isOpen: boolean;
@@ -37,6 +41,7 @@ const AddNewProductFormModal = ({
 }: AddNewProductFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
+  const toast = useToast();
 
   // react hook form
   const {
@@ -60,11 +65,42 @@ const AddNewProductFormModal = ({
 
   // submit handler
   const onSubmit = async (data: NewProductForm) => {
-    await createProduct(data);
+    try {
+      await createProduct(data);
+      toast({
+        title: "Product created.",
+        description: "Product created successfully.",
+        status: "success",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error creating product.",
+        description:
+          (error as AxiosError).response?.data ||
+          "There was an error trying to create this product, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
+  // state for the confirm cancel modal
+  const {
+    isOpen: isConfirmCancelModalOpen,
+    onOpen: openConfirmCancel,
+    onClose: closeConfirmCancel,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
+
   // close modal handler
-  const closeModal = () => onClose();
+  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
   return (
     <>
       <Modal
@@ -248,11 +284,16 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
             </ModalBody>
             <ModalFooter>
-              <ModalFooterButton colorScheme="blue" type="submit">
+              <ModalFooterButton
+                colorScheme="blue"
+                isLoading={isSubmitting}
+                type="submit"
+              >
                 Add
               </ModalFooterButton>
               <ModalFooterButton
                 colorScheme="blue"
+                disabled={isSubmitting}
                 onClick={closeModal}
                 variant="outline"
               >
@@ -262,6 +303,11 @@ const AddNewProductFormModal = ({
           </ModalContent>
         </form>
       </Modal>
+      <ConfirmCancelChangesModal
+        isOpen={isConfirmCancelModalOpen}
+        onClose={closeConfirmCancel}
+        onConfirm={onClose}
+      />
     </>
   );
 };
