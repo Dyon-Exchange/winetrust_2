@@ -10,6 +10,7 @@
     "coverage": "npx hardhat coverage",
     "deploy:local": "npx hardhat --network hardhat deploy --export ./lib/export.json",
     "deploy:goerli": "npx hardhat --network goerli deploy --export ./lib/export.json",
+    "deploy:rinkeby": "npx hardhat --network rinkeby deploy --export ./lib/export.json",
     "deploy:mainnet": "npx hardhat --network mainnet deploy --export ./lib/export.json",
     "test": "npx hardhat test --show-stack-traces"
   },
