@@ -21,7 +21,7 @@ describe("WineTrust token contract", () => {
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
     // Mock a token metadata hash string
-    tokenMetadata = "QmPnMreCbzNfrS1HKHkXX5WSn9dgRU5Gh6M7jbCgpjVfKV";
+    tokenMetadata = "QmPmN2Q4AbetR3oDuDKbtCFMyinkJwE1dr72HeFFAgzUbG";
 
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens once its transaction has been
@@ -100,11 +100,11 @@ describe("WineTrust token contract", () => {
   describe("Get token metadata", () => {
     it("Returns metadata hash for an existing token", async () => {
       await hardhatToken.mintNFT(owner.address, tokenMetadata);
-      expect(await hardhatToken.getTokenMetadata(1)).to.equal(tokenMetadata);
+      expect(await hardhatToken.uri(1)).to.equal(tokenMetadata);
     });
 
     it("Returns empty string for a non existent token", async () => {
-      expect(await hardhatToken.getTokenMetadata(1)).to.equal("");
+      expect(await hardhatToken.uri(1)).to.equal("");
     });
   });
 });

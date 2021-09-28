@@ -6,6 +6,4 @@ interface IWineTrustToken {
     /* FUNCTIONS */
     function mintNFT(address account, string calldata tokenMetadataHash)
         external;
-
-    function getTokenMetadata(uint256 id) external view returns (string memory);
 }

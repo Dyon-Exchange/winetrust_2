@@ -21,23 +21,14 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface IWineTrustTokenInterface extends ethers.utils.Interface {
   functions: {
-    "getTokenMetadata(uint256)": FunctionFragment;
     "mintNFT(address,string)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "getTokenMetadata",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "mintNFT",
     values: [string, string]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "getTokenMetadata",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
 
   events: {};
@@ -87,22 +78,12 @@ export class IWineTrustToken extends BaseContract {
   interface: IWineTrustTokenInterface;
 
   functions: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  getTokenMetadata(
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
 
   mintNFT(
     account: string,
@@ -111,11 +92,6 @@ export class IWineTrustToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
@@ -126,11 +102,6 @@ export class IWineTrustToken extends BaseContract {
   filters: {};
 
   estimateGas: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
@@ -139,11 +110,6 @@ export class IWineTrustToken extends BaseContract {
   };
 
   populateTransaction: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,

@@ -106,13 +106,15 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
     }
 
     /**
-     * @notice Function to return a token's metadata hash string
+     * @notice Override the existing ERC1155 uri function to return to return a token's metadata
+     * hash string from the tokens mapping.
      * @param id token id of the token whose metadata will be returned
      * @return string hash of the token's metadata
      */
-    function getTokenMetadata(uint256 id)
-        external
+    function uri(uint256 id)
+        public
         view
+        virtual
         override
         returns (string memory)
     {
