@@ -13,20 +13,49 @@ export default async (ctx: Context) => {
     {
       name: "Wine",
       description: "Rare bottle of wine",
-      image: "www.image.com",
+      image: "https://cdn.chateau.com/images/labels/chateau-margaux.jpg",
       background_color: "#FF0000",
-      attributes: {
-        sku_code: "123456",
-        id_number: "123456",
-        year: "1609",
-        region: "Eastern Europe",
-        sub_region: "",
-        sub_sub_region: "",
-        pack_size: "big",
-        duty_status: "yes",
-        warehouse_id: "123456",
-        condition_report: "www.condition.com",
-      },
+      initial_condition_report:
+        "https://cdn.shopify.com/s/files/1/0947/5526/products/2000cissac_500x.jpg?v=1624116754",
+      external_url: "https://winetrust.vercel.app",
+      attributes: [
+        {
+          trait_type: "SKU Code",
+          value: "123456",
+        },
+        {
+          trait_type: "ID Number",
+          value: "123456",
+        },
+        {
+          trait_type: "Year",
+          value: "1609",
+        },
+        {
+          trait_type: "Region",
+          value: "Eastern Europe",
+        },
+        {
+          trait_type: "Sub-Region",
+          value: "",
+        },
+        {
+          trait_type: "Sub-Sub-Region",
+          value: "",
+        },
+        {
+          trait_type: "Pack Size",
+          value: "6x32cl",
+        },
+        {
+          trait_type: "Duty Status",
+          value: "In Bond",
+        },
+        {
+          trait_type: "Warehouse ID",
+          value: "123456",
+        },
+      ],
     },
     {
       headers: {
