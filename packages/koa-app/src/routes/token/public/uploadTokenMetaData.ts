@@ -13,19 +13,19 @@ export default async (ctx: Context) => {
     {
       name: "Wine",
       description: "Rare bottle of wine",
-      image: "https://cdn.chateau.com/images/labels/chateau-margaux.jpg",
-      background_color: "#FF0000",
+      image: "ipfs://QmSqvqPkDVtEJmsV3tK7dkoDo3QGKZjRJ74pE2bhZohkX1",
+      background_color: "800000",
       initial_condition_report:
         "https://cdn.shopify.com/s/files/1/0947/5526/products/2000cissac_500x.jpg?v=1624116754",
       external_url: "https://winetrust.vercel.app",
       attributes: [
         {
           trait_type: "SKU Code",
-          value: "123456",
+          value: "872365872152762946",
         },
         {
           trait_type: "ID Number",
-          value: "123456",
+          value: "000001",
         },
         {
           trait_type: "Year",
@@ -53,7 +53,7 @@ export default async (ctx: Context) => {
         },
         {
           trait_type: "Warehouse ID",
-          value: "123456",
+          value: "000001",
         },
       ],
     },
