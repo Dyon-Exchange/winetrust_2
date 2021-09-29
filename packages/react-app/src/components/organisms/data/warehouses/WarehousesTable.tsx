@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { GridColDef } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
+import { orderBy } from "lodash";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
@@ -94,7 +95,7 @@ const WarehousesTable = () => {
       disableColumnSelector
       hideFooter
       columns={warehouseTableColumns}
-      rows={warehousesData ?? []}
+      rows={orderBy(warehousesData, "createdAt", "desc") ?? []}
     />
   );
 };

@@ -11,4 +11,6 @@ interface Warehouse {
   address: string;
   contactName: string;
   contactEmail: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
