@@ -6,7 +6,7 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 
-const theme = extendTheme({
+const chakraTheme = extendTheme({
   config,
   colors: {
     primary: {
@@ -35,4 +35,4 @@ const theme = extendTheme({
   },
 });
 
-export default theme;
+export default chakraTheme;

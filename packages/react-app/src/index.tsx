@@ -1,12 +1,14 @@
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { MuiThemeProvider } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import App from "./App";
+import chakraTheme from "./chakraTheme";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { WalletContextProvider } from "./contexts/WalletContext";
-import theme from "./theme";
+import materialTheme from "./materialTheme";
 
 const AppThemeWrapper = () => {
   // initialise a new react query client object
@@ -17,12 +19,14 @@ const AppThemeWrapper = () => {
       <QueryClientProvider client={queryClient}>
         <WalletContextProvider>
           <AuthContextProvider>
-            <ChakraProvider theme={theme}>
-              <ColorModeScript
-                initialColorMode={theme.config.initialColorMode}
-              />
-              <App />
-            </ChakraProvider>
+            <MuiThemeProvider theme={materialTheme}>
+              <ChakraProvider theme={chakraTheme}>
+                <ColorModeScript
+                  initialColorMode={chakraTheme.config.initialColorMode}
+                />
+                <App />
+              </ChakraProvider>
+            </MuiThemeProvider>
           </AuthContextProvider>
         </WalletContextProvider>
       </QueryClientProvider>

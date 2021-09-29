@@ -6,6 +6,7 @@ interface NewWarehouseForm {
 }
 
 interface Warehouse {
+  _id: string;
   name: string;
   address: string;
   contactName: string;
