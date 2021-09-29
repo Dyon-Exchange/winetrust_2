@@ -4,3 +4,10 @@ interface NewWarehouseForm {
   contactName: string;
   contactEmail: string;
 }
+
+interface Warehouse {
+  name: string;
+  address: string;
+  contactName: string;
+  contactEmail: string;
+}
