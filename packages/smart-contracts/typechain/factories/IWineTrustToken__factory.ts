@@ -11,14 +11,8 @@ import type {
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-    ],
-    name: "getTokenMetadata",
+    inputs: [],
+    name: "contractURI",
     outputs: [
       {
         internalType: "string",
