@@ -11,7 +11,7 @@ import DataTableError from "../../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
 
 // column headers for the warehouses data table
-const warehouseTableColumns: GridColDef[] = [
+const warehousesTableColumns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, minWidth: 200 },
   { field: "address", headerName: "Address", flex: 2, minWidth: 400 },
   {
@@ -72,7 +72,7 @@ const WarehousesTable = () => {
       disableSelectionOnClick
       disableColumnSelector
       hideFooter
-      columns={warehouseTableColumns}
+      columns={warehousesTableColumns}
       rows={orderBy(warehousesData, "createdAt", "desc") ?? []}
     />
   );
