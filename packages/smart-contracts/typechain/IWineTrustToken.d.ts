@@ -21,13 +21,13 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface IWineTrustTokenInterface extends ethers.utils.Interface {
   functions: {
-    "getTokenMetadata(uint256)": FunctionFragment;
+    "contractURI()": FunctionFragment;
     "mintNFT(address,string)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "getTokenMetadata",
-    values: [BigNumberish]
+    functionFragment: "contractURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "mintNFT",
@@ -35,7 +35,7 @@ interface IWineTrustTokenInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getTokenMetadata",
+    functionFragment: "contractURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
@@ -87,10 +87,7 @@ export class IWineTrustToken extends BaseContract {
   interface: IWineTrustTokenInterface;
 
   functions: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     mintNFT(
       account: string,
@@ -99,10 +96,7 @@ export class IWineTrustToken extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  getTokenMetadata(
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  contractURI(overrides?: CallOverrides): Promise<string>;
 
   mintNFT(
     account: string,
@@ -111,10 +105,7 @@ export class IWineTrustToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    contractURI(overrides?: CallOverrides): Promise<string>;
 
     mintNFT(
       account: string,
@@ -126,10 +117,7 @@ export class IWineTrustToken extends BaseContract {
   filters: {};
 
   estimateGas: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintNFT(
       account: string,
@@ -139,10 +127,7 @@ export class IWineTrustToken extends BaseContract {
   };
 
   populateTransaction: {
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintNFT(
       account: string,
