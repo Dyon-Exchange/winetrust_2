@@ -16,6 +16,7 @@ import AddNewButton from "../../atoms/buttons/AddNewButton";
 import AddNewClientFormModal from "./clients/AddNewClientFormModal";
 import ClientsTable from "./clients/ClientsTable";
 import AddNewProductFormModal from "./products/AddNewProductFormModal";
+import ProductsTable from "./products/ProductsTable";
 import AddNewWarehouseFormModal from "./warehouses/AddNewWarehouseFormModal";
 import WarehousesTable from "./warehouses/WarehousesTable";
 
@@ -89,7 +90,9 @@ const WineTrustData = () => {
             <TabPanel>
               <ClientsTable />
             </TabPanel>
-            <TabPanel>Products</TabPanel>
+            <TabPanel>
+              <ProductsTable />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
