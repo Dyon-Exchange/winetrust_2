@@ -28,10 +28,11 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "burn(address,uint256,uint256)": FunctionFragment;
     "burnBatch(address,uint256[],uint256[])": FunctionFragment;
+    "contractLevelURI()": FunctionFragment;
+    "contractURI()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getRoleMember(bytes32,uint256)": FunctionFragment;
     "getRoleMemberCount(bytes32)": FunctionFragment;
-    "getTokenMetadata(uint256)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
@@ -81,6 +82,14 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
     values: [string, BigNumberish[], BigNumberish[]]
   ): string;
   encodeFunctionData(
+    functionFragment: "contractLevelURI",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractURI",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getRoleAdmin",
     values: [BytesLike]
   ): string;
@@ -91,10 +100,6 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getRoleMemberCount",
     values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTokenMetadata",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
@@ -177,6 +182,14 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burnBatch", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "contractLevelURI",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractURI",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getRoleAdmin",
     data: BytesLike
   ): Result;
@@ -186,10 +199,6 @@ interface WineTrustTokenInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoleMemberCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTokenMetadata",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
@@ -331,6 +340,10 @@ export class WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    contractLevelURI(overrides?: CallOverrides): Promise<[string]>;
+
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
+
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     getRoleMember(
@@ -343,11 +356,6 @@ export class WineTrustToken extends BaseContract {
       role: BytesLike,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
-
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
 
     grantRole(
       role: BytesLike,
@@ -444,7 +452,7 @@ export class WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -479,6 +487,10 @@ export class WineTrustToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  contractLevelURI(overrides?: CallOverrides): Promise<string>;
+
+  contractURI(overrides?: CallOverrides): Promise<string>;
+
   getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   getRoleMember(
@@ -491,11 +503,6 @@ export class WineTrustToken extends BaseContract {
     role: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
-
-  getTokenMetadata(
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
 
   grantRole(
     role: BytesLike,
@@ -592,7 +599,7 @@ export class WineTrustToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -627,6 +634,10 @@ export class WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    contractLevelURI(overrides?: CallOverrides): Promise<string>;
+
+    contractURI(overrides?: CallOverrides): Promise<string>;
+
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     getRoleMember(
@@ -639,11 +650,6 @@ export class WineTrustToken extends BaseContract {
       role: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getTokenMetadata(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     grantRole(
       role: BytesLike,
@@ -736,7 +742,7 @@ export class WineTrustToken extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -853,6 +859,10 @@ export class WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    contractLevelURI(overrides?: CallOverrides): Promise<BigNumber>;
+
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRoleAdmin(
       role: BytesLike,
       overrides?: CallOverrides
@@ -866,11 +876,6 @@ export class WineTrustToken extends BaseContract {
 
     getRoleMemberCount(
       role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getTokenMetadata(
-      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -969,7 +974,7 @@ export class WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1007,6 +1012,10 @@ export class WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    contractLevelURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getRoleAdmin(
       role: BytesLike,
       overrides?: CallOverrides
@@ -1020,11 +1029,6 @@ export class WineTrustToken extends BaseContract {
 
     getRoleMemberCount(
       role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getTokenMetadata(
-      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1127,7 +1131,7 @@ export class WineTrustToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     uri(
-      arg0: BigNumberish,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

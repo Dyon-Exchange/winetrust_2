@@ -33,3 +33,13 @@ deploy_backend_main:
         - packages/koa-app/**/*
   script:
     - gcloud app deploy --quiet --project $PROJECT_ID_PRODUCTION
+
+# merge request deployment
+deploy_backend_merge_request:
+  extends: .deploy_backend
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - packages/koa-app/**/*
+  script:
+    - gcloud app deploy --quiet --project $PROJECT_ID_PRODUCTION  --no-promote --version $CI_COMMIT_SHA

@@ -20,6 +20,11 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
      */
     uint256 public tokenIdCount;
 
+    /**
+     * @notice Variable to store the contract level metadata uri
+     */
+    string public contractLevelURI;
+
     /* FUNCTIONS */
     /**
      * @notice Initialises the contract and sets token id count to 0
@@ -27,6 +32,18 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
     constructor() ERC1155PresetMinterPauser("") {
         // Initialise the token id count to 0
         tokenIdCount = 0;
+
+        // Initialise the contract level metadata uri
+        contractLevelURI = "ipfs://QmQ3Ko2f7wNGRizYrQoiWpCTPQBRt3b6xYMXim9yXBLUr6";
+    }
+
+    /**
+     * @notice Function to return the contract level metadata uri as defined in the
+     * opensea docs: https://docs.opensea.io/docs/contract-level-metadata
+     * @return string hash of the contract's metadata
+     */
+    function contractURI() external view override returns (string memory) {
+        return contractLevelURI;
     }
 
     /**
@@ -106,13 +123,15 @@ contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
     }
 
     /**
-     * @notice Function to return a token's metadata hash string
+     * @notice Override the existing ERC1155 uri function to return to return a token's metadata
+     * hash string from the tokens mapping.
      * @param id token id of the token whose metadata will be returned
      * @return string hash of the token's metadata
      */
-    function getTokenMetadata(uint256 id)
-        external
+    function uri(uint256 id)
+        public
         view
+        virtual
         override
         returns (string memory)
     {
