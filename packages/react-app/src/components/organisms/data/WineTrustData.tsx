@@ -14,6 +14,7 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 
 import AddNewClientFormModal from "./clients/AddNewClientFormModal";
+import ClientsTable from "./clients/ClientsTable";
 import AddNewProductFormModal from "./products/AddNewProductFormModal";
 import AddNewWarehouseFormModal from "./warehouses/AddNewWarehouseFormModal";
 import WarehousesTable from "./warehouses/WarehousesTable";
@@ -71,7 +72,7 @@ const WineTrustData = () => {
         m="20px auto"
         maxW="80%"
       >
-        <Tabs index={tabIndex} onChange={handleTabChange}>
+        <Tabs index={tabIndex} isLazy onChange={handleTabChange}>
           <HStack justifyContent="space-between" p="10px 20px" w="100%">
             <TabList>
               <Tab>Warehouses</Tab>
@@ -85,7 +86,9 @@ const WineTrustData = () => {
             <TabPanel>
               <WarehousesTable />
             </TabPanel>
-            <TabPanel>Clients</TabPanel>
+            <TabPanel>
+              <ClientsTable />
+            </TabPanel>
             <TabPanel>Products</TabPanel>
           </TabPanels>
         </Tabs>

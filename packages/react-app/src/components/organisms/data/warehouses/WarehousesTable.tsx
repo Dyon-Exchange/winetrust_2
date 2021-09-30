@@ -1,11 +1,4 @@
-import {
-  Button,
-  Center,
-  Spinner,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, Stack, Text, useToast } from "@chakra-ui/react";
 import { GridColDef } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -13,8 +6,8 @@ import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import getWarehouses from "../../../../api/data/warehouses/getWarehouses";
-import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import StyledDataGrid from "../../../atoms/tables/StyledDataGrid";
+import DataTableSpinner from "../../../molecules/progressIndicators/DataTableSpinner";
 
 // column headers for the warehouses data table
 const warehouseTableColumns: GridColDef[] = [
@@ -35,10 +28,9 @@ const warehouseTableColumns: GridColDef[] = [
 ];
 
 const WarehousesTable = () => {
-  const colors = useThemeColors();
   const toast = useToast();
 
-  //  query for warehouse data
+  //  query for warehouses data
   const {
     data: warehousesData,
     isLoading: warehousesDataIsLoading,
@@ -63,12 +55,7 @@ const WarehousesTable = () => {
     }
   }, [toast, warehousesDataError, warehousesDataIsError]);
 
-  if (warehousesDataIsLoading)
-    return (
-      <Center>
-        <Spinner color={colors.primary} />
-      </Center>
-    );
+  if (warehousesDataIsLoading) return <DataTableSpinner />;
 
   if (warehousesDataIsError)
     return (

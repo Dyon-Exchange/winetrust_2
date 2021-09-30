@@ -28,7 +28,7 @@ import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewProductFormModalProps {
   isOpen: boolean;

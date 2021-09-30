@@ -26,7 +26,7 @@ import createClient from "../../../../api/data/clients/createClient";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewClientFormModalProps {
   isOpen: boolean;

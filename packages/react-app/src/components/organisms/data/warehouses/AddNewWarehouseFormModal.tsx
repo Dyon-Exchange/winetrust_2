@@ -22,7 +22,7 @@ import createWarehouse from "../../../../api/data/warehouses/createWarehouse";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewWareHouseFormModalProps {
   isOpen: boolean;
