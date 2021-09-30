@@ -1,4 +1,4 @@
-import { Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { GridColDef } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -7,7 +7,8 @@ import { useQuery } from "react-query";
 
 import getWarehouses from "../../../../api/data/warehouses/getWarehouses";
 import StyledDataGrid from "../../../atoms/tables/StyledDataGrid";
-import DataTableSpinner from "../../../molecules/progressIndicators/DataTableSpinner";
+import DataTableError from "../../../molecules/dataTables/DataTableError";
+import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
 
 // column headers for the warehouses data table
 const warehouseTableColumns: GridColDef[] = [
@@ -59,20 +60,10 @@ const WarehousesTable = () => {
 
   if (warehousesDataIsError)
     return (
-      <Stack alignItems="center">
-        <Text textAlign="center">
-          There was an error fetching the warehouses data, try again?
-        </Text>
-        <Button
-          colorScheme="blue"
-          onClick={() => refetchWarehousesData()}
-          size="sm"
-          variant="link"
-          w="100px"
-        >
-          Refresh
-        </Button>
-      </Stack>
+      <DataTableError
+        message="There was an error fetching the warehouses data, try again?"
+        refetch={() => refetchWarehousesData()}
+      />
     );
 
   return (
