@@ -11,7 +11,13 @@ import {
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
 import { ClientClass } from "./Client";
+import { WarehouseClass } from "./Warehouse";
 
+enum PreAdviceState {
+  DueIn = "Due In",
+  PartLanded = "Part Landed",
+  Landed = "Landed",
+}
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -19,11 +25,17 @@ import { ClientClass } from "./Client";
   },
 })
 export class PreAdviceClass extends TimeStamps {
-  @prop({ required: true, unique: true })
-  public preAdviceId: string;
+  @prop({ required: true, ref: () => ClientClass })
+  public owner: Ref<ClientClass>;
 
-  @prop({ required: true, ref: "ClientClass" })
-  public transferrer: Ref<ClientClass>;
+  @prop({ required: true, ref: () => WarehouseClass })
+  public transferringWarehouse: Ref<WarehouseClass>;
+
+  @prop({ required: true, ref: () => WarehouseClass })
+  public arrivalWarehouse: Ref<WarehouseClass>;
+
+  @prop({ enum: PreAdviceState, default: PreAdviceState.DueIn })
+  public state: PreAdviceState;
 }
 
 export default getModelForClass(PreAdviceClass);

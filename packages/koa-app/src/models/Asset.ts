@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /**
  * Asset model, the individual wine/token asset which is a type of product
  */
@@ -10,10 +11,17 @@ import {
 } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
-import { ClientClass } from "./Client";
 import { PreAdviceClass } from "./PreAdvice";
 import { ProductClass } from "./Product";
-import { WarehouseClass } from "./Warehouse";
+
+// cost class, will not be turned into a model
+class Cost {
+  @prop({ required: true })
+  public currency: string;
+
+  @prop({ required: true })
+  public amount: number;
+}
 
 enum AssetState {
   DueIn = "Due In",
@@ -28,23 +36,20 @@ enum AssetState {
   },
 })
 export class AssetClass extends TimeStamps {
-  @prop({ required: true, unique: true })
-  public assetId: string;
-
-  @prop({ required: true, ref: "PreAdviceClass" })
+  @prop({ required: true, ref: () => PreAdviceClass })
   public preAdvice: Ref<PreAdviceClass>;
 
-  @prop({ required: true, ref: "ProductClass" })
+  @prop({ required: true, ref: () => ProductClass })
   public product: Ref<ProductClass>;
 
-  @prop({ required: true, ref: "ClientClass" })
-  public owner: Ref<ClientClass>;
+  @prop({ required: true })
+  public cost: Cost;
 
-  @prop({ required: true, ref: "WarehouseClass" })
-  public warehouse: Ref<WarehouseClass>;
+  @prop({ required: true })
+  public expectedArrivalDate: Date;
 
   @prop({ enum: AssetState, default: AssetState.DueIn })
-  public state?: AssetState;
+  public state: AssetState;
 }
 
 export default getModelForClass(AssetClass);
