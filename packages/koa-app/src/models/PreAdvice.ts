@@ -2,9 +2,11 @@
  * Pre advice model, invoice like model which is used to create new assets
  */
 
+import { AutoIncrementID } from "@typegoose/auto-increment";
 import {
   getModelForClass,
   modelOptions,
+  plugin,
   prop,
   Ref,
 } from "@typegoose/typegoose";
@@ -18,6 +20,8 @@ enum PreAdviceState {
   PartLanded = "Part Landed",
   Landed = "Landed",
 }
+
+@plugin(AutoIncrementID, { field: "preAdviceId", startAt: 1 })
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -25,6 +29,9 @@ enum PreAdviceState {
   },
 })
 export class PreAdviceClass extends TimeStamps {
+  @prop()
+  public preAdviceId: number;
+
   @prop({ required: true, ref: () => ClientClass })
   public owner: Ref<ClientClass>;
 

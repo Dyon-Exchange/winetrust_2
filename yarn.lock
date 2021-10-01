@@ -4469,6 +4469,14 @@
   dependencies:
     fs-extra "^9.1.0"
 
+"@typegoose/auto-increment@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@typegoose/auto-increment/-/auto-increment-1.0.0.tgz#150430d04cd29bdc1ceacc485cf6ef9e29c2d478"
+  integrity sha512-3R2kWcxlmrhhzGcFwdkSnsQPBMylWLPMu7vv0CbC+CKsQ1dK9DJDkliCEqf/dLANLS0FKnVOdd0ZvTWjlPCJTw==
+  dependencies:
+    loglevel "^1.7.0"
+    tslib "^2.0.3"
+
 "@typegoose/typegoose@^8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@typegoose/typegoose/-/typegoose-8.2.0.tgz#d6e1a8303a68ea0ed3cb9a96fb1b6f6395f6a06d"
