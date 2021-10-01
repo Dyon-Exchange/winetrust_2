@@ -4,6 +4,6 @@ import { authRequired } from "../../../services/passport";
 
 const router = Router();
 authRequired(router);
-router.prefix("/token");
+router.prefix("/tokens");
 
 export default router;

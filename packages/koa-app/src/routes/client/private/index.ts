@@ -9,11 +9,11 @@ const { Joi } = Router;
 
 const router = Router();
 authRequired(router);
-router.prefix("/client");
+router.prefix("/clients");
 
 router.route({
   method: "post",
-  path: "/create",
+  path: "/",
   validate: {
     body: {
       firstName: Joi.string().required(),
@@ -31,7 +31,7 @@ router.route({
 
 router.route({
   method: "get",
-  path: "/get",
+  path: "/",
   handler: getClients,
 });
 

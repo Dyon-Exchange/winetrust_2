@@ -11,13 +11,13 @@ authRequired(router);
 
 const multer = Multer();
 
-router.prefix("/product");
+router.prefix("/products");
 
-router.post("/create", multer.single("product-image"), createProduct);
+router.post("/", multer.single("product-image"), createProduct);
 
 router.route({
   method: "get",
-  path: "/get",
+  path: "/",
   handler: getProducts,
 });
 

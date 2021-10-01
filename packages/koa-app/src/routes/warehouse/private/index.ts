@@ -9,11 +9,11 @@ const { Joi } = Router;
 
 const router = Router();
 authRequired(router);
-router.prefix("/warehouse");
+router.prefix("/warehouses");
 
 router.route({
   method: "post",
-  path: "/create",
+  path: "/",
   validate: {
     body: {
       warehouseName: Joi.string().required(),
@@ -28,7 +28,7 @@ router.route({
 
 router.route({
   method: "get",
-  path: "/get",
+  path: "/",
   handler: getWarehouses,
 });
 

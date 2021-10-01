@@ -4,6 +4,6 @@ import { authRequired } from "../../../services/passport";
 
 const router = Router();
 authRequired(router);
-router.prefix("/admin");
+router.prefix("/admins");
 
 export default router;
