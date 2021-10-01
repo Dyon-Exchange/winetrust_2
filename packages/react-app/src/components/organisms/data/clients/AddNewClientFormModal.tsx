@@ -19,6 +19,7 @@ import { AxiosError } from "axios";
 import CountryData from "country-data";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
 import isMobilePhone from "validator/lib/isMobilePhone";
 
@@ -26,7 +27,7 @@ import createClient from "../../../../api/data/clients/createClient";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewClientFormModalProps {
   isOpen: boolean;
@@ -40,6 +41,7 @@ const AddNewClientFormModal = ({
   // get theme colors
   const colors = useThemeColors();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   // react hook form
   const {
@@ -51,7 +53,9 @@ const AddNewClientFormModal = ({
   // submit handler
   const onSubmit = async (data: NewClientForm) => {
     try {
+      // await creating the client and then invalidate the clients query data
       await createClient(data);
+      queryClient.invalidateQueries("clients");
       toast({
         title: "Client created.",
         description: "Client created successfully.",

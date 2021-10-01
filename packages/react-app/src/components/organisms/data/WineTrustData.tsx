@@ -3,6 +3,8 @@ import {
   HStack,
   Tab,
   TabList,
+  TabPanel,
+  TabPanels,
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -12,8 +14,11 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 
 import AddNewClientFormModal from "./clients/AddNewClientFormModal";
+import ClientsTable from "./clients/ClientsTable";
 import AddNewProductFormModal from "./products/AddNewProductFormModal";
+import ProductsTable from "./products/ProductsTable";
 import AddNewWarehouseFormModal from "./warehouses/AddNewWarehouseFormModal";
+import WarehousesTable from "./warehouses/WarehousesTable";
 
 const WineTrustData = () => {
   const colors = useThemeColors();
@@ -61,8 +66,14 @@ const WineTrustData = () => {
 
   return (
     <>
-      <Box bg={colors.secondary} boxShadow="sm" flex="1">
-        <Tabs index={tabIndex} onChange={handleTabChange}>
+      <Box
+        bg={colors.secondary}
+        boxShadow="sm"
+        flex="1"
+        m="20px auto"
+        maxW="80%"
+      >
+        <Tabs index={tabIndex} isLazy onChange={handleTabChange}>
           <HStack justifyContent="space-between" p="10px 20px" w="100%">
             <TabList>
               <Tab>Warehouses</Tab>
@@ -71,6 +82,18 @@ const WineTrustData = () => {
             </TabList>
             <AddNewButton onClick={openAddNew} />
           </HStack>
+
+          <TabPanels>
+            <TabPanel>
+              <WarehousesTable />
+            </TabPanel>
+            <TabPanel>
+              <ClientsTable />
+            </TabPanel>
+            <TabPanel>
+              <ProductsTable />
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </Box>
 

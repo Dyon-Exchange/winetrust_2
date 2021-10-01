@@ -4,7 +4,7 @@ import React from "react";
 import WineTrustData from "../../components/organisms/data/WineTrustData";
 
 const Data = () => (
-  <Box display="flex" flexGrow={1} px="10%" py="20px" w="100%">
+  <Box display="flex" flexGrow={1} w="100%">
     <WineTrustData />
   </Box>
 );

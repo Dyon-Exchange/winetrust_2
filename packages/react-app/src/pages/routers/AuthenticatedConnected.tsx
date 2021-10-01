@@ -11,11 +11,12 @@ import Data from "../data/Data";
 // Authenticated and wallet connected routes
 const AuthenticatedConnected = () => {
   const width = useWindowWidth();
+  const showPreAdviceSidePanel = width > 700;
 
   return (
     <Box display="flex" flexGrow={1}>
       {/* Only show pre-advice side panel when window width is greater than 700 */}
-      {width > 700 && <PreAdviceSidePanel />}
+      {showPreAdviceSidePanel && <PreAdviceSidePanel />}
       <VStack flex="1">
         <TabNav />
         <Switch>

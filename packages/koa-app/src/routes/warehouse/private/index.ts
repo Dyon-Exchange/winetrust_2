@@ -3,6 +3,7 @@ import Router from "koa-joi-router";
 import { authRequired } from "../../../services/passport";
 
 import createWarehouse from "./createWarehouse";
+import getWarehouses from "./getWarehouses";
 
 const { Joi } = Router;
 
@@ -23,6 +24,12 @@ router.route({
     type: "json",
   },
   handler: createWarehouse,
+});
+
+router.route({
+  method: "get",
+  path: "/get",
+  handler: getWarehouses,
 });
 
 export default router;

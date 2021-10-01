@@ -22,13 +22,14 @@ import { css } from "@emotion/react";
 import { AxiosError } from "axios";
 import React, { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 
 import createProduct from "../../../../api/data/products/createProduct";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewProductFormModalProps {
   isOpen: boolean;
@@ -42,6 +43,7 @@ const AddNewProductFormModal = ({
   // get theme colors
   const colors = useThemeColors();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   // react hook form
   const {
@@ -66,7 +68,9 @@ const AddNewProductFormModal = ({
   // submit handler
   const onSubmit = async (data: NewProductForm) => {
     try {
+      // await creating the product and then invalidate the products query data
       await createProduct(data);
+      queryClient.invalidateQueries("products");
       toast({
         title: "Product created.",
         description: "Product created successfully.",

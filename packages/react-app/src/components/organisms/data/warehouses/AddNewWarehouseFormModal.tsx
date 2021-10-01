@@ -15,13 +15,14 @@ import {
 import { AxiosError } from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import isEmail from "validator/lib/isEmail";
 
 import createWarehouse from "../../../../api/data/warehouses/createWarehouse";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
-import ConfirmCancelChangesModal from "../../../molecules/Modals/ConfirmCancelChangesModal";
+import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
 
 interface AddNewWareHouseFormModalProps {
   isOpen: boolean;
@@ -35,6 +36,7 @@ const AddNewWarehouseFormModal = ({
   // get theme colors
   const colors = useThemeColors();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   // react hook form
   const {
@@ -46,7 +48,9 @@ const AddNewWarehouseFormModal = ({
   // submit handler
   const onSubmit = async (data: NewWarehouseForm) => {
     try {
+      // await creating the warehouse and then invalidate the warehouses query data
       await createWarehouse(data);
+      queryClient.invalidateQueries("warehouses");
       toast({
         title: "Warehouse created.",
         description: "Warehouse created successfully.",
