@@ -7,8 +7,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { AxiosError } from "axios";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
@@ -25,17 +27,37 @@ const AddNewPreAdviceFormModal = ({
   isOpen,
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
+  const toast = useToast();
+
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
 
   // data queries
-  const { data: clientsData, isFetching: clientsDataIsFetching } = useQuery(
-    ["clients-search", clientSearchQuery],
-    async () => {
-      const data = await searchClients(clientSearchQuery);
-      return data;
+  const {
+    data: clientsData,
+    error: clientsError,
+    isError: clientsIsError,
+    isFetching: clientsDataIsFetching,
+  } = useQuery(["clients-search", clientSearchQuery], async () => {
+    const data = await searchClients(clientSearchQuery);
+    return data;
+  });
+
+  // pop a toast for any of the search queries errors
+  useEffect(() => {
+    if (clientsIsError && clientsError) {
+      toast({
+        title: "Error searching for clients.",
+        description:
+          (clientsError as AxiosError).response?.data ||
+          "There was an error searching for clients, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-  );
+  }, [clientsError, clientsIsError, toast]);
 
   // close modal handler
   const closeModal = () => onClose();
