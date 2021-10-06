@@ -2,7 +2,6 @@
 import {
   FormErrorMessage,
   FormLabel,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -47,6 +46,10 @@ const AddNewPreAdviceFormModal = ({
   const [clientSearchQuery, setClientSearchQuery] = useState("");
   const [arrivalWarehouseSearchQuery, setArrivalWarehouseSearchQuery] =
     useState("");
+  const [
+    transferringWarehouseSearchQuery,
+    setTransferringWarehouseSearchQuery,
+  ] = useState("");
 
   // data queries
   const {
@@ -72,7 +75,20 @@ const AddNewPreAdviceFormModal = ({
     }
   );
 
-  // pop a toast for any of the search queries errors
+  const {
+    data: transferringWarehousesData,
+    error: transferringWarehousesError,
+    isError: transferringWarehousesIsError,
+    isFetching: transferringWarehousesIsFetching,
+  } = useQuery(
+    ["transferring-warehouses-search", transferringWarehouseSearchQuery],
+    async () => {
+      const data = await searchWarehouses(transferringWarehouseSearchQuery);
+      return data;
+    }
+  );
+
+  // pop a toast for any of the search query errors
   useEffect(() => {
     if (clientsIsError && clientsError) {
       toast({
@@ -89,11 +105,17 @@ const AddNewPreAdviceFormModal = ({
   }, [clientsError, clientsIsError, toast]);
 
   useEffect(() => {
-    if (arrivalWarehousesIsError && arrivalWarehousesError) {
+    if (
+      (arrivalWarehousesIsError && arrivalWarehousesError) ||
+      (transferringWarehousesIsError && transferringWarehousesError)
+    ) {
       toast({
         title: "Error searching for warehouses.",
         description:
-          (arrivalWarehousesError as AxiosError).response?.data ||
+          (
+            (arrivalWarehousesError as AxiosError) ||
+            (transferringWarehousesError as AxiosError)
+          ).response?.data ||
           "There was an error searching for warehouses, please try again later.",
         status: "error",
         position: "top-right",
@@ -101,12 +123,17 @@ const AddNewPreAdviceFormModal = ({
         isClosable: true,
       });
     }
-  }, [arrivalWarehousesError, arrivalWarehousesIsError, toast]);
+  }, [
+    arrivalWarehousesError,
+    arrivalWarehousesIsError,
+    toast,
+    transferringWarehousesError,
+    transferringWarehousesIsError,
+  ]);
 
   // react hook form
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors, isDirty, isSubmitting },
   } = useForm<NewPreAdviceForm>();
@@ -204,6 +231,48 @@ const AddNewPreAdviceFormModal = ({
                 <FormErrorMessage fontSize="sm">
                   {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
                   {(errors.arrivalWarehouse as any).message}
+                </FormErrorMessage>
+              )}
+            </ModalFormControl>
+
+            <ModalFormControl
+              isInvalid={errors.transferringWarehouse !== undefined}
+            >
+              <FormLabel fontSize="sm">Transferring warehouse</FormLabel>
+              <Controller
+                control={control}
+                name="transferringWarehouse"
+                rules={{ required: "Transferring warehouse is required." }}
+                render={({ field: { onChange } }) => (
+                  <StyledChakraReactSelect
+                    isLoading={transferringWarehousesIsFetching}
+                    placeholder="Search warehouse"
+                    onChange={(selectedWarehouse) => {
+                      const warehouse = (
+                        selectedWarehouse as SelectedWarehouseOption
+                      )?.value;
+                      if (warehouse) {
+                        onChange(warehouse);
+                      } else {
+                        onChange(undefined);
+                      }
+                    }}
+                    onInputChange={(search: string) =>
+                      setTransferringWarehouseSearchQuery(search)
+                    }
+                    options={transferringWarehousesData?.map(
+                      (warehouse: Warehouse) => ({
+                        value: warehouse,
+                        label: warehouse.name,
+                      })
+                    )}
+                  />
+                )}
+              />
+              {errors.transferringWarehouse !== undefined && (
+                <FormErrorMessage fontSize="sm">
+                  {/* typescript being buggy, thinks errors.transferringWarehouse is a warehouse type */}
+                  {(errors.transferringWarehouse as any).message}
                 </FormErrorMessage>
               )}
             </ModalFormControl>
