@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
@@ -20,6 +21,7 @@ import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
+import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
 
 interface SelectedClientOption {
   label: string;
@@ -141,157 +143,175 @@ const AddNewPreAdviceFormModal = ({
   // submit handler
   const onSubmit = (data: NewPreAdviceForm) => {};
 
+  // state for the confirm cancel modal
+  const {
+    isOpen: isConfirmCancelModalOpen,
+    onOpen: openConfirmCancel,
+    onClose: closeConfirmCancel,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
+
   // close modal handler
-  const closeModal = () => onClose();
+  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
 
   return (
-    <Modal
-      closeOnEsc={!isDirty}
-      closeOnOverlayClick={!isDirty}
-      isCentered
-      isOpen={isOpen}
-      onClose={closeModal}
-      size="xl"
-    >
-      <ModalOverlay />
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <ModalContent>
-          <ModalHeader>Add New Pre-Advice</ModalHeader>
-          <ModalBody alignSelf="center" w="80%">
-            <ModalFormControl isInvalid={errors.owner !== undefined}>
-              <FormLabel fontSize="sm">Owner</FormLabel>
-              <Controller
-                control={control}
-                name="owner"
-                rules={{ required: "Owner is required." }}
-                render={({ field: { onChange } }) => (
-                  <StyledChakraReactSelect
-                    isLoading={clientsDataIsFetching}
-                    placeholder="Search client"
-                    onChange={(selectedClient) => {
-                      const client = (selectedClient as SelectedClientOption)
-                        ?.value;
-                      if (client) {
-                        onChange(client);
-                      } else {
-                        onChange(undefined);
+    <>
+      <Modal
+        closeOnEsc={!isDirty}
+        closeOnOverlayClick={!isDirty}
+        isCentered
+        isOpen={isOpen}
+        onClose={closeModal}
+        size="xl"
+      >
+        <ModalOverlay />
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <ModalContent>
+            <ModalHeader>Add New Pre-Advice</ModalHeader>
+            <ModalBody alignSelf="center" w="80%">
+              <ModalFormControl isInvalid={errors.owner !== undefined}>
+                <FormLabel fontSize="sm">Owner</FormLabel>
+                <Controller
+                  control={control}
+                  name="owner"
+                  rules={{ required: "Owner is required." }}
+                  render={({ field: { onChange } }) => (
+                    <StyledChakraReactSelect
+                      isLoading={clientsDataIsFetching}
+                      placeholder="Search client"
+                      onChange={(selectedClient) => {
+                        const client = (selectedClient as SelectedClientOption)
+                          ?.value;
+                        if (client) {
+                          onChange(client);
+                        } else {
+                          onChange(undefined);
+                        }
+                      }}
+                      onInputChange={(search: string) =>
+                        setClientSearchQuery(search)
                       }
-                    }}
-                    onInputChange={(search: string) =>
-                      setClientSearchQuery(search)
-                    }
-                    options={clientsData?.map((client: Client) => ({
-                      value: client,
-                      label: `${client.firstName} ${client.lastName}`,
-                    }))}
-                  />
+                      options={clientsData?.map((client: Client) => ({
+                        value: client,
+                        label: `${client.firstName} ${client.lastName}`,
+                      }))}
+                    />
+                  )}
+                />
+                {errors.owner !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {/* typescript being buggy, thinks errors.owner is a client type */}
+                    {(errors.owner as any).message}
+                  </FormErrorMessage>
                 )}
-              />
-              {errors.owner !== undefined && (
-                <FormErrorMessage fontSize="sm">
-                  {/* typescript being buggy, thinks errors.owner is a client type */}
-                  {(errors.owner as any).message}
-                </FormErrorMessage>
-              )}
-            </ModalFormControl>
+              </ModalFormControl>
 
-            <ModalFormControl isInvalid={errors.arrivalWarehouse !== undefined}>
-              <FormLabel fontSize="sm">Arriving warehouse</FormLabel>
-              <Controller
-                control={control}
-                name="arrivalWarehouse"
-                rules={{ required: "Arrival warehouse is required." }}
-                render={({ field: { onChange } }) => (
-                  <StyledChakraReactSelect
-                    isLoading={arrivalWarehousesDataIsFetching}
-                    placeholder="Search warehouse"
-                    onChange={(selectedWarehouse) => {
-                      const warehouse = (
-                        selectedWarehouse as SelectedWarehouseOption
-                      )?.value;
-                      if (warehouse) {
-                        onChange(warehouse);
-                      } else {
-                        onChange(undefined);
+              <ModalFormControl
+                isInvalid={errors.arrivalWarehouse !== undefined}
+              >
+                <FormLabel fontSize="sm">Arriving warehouse</FormLabel>
+                <Controller
+                  control={control}
+                  name="arrivalWarehouse"
+                  rules={{ required: "Arrival warehouse is required." }}
+                  render={({ field: { onChange } }) => (
+                    <StyledChakraReactSelect
+                      isLoading={arrivalWarehousesDataIsFetching}
+                      placeholder="Search warehouse"
+                      onChange={(selectedWarehouse) => {
+                        const warehouse = (
+                          selectedWarehouse as SelectedWarehouseOption
+                        )?.value;
+                        if (warehouse) {
+                          onChange(warehouse);
+                        } else {
+                          onChange(undefined);
+                        }
+                      }}
+                      onInputChange={(search: string) =>
+                        setArrivalWarehouseSearchQuery(search)
                       }
-                    }}
-                    onInputChange={(search: string) =>
-                      setArrivalWarehouseSearchQuery(search)
-                    }
-                    options={arrivalWarehousesData?.map(
-                      (warehouse: Warehouse) => ({
-                        value: warehouse,
-                        label: warehouse.name,
-                      })
-                    )}
-                  />
+                      options={arrivalWarehousesData?.map(
+                        (warehouse: Warehouse) => ({
+                          value: warehouse,
+                          label: warehouse.name,
+                        })
+                      )}
+                    />
+                  )}
+                />
+                {errors.arrivalWarehouse !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
+                    {(errors.arrivalWarehouse as any).message}
+                  </FormErrorMessage>
                 )}
-              />
-              {errors.arrivalWarehouse !== undefined && (
-                <FormErrorMessage fontSize="sm">
-                  {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
-                  {(errors.arrivalWarehouse as any).message}
-                </FormErrorMessage>
-              )}
-            </ModalFormControl>
+              </ModalFormControl>
 
-            <ModalFormControl
-              isInvalid={errors.transferringWarehouse !== undefined}
-            >
-              <FormLabel fontSize="sm">Transferring warehouse</FormLabel>
-              <Controller
-                control={control}
-                name="transferringWarehouse"
-                rules={{ required: "Transferring warehouse is required." }}
-                render={({ field: { onChange } }) => (
-                  <StyledChakraReactSelect
-                    isLoading={transferringWarehousesIsFetching}
-                    placeholder="Search warehouse"
-                    onChange={(selectedWarehouse) => {
-                      const warehouse = (
-                        selectedWarehouse as SelectedWarehouseOption
-                      )?.value;
-                      if (warehouse) {
-                        onChange(warehouse);
-                      } else {
-                        onChange(undefined);
+              <ModalFormControl
+                isInvalid={errors.transferringWarehouse !== undefined}
+              >
+                <FormLabel fontSize="sm">Transferring warehouse</FormLabel>
+                <Controller
+                  control={control}
+                  name="transferringWarehouse"
+                  rules={{ required: "Transferring warehouse is required." }}
+                  render={({ field: { onChange } }) => (
+                    <StyledChakraReactSelect
+                      isLoading={transferringWarehousesIsFetching}
+                      placeholder="Search warehouse"
+                      onChange={(selectedWarehouse) => {
+                        const warehouse = (
+                          selectedWarehouse as SelectedWarehouseOption
+                        )?.value;
+                        if (warehouse) {
+                          onChange(warehouse);
+                        } else {
+                          onChange(undefined);
+                        }
+                      }}
+                      onInputChange={(search: string) =>
+                        setTransferringWarehouseSearchQuery(search)
                       }
-                    }}
-                    onInputChange={(search: string) =>
-                      setTransferringWarehouseSearchQuery(search)
-                    }
-                    options={transferringWarehousesData?.map(
-                      (warehouse: Warehouse) => ({
-                        value: warehouse,
-                        label: warehouse.name,
-                      })
-                    )}
-                  />
+                      options={transferringWarehousesData?.map(
+                        (warehouse: Warehouse) => ({
+                          value: warehouse,
+                          label: warehouse.name,
+                        })
+                      )}
+                    />
+                  )}
+                />
+                {errors.transferringWarehouse !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {/* typescript being buggy, thinks errors.transferringWarehouse is a warehouse type */}
+                    {(errors.transferringWarehouse as any).message}
+                  </FormErrorMessage>
                 )}
-              />
-              {errors.transferringWarehouse !== undefined && (
-                <FormErrorMessage fontSize="sm">
-                  {/* typescript being buggy, thinks errors.transferringWarehouse is a warehouse type */}
-                  {(errors.transferringWarehouse as any).message}
-                </FormErrorMessage>
-              )}
-            </ModalFormControl>
-          </ModalBody>
-          <ModalFooter>
-            <ModalFooterButton colorScheme="blue" type="submit">
-              Add
-            </ModalFooterButton>
-            <ModalFooterButton
-              colorScheme="blue"
-              onClick={closeModal}
-              variant="outline"
-            >
-              Cancel
-            </ModalFooterButton>
-          </ModalFooter>
-        </ModalContent>
-      </form>
-    </Modal>
+              </ModalFormControl>
+            </ModalBody>
+            <ModalFooter>
+              <ModalFooterButton colorScheme="blue" type="submit">
+                Add
+              </ModalFooterButton>
+              <ModalFooterButton
+                colorScheme="blue"
+                onClick={closeModal}
+                variant="outline"
+              >
+                Cancel
+              </ModalFooterButton>
+            </ModalFooter>
+          </ModalContent>
+        </form>
+      </Modal>
+      <ConfirmCancelChangesModal
+        isOpen={isConfirmCancelModalOpen}
+        onClose={closeConfirmCancel}
+        onConfirm={onClose}
+      />
+    </>
   );
 };
 
