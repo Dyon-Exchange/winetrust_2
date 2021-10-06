@@ -4,6 +4,7 @@ import { authRequired } from "../../../services/passport";
 
 import createWarehouse from "./createWarehouse";
 import getWarehouses from "./getWarehouses";
+import searchWarehouses from "./searchWarehouses";
 
 const { Joi } = Router;
 
@@ -30,6 +31,17 @@ router.route({
   method: "get",
   path: "/",
   handler: getWarehouses,
+});
+
+router.route({
+  method: "get",
+  path: "/search",
+  validate: {
+    query: {
+      name: Joi.string().required().allow(""),
+    },
+  },
+  handler: searchWarehouses,
 });
 
 export default router;
