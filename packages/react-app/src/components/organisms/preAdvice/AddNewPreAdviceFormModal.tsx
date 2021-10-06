@@ -8,9 +8,11 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { AsyncSelect } from "chakra-react-select";
-import React from "react";
+import { Select } from "chakra-react-select";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 
+import searchClients from "../../../api/data/clients/searchClients";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 
@@ -23,6 +25,18 @@ const AddNewPreAdviceFormModal = ({
   isOpen,
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
+  // states for search queries
+  const [clientSearchQuery, setClientSearchQuery] = useState("");
+
+  // data queries
+  const { data: clientsData, isFetching: clientsDataIsFetching } = useQuery(
+    ["clients-search", clientSearchQuery],
+    async () => {
+      const data = await searchClients(clientSearchQuery);
+      return data;
+    }
+  );
+
   // close modal handler
   const closeModal = () => onClose();
 
@@ -35,14 +49,27 @@ const AddNewPreAdviceFormModal = ({
           {/* Implement add new pre-advice form here... */}
           <ModalFormControl>
             <FormLabel fontSize="sm">Owner</FormLabel>
-            <AsyncSelect
+            <Select
+              backspaceRemovesValue
+              isClearable
+              openMenuOnClick={false}
+              openMenuOnFocus={false}
+              isLoading={clientsDataIsFetching}
               placeholder="Search client"
+              onInputChange={(search: string) => setClientSearchQuery(search)}
+              options={clientsData?.map((client: Client) => ({
+                value: client,
+                label: `${client.firstName} ${client.lastName}`,
+              }))}
               styles={{
                 input: () => ({
                   fontSize: "14px",
                 }),
                 placeholder: (base) => ({
                   ...base,
+                  fontSize: "14px",
+                }),
+                singleValue: () => ({
                   fontSize: "14px",
                 }),
               }}

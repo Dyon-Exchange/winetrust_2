@@ -12,6 +12,11 @@ interface SearchClientsRequest extends Request {
 export default async (ctx: ExtendedContext<SearchClientsRequest>) => {
   const searchName = ctx.request.query.name;
 
+  if (searchName === "") {
+    ctx.body = [];
+    return;
+  }
+
   ctx.body = await Client.find({
     $or: [
       { firstName: { $regex: searchName, $options: "i" } },

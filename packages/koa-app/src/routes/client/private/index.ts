@@ -41,7 +41,7 @@ router.route({
   path: "/search",
   validate: {
     query: {
-      name: Joi.string().required(),
+      name: Joi.string().required().allow(""),
     },
   },
   handler: searchClients,
