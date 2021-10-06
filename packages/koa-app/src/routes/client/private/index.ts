@@ -4,6 +4,7 @@ import { authRequired } from "../../../services/passport";
 
 import createClient from "./createClient";
 import getClients from "./getClients";
+import searchClients from "./searchClients";
 
 const { Joi } = Router;
 
@@ -33,6 +34,17 @@ router.route({
   method: "get",
   path: "/",
   handler: getClients,
+});
+
+router.route({
+  method: "get",
+  path: "/search",
+  validate: {
+    query: {
+      name: Joi.string().required(),
+    },
+  },
+  handler: searchClients,
 });
 
 export default router;
