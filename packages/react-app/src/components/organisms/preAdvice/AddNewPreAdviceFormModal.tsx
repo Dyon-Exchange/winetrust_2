@@ -18,10 +18,13 @@ import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
+import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
+
+import AddNewAssetFormModal from "./AddNewAssetFormModal";
 
 interface SelectedClientOption {
   label: string;
@@ -154,6 +157,15 @@ const AddNewPreAdviceFormModal = ({
 
   // close modal handler
   const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+
+  // state for the add new asset modal
+  const {
+    isOpen: isAddNewAssetOpen,
+    onOpen: openAddNewAsset,
+    onClose: closeAddNewAsset,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
 
   return (
     <>
@@ -290,6 +302,11 @@ const AddNewPreAdviceFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
+              <ModalFormControl>
+                <FormLabel fontSize="sm">Assets</FormLabel>
+                <AddNewButton onClick={openAddNewAsset} />
+              </ModalFormControl>
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton colorScheme="blue" type="submit">
@@ -306,11 +323,20 @@ const AddNewPreAdviceFormModal = ({
           </ModalContent>
         </form>
       </Modal>
+
       <ConfirmCancelChangesModal
         isOpen={isConfirmCancelModalOpen}
         onClose={closeConfirmCancel}
         onConfirm={onClose}
       />
+
+      {/* Add new asset modal form, only render when show state is true to reset hook form */}
+      {isAddNewAssetOpen && (
+        <AddNewAssetFormModal
+          isOpen={isAddNewAssetOpen}
+          onClose={closeAddNewAsset}
+        />
+      )}
     </>
   );
 };
