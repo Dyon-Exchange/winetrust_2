@@ -8,13 +8,13 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { Select } from "chakra-react-select";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
+import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
 
 interface AddNewPreAdviceFormModalProps {
   isOpen: boolean;
@@ -49,11 +49,7 @@ const AddNewPreAdviceFormModal = ({
           {/* Implement add new pre-advice form here... */}
           <ModalFormControl>
             <FormLabel fontSize="sm">Owner</FormLabel>
-            <Select
-              backspaceRemovesValue
-              isClearable
-              openMenuOnClick={false}
-              openMenuOnFocus={false}
+            <StyledChakraReactSelect
               isLoading={clientsDataIsFetching}
               placeholder="Search client"
               onInputChange={(search: string) => setClientSearchQuery(search)}
@@ -61,18 +57,6 @@ const AddNewPreAdviceFormModal = ({
                 value: client,
                 label: `${client.firstName} ${client.lastName}`,
               }))}
-              styles={{
-                input: () => ({
-                  fontSize: "14px",
-                }),
-                placeholder: (base) => ({
-                  ...base,
-                  fontSize: "14px",
-                }),
-                singleValue: () => ({
-                  fontSize: "14px",
-                }),
-              }}
             />
           </ModalFormControl>
           <ModalFormControl>
