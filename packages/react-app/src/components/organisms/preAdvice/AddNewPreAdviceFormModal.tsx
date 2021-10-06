@@ -17,6 +17,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
+import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
@@ -24,6 +25,11 @@ import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect"
 interface SelectedClientOption {
   label: string;
   value: Client;
+}
+
+interface SelectedWarehouseOption {
+  label: string;
+  value: Warehouse;
 }
 
 interface AddNewPreAdviceFormModalProps {
@@ -39,6 +45,8 @@ const AddNewPreAdviceFormModal = ({
 
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
+  const [arrivalWarehouseSearchQuery, setArrivalWarehouseSearchQuery] =
+    useState("");
 
   // data queries
   const {
@@ -50,6 +58,19 @@ const AddNewPreAdviceFormModal = ({
     const data = await searchClients(clientSearchQuery);
     return data;
   });
+
+  const {
+    data: arrivalWarehousesData,
+    error: arrivalWarehousesError,
+    isError: arrivalWarehousesIsError,
+    isFetching: arrivalWarehousesDataIsFetching,
+  } = useQuery(
+    ["arrival-warehouses-search", arrivalWarehouseSearchQuery],
+    async () => {
+      const data = await searchWarehouses(arrivalWarehouseSearchQuery);
+      return data;
+    }
+  );
 
   // pop a toast for any of the search queries errors
   useEffect(() => {
@@ -66,6 +87,21 @@ const AddNewPreAdviceFormModal = ({
       });
     }
   }, [clientsError, clientsIsError, toast]);
+
+  useEffect(() => {
+    if (arrivalWarehousesIsError && arrivalWarehousesError) {
+      toast({
+        title: "Error searching for warehouses.",
+        description:
+          (arrivalWarehousesError as AxiosError).response?.data ||
+          "There was an error searching for warehouses, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [arrivalWarehousesError, arrivalWarehousesIsError, toast]);
 
   // react hook form
   const {
@@ -131,9 +167,45 @@ const AddNewPreAdviceFormModal = ({
                 </FormErrorMessage>
               )}
             </ModalFormControl>
-            <ModalFormControl>
-              <FormLabel fontSize="sm">Test</FormLabel>
-              <Input fontSize="sm" placeholder="Placeholder" />
+
+            <ModalFormControl isInvalid={errors.arrivalWarehouse !== undefined}>
+              <FormLabel fontSize="sm">Arriving warehouse</FormLabel>
+              <Controller
+                control={control}
+                name="arrivalWarehouse"
+                rules={{ required: "Arrival warehouse is required." }}
+                render={({ field: { onChange } }) => (
+                  <StyledChakraReactSelect
+                    isLoading={arrivalWarehousesDataIsFetching}
+                    placeholder="Search warehouse"
+                    onChange={(selectedWarehouse) => {
+                      const warehouse = (
+                        selectedWarehouse as SelectedWarehouseOption
+                      )?.value;
+                      if (warehouse) {
+                        onChange(warehouse);
+                      } else {
+                        onChange(undefined);
+                      }
+                    }}
+                    onInputChange={(search: string) =>
+                      setArrivalWarehouseSearchQuery(search)
+                    }
+                    options={arrivalWarehousesData?.map(
+                      (warehouse: Warehouse) => ({
+                        value: warehouse,
+                        label: warehouse.name,
+                      })
+                    )}
+                  />
+                )}
+              />
+              {errors.arrivalWarehouse !== undefined && (
+                <FormErrorMessage fontSize="sm">
+                  {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
+                  {(errors.arrivalWarehouse as any).message}
+                </FormErrorMessage>
+              )}
             </ModalFormControl>
           </ModalBody>
           <ModalFooter>
