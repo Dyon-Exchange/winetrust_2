@@ -5,12 +5,12 @@ import ExtendedContext from "../../../types/koa/ExtendedContext";
 
 interface SearchProductsRequest extends Request {
   query: {
-    productName: string;
+    ["product-name"]: string;
   };
 }
 
 export default async (ctx: ExtendedContext<SearchProductsRequest>) => {
-  const searchName = ctx.request.query.productName;
+  const searchName = ctx.request.query["product-name"];
 
   if (searchName === "") {
     ctx.body = [];
