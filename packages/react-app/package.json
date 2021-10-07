@@ -31,6 +31,7 @@
     "chakra-react-select": "^1.2.2",
     "country-data": "^0.0.31",
     "customize-cra": "^1.0.0",
+    "dayjs": "^1.10.7",
     "eslint-plugin-tsc": "^2.0.0",
     "ethers": "^5.4.7",
     "framer-motion": "^4",

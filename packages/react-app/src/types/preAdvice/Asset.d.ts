@@ -1,6 +1,6 @@
 interface NewAssetForm {
   product: Product;
-  costPrice: Number;
-  expectedArrivalDate: Date;
-  quantity: Number;
+  costPrice: string;
+  expectedArrivalDate: string;
+  quantity: string;
 }
