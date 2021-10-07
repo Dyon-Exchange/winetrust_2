@@ -13,17 +13,27 @@ import {
   ModalOverlay,
   NumberInput,
   NumberInputField,
+  useToast,
 } from "@chakra-ui/react";
+import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 
+import searchProducts from "../../../api/data/products/searchProducts";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
+import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
 
 // extend dayjs with the isSameOrAfter plugin
 dayjs.extend(isSameOrAfter);
+
+interface SelectedProductOption {
+  label: string;
+  value: Product;
+}
 
 interface AddNewAssetFormModalProps {
   isOpen: boolean;
@@ -36,6 +46,38 @@ const AddNewAssetFormModal = ({
   onClose,
   setAssets,
 }: AddNewAssetFormModalProps) => {
+  const toast = useToast();
+
+  // state for the product search query
+  const [productSearchQuery, setProductSearchQuery] = useState("");
+
+  // products data query
+  const {
+    data: productsData,
+    error: productsError,
+    isError: productsIsError,
+    isFetching: productsDataIsFetching,
+  } = useQuery(["products-search", productSearchQuery], async () => {
+    const data = await searchProducts(productSearchQuery);
+    return data;
+  });
+
+  // pop a toast for any of the search query errors
+  useEffect(() => {
+    if (productsIsError && productsError) {
+      toast({
+        title: "Error searching for products.",
+        description:
+          (productsError as AxiosError).response?.data ||
+          "There was an error searching for products, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [productsError, productsIsError, toast]);
+
   // react hook form
   const {
     register,
@@ -61,6 +103,30 @@ const AddNewAssetFormModal = ({
         <ModalContent>
           <ModalHeader>Add New Asset</ModalHeader>
           <ModalBody alignSelf="center" w="80%">
+            <ModalFormControl>
+              <FormLabel fontSize="sm">Product</FormLabel>
+              <StyledChakraReactSelect
+                isLoading={productsDataIsFetching}
+                placeholder="Search product"
+                onChange={(selectedClient) => {
+                  const product = (selectedClient as SelectedProductOption)
+                    ?.value;
+                  // if (product) {
+                  //   onChange(product);
+                  // } else {
+                  //   onChange(undefined);
+                  // }
+                }}
+                onInputChange={(search: string) =>
+                  setProductSearchQuery(search)
+                }
+                options={productsData?.map((product: Product) => ({
+                  value: product,
+                  label: product.productName,
+                }))}
+              />
+            </ModalFormControl>
+
             <ModalFormControl isInvalid={errors.costPrice !== undefined}>
               <FormLabel fontSize="sm">Cost price</FormLabel>
               <InputGroup>

@@ -29,7 +29,7 @@ router.route({
   path: "/search",
   validate: {
     query: {
-      productName: Joi.string().required().allow(""),
+      "product-name": Joi.string().required().allow(""),
     },
   },
   handler: searchProducts,
