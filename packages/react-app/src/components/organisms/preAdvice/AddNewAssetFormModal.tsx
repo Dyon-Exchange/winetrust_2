@@ -6,18 +6,20 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 
 interface AddNewAssetFormModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setAssets: Dispatch<SetStateAction<NewAssetForm[]>>;
 }
 
 const AddNewAssetFormModal = ({
   isOpen,
   onClose,
+  setAssets,
 }: AddNewAssetFormModalProps) => {
   // close modal handler
   const closeModal = () => onClose();

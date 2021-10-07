@@ -47,6 +47,18 @@ const AddNewPreAdviceFormModal = ({
 }: AddNewPreAdviceFormModalProps) => {
   const toast = useToast();
 
+  // state for the add new asset modal
+  const {
+    isOpen: isAddNewAssetOpen,
+    onOpen: openAddNewAsset,
+    onClose: closeAddNewAsset,
+  } = useDisclosure({
+    defaultIsOpen: false,
+  });
+
+  // state for the assets
+  const [assets, setAssets] = useState<NewAssetForm[]>([]);
+
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
   const [arrivalWarehouseSearchQuery, setArrivalWarehouseSearchQuery] =
@@ -143,6 +155,9 @@ const AddNewPreAdviceFormModal = ({
     formState: { errors, isDirty, isSubmitting },
   } = useForm<NewPreAdviceForm>();
 
+  // true is dirty state
+  const isPreAdviceDirty = isDirty || assets.length > 0;
+
   // submit handler
   const onSubmit = (data: NewPreAdviceForm) => {};
 
@@ -156,22 +171,13 @@ const AddNewPreAdviceFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
-
-  // state for the add new asset modal
-  const {
-    isOpen: isAddNewAssetOpen,
-    onOpen: openAddNewAsset,
-    onClose: closeAddNewAsset,
-  } = useDisclosure({
-    defaultIsOpen: false,
-  });
+  const closeModal = () => (isPreAdviceDirty ? openConfirmCancel() : onClose());
 
   return (
     <>
       <Modal
-        closeOnEsc={!isDirty}
-        closeOnOverlayClick={!isDirty}
+        closeOnEsc={!isPreAdviceDirty}
+        closeOnOverlayClick={!isPreAdviceDirty}
         isCentered
         isOpen={isOpen}
         onClose={closeModal}
@@ -335,6 +341,7 @@ const AddNewPreAdviceFormModal = ({
         <AddNewAssetFormModal
           isOpen={isAddNewAssetOpen}
           onClose={closeAddNewAsset}
+          setAssets={setAssets}
         />
       )}
     </>
