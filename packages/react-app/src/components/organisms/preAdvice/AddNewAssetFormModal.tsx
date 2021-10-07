@@ -3,6 +3,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -42,15 +44,18 @@ const AddNewAssetFormModal = ({
   } = useForm<NewAssetForm>();
 
   // submit handler
-  const onSubmit = (data: NewAssetForm) => {
-    console.log(data);
-  };
+  const onSubmit = (data: NewAssetForm) => {};
 
   // close modal handler
   const closeModal = () => onClose();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      closeOnEsc={!isDirty}
+      closeOnOverlayClick={!isDirty}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <ModalContent>
@@ -58,14 +63,18 @@ const AddNewAssetFormModal = ({
           <ModalBody alignSelf="center" w="80%">
             <ModalFormControl isInvalid={errors.costPrice !== undefined}>
               <FormLabel fontSize="sm">Cost price</FormLabel>
-              <NumberInput>
-                <NumberInputField
-                  {...register("costPrice", {
-                    required: "Cost price is required",
-                  })}
-                  fontSize="sm"
-                />
-              </NumberInput>
+              <InputGroup>
+                <InputLeftElement color="gray.300">$</InputLeftElement>
+                <NumberInput min={0} w="100%">
+                  <NumberInputField
+                    {...register("costPrice", {
+                      required: "Cost price is required",
+                    })}
+                    pl="30px"
+                    fontSize="sm"
+                  />
+                </NumberInput>
+              </InputGroup>
               {errors.costPrice !== undefined && (
                 <FormErrorMessage fontSize="sm">
                   {errors.costPrice.message}
@@ -98,7 +107,7 @@ const AddNewAssetFormModal = ({
 
             <ModalFormControl isInvalid={errors.quantity !== undefined}>
               <FormLabel fontSize="sm">Quantity</FormLabel>
-              <NumberInput>
+              <NumberInput min={1} defaultValue={1}>
                 <NumberInputField
                   {...register("quantity", {
                     required: "Quantity is required",
