@@ -5,6 +5,9 @@ import { authRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
 import getProducts from "./getProducts";
+import searchProducts from "./searchProducts";
+
+const { Joi } = Router;
 
 const router = Router();
 authRequired(router);
@@ -19,6 +22,17 @@ router.route({
   method: "get",
   path: "/",
   handler: getProducts,
+});
+
+router.route({
+  method: "get",
+  path: "/search",
+  validate: {
+    query: {
+      productName: Joi.string().required().allow(""),
+    },
+  },
+  handler: searchProducts,
 });
 
 export default router;
