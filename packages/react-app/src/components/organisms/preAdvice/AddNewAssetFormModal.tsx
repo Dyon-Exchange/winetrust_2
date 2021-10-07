@@ -19,7 +19,7 @@ import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
 import searchProducts from "../../../api/data/products/searchProducts";
@@ -80,6 +80,7 @@ const AddNewAssetFormModal = ({
 
   // react hook form
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isDirty },
@@ -103,28 +104,41 @@ const AddNewAssetFormModal = ({
         <ModalContent>
           <ModalHeader>Add New Asset</ModalHeader>
           <ModalBody alignSelf="center" w="80%">
-            <ModalFormControl>
+            <ModalFormControl isInvalid={errors.product !== undefined}>
               <FormLabel fontSize="sm">Product</FormLabel>
-              <StyledChakraReactSelect
-                isLoading={productsDataIsFetching}
-                placeholder="Search product"
-                onChange={(selectedClient) => {
-                  const product = (selectedClient as SelectedProductOption)
-                    ?.value;
-                  // if (product) {
-                  //   onChange(product);
-                  // } else {
-                  //   onChange(undefined);
-                  // }
-                }}
-                onInputChange={(search: string) =>
-                  setProductSearchQuery(search)
-                }
-                options={productsData?.map((product: Product) => ({
-                  value: product,
-                  label: product.productName,
-                }))}
+              <Controller
+                control={control}
+                name="product"
+                rules={{ required: "Product is required." }}
+                render={({ field: { onChange } }) => (
+                  <StyledChakraReactSelect
+                    isLoading={productsDataIsFetching}
+                    placeholder="Search product"
+                    onChange={(selectedClient) => {
+                      const product = (selectedClient as SelectedProductOption)
+                        ?.value;
+                      if (product) {
+                        onChange(product);
+                      } else {
+                        onChange(undefined);
+                      }
+                    }}
+                    onInputChange={(search: string) =>
+                      setProductSearchQuery(search)
+                    }
+                    options={productsData?.map((product: Product) => ({
+                      value: product,
+                      label: product.productName,
+                    }))}
+                  />
+                )}
               />
+              {errors.product !== undefined && (
+                <FormErrorMessage fontSize="sm">
+                  {/* typescript being buggy, thinks errors.product is a product type */}
+                  {(errors.product as any).message}
+                </FormErrorMessage>
+              )}
             </ModalFormControl>
 
             <ModalFormControl isInvalid={errors.costPrice !== undefined}>
