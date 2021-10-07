@@ -4,7 +4,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalContent,
@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   NumberInput,
   NumberInputField,
+  Select,
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
@@ -23,6 +24,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
 import searchProducts from "../../../api/data/products/searchProducts";
+import supportedCurrencies from "../../../constants/supportedCurrencies";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
@@ -144,22 +146,45 @@ const AddNewAssetFormModal = ({
             <ModalFormControl isInvalid={errors.costPrice !== undefined}>
               <FormLabel fontSize="sm">Cost price</FormLabel>
               <InputGroup>
-                <InputLeftElement color="gray.300">$</InputLeftElement>
+                <InputLeftAddon>
+                  <Select
+                    {...register("costPrice.currency", {
+                      required: "Currency is required",
+                    })}
+                    fontSize="sm"
+                    placeholder="Select"
+                    variant="flushed"
+                    isInvalid={errors.costPrice?.currency !== undefined}
+                  >
+                    {supportedCurrencies.map((country) => (
+                      <option
+                        key={country.name}
+                        value={country.code}
+                        label={`${country.code} (${country.symbol})`}
+                      />
+                    ))}
+                  </Select>
+                </InputLeftAddon>
                 <NumberInput min={0} w="100%">
                   <NumberInputField
-                    {...register("costPrice", {
+                    {...register("costPrice.amount", {
                       required: "Cost price is required",
                     })}
-                    pl="30px"
                     fontSize="sm"
                   />
                 </NumberInput>
               </InputGroup>
-              {errors.costPrice !== undefined && (
+              {errors.costPrice?.currency !== undefined && (
                 <FormErrorMessage fontSize="sm">
-                  {errors.costPrice.message}
+                  {errors.costPrice.currency.message}
                 </FormErrorMessage>
               )}
+              {errors.costPrice?.amount !== undefined &&
+                !errors.costPrice?.currency && (
+                  <FormErrorMessage fontSize="sm">
+                    {errors.costPrice.amount.message}
+                  </FormErrorMessage>
+                )}
             </ModalFormControl>
 
             <ModalFormControl
