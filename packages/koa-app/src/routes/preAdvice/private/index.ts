@@ -19,6 +19,19 @@ router.route({
       ownerId: Joi.string().required(),
       transferringWarehouseId: Joi.string().required(),
       arrivalWarehouseId: Joi.string().required(),
+      assets: Joi.array()
+        .items(
+          Joi.object().keys({
+            productId: Joi.string().required(),
+            cost: Joi.object().keys({
+              currency: Joi.string().required(),
+              amount: Joi.number().required(),
+            }),
+            expectedArrivalDate: Joi.date().required(),
+            quantity: Joi.number().required(),
+          })
+        )
+        .required(),
     },
     type: "json",
   },

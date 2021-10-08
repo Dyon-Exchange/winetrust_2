@@ -9,4 +9,5 @@ interface CreatePreAdviceRequestBody {
   ownerId: string;
   transferringWarehouseId: string;
   arrivalWarehouseId: string;
+  assets: NewAssetRequestForm[];
 }

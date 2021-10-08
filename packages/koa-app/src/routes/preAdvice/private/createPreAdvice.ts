@@ -6,16 +6,27 @@ import PreAdvice from "../../../models/PreAdvice";
 import Warehouse from "../../../models/Warehouse";
 import ExtendedContext from "../../../types/koa/ExtendedContext";
 
+interface AssetForm {
+  productId: string;
+  cost: {
+    currency: string;
+    amount: number;
+  };
+  expectedArrivalDate: Date;
+  quantity: number;
+}
+
 interface CreatePreAdviceRequest extends Request {
   body: {
     ownerId: string;
     transferringWarehouseId: string;
     arrivalWarehouseId: string;
+    assets: AssetForm[];
   };
 }
 
 export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
-  const { ownerId, transferringWarehouseId, arrivalWarehouseId } =
+  const { ownerId, transferringWarehouseId, arrivalWarehouseId, assets } =
     ctx.request.body;
 
   // get the owner, transferring warehouse and arrival warehouse documents and check they exist
@@ -44,17 +55,19 @@ export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
     // start the session transaction
     session.startTransaction();
 
-    // create the pre advice
-    const newPreAdvice = await PreAdvice.create(
-      [
-        {
-          owner,
-          transferringWarehouse,
-          arrivalWarehouse,
-        },
-      ],
-      { session }
-    );
+    console.log(assets);
+
+    // // create the pre advice
+    // const newPreAdvice = await PreAdvice.create(
+    //   [
+    //     {
+    //       owner,
+    //       transferringWarehouse,
+    //       arrivalWarehouse,
+    //     },
+    //   ],
+    //   { session }
+    // );
 
     // commit and end the session
     await session.commitTransaction();
