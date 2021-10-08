@@ -19,7 +19,7 @@ import {
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -40,13 +40,13 @@ interface SelectedProductOption {
 interface AddNewAssetFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  setAssets: Dispatch<SetStateAction<NewAssetForm[]>>;
+  addAsset: (asset: NewAssetForm) => void;
 }
 
 const AddNewAssetFormModal = ({
   isOpen,
   onClose,
-  setAssets,
+  addAsset,
 }: AddNewAssetFormModalProps) => {
   const toast = useToast();
 
@@ -90,10 +90,7 @@ const AddNewAssetFormModal = ({
 
   // submit handler
   const onSubmit = (data: NewAssetForm) => {
-    // use a dayjs timestamp as the asset form key
-    const dataWithKey: NewAssetForm = { ...data, key: dayjs().toString() };
-
-    setAssets((oldAssets) => [...oldAssets, dataWithKey]);
+    addAsset(data);
     onClose();
   };
 

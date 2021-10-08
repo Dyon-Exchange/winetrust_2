@@ -12,6 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -59,6 +60,19 @@ const AddNewPreAdviceFormModal = ({
 
   // state for the assets
   const [assets, setAssets] = useState<NewAssetForm[]>([]);
+
+  // state for assets form error
+  const [assetsError, setAssetsError] = useState("");
+
+  // function for adding assets
+  const addAsset = (asset: NewAssetForm) => {
+    // reset assets error
+    setAssetsError("");
+
+    // use a dayjs timestamp as the asset form key
+    const dataWithKey: NewAssetForm = { ...asset, key: dayjs().toString() };
+    setAssets((oldAssets) => [...oldAssets, dataWithKey]);
+  };
 
   // function for removing assets
   const removeAsset = (key: string) => {
@@ -167,7 +181,20 @@ const AddNewPreAdviceFormModal = ({
   const isPreAdviceDirty = isDirty || assets.length > 0;
 
   // submit handler
-  const onSubmit = (data: NewPreAdviceForm) => {};
+  const onSubmit = (data: NewPreAdviceForm) => {
+    // check if assets is empty
+    if (assets.length <= 0) {
+      setAssetsError("Asset/s is required.");
+      return;
+    }
+
+    const dataWithAssets: NewPreAdviceForm = {
+      ...data,
+      assets,
+    };
+
+    console.log(dataWithAssets);
+  };
 
   // state for the confirm cancel modal
   const {
@@ -318,7 +345,7 @@ const AddNewPreAdviceFormModal = ({
                 )}
               </ModalFormControl>
 
-              <ModalFormControl>
+              <ModalFormControl isInvalid={assetsError !== ""}>
                 <FormLabel fontSize="sm">
                   Assets {`(${assets.length})`}
                 </FormLabel>
@@ -330,6 +357,11 @@ const AddNewPreAdviceFormModal = ({
                   />
                 ))}
                 <AddNewButton onClick={openAddNewAsset} />
+                {assetsError !== "" && (
+                  <FormErrorMessage fontSize="sm">
+                    {assetsError}
+                  </FormErrorMessage>
+                )}
               </ModalFormControl>
             </ModalBody>
             <ModalFooter>
@@ -359,7 +391,7 @@ const AddNewPreAdviceFormModal = ({
         <AddNewAssetFormModal
           isOpen={isAddNewAssetOpen}
           onClose={closeAddNewAsset}
-          setAssets={setAssets}
+          addAsset={addAsset}
         />
       )}
     </>
