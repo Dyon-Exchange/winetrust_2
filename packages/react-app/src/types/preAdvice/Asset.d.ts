@@ -4,6 +4,7 @@ interface NewAssetFormCostPrice {
 }
 
 interface NewAssetForm {
+  key: string;
   product: Product;
   costPrice: NewAssetFormCostPrice;
   expectedArrivalDate: string;

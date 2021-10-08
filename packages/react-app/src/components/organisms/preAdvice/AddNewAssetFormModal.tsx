@@ -89,7 +89,13 @@ const AddNewAssetFormModal = ({
   } = useForm<NewAssetForm>();
 
   // submit handler
-  const onSubmit = (data: NewAssetForm) => {};
+  const onSubmit = (data: NewAssetForm) => {
+    // use a dayjs timestamp as the asset form key
+    const dataWithKey: NewAssetForm = { ...data, key: dayjs().toString() };
+
+    setAssets((oldAssets) => [...oldAssets, dataWithKey]);
+    onClose();
+  };
 
   // close modal handler
   const closeModal = () => onClose();
