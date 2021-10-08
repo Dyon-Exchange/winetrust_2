@@ -60,6 +60,13 @@ const AddNewPreAdviceFormModal = ({
   // state for the assets
   const [assets, setAssets] = useState<NewAssetForm[]>([]);
 
+  // function for removing assets
+  const removeAsset = (key: string) => {
+    setAssets((oldAssets) =>
+      oldAssets.filter((oldAsset) => oldAsset.key !== key)
+    );
+  };
+
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
   const [arrivalWarehouseSearchQuery, setArrivalWarehouseSearchQuery] =
@@ -316,7 +323,11 @@ const AddNewPreAdviceFormModal = ({
                   Assets {`(${assets.length})`}
                 </FormLabel>
                 {assets.map((asset) => (
-                  <AssetCard asset={asset} key={asset.key} />
+                  <AssetCard
+                    asset={asset}
+                    key={asset.key}
+                    removeAsset={removeAsset}
+                  />
                 ))}
                 <AddNewButton onClick={openAddNewAsset} />
               </ModalFormControl>
