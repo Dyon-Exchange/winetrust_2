@@ -27,6 +27,7 @@ const NotAdminWarningModal = () => {
       isOpen={isOpen}
       onClose={onClose}
       size="md"
+      scrollBehavior="inside"
     >
       <ModalOverlay />
       <ModalContent>

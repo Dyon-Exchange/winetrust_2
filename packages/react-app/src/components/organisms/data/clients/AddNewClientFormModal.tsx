@@ -100,6 +100,7 @@ const AddNewClientFormModal = ({
         isCentered
         onClose={closeModal}
         size="xl"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>

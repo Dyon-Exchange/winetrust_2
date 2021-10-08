@@ -106,6 +106,7 @@ const AddNewAssetFormModal = ({
       closeOnOverlayClick={!isDirty}
       isOpen={isOpen}
       onClose={onClose}
+      scrollBehavior="inside"
     >
       <ModalOverlay />
       <form noValidate onSubmit={handleSubmit(onSubmit)}>

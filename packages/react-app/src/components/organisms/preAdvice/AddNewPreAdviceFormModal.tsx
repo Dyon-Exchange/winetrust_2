@@ -18,7 +18,6 @@ import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
-import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
@@ -47,7 +46,6 @@ const AddNewPreAdviceFormModal = ({
   isOpen,
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
-  const colors = useThemeColors();
   const toast = useToast();
 
   // state for the add new asset modal

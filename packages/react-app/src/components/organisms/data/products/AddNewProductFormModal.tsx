@@ -114,6 +114,7 @@ const AddNewProductFormModal = ({
         isOpen={isOpen}
         onClose={closeModal}
         size="xl"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
