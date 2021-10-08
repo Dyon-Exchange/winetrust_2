@@ -4,3 +4,9 @@ interface NewPreAdviceForm {
   arrivalWarehouse: Warehouse;
   assets: NewAssetForm[];
 }
+
+interface CreatePreAdviceRequestBody {
+  ownerId: string;
+  transferringWarehouseId: string;
+  arrivalWarehouseId: string;
+}

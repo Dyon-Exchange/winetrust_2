@@ -15,7 +15,11 @@ router.route({
   method: "post",
   path: "/",
   validate: {
-    body: {},
+    body: {
+      ownerId: Joi.string().required(),
+      transferringWarehouseId: Joi.string().required(),
+      arrivalWarehouseId: Joi.string().required(),
+    },
     type: "json",
   },
   handler: createPreAdvice,

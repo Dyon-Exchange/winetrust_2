@@ -19,6 +19,7 @@ import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
+import createPreAdvice from "../../../api/preAdvice/createPreAdvice";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
@@ -181,7 +182,7 @@ const AddNewPreAdviceFormModal = ({
   const isPreAdviceDirty = isDirty || assets.length > 0;
 
   // submit handler
-  const onSubmit = (data: NewPreAdviceForm) => {
+  const onSubmit = async (data: NewPreAdviceForm) => {
     // check if assets is empty
     if (assets.length <= 0) {
       setAssetsError("Asset/s is required.");
@@ -193,7 +194,12 @@ const AddNewPreAdviceFormModal = ({
       assets,
     };
 
-    console.log(dataWithAssets);
+    try {
+      // await creating the pre advice
+      await createPreAdvice(dataWithAssets);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // state for the confirm cancel modal
@@ -262,48 +268,6 @@ const AddNewPreAdviceFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                isInvalid={errors.arrivalWarehouse !== undefined}
-              >
-                <FormLabel fontSize="sm">Arriving warehouse</FormLabel>
-                <Controller
-                  control={control}
-                  name="arrivalWarehouse"
-                  rules={{ required: "Arrival warehouse is required." }}
-                  render={({ field: { onChange } }) => (
-                    <StyledChakraReactSelect
-                      isLoading={arrivalWarehousesDataIsFetching}
-                      placeholder="Search warehouse"
-                      onChange={(selectedWarehouse) => {
-                        const warehouse = (
-                          selectedWarehouse as SelectedWarehouseOption
-                        )?.value;
-                        if (warehouse) {
-                          onChange(warehouse);
-                        } else {
-                          onChange(undefined);
-                        }
-                      }}
-                      onInputChange={(search: string) =>
-                        setArrivalWarehouseSearchQuery(search)
-                      }
-                      options={arrivalWarehousesData?.map(
-                        (warehouse: Warehouse) => ({
-                          value: warehouse,
-                          label: warehouse.name,
-                        })
-                      )}
-                    />
-                  )}
-                />
-                {errors.arrivalWarehouse !== undefined && (
-                  <FormErrorMessage fontSize="sm">
-                    {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
-                    {(errors.arrivalWarehouse as any).message}
-                  </FormErrorMessage>
-                )}
-              </ModalFormControl>
-
-              <ModalFormControl
                 isInvalid={errors.transferringWarehouse !== undefined}
               >
                 <FormLabel fontSize="sm">Transferring warehouse</FormLabel>
@@ -341,6 +305,48 @@ const AddNewPreAdviceFormModal = ({
                   <FormErrorMessage fontSize="sm">
                     {/* typescript being buggy, thinks errors.transferringWarehouse is a warehouse type */}
                     {(errors.transferringWarehouse as any).message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                isInvalid={errors.arrivalWarehouse !== undefined}
+              >
+                <FormLabel fontSize="sm">Arrival warehouse</FormLabel>
+                <Controller
+                  control={control}
+                  name="arrivalWarehouse"
+                  rules={{ required: "Arrival warehouse is required." }}
+                  render={({ field: { onChange } }) => (
+                    <StyledChakraReactSelect
+                      isLoading={arrivalWarehousesDataIsFetching}
+                      placeholder="Search warehouse"
+                      onChange={(selectedWarehouse) => {
+                        const warehouse = (
+                          selectedWarehouse as SelectedWarehouseOption
+                        )?.value;
+                        if (warehouse) {
+                          onChange(warehouse);
+                        } else {
+                          onChange(undefined);
+                        }
+                      }}
+                      onInputChange={(search: string) =>
+                        setArrivalWarehouseSearchQuery(search)
+                      }
+                      options={arrivalWarehousesData?.map(
+                        (warehouse: Warehouse) => ({
+                          value: warehouse,
+                          label: warehouse.name,
+                        })
+                      )}
+                    />
+                  )}
+                />
+                {errors.arrivalWarehouse !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {/* typescript being buggy, thinks errors.arrivalWarehouse is a warehouse type */}
+                    {(errors.arrivalWarehouse as any).message}
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
