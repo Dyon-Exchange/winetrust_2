@@ -1,36 +1,30 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  CloseButton,
   FormErrorMessage,
   FormLabel,
-  HStack,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Stat,
-  StatHelpText,
-  StatLabel,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
-import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
-import supportedCurrencies from "../../../constants/supportedCurrencies";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
+import AssetCard from "../../molecules/preAdvice/AssetCard";
 
 import AddNewAssetFormModal from "./AddNewAssetFormModal";
 
@@ -323,54 +317,9 @@ const AddNewPreAdviceFormModal = ({
                 <FormLabel fontSize="sm">
                   Assets {`(${assets.length})`}
                 </FormLabel>
-                {assets.map((asset) => {
-                  const currencyObject = supportedCurrencies.find(
-                    (currency) => currency.code === asset.costPrice.currency
-                  );
-                  return (
-                    <HStack
-                      alignItems="start"
-                      bg={colors.tertiary}
-                      borderWidth="1px"
-                      borderRadius="lg"
-                      p="10px 15px"
-                      mb="10px"
-                      key={asset.key}
-                    >
-                      <Stat>
-                        <HStack>
-                          <StatLabel>Product:</StatLabel>
-                          <StatHelpText>
-                            {` ${asset.product.productName}`}
-                          </StatHelpText>
-                        </HStack>
-                        <HStack>
-                          <StatLabel>Cost:</StatLabel>
-                          <StatHelpText>
-                            {`(${currencyObject?.code}) ${
-                              currencyObject?.symbol
-                            }${parseFloat(
-                              asset.costPrice.amount
-                            ).toLocaleString()}`}
-                          </StatHelpText>
-                        </HStack>
-                        <HStack>
-                          <StatLabel>Quantity:</StatLabel>
-                          <StatHelpText>{asset.quantity}</StatHelpText>
-                        </HStack>
-                        <HStack>
-                          <StatLabel>Expected Arrival:</StatLabel>
-                          <StatHelpText>
-                            {dayjs(asset.expectedArrivalDate).format(
-                              "ddd MMM DD, YYYY"
-                            )}
-                          </StatHelpText>
-                        </HStack>
-                      </Stat>
-                      <CloseButton />
-                    </HStack>
-                  );
-                })}
+                {assets.map((asset) => (
+                  <AssetCard asset={asset} key={asset.key} />
+                ))}
                 <AddNewButton onClick={openAddNewAsset} />
               </ModalFormControl>
             </ModalBody>
