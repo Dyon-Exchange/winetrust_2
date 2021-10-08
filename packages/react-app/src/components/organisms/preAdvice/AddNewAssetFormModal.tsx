@@ -216,7 +216,7 @@ const AddNewAssetFormModal = ({
 
             <ModalFormControl isInvalid={errors.quantity !== undefined}>
               <FormLabel fontSize="sm">Quantity</FormLabel>
-              <NumberInput min={1} defaultValue={1}>
+              <NumberInput defaultValue={1} min={1} precision={0}>
                 <NumberInputField
                   {...register("quantity", {
                     required: "Quantity is required",
