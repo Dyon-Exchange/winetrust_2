@@ -24,10 +24,9 @@ import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
+import AssetCard from "../../molecules/assets/AssetCard";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
-import AssetCard from "../../molecules/preAdvice/AssetCard";
-
-import AddNewAssetFormModal from "./AddNewAssetFormModal";
+import AddNewAssetFormModal from "../assets/AddNewAssetFormModal";
 
 interface SelectedClientOption {
   label: string;
