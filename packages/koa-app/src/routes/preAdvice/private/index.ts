@@ -3,6 +3,7 @@ import Router from "koa-joi-router";
 import { authRequired } from "../../../services/passport";
 
 import createPreAdvice from "./createPreAdvice";
+import getPreAdvices from "./getPreAdvices";
 
 const { Joi } = Router;
 
@@ -36,6 +37,12 @@ router.route({
     type: "json",
   },
   handler: createPreAdvice,
+});
+
+router.route({
+  method: "get",
+  path: "/",
+  handler: getPreAdvices,
 });
 
 export default router;
