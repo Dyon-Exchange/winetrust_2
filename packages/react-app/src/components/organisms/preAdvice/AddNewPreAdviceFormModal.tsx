@@ -195,11 +195,11 @@ const AddNewPreAdviceFormModal = ({
     };
 
     try {
-      // await creating the pre advice
+      // await creating the pre-advice
       await createPreAdvice(dataWithAssets);
       toast({
-        title: "Pre advice created.",
-        description: "Pre advice and assets created successfully.",
+        title: "Pre-advice created.",
+        description: "Pre-advice and assets created successfully.",
         status: "success",
         position: "top-right",
         duration: 5000,
@@ -208,10 +208,10 @@ const AddNewPreAdviceFormModal = ({
       onClose();
     } catch (error) {
       toast({
-        title: "Error creating pre advice.",
+        title: "Error creating pre-advice.",
         description:
           (error as AxiosError).response?.data ||
-          "There was an error trying to create this pre advice, please try again later.",
+          "There was an error trying to create this pre-advice, please try again later.",
         status: "error",
         position: "top-right",
         duration: 5000,

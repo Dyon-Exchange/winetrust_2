@@ -55,7 +55,7 @@ export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
     // start the session transaction
     session.startTransaction();
 
-    // create the pre advice, will return an array, pull the pre advice object out of the array
+    // create the pre-advice, will return an array, pull the pre-advice object out of the array
     const [preAdvice] = await PreAdvice.create(
       [
         {
@@ -67,7 +67,7 @@ export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
       { session }
     );
 
-    // loop through assets and create the assets linking them to this pre advice
+    // loop through assets and create the assets linking them to this pre-advice
     await Promise.all(
       assets.map(async (asset) => {
         // get the product for this asset
@@ -98,7 +98,7 @@ export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    ctx.throw(500, "Error creating this pre advice");
+    ctx.throw(500, "Error creating this pre-advice");
   }
 
   ctx.status = 200;
