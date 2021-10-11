@@ -54,6 +54,8 @@ const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
       </VStack>
     );
 
+  if (data?.length === 0) return <Text textAlign="center">No data</Text>;
+
   return (
     <Box overflow="auto">
       {data?.map((preAdvice) => (
