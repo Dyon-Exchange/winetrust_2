@@ -1,6 +1,8 @@
 import { Box, Heading, useDisclosure, VStack } from "@chakra-ui/react";
 import React from "react";
+import { useQuery } from "react-query";
 
+import getPreAdvices from "../../../api/preAdvice/getPreAdvices";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 
@@ -18,9 +20,20 @@ const PreAdviceSidePanel = () => {
     defaultIsOpen: false,
   });
 
+  // query for pre advices data
+  const {
+    data: preAdvicesData,
+    isLoading: preAdvicesDataIsLoading,
+    error: preAdvicesDataError,
+    isError: preAdvicesDataIsError,
+    refetch: refetchPreAdvicesData,
+  } = useQuery("pre-advices", getPreAdvices);
+
+  console.log(preAdvicesData);
+
   return (
     <>
-      <Box bg={colors.tertiary} minW="225px">
+      <Box bg={colors.tertiary} minW="300px" maxW="300px">
         <VStack alignItems="start" p="20px 25px">
           <Heading fontSize="xl">Pre-Advice</Heading>
           <AddNewButton onClick={openAddNewPreAdvice} />
