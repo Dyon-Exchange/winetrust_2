@@ -1,10 +1,6 @@
 import {
   Box,
-  Button,
-  Center,
   Heading,
-  Spinner,
-  Text,
   useDisclosure,
   useToast,
   VStack,
@@ -16,54 +12,9 @@ import { useQuery } from "react-query";
 import getPreAdvices from "../../../api/preAdvice/getPreAdvices";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
-import PreAdviceCard from "../../molecules/preAdvice/PreAdviceCard";
+import PreAdvices from "../../molecules/preAdvice/preAdvices";
 
 import AddNewPreAdviceFormModal from "./AddNewPreAdviceFormModal";
-
-interface PreAdvicesProps {
-  data: PreAdvice[] | undefined;
-  loading: boolean | undefined;
-  error: boolean | undefined;
-  refetch: () => void;
-}
-
-const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
-  const colors = useThemeColors();
-  if (loading)
-    return (
-      <Center>
-        <Spinner justifySelf="center" color={colors.primary} />
-      </Center>
-    );
-
-  if (error)
-    return (
-      <VStack>
-        <Text textAlign="center">
-          There was an error fetching the pre-advices data, try again?
-        </Text>
-        <Button
-          colorScheme="blue"
-          onClick={refetch}
-          size="sm"
-          variant="link"
-          w="100px"
-        >
-          Refresh
-        </Button>
-      </VStack>
-    );
-
-  if (data?.length === 0) return <Text textAlign="center">No data</Text>;
-
-  return (
-    <Box overflow="auto">
-      {data?.map((preAdvice) => (
-        <PreAdviceCard key={preAdvice._id} preAdvice={preAdvice} />
-      ))}
-    </Box>
-  );
-};
 
 const PreAdviceSidePanel = () => {
   const colors = useThemeColors();
