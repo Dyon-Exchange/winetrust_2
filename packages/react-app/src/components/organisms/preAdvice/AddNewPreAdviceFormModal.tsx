@@ -15,7 +15,7 @@ import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
@@ -49,6 +49,7 @@ const AddNewPreAdviceFormModal = ({
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   // state for the add new asset modal
   const {
@@ -195,8 +196,9 @@ const AddNewPreAdviceFormModal = ({
     };
 
     try {
-      // await creating the pre-advice
+      // await creating the pre-advice and then invalidate the pre-advices query data
       await createPreAdvice(dataWithAssets);
+      queryClient.invalidateQueries("pre-advices");
       toast({
         title: "Pre-advice created.",
         description: "Pre-advice and assets created successfully.",

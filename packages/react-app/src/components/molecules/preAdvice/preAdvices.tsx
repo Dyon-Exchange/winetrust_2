@@ -14,6 +14,7 @@ interface PreAdvicesProps {
 
 const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
   const colors = useThemeColors();
+
   if (loading)
     return (
       <Center>
