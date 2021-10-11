@@ -16,6 +16,7 @@ type PreAdviceState = "Due In" | "Part Landed" | "Landed";
 
 interface PreAdvice {
   _id: string;
+  preAdviceId: number;
   owner: Client;
   transferringWarehouse: Warehouse;
   arrivalWarehouse: Warehouse;
