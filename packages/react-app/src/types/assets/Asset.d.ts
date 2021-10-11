@@ -18,3 +18,17 @@ interface NewAssetRequestForm {
   expectedArrivalDate: Date;
   quantity: number;
 }
+
+type AssetState = "Due In" | "Landed" | "Tokenised";
+
+interface Asset {
+  _id: string;
+  preAdvice: PreAdvice;
+  product: Product;
+  cost: {
+    currency: string;
+    amount: number;
+  };
+  expectedArrivalDate: Date;
+  state: AssetState;
+}
