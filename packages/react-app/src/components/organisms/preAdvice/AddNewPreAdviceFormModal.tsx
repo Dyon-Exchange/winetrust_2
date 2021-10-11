@@ -197,8 +197,26 @@ const AddNewPreAdviceFormModal = ({
     try {
       // await creating the pre advice
       await createPreAdvice(dataWithAssets);
+      toast({
+        title: "Pre advice created.",
+        description: "Pre advice and assets created successfully.",
+        status: "success",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      onClose();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Error creating pre advice.",
+        description:
+          (error as AxiosError).response?.data ||
+          "There was an error trying to create this pre advice, please try again later.",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -230,7 +248,10 @@ const AddNewPreAdviceFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Pre-Advice</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <ModalFormControl isInvalid={errors.owner !== undefined}>
+              <ModalFormControl
+                isDisabled={isSubmitting}
+                isInvalid={errors.owner !== undefined}
+              >
                 <FormLabel fontSize="sm">Owner</FormLabel>
                 <Controller
                   control={control}
@@ -268,6 +289,7 @@ const AddNewPreAdviceFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
+                isDisabled={isSubmitting}
                 isInvalid={errors.transferringWarehouse !== undefined}
               >
                 <FormLabel fontSize="sm">Transferring warehouse</FormLabel>
@@ -310,6 +332,7 @@ const AddNewPreAdviceFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
+                isDisabled={isSubmitting}
                 isInvalid={errors.arrivalWarehouse !== undefined}
               >
                 <FormLabel fontSize="sm">Arrival warehouse</FormLabel>
@@ -351,7 +374,10 @@ const AddNewPreAdviceFormModal = ({
                 )}
               </ModalFormControl>
 
-              <ModalFormControl isInvalid={assetsError !== ""}>
+              <ModalFormControl
+                isDisabled={isSubmitting}
+                isInvalid={assetsError !== ""}
+              >
                 <FormLabel fontSize="sm">
                   Assets {`(${assets.length})`}
                 </FormLabel>
@@ -360,9 +386,13 @@ const AddNewPreAdviceFormModal = ({
                     asset={asset}
                     key={asset.key}
                     removeAsset={removeAsset}
+                    removeDisabled={isSubmitting}
                   />
                 ))}
-                <AddNewButton onClick={openAddNewAsset} />
+                <AddNewButton
+                  isDisabled={isSubmitting}
+                  onClick={openAddNewAsset}
+                />
                 {assetsError !== "" && (
                   <FormErrorMessage fontSize="sm">
                     {assetsError}
@@ -371,11 +401,16 @@ const AddNewPreAdviceFormModal = ({
               </ModalFormControl>
             </ModalBody>
             <ModalFooter>
-              <ModalFooterButton colorScheme="blue" type="submit">
+              <ModalFooterButton
+                colorScheme="blue"
+                isLoading={isSubmitting}
+                type="submit"
+              >
                 Add
               </ModalFooterButton>
               <ModalFooterButton
                 colorScheme="blue"
+                disabled={isSubmitting}
                 onClick={closeModal}
                 variant="outline"
               >

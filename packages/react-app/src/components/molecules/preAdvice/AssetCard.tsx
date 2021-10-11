@@ -14,9 +14,10 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 interface AssetCardProps {
   asset: NewAssetForm;
   removeAsset: (key: string) => void;
+  removeDisabled: boolean | undefined;
 }
 
-const AssetCard = ({ asset, removeAsset }: AssetCardProps) => {
+const AssetCard = ({ asset, removeAsset, removeDisabled }: AssetCardProps) => {
   const colors = useThemeColors();
   const currencyObject = supportedCurrencies.find(
     (currency) => currency.code === asset.costPrice.currency
@@ -55,7 +56,10 @@ const AssetCard = ({ asset, removeAsset }: AssetCardProps) => {
           </StatHelpText>
         </HStack>
       </Stat>
-      <CloseButton onClick={() => removeAsset(asset.key)} />
+      <CloseButton
+        disabled={removeDisabled}
+        onClick={() => removeAsset(asset.key)}
+      />
     </HStack>
   );
 };
