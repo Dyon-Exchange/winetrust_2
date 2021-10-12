@@ -64,10 +64,8 @@ const ClientsTable = () => {
 
   return (
     <StyledDataGrid
-      autoHeight
       disableSelectionOnClick
       disableColumnSelector
-      hideFooter
       columns={clientsTableColumns}
       rows={orderBy(clientsData, "createdAt", "desc") ?? []}
     />
