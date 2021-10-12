@@ -3,7 +3,7 @@ import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
-import AssetsTable from "./AssetsTables";
+import AssetsTable from "./AssetsTable";
 
 const WineTrustAssets = () => {
   const colors = useThemeColors();
@@ -13,7 +13,9 @@ const WineTrustAssets = () => {
       <HStack p="20px 40px" maxW="400px" minW="300px">
         <Input placeholder="Search" size="sm" />
       </HStack>
-      <AssetsTable searchQuery="" />
+      <Box p="16px">
+        <AssetsTable searchQuery="" />
+      </Box>
     </Box>
   );
 };
