@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -107,7 +107,11 @@ const AddNewClientFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Client</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <ModalFormControl id="firstName" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="firstName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.firstName !== undefined}
+              >
                 <FormLabel fontSize="sm">First name</FormLabel>
                 <Input
                   {...register("firstName", {
@@ -115,16 +119,20 @@ const AddNewClientFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.firstName !== undefined}
+                  placeholder="First Name"
                 />
                 {errors.firstName !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.firstName.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="lastName" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="lastName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.lastName !== undefined}
+              >
                 <FormLabel fontSize="sm">Last name</FormLabel>
                 <Input
                   {...register("lastName", {
@@ -132,12 +140,11 @@ const AddNewClientFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.lastName !== undefined}
                 />
                 {errors.lastName !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.lastName.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
@@ -156,13 +163,17 @@ const AddNewClientFormModal = ({
                   isInvalid={errors.ethAddress !== undefined}
                 />
                 {errors.ethAddress !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.ethAddress.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="phoneNumber" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="phoneNumber"
+                isDisabled={isSubmitting}
+                isInvalid={errors.phoneNumber !== undefined}
+              >
                 <FormLabel fontSize="sm">Phone number</FormLabel>
                 <InputGroup>
                   <InputLeftAddon>
@@ -194,19 +205,18 @@ const AddNewClientFormModal = ({
                     })}
                     fontSize="sm"
                     type="text"
-                    isInvalid={errors.phoneNumber !== undefined}
                   />
                 </InputGroup>
                 {errors.phoneNumber?.countryCode !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.phoneNumber.countryCode.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
                 {errors.phoneNumber?.phoneNumber !== undefined &&
                   !errors.phoneNumber?.countryCode && (
-                    <FormHelperText color={colors.error} fontSize="sm">
+                    <FormErrorMessage color={colors.error} fontSize="sm">
                       {errors.phoneNumber.phoneNumber.message}
-                    </FormHelperText>
+                    </FormErrorMessage>
                   )}
               </ModalFormControl>
             </ModalBody>
