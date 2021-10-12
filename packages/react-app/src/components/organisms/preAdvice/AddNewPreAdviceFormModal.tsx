@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -66,21 +66,27 @@ const AddNewPreAdviceFormModal = ({
   const [assetsError, setAssetsError] = useState("");
 
   // function for adding assets
-  const addAsset = (asset: NewAssetForm) => {
-    // reset assets error
-    setAssetsError("");
+  const addAsset = useCallback(
+    (asset: NewAssetForm) => {
+      // reset assets error
+      setAssetsError("");
 
-    // use a dayjs timestamp as the asset form key
-    const dataWithKey: NewAssetForm = { ...asset, key: dayjs().toString() };
-    setAssets((oldAssets) => [...oldAssets, dataWithKey]);
-  };
+      // use a dayjs timestamp as the asset form key
+      const dataWithKey: NewAssetForm = { ...asset, key: dayjs().toString() };
+      setAssets((oldAssets) => [...oldAssets, dataWithKey]);
+    },
+    [setAssets, setAssetsError]
+  );
 
   // function for removing assets
-  const removeAsset = (key: string) => {
-    setAssets((oldAssets) =>
-      oldAssets.filter((oldAsset) => oldAsset.key !== key)
-    );
-  };
+  const removeAsset = useCallback(
+    (key: string) => {
+      setAssets((oldAssets) =>
+        oldAssets.filter((oldAsset) => oldAsset.key !== key)
+      );
+    },
+    [setAssets]
+  );
 
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
@@ -230,7 +236,10 @@ const AddNewPreAdviceFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isPreAdviceDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isPreAdviceDirty ? openConfirmCancel() : onClose()),
+    [isPreAdviceDirty, openConfirmCancel, onClose]
+  );
 
   return (
     <>
