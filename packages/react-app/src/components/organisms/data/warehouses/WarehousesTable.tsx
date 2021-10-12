@@ -59,7 +59,7 @@ const WarehousesTable = () => {
     return (
       <DataTableError
         message="There was an error fetching the warehouses data, try again?"
-        refetch={() => refetchWarehousesData()}
+        refetch={refetchWarehousesData}
       />
     );
 

@@ -58,7 +58,7 @@ const ClientsTable = () => {
     return (
       <DataTableError
         message="There was an error fetching the clients data, try again?"
-        refetch={() => refetchClientsData()}
+        refetch={refetchClientsData}
       />
     );
 
