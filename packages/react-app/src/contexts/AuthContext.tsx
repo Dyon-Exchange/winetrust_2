@@ -6,18 +6,17 @@ import React, {
   ReactNode,
   useCallback,
   useEffect,
-  useState,
+  useMemo,
 } from "react";
 
 import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
-import LocalStorage from "../services/LocalStorage";
 import useLocalStorage from "../services/useLocalStorage";
 
 axios.defaults.baseURL = "http://localhost:3030/";
 // axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
-interface AuthResponse {
+interface AuthDetails {
   accessToken: string;
   refreshToken: string;
   email: string;
@@ -27,39 +26,34 @@ interface IAuthContext {
   loggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  authDetails: AuthDetails | undefined;
 }
 
 const INITIAL_AUTH_CONTEXT = {
   loggedIn: false,
   login: async () => {},
   logout: () => {},
+  authDetails: undefined,
 };
 
 export const AuthContext = createContext<IAuthContext>(INITIAL_AUTH_CONTEXT);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  // const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
   const authStorageKey = "auth";
 
   const [authDetails, setAuthDetails] = useLocalStorage<
-    AuthResponse | undefined
+    AuthDetails | undefined
   >(authStorageKey, undefined);
 
-  const loggedIn = authDetails?.accessToken !== "";
+  const loggedIn = useMemo(() => {
+    if (!authDetails?.accessToken) return false;
 
-  // // function to setup auth object and store into local storage
-  // const setAuth = useCallback(
-  //   (access: string, refresh: string) => {
-  //     setAccessToken(access);
-  //     setRefreshToken(refresh);
-  //     LocalStorage.setItem(
-  //       authStorageKey,
-  //       JSON.stringify({ accessToken: access, refreshToken: refresh })
-  //     );
-  //   },
-  //   [setAccessToken, setRefreshToken]
-  // );
+    const { exp } = jwtDecode(authDetails?.accessToken) as any;
+
+    if (Date.now() >= exp * 1000) return false;
+
+    return true;
+  }, [authDetails?.accessToken]);
 
   // login function
   const login = useCallback(
@@ -76,77 +70,38 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   // logout function to clear local storage and local context state
   const logout = useCallback(() => {
     setAuthDetails(undefined);
-    // setAccessToken("");
-    // setRefreshToken("");
-    // LocalStorage.removeItem(authStorageKey);
   }, [setAuthDetails]);
 
-  // function for getting and setting the auth state from storage
-  // const getAuthFromStorage = useCallback(async () => {
-  //   // get the token object
-  //   const authResponse = LocalStorage.getItem(authStorageKey);
+  useEffect(() => {
+    (async () => {
+      if (!authDetails?.accessToken) return;
 
-  //   if (authResponse) {
-  //     // check if the token from storage has expired
-  //     const {
-  //       accessToken: accessTokenFromStorage,
-  //       refreshToken: refreshTokenFromStorage,
-  //     } = JSON.parse(authResponse) as AuthResponse;
-  //     if (!accessTokenFromStorage || accessTokenFromStorage === "") return;
+      const { exp } = jwtDecode(authDetails?.accessToken) as any;
 
-  //     const { exp } = jwtDecode(accessTokenFromStorage) as any;
+      if (Date.now() >= exp * 1000) {
+        // try to refresh token
+        try {
+          const response = await refreshRequest(authDetails?.refreshToken);
 
-  //     // check if token is expired
-  //     if (Date.now() >= exp * 1000) {
-  //       // try to refresh token
-  //       try {
-  //         const response = await refreshRequest(refreshTokenFromStorage);
+          const { token: newAccessToken, refreshToken: newRefreshToken } =
+            response;
 
-  //         const { token: newAccessToken, refreshToken: newRefreshToken } =
-  //           response;
-
-  //         setAuth(newAccessToken, newRefreshToken);
-  //       } catch (error) {
-  //         logout();
-  //       }
-  //     } else {
-  //       // if not expired set auth with the details
-  //       setAuth(accessTokenFromStorage, refreshTokenFromStorage);
-  //     }
-  //   }
-  // }, [logout, setAuth]);
-
-  // // set the starting auth state to whatever is stored in secure storage
-  // useEffect(() => {
-  //   getAuthFromStorage();
-  // });
+          setAuthDetails({
+            ...authDetails,
+            refreshToken: newRefreshToken,
+            accessToken: newAccessToken,
+          });
+        } catch (error) {
+          logout();
+        }
+      }
+    })();
+  }, [authDetails, logout, setAuthDetails]);
 
   // setup axios interceptors
   useEffect(() => {
     let requestInterceptor: number;
     let responseInterceptor: number;
-
-    // if (authDetails?.accessToken) {
-    //   const { exp } = jwtDecode(authDetails?.accessToken) as any;
-
-    //   if (Date.now() >= exp * 1000) {
-    //     // try to refresh token
-    //     try {
-    //       const response = await refreshRequest(authDetails?.refreshToken);
-
-    //       const { token: newAccessToken, refreshToken: newRefreshToken } =
-    //         response;
-
-    //       setAuthDetails({
-    //         ...authDetails,
-    //         refreshToken: newRefreshToken,
-    //         accessToken: newAccessToken,
-    //       });
-    //     } catch (error) {
-    //       logout();
-    //     }
-    //   }
-    // }
 
     if (authDetails?.refreshToken) {
       responseInterceptor = axios.interceptors.response.use(
@@ -197,7 +152,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, [authDetails, logout, setAuthDetails]);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout }}>
+    <AuthContext.Provider value={{ loggedIn, login, logout, authDetails }}>
       {children}
     </AuthContext.Provider>
   );

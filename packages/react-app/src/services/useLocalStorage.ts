@@ -4,14 +4,16 @@ function getStorageValue<T>(key: string, defaultValue: T) {
   // getting stored value
   const saved = localStorage.getItem(key);
 
+  if (saved === "undefined") return undefined;
+
   return saved ? (JSON.parse(saved) as T) : defaultValue;
 }
 
 const useLocalStorage = <T>(
   key: string,
   defaultValue: T
-): [T, Dispatch<SetStateAction<T>>] => {
-  const [value, setValue] = useState<T>(() =>
+): [T | undefined, Dispatch<SetStateAction<T | undefined>>] => {
+  const [value, setValue] = useState<T | undefined>(() =>
     getStorageValue<T>(key, defaultValue)
   );
 
