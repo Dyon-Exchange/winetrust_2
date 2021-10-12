@@ -13,12 +13,109 @@ import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   {
-    field: "preAdvice",
+    field: "preAdviceId",
     headerName: "Pre-Advice ID",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.value as PreAdvice).preAdviceId,
+      (param.row as Asset).preAdvice.preAdviceId,
+  },
+  {
+    field: "productName",
+    headerName: "Product",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.productName,
+  },
+  {
+    field: "productYear",
+    headerName: "Year",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.year,
+  },
+  {
+    field: "productPackSize",
+    headerName: "Pack Size",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.packSize,
+  },
+  {
+    field: "productId",
+    headerName: "Product ID",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product._id,
+  },
+  {
+    field: "productDutyStatus",
+    headerName: "Duty Status",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.dutyStatus,
+  },
+  {
+    field: "price",
+    headerName: "Original Price",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) =>
+      `${(param.row as Asset).cost.currency} ${(
+        param.row as Asset
+      ).cost.amount.toLocaleString()}`,
+  },
+  {
+    field: "transferringWarehouse",
+    headerName: "Transferring Warehouse",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).preAdvice.transferringWarehouse.name,
+  },
+  {
+    field: "arrivalWarehouse",
+    headerName: "Arrival Warehouse",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).preAdvice.arrivalWarehouse.name,
+  },
+  {
+    field: "owner",
+    headerName: "Owner",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) =>
+      `${(param.row as Asset).preAdvice.owner.firstName} ${
+        (param.row as Asset).preAdvice.owner.lastName
+      }`,
+  },
+  {
+    field: "state",
+    headerName: "State",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset).state,
+  },
+  {
+    field: "assetId",
+    headerName: "Asset ID",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
+  },
+  {
+    field: "tokenId",
+    headerName: "Token ID",
+    flex: 1,
+    minWidth: 250,
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
   },
 ];
 
