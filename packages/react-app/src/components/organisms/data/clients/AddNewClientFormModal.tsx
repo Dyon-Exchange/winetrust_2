@@ -13,7 +13,6 @@ import {
   ModalOverlay,
   Select,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import CountryData from "country-data";
@@ -25,6 +24,7 @@ import isMobilePhone from "validator/lib/isMobilePhone";
 
 import createClient from "../../../../api/data/clients/createClient";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
@@ -40,7 +40,7 @@ const AddNewClientFormModal = ({
 }: AddNewClientFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // react hook form
@@ -61,9 +61,6 @@ const AddNewClientFormModal = ({
           title: "Client created.",
           description: "Client created successfully.",
           status: "success",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
         onClose();
       } catch (error) {
@@ -73,9 +70,6 @@ const AddNewClientFormModal = ({
             (error as AxiosError).response?.data ||
             "There was an error trying to create this client, please try again later.",
           status: "error",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
       }
     },

@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -6,6 +5,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import getClients from "../../../../api/data/clients/getClients";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
@@ -28,7 +28,7 @@ const clientsTableColumns: GridColDef[] = [
 ];
 
 const ClientsTable = () => {
-  const toast = useToast();
+  const toast = useDefaultToast();
 
   // query for clients data
   const {
@@ -48,9 +48,6 @@ const ClientsTable = () => {
           (clientsDataError as AxiosError).response?.data ||
           "There was an error fetching the clients data, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [clientsDataError, clientsDataIsError, toast]);

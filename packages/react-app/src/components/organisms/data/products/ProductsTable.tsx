@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -6,6 +5,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import getProducts from "../../../../api/data/products/getProducts";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
@@ -34,7 +34,7 @@ const productsTableColumns: GridColDef[] = [
 ];
 
 const ProductsTable = () => {
-  const toast = useToast();
+  const toast = useDefaultToast();
 
   // query for products data
   const {
@@ -54,9 +54,6 @@ const ProductsTable = () => {
           (productsDataError as AxiosError).response?.data ||
           "There was an error fetching the products data, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [productsDataError, productsDataIsError, toast]);

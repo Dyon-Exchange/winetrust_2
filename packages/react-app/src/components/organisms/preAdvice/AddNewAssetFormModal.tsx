@@ -15,7 +15,6 @@ import {
   NumberInputField,
   Select,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
@@ -26,6 +25,7 @@ import { useQuery } from "react-query";
 
 import searchProducts from "../../../api/data/products/searchProducts";
 import supportedCurrencies from "../../../constants/supportedCurrencies";
+import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
@@ -50,7 +50,7 @@ const AddNewAssetFormModal = ({
   onClose,
   addAsset,
 }: AddNewAssetFormModalProps) => {
-  const toast = useToast();
+  const toast = useDefaultToast();
 
   // state for the product search query
   const [productSearchQuery, setProductSearchQuery] = useState("");
@@ -75,9 +75,6 @@ const AddNewAssetFormModal = ({
           (productsError as AxiosError).response?.data ||
           "There was an error searching for products, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [productsError, productsIsError, toast]);

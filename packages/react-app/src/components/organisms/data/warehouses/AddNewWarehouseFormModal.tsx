@@ -10,7 +10,6 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import React, { useCallback } from "react";
@@ -20,6 +19,7 @@ import isEmail from "validator/lib/isEmail";
 
 import createWarehouse from "../../../../api/data/warehouses/createWarehouse";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
@@ -35,7 +35,7 @@ const AddNewWarehouseFormModal = ({
 }: AddNewWareHouseFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // react hook form
@@ -56,9 +56,6 @@ const AddNewWarehouseFormModal = ({
           title: "Warehouse created.",
           description: "Warehouse created successfully.",
           status: "success",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
         onClose();
       } catch (error) {
@@ -68,9 +65,6 @@ const AddNewWarehouseFormModal = ({
             (error as AxiosError).response?.data ||
             "There was an error trying to create this warehouse, please try again later.",
           status: "error",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
       }
     },

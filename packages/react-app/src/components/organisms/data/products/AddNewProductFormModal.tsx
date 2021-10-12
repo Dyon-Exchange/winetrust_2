@@ -16,7 +16,6 @@ import {
   NumberInputField,
   Select,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { AxiosError } from "axios";
@@ -26,6 +25,7 @@ import { useQueryClient } from "react-query";
 
 import createProduct from "../../../../api/data/products/createProduct";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
@@ -42,7 +42,7 @@ const AddNewProductFormModal = ({
 }: AddNewProductFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // react hook form
@@ -76,9 +76,6 @@ const AddNewProductFormModal = ({
           title: "Product created.",
           description: "Product created successfully.",
           status: "success",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
         onClose();
       } catch (error) {
@@ -88,9 +85,6 @@ const AddNewProductFormModal = ({
             (error as AxiosError).response?.data ||
             "There was an error trying to create this product, please try again later.",
           status: "error",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
       }
     },

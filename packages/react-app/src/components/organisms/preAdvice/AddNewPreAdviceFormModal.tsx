@@ -9,7 +9,6 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
@@ -20,6 +19,7 @@ import { useQuery } from "react-query";
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
 import createPreAdvice from "../../../api/preAdvice/createPreAdvice";
+import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
@@ -48,7 +48,7 @@ const AddNewPreAdviceFormModal = ({
   isOpen,
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
-  const toast = useToast();
+  const toast = useDefaultToast();
 
   // state for the add new asset modal
   const {
@@ -143,9 +143,6 @@ const AddNewPreAdviceFormModal = ({
           (clientsError as AxiosError).response?.data ||
           "There was an error searching for clients, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [clientsError, clientsIsError, toast]);
@@ -164,9 +161,6 @@ const AddNewPreAdviceFormModal = ({
           ).response?.data ||
           "There was an error searching for warehouses, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [
@@ -208,9 +202,6 @@ const AddNewPreAdviceFormModal = ({
           title: "Pre advice created.",
           description: "Pre advice and assets created successfully.",
           status: "success",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
         onClose();
       } catch (error) {
@@ -220,9 +211,6 @@ const AddNewPreAdviceFormModal = ({
             (error as AxiosError).response?.data ||
             "There was an error trying to create this pre advice, please try again later.",
           status: "error",
-          position: "top-right",
-          duration: 5000,
-          isClosable: true,
         });
       }
     },
