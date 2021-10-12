@@ -94,10 +94,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (Date.now() >= exp * 1000) {
         // try to refresh token
         try {
-          const response = await refreshRequest(refreshTokenFromStorage);
-
           const { token: newAccessToken, refreshToken: newRefreshToken } =
-            response;
+            await refreshRequest(refreshTokenFromStorage);
 
           setAuth(newAccessToken, newRefreshToken);
         } catch (error) {
