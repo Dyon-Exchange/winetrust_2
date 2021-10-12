@@ -4,6 +4,8 @@ import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
+import TopMenu from "./TopMenu";
+
 const TopBar = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
@@ -15,7 +17,7 @@ const TopBar = () => {
       py="10px"
       justifyContent="space-between"
     >
-      <HStack h="50px" spacing="15px">
+      <HStack h="50px" spacing="15px" w="100%">
         <Heading color="white" fontSize="2xl">
           WineTrust
         </Heading>
@@ -29,6 +31,7 @@ const TopBar = () => {
           </>
         )}
       </HStack>
+      <TopMenu />
     </HStack>
   );
 };
