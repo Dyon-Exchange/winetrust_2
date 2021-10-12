@@ -20,7 +20,7 @@ import {
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -91,10 +91,13 @@ const AddNewAssetFormModal = ({
   } = useForm<NewAssetForm>();
 
   // submit handler
-  const onSubmit = (data: NewAssetForm) => {
-    addAsset(data);
-    onClose();
-  };
+  const onSubmit = useCallback(
+    (data: NewAssetForm) => {
+      addAsset(data);
+      onClose();
+    },
+    [addAsset, onClose]
+  );
 
   // state for the confirm cancel modal
   const {
@@ -106,7 +109,10 @@ const AddNewAssetFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isDirty ? openConfirmCancel() : onClose()),
+    [isDirty, openConfirmCancel, onClose]
+  );
 
   return (
     <>

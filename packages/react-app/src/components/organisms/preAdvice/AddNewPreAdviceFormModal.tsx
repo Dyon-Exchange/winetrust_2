@@ -188,43 +188,46 @@ const AddNewPreAdviceFormModal = ({
   const isPreAdviceDirty = isDirty || assets.length > 0;
 
   // submit handler
-  const onSubmit = async (data: NewPreAdviceForm) => {
-    // check if assets is empty
-    if (assets.length <= 0) {
-      setAssetsError("Asset/s is required.");
-      return;
-    }
+  const onSubmit = useCallback(
+    async (data: NewPreAdviceForm) => {
+      // check if assets is empty
+      if (assets.length <= 0) {
+        setAssetsError("Asset/s is required.");
+        return;
+      }
 
-    const dataWithAssets: NewPreAdviceForm = {
-      ...data,
-      assets,
-    };
+      const dataWithAssets: NewPreAdviceForm = {
+        ...data,
+        assets,
+      };
 
-    try {
-      // await creating the pre advice
-      await createPreAdvice(dataWithAssets);
-      toast({
-        title: "Pre advice created.",
-        description: "Pre advice and assets created successfully.",
-        status: "success",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error creating pre advice.",
-        description:
-          (error as AxiosError).response?.data ||
-          "There was an error trying to create this pre advice, please try again later.",
-        status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+      try {
+        // await creating the pre advice
+        await createPreAdvice(dataWithAssets);
+        toast({
+          title: "Pre advice created.",
+          description: "Pre advice and assets created successfully.",
+          status: "success",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+        onClose();
+      } catch (error) {
+        toast({
+          title: "Error creating pre advice.",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error trying to create this pre advice, please try again later.",
+          status: "error",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+    [assets, onClose, toast]
+  );
 
   // state for the confirm cancel modal
   const {

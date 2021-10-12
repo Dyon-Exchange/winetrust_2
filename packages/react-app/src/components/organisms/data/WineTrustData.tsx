@@ -8,7 +8,7 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
@@ -52,17 +52,20 @@ const WineTrustData = () => {
   });
 
   // tab change handler
-  const handleTabChange = (index: number) => {
-    setTabIndex(index);
-  };
+  const handleTabChange = useCallback(
+    (index: number) => {
+      setTabIndex(index);
+    },
+    [setTabIndex]
+  );
 
   // open add new handler
-  const openAddNew = () => {
+  const openAddNew = useCallback(() => {
     // open the appropriate add new modal
     if (tabIndex === 0) openAddNewWarehouse();
     if (tabIndex === 1) openAddNewClient();
     if (tabIndex === 2) openAddNewProduct();
-  };
+  }, [tabIndex, openAddNewWarehouse, openAddNewClient, openAddNewProduct]);
 
   return (
     <>

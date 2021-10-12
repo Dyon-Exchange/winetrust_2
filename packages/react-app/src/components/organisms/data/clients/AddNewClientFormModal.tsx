@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import CountryData from "country-data";
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
@@ -51,33 +51,36 @@ const AddNewClientFormModal = ({
   } = useForm<NewClientForm>();
 
   // submit handler
-  const onSubmit = async (data: NewClientForm) => {
-    try {
-      // await creating the client and then invalidate the clients query data
-      await createClient(data);
-      queryClient.invalidateQueries("clients");
-      toast({
-        title: "Client created.",
-        description: "Client created successfully.",
-        status: "success",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error creating client.",
-        description:
-          (error as AxiosError).response?.data ||
-          "There was an error trying to create this client, please try again later.",
-        status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+  const onSubmit = useCallback(
+    async (data: NewClientForm) => {
+      try {
+        // await creating the client and then invalidate the clients query data
+        await createClient(data);
+        queryClient.invalidateQueries("clients");
+        toast({
+          title: "Client created.",
+          description: "Client created successfully.",
+          status: "success",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+        onClose();
+      } catch (error) {
+        toast({
+          title: "Error creating client.",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error trying to create this client, please try again later.",
+          status: "error",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+    [onClose, queryClient, toast]
+  );
 
   // state for the confirm cancel modal
   const {
@@ -89,7 +92,10 @@ const AddNewClientFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isDirty ? openConfirmCancel() : onClose()),
+    [isDirty, openConfirmCancel, onClose]
+  );
 
   return (
     <>
