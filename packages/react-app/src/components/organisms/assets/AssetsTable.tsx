@@ -160,12 +160,11 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
 
   return (
     <StyledDataGrid
-      autoHeight
       disableSelectionOnClick
       disableColumnSelector
-      hideFooter
       columns={assetsTableColumns}
       rows={orderBy(assetsData, "createdAt", "desc") ?? []}
+      style={{ height: "75vh" }}
     />
   );
 };
