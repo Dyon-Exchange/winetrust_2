@@ -9,11 +9,12 @@ export default async (
   email: string,
   password: string
 ): Promise<{ token: string; refreshToken: string }> => {
-  const response = await axios.post("/admins/login", {
+  const {
+    data: { token, refreshToken },
+  } = await axios.post("/admins/login", {
     email,
     password,
   });
-  const { token, refreshToken } = response.data as LoginData;
 
   return { token, refreshToken };
 };

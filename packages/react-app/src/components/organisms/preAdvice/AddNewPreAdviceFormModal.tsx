@@ -14,7 +14,7 @@ import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
@@ -24,10 +24,9 @@ import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import StyledChakraReactSelect from "../../atoms/inputs/StyledChakraReactSelect";
+import AssetCard from "../../molecules/assets/AssetCard";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
-import AssetCard from "../../molecules/preAdvice/AssetCard";
-
-import AddNewAssetFormModal from "./AddNewAssetFormModal";
+import AddNewAssetFormModal from "../assets/AddNewAssetFormModal";
 
 interface SelectedClientOption {
   label: string;
@@ -49,6 +48,7 @@ const AddNewPreAdviceFormModal = ({
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
   const toast = useDefaultToast();
+  const queryClient = useQueryClient();
 
   // state for the add new asset modal
   const {
@@ -182,40 +182,38 @@ const AddNewPreAdviceFormModal = ({
   const isPreAdviceDirty = isDirty || assets.length > 0;
 
   // submit handler
-  const onSubmit = useCallback(
-    async (data: NewPreAdviceForm) => {
-      // check if assets is empty
-      if (assets.length <= 0) {
-        setAssetsError("Asset/s is required.");
-        return;
-      }
+  const onSubmit = async (data: NewPreAdviceForm) => {
+    // check if assets is empty
+    if (assets.length <= 0) {
+      setAssetsError("Asset/s is required.");
+      return;
+    }
 
-      const dataWithAssets: NewPreAdviceForm = {
-        ...data,
-        assets,
-      };
+    const dataWithAssets: NewPreAdviceForm = {
+      ...data,
+      assets,
+    };
 
-      try {
-        // await creating the pre advice
-        await createPreAdvice(dataWithAssets);
-        toast({
-          title: "Pre advice created.",
-          description: "Pre advice and assets created successfully.",
-          status: "success",
-        });
-        onClose();
-      } catch (error) {
-        toast({
-          title: "Error creating pre advice.",
-          description:
-            (error as AxiosError).response?.data ||
-            "There was an error trying to create this pre advice, please try again later.",
-          status: "error",
-        });
-      }
-    },
-    [assets, onClose, toast]
-  );
+    try {
+      // await creating the pre-advice and then invalidate the pre-advices query data
+      await createPreAdvice(dataWithAssets);
+      queryClient.invalidateQueries("pre-advices");
+      toast({
+        title: "Pre-advice created.",
+        description: "Pre-advice and assets created successfully.",
+        status: "success",
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error creating pre-advice.",
+        description:
+          (error as AxiosError).response?.data ||
+          "There was an error trying to create this pre-advice, please try again later.",
+        status: "error",
+      });
+    }
+  };
 
   // state for the confirm cancel modal
   const {

@@ -1,5 +1,5 @@
 /**
- * Pre advice model, invoice like model which is used to create new assets
+ * Pre-advice model, invoice like model which is used to create new assets
  */
 
 import { AutoIncrementID } from "@typegoose/auto-increment";
