@@ -1,4 +1,5 @@
 import { Box, Button, Center, Spinner, Text, VStack } from "@chakra-ui/react";
+import { orderBy } from "lodash";
 import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
@@ -44,7 +45,7 @@ const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
 
   return (
     <Box overflow="auto">
-      {data?.map((preAdvice) => (
+      {orderBy(data, "createdAt", "desc")?.map((preAdvice) => (
         <PreAdviceCard key={preAdvice._id} preAdvice={preAdvice} />
       ))}
     </Box>
