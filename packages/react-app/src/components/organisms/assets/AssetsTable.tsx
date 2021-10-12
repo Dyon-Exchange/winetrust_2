@@ -164,7 +164,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       disableColumnSelector
       columns={assetsTableColumns}
       rows={orderBy(assetsData, "createdAt", "desc") ?? []}
-      style={{ height: "75vh" }}
+      style={{ minHeight: "225px", height: "calc(100vh - 300px)" }} // min height and max height takes into account the top bar
     />
   );
 };

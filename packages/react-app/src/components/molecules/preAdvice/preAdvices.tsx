@@ -44,7 +44,8 @@ const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
   if (data?.length === 0) return <Text textAlign="center">No data</Text>;
 
   return (
-    <Box overflow="auto">
+    // min height and max height takes into account the top bar and the add new pre-advice section
+    <Box minH="300px" maxH="calc(100vh - 175px)" overflow="auto">
       {orderBy(data, "createdAt", "desc")?.map((preAdvice) => (
         <PreAdviceCard key={preAdvice._id} preAdvice={preAdvice} />
       ))}
