@@ -15,9 +15,11 @@ interface WineTrustTokenContractHook {
 const useWineTrustToken = ({
   provider,
   userDetails,
+  networkDetails,
 }: {
   provider: providers.JsonRpcSigner | undefined;
   userDetails: UserDetails | undefined;
+  networkDetails: NetworkDetails | undefined;
 }): WineTrustTokenContractHook => {
   // state for the wine trust token contract instance
   const [wineTrustTokenContract, setWineTrustTokenContract] = useState<
@@ -40,7 +42,12 @@ const useWineTrustToken = ({
 
   // checks whether the current user's address has default admin role
   const checkIfUserIsAdmin = useCallback(async () => {
-    if (!wineTrustTokenContract || !userDetails) return false;
+    if (
+      !wineTrustTokenContract ||
+      !userDetails ||
+      !networkDetails?.onSupportedNetwork
+    )
+      return false;
 
     // default admin role in the contract
     const defaultAdminRole = hexZeroPad("0x0", 32);
@@ -62,7 +69,7 @@ const useWineTrustToken = ({
         adminAddress.toLocaleLowerCase() ===
         userDetails.address.toLocaleLowerCase()
     );
-  }, [userDetails, wineTrustTokenContract]);
+  }, [userDetails, wineTrustTokenContract, networkDetails]);
 
   // run the admin check with the current user's address
   useEffect(() => {

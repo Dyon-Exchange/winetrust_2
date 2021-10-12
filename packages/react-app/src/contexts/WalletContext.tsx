@@ -3,6 +3,7 @@ import { providers } from "ethers";
 import React, { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
+import { SUPPORTED_NETWORKS } from "../constants/network";
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
 import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
 
@@ -14,6 +15,7 @@ interface IWalletContext {
   walletConnected: boolean;
   connectAccount: () => Promise<void>;
   isAdmin: boolean;
+  networkDetails: NetworkDetails | undefined;
 }
 
 const INITIAL_WALLET_CONTEXT = {
@@ -24,6 +26,7 @@ const INITIAL_WALLET_CONTEXT = {
   walletConnected: false,
   connectAccount: async () => {},
   isAdmin: true,
+  networkDetails: undefined,
 };
 
 export const WalletContext = createContext<IWalletContext>(
@@ -43,6 +46,8 @@ export const WalletContextProvider = ({
     providers.JsonRpcSigner | undefined
   >();
 
+  const [networkDetails, setNetworkDetails] = useState<NetworkDetails>();
+
   const isMetaMaskInstalled = window.ethereum?.isMetaMask;
 
   const walletConnected =
@@ -55,6 +60,7 @@ export const WalletContextProvider = ({
     })) as providers.ExternalProvider | providers.JsonRpcFetchFunc;
 
     const ethersProvider = new providers.Web3Provider(webProvider);
+
     const [address] = await ethersProvider.send("eth_requestAccounts", []);
 
     const balance = await ethersProvider.getBalance(address);
@@ -102,8 +108,30 @@ export const WalletContextProvider = ({
       await connectAccount();
     };
 
+    const handleChainChanged = (chainIdString: string) => {
+      const chainId = parseInt(chainIdString, 16);
+      const onSupportedNetwork = SUPPORTED_NETWORKS.some(
+        ({ chainId: supportedNetworkChainId }) =>
+          supportedNetworkChainId === chainId
+      );
+      setNetworkDetails({
+        chainId,
+        onSupportedNetwork,
+      });
+    };
+
+    // Grab the initial chain the user is connected to
+    (async () => {
+      const chainId = await (window.ethereum as any).request({
+        method: "eth_chainId",
+      });
+      handleChainChanged(chainId);
+    })();
+
     // setup listener
     (window.ethereum as any).on("accountsChanged", handleAccountChange);
+
+    (window.ethereum as any).on("chainChanged", handleChainChanged);
 
     // remove the listener
     // eslint-disable-next-line consistent-return
@@ -112,11 +140,19 @@ export const WalletContextProvider = ({
         "accountsChanged",
         handleAccountChange
       );
+      (window.ethereum as any).removeListener(
+        "chainChanged",
+        handleChainChanged
+      );
     };
   }, []);
 
   // get everything from the WineTrust token hook
-  const { isAdmin } = useWineTrustToken({ provider, userDetails });
+  const { isAdmin } = useWineTrustToken({
+    provider,
+    userDetails,
+    networkDetails,
+  });
 
   return (
     <WalletContext.Provider
@@ -128,6 +164,7 @@ export const WalletContextProvider = ({
         walletConnected,
         connectAccount,
         isAdmin,
+        networkDetails,
       }}
     >
       {children}
