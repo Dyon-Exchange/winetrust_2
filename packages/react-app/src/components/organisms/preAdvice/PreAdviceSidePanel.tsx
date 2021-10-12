@@ -56,7 +56,7 @@ const PreAdviceSidePanel = () => {
 
   return (
     <>
-      <Box bg={colors.tertiary} minW="300px" maxW="300px">
+      <Box bg={colors.tertiary} boxShadow="sm" minW="300px" maxW="300px">
         <VStack alignItems="start" p="20px 25px">
           <Heading fontSize="xl">Pre-Advice</Heading>
           <AddNewButton onClick={openAddNewPreAdvice} />

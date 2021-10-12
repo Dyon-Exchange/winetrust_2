@@ -14,7 +14,7 @@ const PreAdviceCard = ({ preAdvice }: PreAdviceCardProps) => {
     <Stack
       bg={colors.secondary}
       p=" 10px 15px"
-      m="0px 5px 5px 5px"
+      m="2.5px 0px"
       cursor="pointer"
       onClick={() => {}}
     >
