@@ -5,7 +5,7 @@ import uploadTokenMetaData from "./uploadTokenMetaData";
 const { Joi } = Router;
 
 const router = Router();
-router.prefix("/token");
+router.prefix("/tokens");
 
 router.route({
   method: "post",

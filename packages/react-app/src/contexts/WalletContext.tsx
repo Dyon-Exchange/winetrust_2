@@ -1,6 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { SUPPORTED_NETWORKS } from "../constants/network";
@@ -54,7 +54,7 @@ export const WalletContextProvider = ({
     userDetails !== undefined && provider !== undefined && !initialising;
 
   // will setup wallet context to the currently selected metamask account
-  const connectAccount = async () => {
+  const connectAccount = useCallback(async () => {
     const webProvider = (await detectEthereumProvider({
       mustBeMetaMask: true,
     })) as providers.ExternalProvider | providers.JsonRpcFetchFunc;
@@ -70,7 +70,7 @@ export const WalletContextProvider = ({
       address,
       balance: convertWeiToNumber(balance.toString()),
     });
-  };
+  }, [setProvider, setUserDetails]);
 
   // automatically connect metamask account if one is already connected
   useEffect(() => {
@@ -97,7 +97,7 @@ export const WalletContextProvider = ({
       // set initialising to false
       setInitialising(false);
     })();
-  }, []);
+  }, [connectAccount]);
 
   // set up metamask account change event listener
   useEffect(() => {
@@ -145,7 +145,7 @@ export const WalletContextProvider = ({
         handleChainChanged
       );
     };
-  }, []);
+  }, [connectAccount]);
 
   // get everything from the WineTrust token hook
   const { isAdmin } = useWineTrustToken({

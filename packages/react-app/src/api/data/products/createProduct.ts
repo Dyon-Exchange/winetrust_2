@@ -32,5 +32,5 @@ export default async (newProduct: NewProductForm) => {
 
   productFormData.append("product-data", productData);
 
-  await axios.post("/product/create", productFormData);
+  await axios.post("/products", productFormData);
 };

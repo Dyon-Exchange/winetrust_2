@@ -16,16 +16,16 @@ import {
   NumberInputField,
   Select,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { AxiosError } from "axios";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
 import createProduct from "../../../../api/data/products/createProduct";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import ProductDutyStatus from "../../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
@@ -42,7 +42,7 @@ const AddNewProductFormModal = ({
 }: AddNewProductFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // react hook form
@@ -66,33 +66,30 @@ const AddNewProductFormModal = ({
   });
 
   // submit handler
-  const onSubmit = async (data: NewProductForm) => {
-    try {
-      // await creating the product and then invalidate the products query data
-      await createProduct(data);
-      queryClient.invalidateQueries("products");
-      toast({
-        title: "Product created.",
-        description: "Product created successfully.",
-        status: "success",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error creating product.",
-        description:
-          (error as AxiosError).response?.data ||
-          "There was an error trying to create this product, please try again later.",
-        status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+  const onSubmit = useCallback(
+    async (data: NewProductForm) => {
+      try {
+        // await creating the product and then invalidate the products query data
+        await createProduct(data);
+        queryClient.invalidateQueries("products");
+        toast({
+          title: "Product created.",
+          description: "Product created successfully.",
+          status: "success",
+        });
+        onClose();
+      } catch (error) {
+        toast({
+          title: "Error creating product.",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error trying to create this product, please try again later.",
+          status: "error",
+        });
+      }
+    },
+    [onClose, queryClient, toast]
+  );
 
   // state for the confirm cancel modal
   const {
@@ -104,7 +101,11 @@ const AddNewProductFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isDirty ? openConfirmCancel() : onClose()),
+    [isDirty, openConfirmCancel, onClose]
+  );
+
   return (
     <>
       <Modal
@@ -114,6 +115,7 @@ const AddNewProductFormModal = ({
         isOpen={isOpen}
         onClose={closeModal}
         size="xl"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>

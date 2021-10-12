@@ -6,7 +6,7 @@ import refreshToken from "./refreshToken";
 const { Joi } = Router;
 
 const router = Router();
-router.prefix("/admin");
+router.prefix("/admins");
 
 router.route({
   method: "post",

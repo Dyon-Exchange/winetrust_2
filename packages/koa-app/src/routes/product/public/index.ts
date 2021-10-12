@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
 
 const router = Router();
-router.prefix("/product");
+router.prefix("/products");
 
 export default router;

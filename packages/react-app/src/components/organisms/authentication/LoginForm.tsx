@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
@@ -56,7 +56,10 @@ const LoginForm = () => {
     }, [reveal]);
 
   // function to toggle revealing password
-  const toggleRevealPassword = () => setReveal.toggle();
+  const toggleRevealPassword = useCallback(
+    () => setReveal.toggle(),
+    [setReveal]
+  );
 
   // react hook form
   const {
@@ -66,19 +69,22 @@ const LoginForm = () => {
   } = useForm<LoginForm>();
 
   // submit handler
-  const onSubmit = async (data: LoginForm) => {
-    // reset the login error
-    setLoginError(undefined);
-    const { email, password } = data;
-    // return if email or password is undefined
-    if (!email || !password) return;
+  const onSubmit = useCallback(
+    async (data: LoginForm) => {
+      // reset the login error
+      setLoginError(undefined);
+      const { email, password } = data;
+      // return if email or password is undefined
+      if (!email || !password) return;
 
-    try {
-      await login(email, password);
-    } catch (error) {
-      setLoginError((error as AxiosError).response?.data ?? "Network error.");
-    }
-  };
+      try {
+        await login(email, password);
+      } catch (error) {
+        setLoginError((error as AxiosError).response?.data ?? "Network error.");
+      }
+    },
+    [login, setLoginError]
+  );
 
   return (
     <Box

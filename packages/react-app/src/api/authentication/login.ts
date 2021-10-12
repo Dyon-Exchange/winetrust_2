@@ -9,7 +9,7 @@ export default async (
   email: string,
   password: string
 ): Promise<{ token: string; refreshToken: string }> => {
-  const response = await axios.post("/admin/login", {
+  const response = await axios.post("/admins/login", {
     email,
     password,
   });

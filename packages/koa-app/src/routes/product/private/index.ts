@@ -5,20 +5,34 @@ import { authRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
 import getProducts from "./getProducts";
+import searchProducts from "./searchProducts";
+
+const { Joi } = Router;
 
 const router = Router();
 authRequired(router);
 
 const multer = Multer();
 
-router.prefix("/product");
+router.prefix("/products");
 
-router.post("/create", multer.single("product-image"), createProduct);
+router.post("/", multer.single("product-image"), createProduct);
 
 router.route({
   method: "get",
-  path: "/get",
+  path: "/",
   handler: getProducts,
+});
+
+router.route({
+  method: "get",
+  path: "/search",
+  validate: {
+    query: {
+      "product-name": Joi.string().required().allow(""),
+    },
+  },
+  handler: searchProducts,
 });
 
 export default router;
