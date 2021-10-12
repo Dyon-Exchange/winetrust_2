@@ -29,7 +29,7 @@ enum PreAdviceState {
   },
 })
 export class PreAdviceClass extends TimeStamps {
-  @prop()
+  @prop({ unique: true })
   public preAdviceId: number;
 
   @prop({ required: true, ref: () => ClientClass })

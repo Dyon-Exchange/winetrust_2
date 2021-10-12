@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
@@ -37,34 +43,40 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const authStorageKey = "auth";
 
+  // function to setup auth object and store into local storage
+  const setAuth = useCallback(
+    (access: string, refresh: string) => {
+      setAccessToken(access);
+      setRefreshToken(refresh);
+      LocalStorage.setItem(
+        authStorageKey,
+        JSON.stringify({ accessToken: access, refreshToken: refresh })
+      );
+    },
+    [setAccessToken, setRefreshToken]
+  );
+
   // login function
-  const login = async (email: string, password: string) => {
-    const { token, refreshToken: refresh } = await loginRequest(
-      email,
-      password
-    );
-    setAuth(token, refresh);
-  };
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const { token, refreshToken: refresh } = await loginRequest(
+        email,
+        password
+      );
+      setAuth(token, refresh);
+    },
+    [setAuth]
+  );
 
   // logout function to clear local storage and local context state
-  const logout = () => {
+  const logout = useCallback(() => {
     setAccessToken("");
     setRefreshToken("");
     LocalStorage.removeItem(authStorageKey);
-  };
-
-  // function to setup auth object and store into local storage
-  const setAuth = (access: string, refresh: string) => {
-    setAccessToken(access);
-    setRefreshToken(refresh);
-    LocalStorage.setItem(
-      authStorageKey,
-      JSON.stringify({ accessToken: access, refreshToken: refresh })
-    );
-  };
+  }, [setAccessToken, setRefreshToken]);
 
   // function for getting and setting the auth state from storage
-  const getAuthFromStorage = async () => {
+  const getAuthFromStorage = useCallback(async () => {
     // get the token object
     const authResponse = LocalStorage.getItem(authStorageKey);
 
@@ -96,7 +108,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setAuth(accessTokenFromStorage, refreshTokenFromStorage);
       }
     }
-  };
+  }, [logout, setAuth]);
 
   // set the starting auth state to whatever is stored in secure storage
   useEffect(() => {
@@ -151,7 +163,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       axios.interceptors.response.eject(responseInterceptor);
       axios.interceptors.request.eject(requestInterceptor);
     };
-  }, [accessToken, refreshToken]);
+  }, [accessToken, logout, refreshToken]);
 
   return (
     <AuthContext.Provider value={{ loggedIn, login, logout }}>

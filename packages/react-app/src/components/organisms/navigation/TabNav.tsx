@@ -2,7 +2,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { HStack, IconButton, Tab, TabList, Tabs } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { useWindowWidth } from "@react-hook/window-size";
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
@@ -17,9 +17,12 @@ const TabNav = () => {
   const width = useWindowWidth();
 
   // push to history on tab change
-  const handleTabChange = (index: number) => {
-    history.push(index === 0 ? "/assets" : "/data");
-  };
+  const handleTabChange = useCallback(
+    (index: number) => {
+      history.push(index === 0 ? "/assets" : "/data");
+    },
+    [history]
+  );
 
   return (
     <Tabs onChange={handleTabChange} w="100%">

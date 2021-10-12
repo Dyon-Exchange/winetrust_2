@@ -5,7 +5,7 @@ import ExtendedContext from "../../../types/koa/ExtendedContext";
 
 interface SearchProductsRequest extends Request {
   query: {
-    ["product-name"]: string;
+    "product-name": string;
   };
 }
 

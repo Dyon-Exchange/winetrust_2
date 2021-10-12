@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import { GridColDef } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -6,6 +5,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import getWarehouses from "../../../../api/data/warehouses/getWarehouses";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
@@ -29,7 +29,7 @@ const warehousesTableColumns: GridColDef[] = [
 ];
 
 const WarehousesTable = () => {
-  const toast = useToast();
+  const toast = useDefaultToast();
 
   //  query for warehouses data
   const {
@@ -49,9 +49,6 @@ const WarehousesTable = () => {
           (warehousesDataError as AxiosError).response?.data ||
           "There was an error fetching the warehouses data, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [toast, warehousesDataError, warehousesDataIsError]);

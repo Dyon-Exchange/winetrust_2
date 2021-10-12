@@ -9,17 +9,17 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery, useQueryClient } from "react-query";
 
 import searchClients from "../../../api/data/clients/searchClients";
 import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
 import createPreAdvice from "../../../api/preAdvice/createPreAdvice";
+import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
@@ -47,7 +47,7 @@ const AddNewPreAdviceFormModal = ({
   isOpen,
   onClose,
 }: AddNewPreAdviceFormModalProps) => {
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // state for the add new asset modal
@@ -66,21 +66,27 @@ const AddNewPreAdviceFormModal = ({
   const [assetsError, setAssetsError] = useState("");
 
   // function for adding assets
-  const addAsset = (asset: NewAssetForm) => {
-    // reset assets error
-    setAssetsError("");
+  const addAsset = useCallback(
+    (asset: NewAssetForm) => {
+      // reset assets error
+      setAssetsError("");
 
-    // use a dayjs timestamp as the asset form key
-    const dataWithKey: NewAssetForm = { ...asset, key: dayjs().toString() };
-    setAssets((oldAssets) => [...oldAssets, dataWithKey]);
-  };
+      // use a dayjs timestamp as the asset form key
+      const dataWithKey: NewAssetForm = { ...asset, key: dayjs().toString() };
+      setAssets((oldAssets) => [...oldAssets, dataWithKey]);
+    },
+    [setAssets, setAssetsError]
+  );
 
   // function for removing assets
-  const removeAsset = (key: string) => {
-    setAssets((oldAssets) =>
-      oldAssets.filter((oldAsset) => oldAsset.key !== key)
-    );
-  };
+  const removeAsset = useCallback(
+    (key: string) => {
+      setAssets((oldAssets) =>
+        oldAssets.filter((oldAsset) => oldAsset.key !== key)
+      );
+    },
+    [setAssets]
+  );
 
   // states for search queries
   const [clientSearchQuery, setClientSearchQuery] = useState("");
@@ -137,9 +143,6 @@ const AddNewPreAdviceFormModal = ({
           (clientsError as AxiosError).response?.data ||
           "There was an error searching for clients, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [clientsError, clientsIsError, toast]);
@@ -158,9 +161,6 @@ const AddNewPreAdviceFormModal = ({
           ).response?.data ||
           "There was an error searching for warehouses, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   }, [
@@ -202,9 +202,6 @@ const AddNewPreAdviceFormModal = ({
         title: "Pre-advice created.",
         description: "Pre-advice and assets created successfully.",
         status: "success",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
       onClose();
     } catch (error) {
@@ -214,9 +211,6 @@ const AddNewPreAdviceFormModal = ({
           (error as AxiosError).response?.data ||
           "There was an error trying to create this pre-advice, please try again later.",
         status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
       });
     }
   };
@@ -231,7 +225,10 @@ const AddNewPreAdviceFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isPreAdviceDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isPreAdviceDirty ? openConfirmCancel() : onClose()),
+    [isPreAdviceDirty, openConfirmCancel, onClose]
+  );
 
   return (
     <>

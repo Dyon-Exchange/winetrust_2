@@ -10,16 +10,16 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import isEmail from "validator/lib/isEmail";
 
 import createWarehouse from "../../../../api/data/warehouses/createWarehouse";
 import useThemeColors from "../../../../hooks/theme/useThemeColors";
+import useDefaultToast from "../../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../../molecules/modals/ConfirmCancelChangesModal";
@@ -35,7 +35,7 @@ const AddNewWarehouseFormModal = ({
 }: AddNewWareHouseFormModalProps) => {
   // get theme colors
   const colors = useThemeColors();
-  const toast = useToast();
+  const toast = useDefaultToast();
   const queryClient = useQueryClient();
 
   // react hook form
@@ -46,33 +46,30 @@ const AddNewWarehouseFormModal = ({
   } = useForm<NewWarehouseForm>();
 
   // submit handler
-  const onSubmit = async (data: NewWarehouseForm) => {
-    try {
-      // await creating the warehouse and then invalidate the warehouses query data
-      await createWarehouse(data);
-      queryClient.invalidateQueries("warehouses");
-      toast({
-        title: "Warehouse created.",
-        description: "Warehouse created successfully.",
-        status: "success",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error creating warehouse.",
-        description:
-          (error as AxiosError).response?.data ||
-          "There was an error trying to create this warehouse, please try again later.",
-        status: "error",
-        position: "top-right",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+  const onSubmit = useCallback(
+    async (data: NewWarehouseForm) => {
+      try {
+        // await creating the warehouse and then invalidate the warehouses query data
+        await createWarehouse(data);
+        queryClient.invalidateQueries("warehouses");
+        toast({
+          title: "Warehouse created.",
+          description: "Warehouse created successfully.",
+          status: "success",
+        });
+        onClose();
+      } catch (error) {
+        toast({
+          title: "Error creating warehouse.",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error trying to create this warehouse, please try again later.",
+          status: "error",
+        });
+      }
+    },
+    [onClose, queryClient, toast]
+  );
 
   // state for the confirm cancel modal
   const {
@@ -84,7 +81,10 @@ const AddNewWarehouseFormModal = ({
   });
 
   // close modal handler
-  const closeModal = () => (isDirty ? openConfirmCancel() : onClose());
+  const closeModal = useCallback(
+    () => (isDirty ? openConfirmCancel() : onClose()),
+    [isDirty, openConfirmCancel, onClose]
+  );
 
   return (
     <>

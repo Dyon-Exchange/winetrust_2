@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async (): Promise<Product[]> => {
-  const response = await axios.get("/products");
-  const { data } = response;
+  const { data } = await axios.get("/products");
   return data;
 };
