@@ -10,10 +10,10 @@ const WineTrustAssets = () => {
 
   return (
     <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
-      <HStack p="10px 20px" maxW="400px" minW="300px">
+      <HStack p="20px 40px" maxW="400px" minW="300px">
         <Input placeholder="Search" size="sm" />
       </HStack>
-      <AssetsTable />
+      <AssetsTable searchQuery="" />
     </Box>
   );
 };
