@@ -195,9 +195,10 @@ const AddNewPreAdviceFormModal = ({
     };
 
     try {
-      // await creating the pre-advice and then invalidate the pre-advices query data
+      // await creating the pre-advice and then invalidate the pre-advices and assets query data
       await createPreAdvice(dataWithAssets);
       queryClient.invalidateQueries("pre-advices");
+      queryClient.invalidateQueries("assets");
       toast({
         title: "Pre-advice created.",
         description: "Pre-advice and assets created successfully.",
