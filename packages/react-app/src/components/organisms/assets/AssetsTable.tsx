@@ -1,10 +1,12 @@
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
+import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import getAssets from "../../../api/assets/getAssets";
+import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
@@ -104,6 +106,16 @@ const assetsTableColumns: GridColDef[] = [
     valueGetter: (param: GridValueGetterParams) => (param.row as Asset).state,
   },
   {
+    field: "expectedArrivalDate",
+    headerName: "Expected Arrival",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) =>
+      dayjs((param.row as Asset).expectedArrivalDate).format(
+        "ddd MMM DD, YYYY"
+      ),
+  },
+  {
     field: "assetId",
     headerName: "Asset ID",
     flex: 1,
@@ -135,6 +147,28 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
     refetch: refetchAssetsData,
   } = useQuery("assets", getAssets);
 
+  // filter the assets data if there is a search query
+  const searchFilteredAssetsData = useFuseSearch(
+    assetsData || [],
+    [
+      "preAdvice.preAdviceId",
+      "product.productName",
+      "product.year",
+      "product.packSize",
+      "product._id",
+      "product.dutyStatus",
+      "product.cost.currency",
+      "product.cost.amount",
+      "preAdvice.transferringWarehouse.name",
+      "preAdvice.arrivingWarehouse.name",
+      "preAdvice.owner.firstName",
+      "preAdvice.owner.lastName",
+      "state",
+      "_id",
+    ],
+    searchQuery
+  );
+
   // pop an error toast if assets data query errors
   useEffect(() => {
     if (assetsDataIsError && assetsDataError) {
@@ -163,7 +197,10 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}
-      rows={orderBy(assetsData, "createdAt", "desc") ?? []}
+      rows={
+        orderBy(searchFilteredAssetsData || assetsData, "createdAt", "desc") ??
+        []
+      }
     />
   );
 };
