@@ -41,6 +41,8 @@ export class ProductClass extends TimeStamps {
 
   // Add description to add new product
   // Under product name
+  @prop()
+  public description?: string;
 }
 
 export default getModelForClass(ProductClass);

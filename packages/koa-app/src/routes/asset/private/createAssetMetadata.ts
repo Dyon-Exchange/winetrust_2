@@ -3,8 +3,11 @@ import FormData from "form-data";
 import { Context } from "koa";
 
 import pinataUrl from "../../../constants/pinataUrl";
+import uploadAssetMetadataToIPFS from "../../../helpers/asset/uploadAssetMetadataToIPFS";
 import uploadFileToIPFS from "../../../helpers/uploadFileToIPFS";
+import Asset from "../../../models/Asset";
 import Product, { ProductClass } from "../../../models/Product";
+import { WarehouseClass } from "../../../models/Warehouse";
 
 interface CreateAssetMetadataBody {
   externalURL: string;
@@ -33,15 +36,49 @@ export default async (ctx: Context) => {
   //   Potentially sign the tx on the frontend and send the signed tx to the backend, which executes it and waits for the tx hash
 
   try {
+    const asset = await Asset.findById(assetId)
+      .populate({
+        path: "preAdvice",
+        populate: {
+          path: "owner",
+        },
+      })
+      .populate({
+        path: "preAdvice",
+        populate: {
+          path: "transferringWarehouse",
+        },
+      })
+      .populate({
+        path: "preAdvice",
+        populate: {
+          path: "arrivalWarehouse",
+        },
+      })
+      .populate({
+        path: "product",
+      });
+
+    if (!asset) throw new Error("Asset not found");
+
     // const initialConditionReportHash = await uploadFileToIPFS(
     //   initialConditionReport
     // );
     const initialConditionReportHash =
       "QmbGg2TePa9LUV9ghADvpQwCTbUGPQJPBg7uND9ZLjtgn4";
 
-    // Uploaded files hash QmbGg2TePa9LUV9ghADvpQwCTbUGPQJPBg7uND9ZLjtgn4
-    console.log(initialConditionReportHash);
-    // // try to upload the image file to pinata
+    const metadataHash = await uploadAssetMetadataToIPFS(
+      asset._id,
+      asset.product as ProductClass,
+      (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
+        _id: string;
+      },
+      initialConditionReportHash,
+      externalURL
+    );
+
+    console.log(metadataHash);
+
     // const response = await axios.post(
     //   `${pinataUrl}/pinning/pinFileToIPFS`,
     //   imageData,
@@ -59,7 +96,9 @@ export default async (ctx: Context) => {
     // const imageHash = response.data.IpfsHash;
 
     // ctx.status = 200;
-    ctx.status = 404;
+
+    ctx.body = metadataHash;
+    ctx.status = 200;
   } catch (error) {
     console.log(error);
     ctx.throw(
