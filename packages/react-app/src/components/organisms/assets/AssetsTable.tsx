@@ -2,12 +2,13 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
 
 import getAssets from "../../../api/assets/getAssets";
 import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
+import usePreAdviceFilter from "../../../zustand/usePreAdviceFilter";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
@@ -138,6 +139,9 @@ interface AssetsTableProps {
 const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
   const toast = useDefaultToast();
 
+  // get everything needed from the pre-advice filter zustand
+  const { selectedPreAdviceId } = usePreAdviceFilter();
+
   // query for assets data
   const {
     data: assetsData,
@@ -147,9 +151,18 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
     refetch: refetchAssetsData,
   } = useQuery("assets", getAssets);
 
+  const filteredAssetsData: Asset[] | undefined = useMemo(() => {
+    if (!assetsData) return undefined;
+    if (selectedPreAdviceId)
+      return assetsData.filter(
+        (asset: Asset) => asset.preAdvice._id === selectedPreAdviceId
+      );
+    return assetsData;
+  }, [assetsData, selectedPreAdviceId]);
+
   // filter the assets data if there is a search query
   const searchFilteredAssetsData = useFuseSearch(
-    assetsData || [],
+    filteredAssetsData || [],
     [
       "preAdvice.preAdviceId",
       "product.productName",
@@ -198,8 +211,11 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       disableColumnSelector
       columns={assetsTableColumns}
       rows={
-        orderBy(searchFilteredAssetsData || assetsData, "createdAt", "desc") ??
-        []
+        orderBy(
+          searchFilteredAssetsData || filteredAssetsData,
+          "createdAt",
+          "desc"
+        ) ?? []
       }
     />
   );

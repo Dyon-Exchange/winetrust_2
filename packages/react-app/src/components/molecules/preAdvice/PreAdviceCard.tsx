@@ -5,50 +5,63 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 interface PreAdviceCardProps {
   preAdvice: PreAdvice;
+  selected?: boolean;
+  onClick?: () => void;
 }
 
-const PreAdviceCard = ({ preAdvice }: PreAdviceCardProps) => {
+const PreAdviceCard = ({
+  preAdvice,
+  onClick,
+  selected,
+}: PreAdviceCardProps) => {
   const colors = useThemeColors();
+  const cardBgColor = selected ? colors.primary : colors.secondary;
+  const textColor = selected ? "white" : undefined;
 
   return (
     <Stack
-      bg={colors.secondary}
+      bg={cardBgColor}
       p=" 10px 15px"
       m="2.5px 0px"
       cursor="pointer"
-      onClick={() => {}}
+      onClick={onClick || undefined}
     >
       <HStack justifyContent="space-between">
         <Box>
-          <Text fontSize="xs" fontWeight="thin">
+          <Text color={textColor} fontSize="xs" fontWeight="thin">
             Transferrer
           </Text>
-          <Text fontSize="sm" fontWeight="bold" noOfLines={1}>
+          <Text color={textColor} fontSize="sm" fontWeight="bold" noOfLines={1}>
             {`${preAdvice.owner.firstName} ${preAdvice.owner.lastName}`}
           </Text>
         </Box>
         <Box>
-          <Text fontSize="xs" fontWeight="thin">
+          <Text color={textColor} fontSize="xs" fontWeight="thin">
             Pre-Advice ID
           </Text>
-          <Text fontSize="sm" fontWeight="bold" textAlign="right">
+          <Text
+            color={textColor}
+            fontSize="sm"
+            fontWeight="bold"
+            textAlign="right"
+          >
             {preAdvice.preAdviceId}
           </Text>
         </Box>
       </HStack>
       <Box>
-        <Text fontSize="xs" fontWeight="thin">
+        <Text color={textColor} fontSize="xs" fontWeight="thin">
           Arrival Warehouse
         </Text>
-        <Text fontSize="sm" noOfLines={1}>
+        <Text color={textColor} fontSize="sm" noOfLines={1}>
           {preAdvice.arrivalWarehouse.name}
         </Text>
       </Box>
       <Box>
-        <Text fontSize="xs" fontWeight="thin">
+        <Text color={textColor} fontSize="xs" fontWeight="thin">
           Status
         </Text>
-        <Text fontSize="sm" noOfLines={1}>
+        <Text color={textColor} fontSize="sm" noOfLines={1}>
           {preAdvice.state}
         </Text>
       </Box>
