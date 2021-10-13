@@ -1,5 +1,5 @@
 import { Box, HStack, Stack, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
@@ -15,12 +15,18 @@ const PreAdviceCard = ({
   selected,
 }: PreAdviceCardProps) => {
   const colors = useThemeColors();
-  const cardBgColor = selected ? colors.primary : colors.secondary;
-  const textColor = selected ? "white" : undefined;
+
+  const { color, textColor } = useMemo(() => {
+    if (selected) {
+      return { color: colors.primary, textColor: "white" };
+    }
+
+    return { color: colors.secondary, textColor: undefined };
+  }, [colors.primary, colors.secondary, selected]);
 
   return (
     <Stack
-      bg={cardBgColor}
+      bg={color}
       p=" 10px 15px"
       m="2.5px 0px"
       cursor="pointer"

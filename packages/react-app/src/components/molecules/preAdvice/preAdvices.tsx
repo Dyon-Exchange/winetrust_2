@@ -1,6 +1,6 @@
 import { Box, Button, Center, Spinner, Text, VStack } from "@chakra-ui/react";
 import { orderBy } from "lodash";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import usePreAdviceFilter from "../../../zustand/usePreAdviceFilter";
@@ -33,6 +33,11 @@ const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
     [clearSelectedPreAdvice, selectedPreAdviceId, setSelectedPreAdvice]
   );
 
+  const orderedPreAdvice = useMemo(
+    () => orderBy(data ?? [], "createdAt", "desc"),
+    [data]
+  );
+
   if (loading)
     return (
       <Center>
@@ -63,7 +68,7 @@ const PreAdvices = ({ data, loading, error, refetch }: PreAdvicesProps) => {
   return (
     // min height and max height takes into account the top bar and the add new pre-advice section
     <Box minH="300px" maxH="calc(100vh - 175px)" overflow="auto">
-      {orderBy(data, "createdAt", "desc")?.map((preAdvice) => (
+      {orderedPreAdvice.map((preAdvice) => (
         <PreAdviceCard
           key={preAdvice._id}
           preAdvice={preAdvice}
