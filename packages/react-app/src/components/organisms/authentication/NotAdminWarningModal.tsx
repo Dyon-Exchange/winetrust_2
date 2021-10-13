@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 
 import { SUPPORTED_NETWORKS } from "../../../constants/network";
 import { WalletContext } from "../../../contexts/WalletContext";
-
-import WarningModal from "./WarningModal";
+import WarningModal from "../../molecules/modals/WarningModal";
 
 const NotAdminWarningModal = () => {
   const { isAdmin, networkDetails } = useContext(WalletContext);
