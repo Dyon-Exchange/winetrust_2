@@ -5,6 +5,7 @@ import { authRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
 import getAssets from "./getAssets";
+import patchAssetWithTxHash from "./patchAssetWithTxHash";
 
 const { Joi } = Router;
 
@@ -20,6 +21,21 @@ router.post(
   multer.single("initial-condition-report"),
   createAssetMetadata
 );
+
+router.route({
+  method: "patch",
+  path: "/",
+  validate: {
+    type: "json",
+    query: {
+      assetId: Joi.string().required().allow(""),
+    },
+    body: {
+      txHash: Joi.string().required().allow(""),
+    },
+  },
+  handler: patchAssetWithTxHash,
+});
 
 // router.route({
 //   method: "post",

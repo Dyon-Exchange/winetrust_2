@@ -4,15 +4,22 @@
 import LocalWineTrustTokenJson from "@winetrust/smart-contracts/deployments/localhost/WineTrustToken.json";
 import { WineTrustToken__factory } from "@winetrust/smart-contracts/typechain/factories/WineTrustToken__factory";
 import { WineTrustToken } from "@winetrust/smart-contracts/typechain/WineTrustToken";
-import { providers } from "ethers";
+import { ContractTransaction, providers } from "ethers";
 import { hexZeroPad } from "ethers/lib/utils";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-interface WineTrustTokenContractHook {
+import { DEFAULT_ADMIN_ROLE } from "../../constants/roles";
+
+export interface WineTrustTokenAPI {
+  mintNFT: (to: string, metadataHash: string) => Promise<string>;
+  grantRole: (role: string, to: string) => Promise<ContractTransaction>;
+}
+interface WineTrustTokenInstanceHook {
   isAdmin: boolean;
+  wineTrustTokenAPI: WineTrustTokenAPI | undefined;
 }
 
-const useWineTrustToken = ({
+const useWineTrustTokenInstance = ({
   provider,
   userDetails,
   networkDetails,
@@ -20,22 +27,22 @@ const useWineTrustToken = ({
   provider: providers.JsonRpcSigner | undefined;
   userDetails: UserDetails | undefined;
   networkDetails: NetworkDetails | undefined;
-}): WineTrustTokenContractHook => {
+}): WineTrustTokenInstanceHook => {
   // state for the wine trust token contract instance
-  const [wineTrustTokenContract, setWineTrustTokenContract] = useState<
+  const [WineTrustTokenInstance, setWineTrustTokenInstance] = useState<
     WineTrustToken | undefined
   >();
 
   // state whether the current user's address has default admin role
   const [isAdmin, setIsAdmin] = useState(true); // initialise to true so that the warning modal doesn't show initially
 
-  // destructure WineTrustToken json
+  // destructure WineTrustTokenInstance json
   const { address } = LocalWineTrustTokenJson;
 
   // set a wine trust token contract instance
   useEffect(() => {
     if (!provider) return;
-    setWineTrustTokenContract(
+    setWineTrustTokenInstance(
       WineTrustToken__factory.connect(address, provider)
     );
   }, [address, provider]);
@@ -43,23 +50,22 @@ const useWineTrustToken = ({
   // checks whether the current user's address has default admin role
   const checkIfUserIsAdmin = useCallback(async () => {
     if (
-      !wineTrustTokenContract ||
+      !WineTrustTokenInstance ||
       !userDetails ||
       !networkDetails?.onSupportedNetwork
     )
       return false;
 
     // default admin role in the contract
-    const defaultAdminRole = hexZeroPad("0x0", 32);
 
-    const adminAccountsCount = await wineTrustTokenContract.getRoleMemberCount(
-      defaultAdminRole
+    const adminAccountsCount = await WineTrustTokenInstance.getRoleMemberCount(
+      DEFAULT_ADMIN_ROLE
     );
 
     // loop through the admin accounts count to get all the addresses with the admin role
     const adminAddresses = await Promise.all(
       [...new Array(adminAccountsCount.toNumber())].map((_, idx) =>
-        wineTrustTokenContract.getRoleMember(defaultAdminRole, idx)
+        WineTrustTokenInstance.getRoleMember(DEFAULT_ADMIN_ROLE, idx)
       )
     );
 
@@ -69,15 +75,28 @@ const useWineTrustToken = ({
         adminAddress.toLocaleLowerCase() ===
         userDetails.address.toLocaleLowerCase()
     );
-  }, [userDetails, wineTrustTokenContract, networkDetails]);
+  }, [userDetails, WineTrustTokenInstance, networkDetails]);
 
   // run the admin check with the current user's address
   useEffect(() => {
-    if (!wineTrustTokenContract || !userDetails) return;
+    if (!WineTrustTokenInstance || !userDetails) return;
     (async () => setIsAdmin(await checkIfUserIsAdmin()))();
-  }, [checkIfUserIsAdmin, userDetails, wineTrustTokenContract]);
+  }, [checkIfUserIsAdmin, userDetails, WineTrustTokenInstance]);
 
-  return { isAdmin };
+  const wineTrustTokenAPI = useMemo(() => {
+    if (!WineTrustTokenInstance) return undefined;
+
+    return {
+      mintNFT: async (to: string, metadataHash: string) => {
+        const data = await WineTrustTokenInstance.mintNFT(to, metadataHash);
+        return data.hash;
+      },
+      grantRole: async (role: string, to: string) =>
+        WineTrustTokenInstance.grantRole(role, to),
+    };
+  }, [WineTrustTokenInstance]);
+
+  return { isAdmin, wineTrustTokenAPI };
 };
 
-export default useWineTrustToken;
+export default useWineTrustTokenInstance;

@@ -16,11 +16,14 @@ import {
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { AxiosError } from "axios";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useContext } from "react";
 import { useController, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
 import createAssetMetadata from "../../../api/data/assets/createAssetMetadata";
+import patchAssetWithTxHash from "../../../api/data/assets/patchAssetWithTxHash";
+import { MINTER_ROLE } from "../../../constants/roles";
+import { WalletContext } from "../../../contexts/WalletContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
@@ -58,6 +61,7 @@ export interface MintNFTForm {
 }
 
 const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
+  const { wineTrustTokenAPI, userDetails } = useContext(WalletContext);
   // get theme colors
   const colors = useThemeColors();
   const toast = useDefaultToast();
@@ -92,7 +96,20 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     async (data: MintNFTForm) => {
       try {
         // await creating the product and then invalidate the products query data
-        await createAssetMetadata({ ...data, assetId: row._id });
+        // const metadataHash = await createAssetMetadata({
+        //   ...data,
+        //   assetId: row._id,
+        // });
+
+        // const txHash = await wineTrustTokenAPI?.mintNFT(
+        //   row.preAdvice.owner.ethAddress,
+        //   metadataHash
+        // );
+
+        const txHash =
+          "0x4118bff291b318ba572c70398f40592bfc601c3c30112c346bbb74961b19a945";
+
+        await patchAssetWithTxHash({ assetId: row._id, txHash });
 
         toast({
           title: "Product created.",

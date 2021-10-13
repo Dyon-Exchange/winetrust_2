@@ -5,7 +5,9 @@ import type { ReactNode } from "react";
 
 import { SUPPORTED_NETWORKS } from "../constants/network";
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
-import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
+import useWineTrustToken, {
+  WineTrustTokenAPI,
+} from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
   userDetails: UserDetails | undefined;
@@ -16,6 +18,7 @@ interface IWalletContext {
   connectAccount: () => Promise<void>;
   isAdmin: boolean;
   networkDetails: NetworkDetails | undefined;
+  wineTrustTokenAPI: WineTrustTokenAPI | undefined;
 }
 
 const INITIAL_WALLET_CONTEXT = {
@@ -27,6 +30,7 @@ const INITIAL_WALLET_CONTEXT = {
   connectAccount: async () => {},
   isAdmin: true,
   networkDetails: undefined,
+  wineTrustTokenAPI: undefined,
 };
 
 export const WalletContext = createContext<IWalletContext>(
@@ -148,7 +152,7 @@ export const WalletContextProvider = ({
   }, [connectAccount]);
 
   // get everything from the WineTrust token hook
-  const { isAdmin } = useWineTrustToken({
+  const { isAdmin, wineTrustTokenAPI } = useWineTrustToken({
     provider,
     userDetails,
     networkDetails,
@@ -165,6 +169,7 @@ export const WalletContextProvider = ({
         connectAccount,
         isAdmin,
         networkDetails,
+        wineTrustTokenAPI,
       }}
     >
       {children}

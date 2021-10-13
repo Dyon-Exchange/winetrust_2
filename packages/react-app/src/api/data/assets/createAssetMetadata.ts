@@ -21,5 +21,5 @@ export default async ({
 
   const { data } = await axios.post("/assets", formData);
 
-  console.log(data);
+  return data;
 };

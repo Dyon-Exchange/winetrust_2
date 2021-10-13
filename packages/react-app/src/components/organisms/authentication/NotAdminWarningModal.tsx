@@ -20,14 +20,14 @@ const NotAdminWarningModal = () => {
     );
   }
 
-  if (!isAdmin) {
-    return (
-      <WarningModal
-        title="Non-Admin Address Detected"
-        desc="Check the metamask extension to change account."
-      />
-    );
-  }
+  // if (!isAdmin) {
+  //   return (
+  //     <WarningModal
+  //       title="Non-Admin Address Detected"
+  //       desc="Check the metamask extension to change account."
+  //     />
+  //   );
+  // }
 
   return null;
 };

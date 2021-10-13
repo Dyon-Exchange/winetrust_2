@@ -1,14 +1,13 @@
 import axios from "axios";
 
 import pinataUrl from "../../constants/pinataUrl";
-import { AssetClass } from "../../models/Asset";
 import { ProductClass } from "../../models/Product";
 import { WarehouseClass } from "../../models/Warehouse";
 
 type ClassWithId<T> = T & { _id: string };
 
 const formatAssetMetadata = (
-  assetId,
+  assetId: string,
   product: ProductClass,
   arrivalWarehouse: ClassWithId<WarehouseClass>,
   initialConditionReportHash: string,
@@ -17,8 +16,8 @@ const formatAssetMetadata = (
   pinataContent: {
     name: product.productName,
     description: product.description,
-    image: product.image,
-    initial_condition_report: initialConditionReportHash,
+    image: `ipfs://${product.image}`,
+    initial_condition_report: `ipfs://${initialConditionReportHash}`,
     external_url: externalURL,
     attributes: [
       {

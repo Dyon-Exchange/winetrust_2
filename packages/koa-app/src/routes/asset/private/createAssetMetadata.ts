@@ -1,37 +1,25 @@
-import axios, { AxiosError } from "axios";
-import FormData from "form-data";
-import { Context } from "koa";
+import multer from "@koa/multer";
+import { AxiosError } from "axios";
+import { Request } from "koa";
 
-import pinataUrl from "../../../constants/pinataUrl";
 import uploadAssetMetadataToIPFS from "../../../helpers/asset/uploadAssetMetadataToIPFS";
-import uploadFileToIPFS from "../../../helpers/uploadFileToIPFS";
 import Asset from "../../../models/Asset";
-import Product, { ProductClass } from "../../../models/Product";
+import { ProductClass } from "../../../models/Product";
 import { WarehouseClass } from "../../../models/Warehouse";
+import ExtendedContext from "../../../types/koa/ExtendedContext";
 
-interface CreateAssetMetadataBody {
-  externalURL: string;
-  assetId: string;
+interface CreateAssetMetadataBody extends Request {
+  file: multer.File;
+  body: {
+    assetId: string;
+    externalURL: string;
+  };
 }
 
-export default async (ctx: Context) => {
-  // request body in this case is a stringified JSON in a form data object with 'product-data' as it's key
+export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
   const initialConditionReport = ctx.request.file;
 
-  console.log(initialConditionReport);
-
-  const { externalURL, assetId } = ctx.request.body as CreateAssetMetadataBody;
-
-  // const imageData = new FormData();
-  // imageData.append(
-  //   "file",
-  //   initialConditionReport.buffer,
-  //   initialConditionReport.originalname
-  // );
-
-  //   Hash the PDF file
-  // Hash all the metadata
-  // Return the metadata hash to the frontend
+  const { externalURL, assetId } = ctx.request.body;
 
   //   Potentially sign the tx on the frontend and send the signed tx to the backend, which executes it and waits for the tx hash
 
@@ -64,40 +52,30 @@ export default async (ctx: Context) => {
     // const initialConditionReportHash = await uploadFileToIPFS(
     //   initialConditionReport
     // );
-    const initialConditionReportHash =
-      "QmbGg2TePa9LUV9ghADvpQwCTbUGPQJPBg7uND9ZLjtgn4";
 
-    const metadataHash = await uploadAssetMetadataToIPFS(
-      asset._id,
-      asset.product as ProductClass,
-      (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
-        _id: string;
-      },
-      initialConditionReportHash,
-      externalURL
-    );
+    // const initialConditionReportHash =
+    //   "QmbGg2TePa9LUV9ghADvpQwCTbUGPQJPBg7uND9ZLjtgn4";
 
-    console.log(metadataHash);
-
-    // const response = await axios.post(
-    //   `${pinataUrl}/pinning/pinFileToIPFS`,
-    //   imageData,
-    //   {
-    //     maxBodyLength: Infinity,
-    //     headers: {
-    //       "Content-Type": `multipart/form-data; boundary=${imageData.getBoundary()}`,
-    //       pinata_api_key: pinataKey,
-    //       pinata_secret_api_key: pinataSecret,
-    //     },
-    //   }
+    // const metadataHash = await uploadAssetMetadataToIPFS(
+    //   asset._id,
+    //   asset.product as ProductClass,
+    //   (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
+    //     _id: string;
+    //   },
+    //   initialConditionReportHash,
+    //   externalURL
     // );
 
-    // // get the image IPFS hash from response
-    // const imageHash = response.data.IpfsHash;
+    // asset.initialConditionReport = initialConditionReportHash;
+    // asset.metadataHash = metadataHash;
 
-    // ctx.status = 200;
+    // await asset.save();
 
-    ctx.body = metadataHash;
+    // // Return the created hash for the metadata
+    // ctx.body = `ipfs://${metadataHash}`;
+
+    ctx.body = "ipfs://Qmb7vBcXUQMWYriNwyFJJH6kmPnTYuZUaY8W9YK76EE9yL";
+
     ctx.status = 200;
   } catch (error) {
     console.log(error);
