@@ -4,6 +4,8 @@ import React from "react";
 
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
+import TopMenu from "./TopMenu";
+
 const TopBar = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
@@ -29,6 +31,7 @@ const TopBar = () => {
           </>
         )}
       </HStack>
+      <TopMenu />
     </HStack>
   );
 };
