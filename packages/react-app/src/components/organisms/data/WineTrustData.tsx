@@ -77,8 +77,13 @@ const WineTrustData = () => {
         maxW="80%"
       >
         <Tabs index={tabIndex} isLazy onChange={handleTabChange}>
-          <HStack justifyContent="space-between" p="10px 20px" w="100%">
-            <TabList>
+          <HStack
+            justifyContent="space-between"
+            overflow="auto"
+            p="10px 20px"
+            w="100%"
+          >
+            <TabList mr="20px">
               <Tab>Warehouses</Tab>
               <Tab>Clients</Tab>
               <Tab>Products</Tab>

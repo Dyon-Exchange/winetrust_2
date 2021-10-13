@@ -8,6 +8,7 @@ const AddNewButton = (props: ButtonProps) => (
     colorScheme="blue"
     leftIcon={<AddIcon />}
     fontSize="xs"
+    minW="100px"
     size="sm"
     {...props}
   >

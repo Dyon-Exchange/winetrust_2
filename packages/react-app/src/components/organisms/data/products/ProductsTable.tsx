@@ -64,7 +64,7 @@ const ProductsTable = () => {
     return (
       <DataTableError
         message="There was an error fetching the products data, try again?"
-        refetch={() => refetchProductsData()}
+        refetch={refetchProductsData}
       />
     );
 

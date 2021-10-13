@@ -2,6 +2,7 @@ import { Context, DefaultState } from "koa";
 import Router from "koa-router";
 
 import AdminRouter from "./admin";
+import AssetRouter from "./asset";
 import ClientRouter from "./client";
 import PreAdviceRouter from "./preAdvice";
 import ProductRouter from "./product";
@@ -18,6 +19,8 @@ router.get("/", async (ctx: Context) => {
 router.use(
   AdminRouter.Public.middleware(),
   AdminRouter.Private.middleware(),
+  AssetRouter.Public.middleware(),
+  AssetRouter.Private.middleware(),
   ClientRouter.Public.middleware(),
   ClientRouter.Private.middleware(),
   PreAdviceRouter.Public.middleware(),
