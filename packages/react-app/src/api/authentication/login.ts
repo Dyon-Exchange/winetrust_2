@@ -5,16 +5,10 @@ export interface LoginData {
   refreshToken: string;
 }
 
-export default async (
-  email: string,
-  password: string
-): Promise<{ token: string; refreshToken: string }> => {
-  const {
-    data: { token, refreshToken },
-  } = await axios.post("/admins/login", {
+export default async (email: string, password: string): Promise<LoginData> => {
+  const { data } = await axios.post("/admins/login", {
     email,
     password,
   });
-
-  return { token, refreshToken };
+  return data;
 };
