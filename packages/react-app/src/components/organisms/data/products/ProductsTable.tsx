@@ -70,10 +70,8 @@ const ProductsTable = () => {
 
   return (
     <StyledDataGrid
-      autoHeight
       disableSelectionOnClick
       disableColumnSelector
-      hideFooter
       columns={productsTableColumns}
       rows={orderBy(productsData, "createdAt", "desc") ?? []}
     />

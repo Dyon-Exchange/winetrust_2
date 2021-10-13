@@ -1,21 +1,8 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import React, { useContext } from "react";
 
 import { AuthContext } from "../../../contexts/AuthContext";
-
-const TopButton = ({ email }: { email: string }) => (
-  <Button rightIcon={<ChevronDownIcon />}>
-    <Text>{email}</Text>
-  </Button>
-);
 
 const TopMenu = () => {
   const { logout, loggedIn, authDetails } = useContext(AuthContext);
@@ -24,8 +11,9 @@ const TopMenu = () => {
 
   return (
     <Menu>
-      <MenuButton>
-        <TopButton email={authDetails?.email} />
+      <MenuButton color="white">
+        {authDetails?.email}
+        <ChevronDownIcon color="white" ml="10px" />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={logout}>Logout</MenuItem>

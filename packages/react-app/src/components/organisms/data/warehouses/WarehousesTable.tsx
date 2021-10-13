@@ -65,10 +65,8 @@ const WarehousesTable = () => {
 
   return (
     <StyledDataGrid
-      autoHeight
       disableSelectionOnClick
       disableColumnSelector
-      hideFooter
       columns={warehousesTableColumns}
       rows={orderBy(warehousesData, "createdAt", "desc") ?? []}
     />
