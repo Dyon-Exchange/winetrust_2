@@ -11,7 +11,7 @@ import React, {
 
 import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
-import useLocalStorage from "../services/useLocalStorage";
+import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
 // axios.defaults.baseURL = "http://localhost:3030/";
 axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
