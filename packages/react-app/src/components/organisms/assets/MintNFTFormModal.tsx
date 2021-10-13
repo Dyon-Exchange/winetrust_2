@@ -12,9 +12,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  NumberInput,
-  NumberInputField,
-  Select,
   useDisclosure,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
@@ -23,10 +20,9 @@ import React, { useCallback, useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
-import createProduct from "../../../api/data/products/createProduct";
+import createAssetMetadata from "../../../api/data/assets/createAssetMetadata";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
-import ProductDutyStatus from "../../../types/data/product/ProductDutyStatus";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
@@ -56,7 +52,7 @@ interface MintNFTFormModalProps {
   row: Asset;
 }
 
-interface MintNFTForm {
+export interface MintNFTForm {
   externalURL: string;
   initialConditionReport: File;
 }
@@ -80,11 +76,15 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
 
   // controller hook for the image file input
   const {
-    field: { value: imageValue, onChange: onImageChange, ...inputProps },
+    field: {
+      value: conditionReportValue,
+      onChange: onConditionReportChange,
+      ...inputProps
+    },
   } = useController({
     name: "initialConditionReport",
     control,
-    rules: { required: "Image is required" },
+    rules: { required: "Initial Condition Report is required" },
   });
 
   // submit handler
@@ -92,8 +92,8 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     async (data: MintNFTForm) => {
       try {
         // await creating the product and then invalidate the products query data
-        // await createProduct(data);
-        queryClient.invalidateQueries("products");
+        await createAssetMetadata({ ...data, assetId: row._id });
+
         toast({
           title: "Product created.",
           description: "Product created successfully.",
@@ -110,7 +110,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         });
       }
     },
-    [onClose, queryClient, toast]
+    [onClose, row._id, toast]
   );
 
   // state for the confirm cancel modal
@@ -152,6 +152,70 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 title="Description"
                 defaultValue={row.product.description}
               />
+              <ModalFormControl isInvalid={errors.externalURL !== undefined}>
+                <FormLabel fontSize="sm">External URL</FormLabel>
+
+                <Input
+                  {...register("externalURL", {
+                    required: "External URL is required",
+                    // TODO validate URL
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="External URL"
+                />
+                {errors.externalURL !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {errors.externalURL.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+              <ModalFormControl
+                id="image"
+                isDisabled={isSubmitting}
+                isInvalid={errors.initialConditionReport !== undefined}
+              >
+                <FormLabel fontSize="sm">Condition Report</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
 
               {/* Image?? */}
               <AssetFieldDisplay
@@ -187,69 +251,6 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 title="Warehouse ID"
                 defaultValue={row.preAdvice.arrivalWarehouse._id}
               />
-              <ModalFormControl isInvalid={errors.externalURL !== undefined}>
-                <FormLabel fontSize="sm">External URL</FormLabel>
-
-                <Input
-                  {...register("externalURL", {
-                    required: "Arrival date is required",
-                  })}
-                  fontSize="sm"
-                  type="text"
-                  placeholder="placeholder="
-                />
-                {errors.externalURL !== undefined && (
-                  <FormErrorMessage fontSize="sm">
-                    {errors.externalURL.message}
-                  </FormErrorMessage>
-                )}
-              </ModalFormControl>
-              <ModalFormControl
-                id="image"
-                isDisabled={isSubmitting}
-                isInvalid={errors.initialConditionReport !== undefined}
-              >
-                <FormLabel fontSize="sm">Condition Report</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...inputProps}
-                    accept=".pdf" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
-                    }}
-                    ref={imageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.initialConditionReport
-                        ? "3px"
-                        : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Product image"
-                  />
-                </InputGroup>
-                {errors.initialConditionReport !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.initialConditionReport.message}
-                  </FormErrorMessage>
-                )}
-              </ModalFormControl>
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton
