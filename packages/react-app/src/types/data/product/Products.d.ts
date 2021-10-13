@@ -2,6 +2,7 @@ type ProductDutyStatus = "In Bond" | "Duty Paid";
 
 interface NewProductForm {
   productName: string;
+  description: string;
   year: string;
   region: string;
   subRegion?: string;

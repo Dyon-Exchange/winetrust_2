@@ -11,6 +11,7 @@ export default async (newProduct: NewProductForm) => {
     packSize,
     dutyStatus,
     image,
+    description,
   } = newProduct;
 
   // construct a form data object for the product, so image file can be uploaded
@@ -28,6 +29,7 @@ export default async (newProduct: NewProductForm) => {
     subSubRegion,
     packSize,
     dutyStatus,
+    description,
   });
 
   productFormData.append("product-data", productData);
