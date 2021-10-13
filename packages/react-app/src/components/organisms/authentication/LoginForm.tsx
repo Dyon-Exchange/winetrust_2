@@ -7,7 +7,7 @@ import {
   Button,
   CloseButton,
   FormControl,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   IconButton,
   Input,
@@ -111,7 +111,11 @@ const LoginForm = () => {
               />
             </Alert>
           )}
-          <FormControl id="email" isDisabled={isSubmitting}>
+          <FormControl
+            id="email"
+            isDisabled={isSubmitting}
+            isInvalid={errors.email !== undefined}
+          >
             <FormLabel fontSize="sm">Email address</FormLabel>
             <Input
               {...register("email", {
@@ -121,22 +125,26 @@ const LoginForm = () => {
               })}
               fontSize="sm"
               type="email"
-              isInvalid={errors.email !== undefined}
+              placeholder="Email"
             />
             {errors.email !== undefined && (
-              <FormHelperText color={colors.error} fontSize="sm">
+              <FormErrorMessage color={colors.error} fontSize="sm">
                 {errors.email.message}
-              </FormHelperText>
+              </FormErrorMessage>
             )}
           </FormControl>
-          <FormControl id="password" isDisabled={isSubmitting}>
+          <FormControl
+            id="password"
+            isDisabled={isSubmitting}
+            isInvalid={errors.password !== undefined}
+          >
             <FormLabel fontSize="sm">Password</FormLabel>
             <InputGroup>
               <Input
                 {...register("password", { required: "Password is required" })}
                 fontSize="sm"
                 type={passwordInputType}
-                isInvalid={errors.password !== undefined}
+                placeholder="Password"
               />
               <InputRightElement>
                 <IconButton
@@ -150,9 +158,9 @@ const LoginForm = () => {
               </InputRightElement>
             </InputGroup>
             {errors.password !== undefined && (
-              <FormHelperText color={colors.error} fontSize="sm">
+              <FormErrorMessage color={colors.error} fontSize="sm">
                 {errors.password.message}
-              </FormHelperText>
+              </FormErrorMessage>
             )}
           </FormControl>
           <Button

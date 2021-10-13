@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AttachmentIcon } from "@chakra-ui/icons";
 import {
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -122,7 +122,11 @@ const AddNewProductFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <ModalFormControl id="productName" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="productName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productName !== undefined}
+              >
                 <FormLabel fontSize="sm">Product name</FormLabel>
                 <Input
                   {...register("productName", {
@@ -130,37 +134,42 @@ const AddNewProductFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.productName !== undefined}
+                  placeholder="Product name"
                 />
                 {errors.productName !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.productName.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="year" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="year"
+                isDisabled={isSubmitting}
+                isInvalid={errors.year !== undefined}
+              >
                 <FormLabel fontSize="sm">Product year</FormLabel>
-                <NumberInput
-                  isInvalid={errors.year !== undefined}
-                  min={0}
-                  max={new Date().getFullYear()}
-                >
+                <NumberInput min={0} max={new Date().getFullYear()}>
                   <NumberInputField
                     {...register("year", {
                       required: "Product year is required",
                     })}
                     fontSize="sm"
+                    placeholder="Product year"
                   />
                 </NumberInput>
                 {errors.year !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.year.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="region" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="region"
+                isDisabled={isSubmitting}
+                isInvalid={errors.region !== undefined}
+              >
                 <FormLabel fontSize="sm">Region</FormLabel>
                 <Input
                   {...register("region", {
@@ -168,46 +177,58 @@ const AddNewProductFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.region !== undefined}
+                  placeholder="Region"
                 />
                 {errors.region !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.region.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="subRegion" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="subRegion"
+                isDisabled={isSubmitting}
+                isInvalid={errors.subRegion !== undefined}
+              >
                 <FormLabel fontSize="sm">Sub region</FormLabel>
                 <Input
                   {...register("subRegion")}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.subRegion !== undefined}
+                  placeholder="Sub region"
                 />
                 {errors.subRegion !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.subRegion.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="subSubRegion" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="subSubRegion"
+                isDisabled={isSubmitting}
+                isInvalid={errors.subRegion !== undefined}
+              >
                 <FormLabel fontSize="sm">Sub sub region</FormLabel>
                 <Input
                   {...register("subSubRegion")}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.subRegion !== undefined}
+                  placeholder="Sub sub region"
                 />
                 {errors.subRegion !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.subRegion.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="packSize" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="packSize"
+                isDisabled={isSubmitting}
+                isInvalid={errors.packSize !== undefined}
+              >
                 <FormLabel fontSize="sm">Pack size</FormLabel>
                 <Input
                   {...register("packSize", {
@@ -215,23 +236,26 @@ const AddNewProductFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.packSize !== undefined}
+                  placeholder="Pack size"
                 />
                 {errors.packSize !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.packSize.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="dutyStatus" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="dutyStatus"
+                isDisabled={isSubmitting}
+                isInvalid={errors.dutyStatus !== undefined}
+              >
                 <FormLabel fontSize="sm">Duty status</FormLabel>
                 <Select
                   {...register("dutyStatus", {
                     required: "Duty status is required",
                   })}
                   fontSize="sm"
-                  isInvalid={errors.dutyStatus !== undefined}
                   placeholder="Select"
                 >
                   <option value={ProductDutyStatus.InBond}>
@@ -242,13 +266,17 @@ const AddNewProductFormModal = ({
                   </option>
                 </Select>
                 {errors.dutyStatus !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.dutyStatus.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="image" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="image"
+                isDisabled={isSubmitting}
+                isInvalid={errors.image !== undefined}
+              >
                 <FormLabel fontSize="sm">Image</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -279,13 +307,13 @@ const AddNewProductFormModal = ({
                     readOnly
                     type="text"
                     value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    isInvalid={errors.image !== undefined}
+                    placeholder="Product image"
                   />
                 </InputGroup>
                 {errors.image !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.image.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
             </ModalBody>

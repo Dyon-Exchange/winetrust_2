@@ -6,55 +6,49 @@ import React, {
   ReactNode,
   useCallback,
   useEffect,
-  useState,
+  useMemo,
 } from "react";
 
 import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
-import LocalStorage from "../services/LocalStorage";
+import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
 // axios.defaults.baseURL = "http://localhost:3030/";
 axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
-interface AuthResponse {
+interface AuthDetails {
   accessToken: string;
   refreshToken: string;
+  email: string;
 }
 
 interface IAuthContext {
   loggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  authDetails: AuthDetails | undefined;
 }
 
 const INITIAL_AUTH_CONTEXT = {
   loggedIn: false,
   login: async () => {},
   logout: () => {},
+  authDetails: undefined,
 };
 
 export const AuthContext = createContext<IAuthContext>(INITIAL_AUTH_CONTEXT);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
-
-  const loggedIn = accessToken !== "";
-
   const authStorageKey = "auth";
 
-  // function to setup auth object and store into local storage
-  const setAuth = useCallback(
-    (access: string, refresh: string) => {
-      setAccessToken(access);
-      setRefreshToken(refresh);
-      LocalStorage.setItem(
-        authStorageKey,
-        JSON.stringify({ accessToken: access, refreshToken: refresh })
-      );
-    },
-    [setAccessToken, setRefreshToken]
-  );
+  const [authDetails, setAuthDetails] = useLocalStorage<
+    AuthDetails | undefined
+  >(authStorageKey, undefined);
+
+  const loggedIn = useMemo(() => {
+    if (!authDetails?.accessToken) return false;
+    return true;
+  }, [authDetails?.accessToken]);
 
   // login function
   const login = useCallback(
@@ -63,73 +57,60 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         email,
         password
       );
-      setAuth(token, refresh);
+      setAuthDetails({ email, accessToken: token, refreshToken: refresh });
     },
-    [setAuth]
+    [setAuthDetails]
   );
 
   // logout function to clear local storage and local context state
   const logout = useCallback(() => {
-    setAccessToken("");
-    setRefreshToken("");
-    LocalStorage.removeItem(authStorageKey);
-  }, [setAccessToken, setRefreshToken]);
+    setAuthDetails(undefined);
+  }, [setAuthDetails]);
 
-  // function for getting and setting the auth state from storage
-  const getAuthFromStorage = useCallback(async () => {
-    // get the token object
-    const authResponse = LocalStorage.getItem(authStorageKey);
+  useEffect(() => {
+    (async () => {
+      if (!authDetails?.accessToken) return;
 
-    if (authResponse) {
-      // check if the token from storage has expired
-      const {
-        accessToken: accessTokenFromStorage,
-        refreshToken: refreshTokenFromStorage,
-      } = JSON.parse(authResponse) as AuthResponse;
-      if (!accessTokenFromStorage || accessTokenFromStorage === "") return;
+      const { exp } = jwtDecode(authDetails?.accessToken) as any;
 
-      const { exp } = jwtDecode(accessTokenFromStorage) as any;
-
-      // check if token is expired
       if (Date.now() >= exp * 1000) {
         // try to refresh token
         try {
           const { token: newAccessToken, refreshToken: newRefreshToken } =
-            await refreshRequest(refreshTokenFromStorage);
+            await refreshRequest(authDetails?.refreshToken);
 
-          setAuth(newAccessToken, newRefreshToken);
+          setAuthDetails({
+            ...authDetails,
+            refreshToken: newRefreshToken,
+            accessToken: newAccessToken,
+          });
         } catch (error) {
           logout();
         }
-      } else {
-        // if not expired set auth with the details
-        setAuth(accessTokenFromStorage, refreshTokenFromStorage);
       }
-    }
-  }, [logout, setAuth]);
-
-  // set the starting auth state to whatever is stored in secure storage
-  useEffect(() => {
-    getAuthFromStorage();
-  });
+    })();
+  }, [authDetails, logout, setAuthDetails]);
 
   // setup axios interceptors
   useEffect(() => {
     let requestInterceptor: number;
     let responseInterceptor: number;
 
-    if (refreshToken) {
+    if (authDetails?.refreshToken) {
       responseInterceptor = axios.interceptors.response.use(
         (response) => response,
         async (error) => {
           if (error.response.status === 401) {
-            // try to refresh token
-            let response: any;
             try {
-              response = await refreshRequest(refreshToken);
+              const { token, refreshToken: refresh } = await refreshRequest(
+                authDetails?.refreshToken
+              );
 
-              setAccessToken(response.data.token);
-              setRefreshToken(response.data.refreshToken);
+              setAuthDetails({
+                ...authDetails,
+                refreshToken: refresh,
+                accessToken: token,
+              });
 
               return await axios(error.config);
             } catch (innerError) {
@@ -143,11 +124,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       );
     }
 
-    if (accessToken) {
+    if (authDetails?.accessToken) {
       requestInterceptor = axios.interceptors.request.use(
         (config) => {
           // eslint-disable-next-line no-param-reassign
-          config.headers.Authorization = `Bearer ${accessToken}`;
+          config.headers.Authorization = `Bearer ${authDetails?.accessToken}`;
           return config;
         },
         (error) => {
@@ -161,10 +142,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       axios.interceptors.response.eject(responseInterceptor);
       axios.interceptors.request.eject(requestInterceptor);
     };
-  }, [accessToken, logout, refreshToken]);
+  }, [authDetails, logout, setAuthDetails]);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout }}>
+    <AuthContext.Provider value={{ loggedIn, login, logout, authDetails }}>
       {children}
     </AuthContext.Provider>
   );
