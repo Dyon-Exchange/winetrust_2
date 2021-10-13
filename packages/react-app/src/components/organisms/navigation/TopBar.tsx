@@ -17,7 +17,7 @@ const TopBar = () => {
       py="10px"
       justifyContent="space-between"
     >
-      <HStack h="50px" spacing="15px" w="100%">
+      <HStack h="50px" spacing="15px">
         <Heading color="white" fontSize="2xl">
           WineTrust
         </Heading>
