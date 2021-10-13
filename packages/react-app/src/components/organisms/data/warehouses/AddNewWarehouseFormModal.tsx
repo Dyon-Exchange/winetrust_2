@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Input,
   Modal,
@@ -102,7 +102,11 @@ const AddNewWarehouseFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Warehouse</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <ModalFormControl id="warehouseName" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="warehouseName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.warehouseName !== undefined}
+              >
                 <FormLabel fontSize="sm">Warehouse name</FormLabel>
                 <Input
                   {...register("warehouseName", {
@@ -110,16 +114,20 @@ const AddNewWarehouseFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.warehouseName !== undefined}
+                  placeholder="Warehouse name"
                 />
                 {errors.warehouseName !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.warehouseName.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="warehouseAddress" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="warehouseAddress"
+                isDisabled={isSubmitting}
+                isInvalid={errors.warehouseAddress !== undefined}
+              >
                 <FormLabel fontSize="sm">Warehouse address</FormLabel>
                 <Input
                   {...register("warehouseAddress", {
@@ -127,16 +135,20 @@ const AddNewWarehouseFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.warehouseAddress !== undefined}
+                  placeholder="Warehouse address"
                 />
                 {errors.warehouseAddress !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.warehouseAddress.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="contactName" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="contactName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.contactName !== undefined}
+              >
                 <FormLabel fontSize="sm">Contact name</FormLabel>
                 <Input
                   {...register("contactName", {
@@ -144,16 +156,20 @@ const AddNewWarehouseFormModal = ({
                   })}
                   fontSize="sm"
                   type="text"
-                  isInvalid={errors.contactName !== undefined}
+                  placeholder="Contact name"
                 />
                 {errors.contactName !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.contactName.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="contactEmail" isDisabled={isSubmitting}>
+              <ModalFormControl
+                id="contactEmail"
+                isDisabled={isSubmitting}
+                isInvalid={errors.contactEmail !== undefined}
+              >
                 <FormLabel fontSize="sm">Contact email address</FormLabel>
                 <Input
                   {...register("contactEmail", {
@@ -163,12 +179,12 @@ const AddNewWarehouseFormModal = ({
                   })}
                   fontSize="sm"
                   type="email"
-                  isInvalid={errors.contactEmail !== undefined}
+                  placeholder="Contact email address"
                 />
                 {errors.contactEmail !== undefined && (
-                  <FormHelperText color={colors.error} fontSize="sm">
+                  <FormErrorMessage color={colors.error} fontSize="sm">
                     {errors.contactEmail.message}
-                  </FormHelperText>
+                  </FormErrorMessage>
                 )}
               </ModalFormControl>
             </ModalBody>
