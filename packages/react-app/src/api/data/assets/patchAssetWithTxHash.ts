@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default async ({ assetId, txHash }: Props) => {
-  const { data } = await axios.patch(`/assets/${assetId}`, { txHash });
+  const { data } = await axios.patch(`/assets?asset-id=${assetId}`, { txHash });
 
   return data;
 };

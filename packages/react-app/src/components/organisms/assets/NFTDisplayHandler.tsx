@@ -1,23 +1,29 @@
-import { AddIcon } from "@chakra-ui/icons";
-import { Button, ButtonProps, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import { AddIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { Button, ButtonProps, Link, useDisclosure } from "@chakra-ui/react";
+import React, { useContext } from "react";
+
+import { WalletContext } from "../../../contexts/WalletContext";
+import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 
 import MintNFTFormModal from "./MintNFTFormModal";
 
 const MintNFTDisplay = ({ row }: { row: Asset }) => {
+  const { userRoles } = useContext(WalletContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
-  // Product-> ProductName
-  // Product -> description
-  // Product -> Image?
-  // Input -> Uploaded for condition report
-  //   Input -> External URL
-  // Product -> skuCode
-  // Asset -> _id
-  // Produuct -> year
 
-  // The remaining fields in the metadata example
+  const toast = useDefaultToast();
 
-  // Preadvice -> arrivalWarehouse -> _id
+  const handleOpen = () => {
+    if (!userRoles?.isMinter) {
+      toast({
+        title: "Error cannot mint",
+        description: "You must have the minter role to be able to mint",
+        status: "error",
+      });
+    } else {
+      onOpen();
+    }
+  };
 
   return (
     <>
@@ -28,7 +34,7 @@ const MintNFTDisplay = ({ row }: { row: Asset }) => {
         fontSize="xs"
         minW="100px"
         size="sm"
-        onClick={onOpen}
+        onClick={handleOpen}
       >
         Mint NFT
       </Button>
@@ -41,12 +47,16 @@ const NFTDisplayHandler = ({ row }: { row: Asset }) => {
     return <MintNFTDisplay row={row} />;
   }
 
-  if (!row.tokenId) {
-    // Still minting, display something
-    return <>Minting...</>;
-  }
+  // if (!row.tokenId) {
+  //   // Still minting, display something
+  //   return <>Minting...</>;
+  // }
 
-  return <>{row.tokenId}</>;
+  return (
+    <Link href={`https://goerli.etherscan.io/tx/${row.txHash}`} isExternal>
+      View on Etherscan <ExternalLinkIcon mx="2px" />
+    </Link>
+  );
 };
 
 export default NFTDisplayHandler;

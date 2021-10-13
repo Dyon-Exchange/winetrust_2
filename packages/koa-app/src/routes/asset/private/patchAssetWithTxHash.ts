@@ -8,14 +8,18 @@ interface CreateAssetMetadataBody extends Request {
     txHash: string;
   };
   query: {
-    assetId: string;
+    "asset-id": string;
   };
 }
 
 export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
-  console.log(ctx.query);
-  console.log(ctx.body);
+  const assetId = ctx.request.query["asset-id"];
 
-  ctx.status = 404;
-  //   ctx.body =
+  const asset = await Asset.findById(assetId);
+
+  asset.txHash = ctx.request.body.txHash;
+
+  await asset.save();
+
+  ctx.status = 200;
 };

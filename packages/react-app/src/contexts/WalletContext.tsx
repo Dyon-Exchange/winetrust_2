@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { SUPPORTED_NETWORKS } from "../constants/network";
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
 import useWineTrustToken, {
-  WineTrustTokenAPI,
+  WineTrustTokenInstanceHook,
 } from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
@@ -16,9 +16,11 @@ interface IWalletContext {
   isMetaMaskInstalled: boolean | undefined;
   walletConnected: boolean;
   connectAccount: () => Promise<void>;
-  isAdmin: boolean;
+  userRoles: WineTrustTokenInstanceHook["userRoles"] | undefined;
   networkDetails: NetworkDetails | undefined;
-  wineTrustTokenAPI: WineTrustTokenAPI | undefined;
+  wineTrustTokenAPI:
+    | WineTrustTokenInstanceHook["wineTrustTokenAPI"]
+    | undefined;
 }
 
 const INITIAL_WALLET_CONTEXT = {
@@ -28,7 +30,7 @@ const INITIAL_WALLET_CONTEXT = {
   isMetaMaskInstalled: undefined,
   walletConnected: false,
   connectAccount: async () => {},
-  isAdmin: true,
+  userRoles: undefined,
   networkDetails: undefined,
   wineTrustTokenAPI: undefined,
 };
@@ -152,7 +154,7 @@ export const WalletContextProvider = ({
   }, [connectAccount]);
 
   // get everything from the WineTrust token hook
-  const { isAdmin, wineTrustTokenAPI } = useWineTrustToken({
+  const { userRoles, wineTrustTokenAPI } = useWineTrustToken({
     provider,
     userDetails,
     networkDetails,
@@ -167,7 +169,7 @@ export const WalletContextProvider = ({
         isMetaMaskInstalled,
         walletConnected,
         connectAccount,
-        isAdmin,
+        userRoles,
         networkDetails,
         wineTrustTokenAPI,
       }}

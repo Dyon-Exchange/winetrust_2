@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import { Request } from "koa";
 
 import uploadAssetMetadataToIPFS from "../../../helpers/asset/uploadAssetMetadataToIPFS";
+import uploadFileToIPFS from "../../../helpers/uploadFileToIPFS";
 import Asset from "../../../models/Asset";
 import { ProductClass } from "../../../models/Product";
 import { WarehouseClass } from "../../../models/Warehouse";
@@ -49,32 +50,27 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
 
     if (!asset) throw new Error("Asset not found");
 
-    // const initialConditionReportHash = await uploadFileToIPFS(
-    //   initialConditionReport
-    // );
+    const initialConditionReportHash = await uploadFileToIPFS(
+      initialConditionReport
+    );
 
-    // const initialConditionReportHash =
-    //   "QmbGg2TePa9LUV9ghADvpQwCTbUGPQJPBg7uND9ZLjtgn4";
+    const metadataHash = await uploadAssetMetadataToIPFS(
+      assetId,
+      asset.product as ProductClass,
+      (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
+        _id: string;
+      },
+      initialConditionReportHash,
+      externalURL
+    );
 
-    // const metadataHash = await uploadAssetMetadataToIPFS(
-    //   asset._id,
-    //   asset.product as ProductClass,
-    //   (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
-    //     _id: string;
-    //   },
-    //   initialConditionReportHash,
-    //   externalURL
-    // );
+    asset.initialConditionReport = initialConditionReportHash;
+    asset.metadataHash = metadataHash;
 
-    // asset.initialConditionReport = initialConditionReportHash;
-    // asset.metadataHash = metadataHash;
+    await asset.save();
 
-    // await asset.save();
-
-    // // Return the created hash for the metadata
-    // ctx.body = `ipfs://${metadataHash}`;
-
-    ctx.body = "ipfs://Qmb7vBcXUQMWYriNwyFJJH6kmPnTYuZUaY8W9YK76EE9yL";
+    // Return the created hash for the metadata
+    ctx.body = `ipfs://${metadataHash}`;
 
     ctx.status = 200;
   } catch (error) {

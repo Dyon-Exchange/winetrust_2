@@ -5,7 +5,7 @@ import { WalletContext } from "../../../contexts/WalletContext";
 import WarningModal from "../../molecules/modals/WarningModal";
 
 const NotAdminWarningModal = () => {
-  const { isAdmin, networkDetails } = useContext(WalletContext);
+  const { networkDetails } = useContext(WalletContext);
 
   if (!networkDetails?.onSupportedNetwork) {
     const supportedNetworks = SUPPORTED_NETWORKS.map(({ name }) => name).join(

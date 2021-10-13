@@ -1,6 +1,7 @@
 import Multer from "@koa/multer";
 import Router from "koa-joi-router";
 
+import validateObjectId from "../../../helpers/validateObjectId";
 import { authRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
@@ -28,7 +29,10 @@ router.route({
   validate: {
     type: "json",
     query: {
-      assetId: Joi.string().required().allow(""),
+      "asset-id": Joi.string()
+        .required()
+        .custom(validateObjectId)
+        .example("60da675cdf9ae719a4129684"),
     },
     body: {
       txHash: Joi.string().required().allow(""),

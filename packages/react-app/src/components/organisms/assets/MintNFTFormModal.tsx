@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AttachmentIcon } from "@chakra-ui/icons";
 import {
+  Stat,
   FormErrorMessage,
   FormLabel,
   Input,
@@ -13,6 +14,9 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  HStack,
+  StatLabel,
+  StatHelpText,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { AxiosError } from "axios";
@@ -37,16 +41,10 @@ const AssetFieldDisplay = ({
   title: string;
   defaultValue: number | string | undefined;
 }) => (
-  <ModalFormControl>
-    <FormLabel fontSize="sm">{title}</FormLabel>
-    <Input
-      fontSize="sm"
-      type="text"
-      placeholder="Product name"
-      disabled
-      defaultValue={defaultValue}
-    />
-  </ModalFormControl>
+  <HStack>
+    <StatLabel>{title}</StatLabel>
+    <StatHelpText>{defaultValue}</StatHelpText>
+  </HStack>
 );
 
 interface MintNFTFormModalProps {
@@ -61,7 +59,7 @@ export interface MintNFTForm {
 }
 
 const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
-  const { wineTrustTokenAPI, userDetails } = useContext(WalletContext);
+  const { wineTrustTokenAPI } = useContext(WalletContext);
   // get theme colors
   const colors = useThemeColors();
   const toast = useDefaultToast();
@@ -96,20 +94,23 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     async (data: MintNFTForm) => {
       try {
         // await creating the product and then invalidate the products query data
-        // const metadataHash = await createAssetMetadata({
-        //   ...data,
-        //   assetId: row._id,
-        // });
+        const metadataHash = await createAssetMetadata({
+          ...data,
+          assetId: row._id,
+        });
 
-        // const txHash = await wineTrustTokenAPI?.mintNFT(
-        //   row.preAdvice.owner.ethAddress,
-        //   metadataHash
-        // );
+        const txHash = await wineTrustTokenAPI?.mintNFT(
+          row.preAdvice.owner.ethAddress,
+          metadataHash
+        );
 
-        const txHash =
-          "0x4118bff291b318ba572c70398f40592bfc601c3c30112c346bbb74961b19a945";
+        if (!txHash) throw new Error("No Tx Hash returned");
 
         await patchAssetWithTxHash({ assetId: row._id, txHash });
+
+        await queryClient.invalidateQueries("assets");
+
+        onClose();
 
         toast({
           title: "Product created.",
@@ -118,6 +119,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         });
         onClose();
       } catch (error) {
+        console.log(error);
         toast({
           title: "Error creating product.",
           description:
@@ -127,7 +129,14 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         });
       }
     },
-    [onClose, row._id, toast]
+    [
+      onClose,
+      queryClient,
+      row._id,
+      row.preAdvice.owner.ethAddress,
+      toast,
+      wineTrustTokenAPI,
+    ]
   );
 
   // state for the confirm cancel modal
@@ -161,14 +170,6 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
           <ModalContent>
             <ModalHeader>Mint NFT</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <AssetFieldDisplay
-                title="Product Name"
-                defaultValue={row.product.productName}
-              />
-              <AssetFieldDisplay
-                title="Description"
-                defaultValue={row.product.description}
-              />
               <ModalFormControl isInvalid={errors.externalURL !== undefined}>
                 <FormLabel fontSize="sm">External URL</FormLabel>
 
@@ -233,41 +234,58 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
-
-              {/* Image?? */}
-              <AssetFieldDisplay
-                title="SKU Code"
-                defaultValue={row.product.skuCode}
-              />
-              <AssetFieldDisplay title="Asset ID" defaultValue={row._id} />
-              <AssetFieldDisplay
-                title="Product Year"
-                defaultValue={row.product.year}
-              />
-              <AssetFieldDisplay
-                title="Region"
-                defaultValue={row.product.region}
-              />
-              <AssetFieldDisplay
-                title="Sub-Region"
-                defaultValue={row.product.subRegion}
-              />
-              <AssetFieldDisplay
-                title="Sub-Sub-Region"
-                defaultValue={row.product.subSubRegion}
-              />
-              <AssetFieldDisplay
-                title="Pack Size"
-                defaultValue={row.product.packSize}
-              />
-              <AssetFieldDisplay
-                title="Duty Status"
-                defaultValue={row.product.dutyStatus}
-              />
-              <AssetFieldDisplay
-                title="Warehouse ID"
-                defaultValue={row.preAdvice.arrivalWarehouse._id}
-              />
+              <HStack
+                alignItems="start"
+                bg={colors.tertiary}
+                borderWidth="1px"
+                borderRadius="lg"
+                p="10px 15px"
+                mb="15px"
+              >
+                <Stat>
+                  <AssetFieldDisplay
+                    title="Product Name"
+                    defaultValue={row.product.productName}
+                  />
+                  <AssetFieldDisplay
+                    title="Description"
+                    defaultValue={row.product.description}
+                  />
+                  {/* <AssetFieldDisplay
+                    title="SKU Code"
+                    defaultValue={row.product.skuCode}
+                  /> */}
+                  <AssetFieldDisplay title="Asset ID" defaultValue={row._id} />
+                  <AssetFieldDisplay
+                    title="Product Year"
+                    defaultValue={row.product.year}
+                  />
+                  <AssetFieldDisplay
+                    title="Region"
+                    defaultValue={row.product.region}
+                  />
+                  <AssetFieldDisplay
+                    title="Sub-Region"
+                    defaultValue={row.product.subRegion}
+                  />
+                  <AssetFieldDisplay
+                    title="Sub-Sub-Region"
+                    defaultValue={row.product.subSubRegion}
+                  />
+                  <AssetFieldDisplay
+                    title="Pack Size"
+                    defaultValue={row.product.packSize}
+                  />
+                  <AssetFieldDisplay
+                    title="Duty Status"
+                    defaultValue={row.product.dutyStatus}
+                  />
+                  <AssetFieldDisplay
+                    title="Warehouse ID"
+                    defaultValue={row.preAdvice.arrivalWarehouse._id}
+                  />
+                </Stat>
+              </HStack>
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton

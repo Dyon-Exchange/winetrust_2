@@ -20,10 +20,10 @@ const formatAssetMetadata = (
     initial_condition_report: `ipfs://${initialConditionReportHash}`,
     external_url: externalURL,
     attributes: [
-      {
-        trait_type: "SKU Code",
-        value: product.skuCode,
-      },
+      // {
+      //   trait_type: "SKU Code",
+      //   value: product.skuCode ?? "",
+      // },
       {
         trait_type: "ID Number",
         value: assetId,
@@ -54,7 +54,7 @@ const formatAssetMetadata = (
       },
       {
         trait_type: "Warehouse ID",
-        value: arrivalWarehouse._id,
+        value: arrivalWarehouse._id.toString(),
       },
     ],
   },
