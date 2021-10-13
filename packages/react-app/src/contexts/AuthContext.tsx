@@ -13,8 +13,8 @@ import loginRequest from "../api/authentication/login";
 import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../services/useLocalStorage";
 
-axios.defaults.baseURL = "http://localhost:3030/";
-// axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
+// axios.defaults.baseURL = "http://localhost:3030/";
+axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
 interface AuthDetails {
   accessToken: string;
@@ -47,11 +47,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const loggedIn = useMemo(() => {
     if (!authDetails?.accessToken) return false;
-
-    const { exp } = jwtDecode(authDetails?.accessToken) as any;
-
-    if (Date.now() >= exp * 1000) return false;
-
     return true;
   }, [authDetails?.accessToken]);
 
