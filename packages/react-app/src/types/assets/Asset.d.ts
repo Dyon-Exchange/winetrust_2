@@ -31,4 +31,7 @@ interface Asset {
   };
   expectedArrivalDate: Date;
   state: AssetState;
+  initialConditionReport?: string;
+  tokenId?: number;
+  txHash?: string;
 }

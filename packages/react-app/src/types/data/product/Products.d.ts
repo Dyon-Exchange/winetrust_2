@@ -14,6 +14,8 @@ interface NewProductForm {
 interface Product {
   _id: string;
   productName: string;
+  description: string;
+  skuCode?: string;
   year: string;
   region: string;
   subRegion?: string;

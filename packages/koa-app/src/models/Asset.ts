@@ -50,6 +50,16 @@ export class AssetClass extends TimeStamps {
 
   @prop({ enum: AssetState, default: AssetState.DueIn })
   public state: AssetState;
+
+  // The IPFS hash of the condition report
+  @prop()
+  public initialConditionReport: string;
+
+  @prop()
+  public tokenId: number;
+
+  @prop()
+  public txHash: string;
 }
 
 export default getModelForClass(AssetClass);

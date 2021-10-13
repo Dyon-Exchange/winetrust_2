@@ -38,6 +38,9 @@ export class ProductClass extends TimeStamps {
 
   @prop()
   public image?: string;
+
+  // Add description to add new product
+  // Under product name
 }
 
 export default getModelForClass(ProductClass);
