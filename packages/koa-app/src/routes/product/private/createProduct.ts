@@ -7,6 +7,7 @@ import Product, { ProductClass } from "../../../models/Product";
 
 interface CreateProductRequestBody {
   productName: string;
+  description: string;
   year: string;
   region: string;
   subRegion?: string;

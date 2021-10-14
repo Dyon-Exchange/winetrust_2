@@ -13,6 +13,8 @@ import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import NFTDisplayHandler from "./NFTDisplayHandler";
+
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   {
@@ -128,7 +130,9 @@ const assetsTableColumns: GridColDef[] = [
     headerName: "Token ID",
     flex: 1,
     minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
+    renderCell: (param: GridValueGetterParams) => (
+      <NFTDisplayHandler row={param.row as Asset} />
+    ),
   },
 ];
 

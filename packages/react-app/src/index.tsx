@@ -17,8 +17,8 @@ const AppThemeWrapper = () => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <WalletContextProvider>
-          <AuthContextProvider>
+        <AuthContextProvider>
+          <WalletContextProvider>
             <MuiThemeProvider theme={materialTheme}>
               <ChakraProvider theme={chakraTheme}>
                 <ColorModeScript
@@ -27,8 +27,8 @@ const AppThemeWrapper = () => {
                 <App />
               </ChakraProvider>
             </MuiThemeProvider>
-          </AuthContextProvider>
-        </WalletContextProvider>
+          </WalletContextProvider>
+        </AuthContextProvider>
       </QueryClientProvider>
     </React.StrictMode>
   );

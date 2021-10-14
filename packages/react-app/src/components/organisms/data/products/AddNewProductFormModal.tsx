@@ -142,6 +142,26 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+              <ModalFormControl
+                id="description"
+                isDisabled={isSubmitting}
+                isInvalid={errors.description !== undefined}
+              >
+                <FormLabel fontSize="sm">Description</FormLabel>
+                <Input
+                  {...register("description", {
+                    required: "Description is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Description"
+                />
+                {errors.description !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.description.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
 
               <ModalFormControl
                 id="year"

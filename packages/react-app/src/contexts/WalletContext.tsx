@@ -5,7 +5,9 @@ import type { ReactNode } from "react";
 
 import { SUPPORTED_NETWORKS } from "../constants/network";
 import { convertWeiToNumber } from "../helpers/ethers/convertValue";
-import useWineTrustToken from "../hooks/contracts/useWineTrustToken";
+import useWineTrustToken, {
+  WineTrustTokenInstanceHook,
+} from "../hooks/contracts/useWineTrustToken";
 
 interface IWalletContext {
   userDetails: UserDetails | undefined;
@@ -14,8 +16,11 @@ interface IWalletContext {
   isMetaMaskInstalled: boolean | undefined;
   walletConnected: boolean;
   connectAccount: () => Promise<void>;
-  isAdmin: boolean;
+  userRoles: WineTrustTokenInstanceHook["userRoles"] | undefined;
   networkDetails: NetworkDetails | undefined;
+  wineTrustTokenAPI:
+    | WineTrustTokenInstanceHook["wineTrustTokenAPI"]
+    | undefined;
 }
 
 const INITIAL_WALLET_CONTEXT = {
@@ -25,8 +30,9 @@ const INITIAL_WALLET_CONTEXT = {
   isMetaMaskInstalled: undefined,
   walletConnected: false,
   connectAccount: async () => {},
-  isAdmin: true,
+  userRoles: undefined,
   networkDetails: undefined,
+  wineTrustTokenAPI: undefined,
 };
 
 export const WalletContext = createContext<IWalletContext>(
@@ -52,6 +58,11 @@ export const WalletContextProvider = ({
 
   const walletConnected =
     userDetails !== undefined && provider !== undefined && !initialising;
+
+  const clearConnectedAccount = useCallback(() => {
+    setProvider(undefined);
+    setUserDetails(undefined);
+  }, [setProvider, setUserDetails]);
 
   // will setup wallet context to the currently selected metamask account
   const connectAccount = useCallback(async () => {
@@ -104,6 +115,7 @@ export const WalletContextProvider = ({
     if (!window.ethereum) return;
 
     const handleAccountChange = async () => {
+      clearConnectedAccount();
       // setup wallet context again with the new selected account
       await connectAccount();
     };
@@ -145,10 +157,10 @@ export const WalletContextProvider = ({
         handleChainChanged
       );
     };
-  }, [connectAccount]);
+  }, [clearConnectedAccount, connectAccount]);
 
   // get everything from the WineTrust token hook
-  const { isAdmin } = useWineTrustToken({
+  const { userRoles, wineTrustTokenAPI } = useWineTrustToken({
     provider,
     userDetails,
     networkDetails,
@@ -163,8 +175,9 @@ export const WalletContextProvider = ({
         isMetaMaskInstalled,
         walletConnected,
         connectAccount,
-        isAdmin,
+        userRoles,
         networkDetails,
+        wineTrustTokenAPI,
       }}
     >
       {children}

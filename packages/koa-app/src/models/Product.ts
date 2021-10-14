@@ -12,32 +12,35 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
   },
 })
 export class ProductClass extends TimeStamps {
-  @prop()
-  public productName?: string;
+  @prop({ required: true })
+  public productName: string;
 
-  @prop({ maxlength: 18 })
-  public skuCode?: string;
+  @prop({ required: true })
+  public description: string;
 
-  @prop()
-  public year?: string;
+  // @prop({ maxlength: 18, required: true })
+  // public skuCode?: string;
 
-  @prop()
-  public region?: string;
+  @prop({ required: true })
+  public year: string;
 
-  @prop()
-  public subRegion?: string;
+  @prop({ required: true })
+  public region: string;
 
-  @prop()
-  public subSubRegion?: string;
+  @prop({ required: true })
+  public subRegion: string;
 
-  @prop()
-  public packSize?: string;
+  @prop({ required: true })
+  public subSubRegion: string;
 
-  @prop()
-  public dutyStatus?: string;
+  @prop({ required: true })
+  public packSize: string;
 
-  @prop()
-  public image?: string;
+  @prop({ required: true })
+  public dutyStatus: string;
+
+  @prop({ required: true })
+  public image: string;
 }
 
 export default getModelForClass(ProductClass);
