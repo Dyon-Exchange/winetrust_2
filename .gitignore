@@ -30,3 +30,5 @@ yarn-error.log*
 # smart-contracts
 /packages/smart-contracts/artifacts
 /packages/smart-contracts/cache
+
+/packages/react-app/build

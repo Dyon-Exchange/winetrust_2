@@ -26,7 +26,6 @@ import { useQueryClient } from "react-query";
 
 import createAssetMetadata from "../../../api/data/assets/createAssetMetadata";
 import patchAssetWithTxHash from "../../../api/data/assets/patchAssetWithTxHash";
-import { MINTER_ROLE } from "../../../constants/roles";
 import { WalletContext } from "../../../contexts/WalletContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
@@ -119,7 +118,6 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         });
         onClose();
       } catch (error) {
-        console.log(error);
         toast({
           title: "Error creating product.",
           description:
@@ -170,13 +168,14 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
           <ModalContent>
             <ModalHeader>Mint NFT</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-              <ModalFormControl isInvalid={errors.externalURL !== undefined}>
+              <ModalFormControl
+                isInvalid={errors.externalURL !== undefined}
+                isDisabled={isSubmitting}
+              >
                 <FormLabel fontSize="sm">External URL</FormLabel>
-
                 <Input
                   {...register("externalURL", {
                     required: "External URL is required",
-                    // TODO validate URL
                   })}
                   fontSize="sm"
                   type="text"

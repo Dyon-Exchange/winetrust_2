@@ -1,6 +1,12 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import type { ReactNode } from "react";
 
 import { SUPPORTED_NETWORKS } from "../constants/network";
@@ -8,6 +14,8 @@ import { convertWeiToNumber } from "../helpers/ethers/convertValue";
 import useWineTrustToken, {
   WineTrustTokenInstanceHook,
 } from "../hooks/contracts/useWineTrustToken";
+
+import { AuthContext } from "./AuthContext";
 
 interface IWalletContext {
   userDetails: UserDetails | undefined;
@@ -44,6 +52,7 @@ export const WalletContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { logout } = useContext(AuthContext);
   // loading state for initialising the context
   const [initialising, setInitialising] = useState(true);
 
@@ -58,6 +67,11 @@ export const WalletContextProvider = ({
 
   const walletConnected =
     userDetails !== undefined && provider !== undefined && !initialising;
+
+  const clearConnectedAccount = useCallback(() => {
+    setProvider(undefined);
+    setUserDetails(undefined);
+  }, [setProvider, setUserDetails]);
 
   // will setup wallet context to the currently selected metamask account
   const connectAccount = useCallback(async () => {
@@ -110,6 +124,7 @@ export const WalletContextProvider = ({
     if (!window.ethereum) return;
 
     const handleAccountChange = async () => {
+      clearConnectedAccount();
       // setup wallet context again with the new selected account
       await connectAccount();
     };
@@ -151,7 +166,7 @@ export const WalletContextProvider = ({
         handleChainChanged
       );
     };
-  }, [connectAccount]);
+  }, [clearConnectedAccount, connectAccount]);
 
   // get everything from the WineTrust token hook
   const { userRoles, wineTrustTokenAPI } = useWineTrustToken({

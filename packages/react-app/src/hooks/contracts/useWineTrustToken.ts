@@ -1,11 +1,10 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
-import LocalWineTrustTokenJson from "@winetrust/smart-contracts/deployments/localhost/WineTrustToken.json";
+import WineTrustTokenJSON from "@winetrust/smart-contracts/deployments/goerli/WineTrustToken.json";
 import { WineTrustToken__factory } from "@winetrust/smart-contracts/typechain/factories/WineTrustToken__factory";
 import { WineTrustToken } from "@winetrust/smart-contracts/typechain/WineTrustToken";
 import { ContractTransaction, providers } from "ethers";
-import { hexZeroPad } from "ethers/lib/utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../../constants/roles";
@@ -38,7 +37,7 @@ const useWineTrustTokenInstance = ({
     useState<WineTrustTokenInstanceHook["userRoles"]>();
 
   // destructure WineTrustTokenInstance json
-  const { address } = LocalWineTrustTokenJson;
+  const { address } = WineTrustTokenJSON;
 
   // set a wine trust token contract instance
   useEffect(() => {
