@@ -13,7 +13,7 @@ export default async ({
 }: Props) => {
   const formData = new FormData();
 
-  // append the image file
+  // append the initial condition report
   formData.append("initial-condition-report", initialConditionReport);
 
   formData.append("assetId", assetId);

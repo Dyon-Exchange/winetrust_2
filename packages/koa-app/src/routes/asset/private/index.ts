@@ -45,19 +45,6 @@ router.route({
   handler: patchAsset,
 });
 
-// router.route({
-//   method: "post",
-//   path: "/",
-//   validate: {
-//     type: "multipart",
-//     body: {
-//       assetId: Joi.string().required().allow(""),
-//       externalURL: Joi.string().required().allow(""),
-//     },
-//   },
-//   handler: [multer.single("initial-condition-report"), createAssetMetadata],
-// });
-
 router.route({
   method: "get",
   path: "/",

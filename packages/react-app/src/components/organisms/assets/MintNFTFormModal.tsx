@@ -72,10 +72,10 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     formState: { errors, isDirty, isSubmitting },
   } = useForm<MintNFTForm>();
 
-  // image file input ref
-  const imageFileInputRef = useRef<any>(null);
+  // pdf file input ref
+  const pdfFileInputRef = useRef<any>(null);
 
-  // controller hook for the image file input
+  // controller hook for the pdf file input
   const {
     field: {
       value: conditionReportValue,
@@ -191,7 +191,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
               <ModalFormControl
-                id="image"
+                id="pdf"
                 isDisabled={isSubmitting}
                 isInvalid={errors.initialConditionReport !== undefined}
               >
@@ -207,7 +207,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={pdfFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -223,7 +223,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => pdfFileInputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
