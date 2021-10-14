@@ -28,8 +28,8 @@ export default async (ctx: ExtendedContext<LoginRequest>) => {
   const payload = {
     id: account._id,
   };
-  // { expiresIn: 36000 }
-  const token = sign(payload, process.env.TOKEN_SECRET, { expiresIn: 5 });
+
+  const token = sign(payload, process.env.TOKEN_SECRET, { expiresIn: 36000 });
   const refreshToken = sign(payload, process.env.REFRESH_SECRET, {
     expiresIn: "7d",
   });
