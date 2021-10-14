@@ -13,7 +13,7 @@ export default async (ctx: ExtendedContext<SearchWarehousesRequest>) => {
   const searchName = ctx.request.query.name;
 
   if (searchName === "") {
-    ctx.body = [];
+    ctx.body = await Warehouse.find();
     return;
   }
 

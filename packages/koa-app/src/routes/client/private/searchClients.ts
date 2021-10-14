@@ -13,7 +13,7 @@ export default async (ctx: ExtendedContext<SearchClientsRequest>) => {
   const searchName = ctx.request.query.name;
 
   if (searchName === "") {
-    ctx.body = [];
+    ctx.body = await Client.find();
     return;
   }
 

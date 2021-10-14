@@ -13,7 +13,7 @@ export default async (ctx: ExtendedContext<SearchProductsRequest>) => {
   const searchName = ctx.request.query["product-name"];
 
   if (searchName === "") {
-    ctx.body = [];
+    ctx.body = await Product.find();
     return;
   }
 
