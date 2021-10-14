@@ -57,14 +57,17 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   if (asset.state === "Due In") {
     return (
       <>
-        <ConfirmCancelChangesModal
-          onConfirm={setAsLandedHandler}
-          isOpen={isConfirmLandedModalOpen}
-          onClose={closeConfirmLandedModal}
-          overrideHeader="Warning: Setting as Landed"
-          overrideBody="Are you sure you want to mark as landed? This cannot be undone."
-          isSubmitting={isSubmitting}
-        />
+        {isConfirmLandedModalOpen && (
+          <ConfirmCancelChangesModal
+            onConfirm={setAsLandedHandler}
+            isOpen={isConfirmLandedModalOpen}
+            onClose={closeConfirmLandedModal}
+            overrideHeader="Warning: Setting as Landed"
+            overrideBody="Are you sure you want to mark as landed? This cannot be undone."
+            isSubmitting={isSubmitting}
+          />
+        )}
+
         <Button
           colorScheme="blue"
           // leftIcon={<AddIcon />}
