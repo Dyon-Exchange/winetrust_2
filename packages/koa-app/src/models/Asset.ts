@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable max-classes-per-file */
 /**
  * Asset model, the individual wine/token asset which is a type of product
@@ -6,6 +7,7 @@
 import {
   getModelForClass,
   modelOptions,
+  pre,
   prop,
   Ref,
 } from "@typegoose/typegoose";
@@ -23,7 +25,7 @@ class Cost {
   public amount: number;
 }
 
-enum AssetState {
+export enum AssetState {
   DueIn = "Due In",
   Landed = "Landed",
   Tokenised = "Tokenised",
@@ -65,4 +67,6 @@ export class AssetClass extends TimeStamps {
   public txHash: string;
 }
 
-export default getModelForClass(AssetClass);
+const Asset = getModelForClass(AssetClass);
+
+export default Asset;

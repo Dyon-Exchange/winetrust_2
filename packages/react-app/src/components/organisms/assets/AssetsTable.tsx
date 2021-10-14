@@ -13,6 +13,7 @@ import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
 // column headers for the assets data table
@@ -106,7 +107,9 @@ const assetsTableColumns: GridColDef[] = [
     headerName: "State",
     flex: 1,
     minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) => (param.row as Asset).state,
+    renderCell: (param: GridValueGetterParams) => (
+      <AssetStateHandler asset={param.row as Asset} />
+    ),
   },
   {
     field: "expectedArrivalDate",

@@ -15,7 +15,7 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { ClientClass } from "./Client";
 import { WarehouseClass } from "./Warehouse";
 
-enum PreAdviceState {
+export enum PreAdviceState {
   DueIn = "Due In",
   PartLanded = "Part Landed",
   Landed = "Landed",

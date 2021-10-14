@@ -14,26 +14,44 @@ interface ConfirmCancelChangesModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  overrideHeader?: string;
+  overrideBody?: string;
+  isSubmitting?: boolean;
 }
 
 const ConfirmCancelChangesModal = ({
   isOpen,
   onClose,
   onConfirm,
+  overrideHeader,
+  overrideBody,
+  isSubmitting,
 }: ConfirmCancelChangesModalProps) => (
-  <Modal isOpen={isOpen} onClose={onClose}>
+  <Modal
+    closeOnOverlayClick={!isSubmitting}
+    closeOnEsc={!isSubmitting}
+    isOpen={isOpen}
+    onClose={onClose}
+  >
     <ModalOverlay />
     <ModalContent>
-      <ModalHeader>Are you sure?</ModalHeader>
-      <ModalBody>Changes you made may not be saved.</ModalBody>
+      <ModalHeader>{overrideHeader ?? "Are you sure?"}</ModalHeader>
+      <ModalBody>
+        {overrideBody ?? "Changes you made may not be saved."}
+      </ModalBody>
       <ModalFooter>
-        <ModalFooterButton colorScheme="blue" onClick={onConfirm}>
+        <ModalFooterButton
+          colorScheme="blue"
+          onClick={onConfirm}
+          isLoading={isSubmitting}
+        >
           Confirm
         </ModalFooterButton>
         <ModalFooterButton
           colorScheme="blue"
           onClick={onClose}
           variant="outline"
+          disabled={isSubmitting}
         >
           Cancel
         </ModalFooterButton>

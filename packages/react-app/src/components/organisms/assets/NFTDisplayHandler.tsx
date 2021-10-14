@@ -35,6 +35,7 @@ const MintNFTDisplay = ({ row }: { row: Asset }) => {
         minW="100px"
         size="sm"
         onClick={handleOpen}
+        disabled={row.state === "Due In"}
       >
         Mint NFT
       </Button>
