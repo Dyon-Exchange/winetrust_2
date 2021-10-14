@@ -25,7 +25,7 @@ import { useController, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
 import createAssetMetadata from "../../../api/data/assets/createAssetMetadata";
-import patchAssetWithTxHash from "../../../api/data/assets/patchAssetWithTxHash";
+import patchAsset from "../../../api/data/assets/patchAsset";
 import { WalletContext } from "../../../contexts/WalletContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
@@ -105,7 +105,10 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
 
         if (!txHash) throw new Error("No Tx Hash returned");
 
-        await patchAssetWithTxHash({ assetId: row._id, txHash });
+        await patchAsset({
+          assetId: row._id,
+          assetUpdates: { txHash },
+        });
 
         await queryClient.invalidateQueries("assets");
 

@@ -2,11 +2,12 @@ import Multer from "@koa/multer";
 import Router from "koa-joi-router";
 
 import validateObjectId from "../../../helpers/validateObjectId";
+import { AssetState } from "../../../models/Asset";
 import { authRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
 import getAssets from "./getAssets";
-import patchAssetWithTxHash from "./patchAssetWithTxHash";
+import patchAsset from "./patchAsset";
 
 const { Joi } = Router;
 
@@ -35,10 +36,13 @@ router.route({
         .example("60da675cdf9ae719a4129684"),
     },
     body: {
-      txHash: Joi.string().required().allow(""),
+      assetUpdates: Joi.object().keys({
+        txHash: Joi.string().allow(""),
+        state: Joi.string().valid(...Object.values(AssetState)),
+      }),
     },
   },
-  handler: patchAssetWithTxHash,
+  handler: patchAsset,
 });
 
 router.route({

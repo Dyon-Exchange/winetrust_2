@@ -23,8 +23,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
-import searchProducts from "../../../api/data/products/searchProducts";
+import getProducts from "../../../api/data/products/getProducts";
 import supportedCurrencies from "../../../constants/supportedCurrencies";
+import useFilteredData from "../../../hooks/search/useFilteredData";
+import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
@@ -52,18 +54,16 @@ const AddNewAssetFormModal = ({
 }: AddNewAssetFormModalProps) => {
   const toast = useDefaultToast();
 
-  // state for the product search query
-  const [productSearchQuery, setProductSearchQuery] = useState("");
-
-  // products data query
   const {
-    data: productsData,
+    filteredData: filteredProductsData,
+    setSearchQry: setProductSearchQuery,
     error: productsError,
     isError: productsIsError,
     isFetching: productsDataIsFetching,
-  } = useQuery(["products-search", productSearchQuery], async () => {
-    const data = await searchProducts(productSearchQuery);
-    return data;
+  } = useFilteredData<Product>({
+    useQueryKey: "products",
+    getFunction: getProducts,
+    filterFields: ["productName"],
   });
 
   // pop a toast for any of the search query errors
@@ -124,9 +124,10 @@ const AddNewAssetFormModal = ({
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
             <ModalHeader>Add New Asset</ModalHeader>
-            <ModalBody alignSelf="center" w="80%">
+            <ModalBody alignSelf="center" w="80%" overflow="inherit">
               <ModalFormControl isInvalid={errors.product !== undefined}>
                 <FormLabel fontSize="sm">Product</FormLabel>
+                {/* @ts-ignore */}
                 <Controller
                   control={control}
                   name="product"
@@ -148,10 +149,12 @@ const AddNewAssetFormModal = ({
                       onInputChange={(search: string) =>
                         setProductSearchQuery(search)
                       }
-                      options={productsData?.map((product: Product) => ({
-                        value: product,
-                        label: product.productName,
-                      }))}
+                      options={filteredProductsData?.map(
+                        (product: Product) => ({
+                          value: product,
+                          label: product.productName,
+                        })
+                      )}
                     />
                   )}
                 />
@@ -232,7 +235,7 @@ const AddNewAssetFormModal = ({
 
               <ModalFormControl isInvalid={errors.quantity !== undefined}>
                 <FormLabel fontSize="sm">Quantity</FormLabel>
-                <NumberInput defaultValue={1} min={1} precision={0}>
+                <NumberInput defaultValue={1} min={1} precision={0} max={99}>
                   <NumberInputField
                     {...register("quantity", {
                       required: "Quantity is required",

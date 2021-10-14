@@ -16,9 +16,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useQuery, useQueryClient } from "react-query";
 
-import searchClients from "../../../api/data/clients/searchClients";
-import searchWarehouses from "../../../api/data/warehouses/searchWarehouses";
+import getClients from "../../../api/data/clients/getClients";
+import getWarehouses from "../../../api/data/warehouses/getWarehouses";
 import createPreAdvice from "../../../api/preAdvice/createPreAdvice";
+import useFilteredData from "../../../hooks/search/useFilteredData";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
@@ -88,51 +89,41 @@ const AddNewPreAdviceFormModal = ({
     [setAssets]
   );
 
-  // states for search queries
-  const [clientSearchQuery, setClientSearchQuery] = useState("");
-  const [arrivalWarehouseSearchQuery, setArrivalWarehouseSearchQuery] =
-    useState("");
-  const [
-    transferringWarehouseSearchQuery,
-    setTransferringWarehouseSearchQuery,
-  ] = useState("");
-
-  // data queries
   const {
-    data: clientsData,
+    filteredData: clientsData,
+    setSearchQry: setClientSearchQuery,
     error: clientsError,
     isError: clientsIsError,
     isFetching: clientsDataIsFetching,
-  } = useQuery(["clients-search", clientSearchQuery], async () => {
-    const data = await searchClients(clientSearchQuery);
-    return data;
+  } = useFilteredData<Client>({
+    useQueryKey: "clients",
+    getFunction: getClients,
+    filterFields: ["firstName", "lastName"],
   });
 
   const {
-    data: arrivalWarehousesData,
+    filteredData: arrivalWarehousesData,
+    setSearchQry: setArrivalWarehouseSearchQuery,
     error: arrivalWarehousesError,
     isError: arrivalWarehousesIsError,
     isFetching: arrivalWarehousesDataIsFetching,
-  } = useQuery(
-    ["arrival-warehouses-search", arrivalWarehouseSearchQuery],
-    async () => {
-      const data = await searchWarehouses(arrivalWarehouseSearchQuery);
-      return data;
-    }
-  );
+  } = useFilteredData<Warehouse>({
+    useQueryKey: "warehouses",
+    getFunction: getWarehouses,
+    filterFields: ["name"],
+  });
 
   const {
-    data: transferringWarehousesData,
+    filteredData: transferringWarehousesData,
+    setSearchQry: setTransferringWarehouseSearchQuery,
     error: transferringWarehousesError,
     isError: transferringWarehousesIsError,
     isFetching: transferringWarehousesIsFetching,
-  } = useQuery(
-    ["transferring-warehouses-search", transferringWarehouseSearchQuery],
-    async () => {
-      const data = await searchWarehouses(transferringWarehouseSearchQuery);
-      return data;
-    }
-  );
+  } = useFilteredData<Warehouse>({
+    useQueryKey: "warehouses",
+    getFunction: getWarehouses,
+    filterFields: ["name"],
+  });
 
   // pop a toast for any of the search query errors
   useEffect(() => {
@@ -246,7 +237,7 @@ const AddNewPreAdviceFormModal = ({
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
             <ModalHeader>Add New Pre-Advice</ModalHeader>
-            <ModalBody alignSelf="center" w="80%">
+            <ModalBody alignSelf="center" w="80%" overflow="inherit">
               <ModalFormControl
                 isDisabled={isSubmitting}
                 isInvalid={errors.owner !== undefined}

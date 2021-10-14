@@ -16,7 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import CountryData from "country-data";
-import React, { useCallback } from "react";
+import { orderBy } from "lodash";
+import React, { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
@@ -89,6 +90,16 @@ const AddNewClientFormModal = ({
   const closeModal = useCallback(
     () => (isDirty ? openConfirmCancel() : onClose()),
     [isDirty, openConfirmCancel, onClose]
+  );
+
+  const orderedCountries = useMemo(
+    () =>
+      orderBy(
+        CountryData.callingCountries.all,
+        (country) => country.alpha3 || country.alpha2
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [CountryData.callingCountries.all]
   );
 
   return (
@@ -186,13 +197,18 @@ const AddNewClientFormModal = ({
                       variant="flushed"
                       isInvalid={errors.phoneNumber?.countryCode !== undefined}
                     >
-                      {CountryData.callingCountries.all.map((country) => (
-                        <option
-                          key={country.name}
-                          value={country.countryCallingCodes[0]}
-                          label={country.countryCallingCodes[0]}
-                        />
-                      ))}
+                      {orderedCountries.map((country) => {
+                        const value = `${country.alpha3 || country.alpha2} (${
+                          country.countryCallingCodes[0]
+                        })`;
+                        return (
+                          <option
+                            key={country.name}
+                            value={country.countryCallingCodes[0]}
+                            label={value}
+                          />
+                        );
+                      })}
                     </Select>
                   </InputLeftAddon>
                   <Input
