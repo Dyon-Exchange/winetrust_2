@@ -1,12 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 import { SUPPORTED_NETWORKS } from "../constants/network";
@@ -14,8 +8,6 @@ import { convertWeiToNumber } from "../helpers/ethers/convertValue";
 import useWineTrustToken, {
   WineTrustTokenInstanceHook,
 } from "../hooks/contracts/useWineTrustToken";
-
-import { AuthContext } from "./AuthContext";
 
 interface IWalletContext {
   userDetails: UserDetails | undefined;
@@ -52,7 +44,6 @@ export const WalletContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { logout } = useContext(AuthContext);
   // loading state for initialising the context
   const [initialising, setInitialising] = useState(true);
 

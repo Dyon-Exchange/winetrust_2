@@ -27,7 +27,9 @@ const MintNFTDisplay = ({ row }: { row: Asset }) => {
 
   return (
     <>
-      <MintNFTFormModal isOpen={isOpen} onClose={onClose} row={row} />
+      {isOpen && (
+        <MintNFTFormModal isOpen={isOpen} onClose={onClose} row={row} />
+      )}
       <Button
         colorScheme="blue"
         leftIcon={<AddIcon />}
@@ -46,11 +48,6 @@ const NFTDisplayHandler = ({ row }: { row: Asset }) => {
   if (!row.txHash) {
     return <MintNFTDisplay row={row} />;
   }
-
-  // if (!row.tokenId) {
-  //   // Still minting, display something
-  //   return <>Minting...</>;
-  // }
 
   return (
     <Link href={`https://goerli.etherscan.io/tx/${row.txHash}`} isExternal>
