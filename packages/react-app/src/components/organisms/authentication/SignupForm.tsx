@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
@@ -27,46 +27,46 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/icons/ToggleRevealPasswordIcon";
 import DefaultLink from "../../atoms/links/DefaultLink";
 
-const LoginForm = () => {
+const SignupForm = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
 
   // get the login function from auth context
-  const { login, authDetails } = useContext(AuthContext);
+  const { signup } = useContext(AuthContext);
 
   // the form's min width
   const formMinWidth = width > 500 ? "400px" : undefined;
 
   // state to reveal or hide password
-  const [reveal, setReveal] = useBoolean(false);
+  const [revealPass, setRevealPass] = useBoolean(false);
+  const [revealCPass, setRevealCPass] = useBoolean(false);
 
   // state for login error
   const [loginError, setLoginError] = useState<string | undefined>();
 
   // returns the input type for the password field depending on `reveal``
-  const passwordInputType: "text" | "password" = useMemo(() => {
+  const passwordInputType = (reveal: boolean): "text" | "password" => {
     if (reveal) return "text";
     return "password";
-  }, [reveal]);
+  };
 
   // aria label for the password input reveal button
-  const passwordRevealButtonAriaLabel: "Hide password" | "Reveal password" =
-    useMemo(() => {
+  const passwordRevealButtonAriaLabel = (reveal: boolean): "Hide password" | "Reveal password" => {
       if (reveal) return "Hide password";
       return "Reveal password";
-    }, [reveal]);
+    };
 
   // function to toggle revealing password
-  const toggleRevealPassword = useCallback(
-    () => setReveal.toggle(),
-    [setReveal]
-  );
+  const toggleReveal = (setReveal: {
+    readonly toggle: () => void;
+  }) => () => setReveal.toggle();
 
   // react hook form
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    getValues
   } = useForm<LoginForm>();
 
   // submit handler
@@ -79,13 +79,12 @@ const LoginForm = () => {
       if (!email || !password) return;
 
       try {
-        await login(email, password);
-        console.log(authDetails);
+        await signup(email, password);
       } catch (error) {
         setLoginError((error as AxiosError).response?.data ?? "Network error.");
       }
     },
-    [login, setLoginError, authDetails]
+    [signup, setLoginError]
   );
 
   return (
@@ -145,23 +144,56 @@ const LoginForm = () => {
               <Input
                 {...register("password", { required: "Password is required" })}
                 fontSize="sm"
-                type={passwordInputType}
+                type={passwordInputType(revealPass)}
                 placeholder="Password"
               />
               <InputRightElement>
                 <IconButton
-                  aria-label={passwordRevealButtonAriaLabel}
+                  aria-label={passwordRevealButtonAriaLabel(revealPass)}
                   bg="transparent"
                   disabled={isSubmitting}
                   size="sm"
-                  icon={<ToggleRevealPasswordIcon reveal={reveal} />}
-                  onClick={toggleRevealPassword}
+                  icon={<ToggleRevealPasswordIcon reveal={revealPass} />}
+                  onClick={toggleReveal(setRevealPass)}
                 />
               </InputRightElement>
             </InputGroup>
             {errors.password !== undefined && (
               <FormErrorMessage color={colors.error} fontSize="sm">
                 {errors.password.message}
+              </FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl
+            id="confirm_password"
+            isDisabled={isSubmitting}
+            isInvalid={errors.confirmPassword !== undefined}
+          >
+            <FormLabel fontSize="sm">Conirm Password</FormLabel>
+            <InputGroup>
+              <Input
+                {...register("confirmPassword", {
+                  validate: value =>
+                    value === getValues("password") || "The passwords do not match"
+                })}
+                fontSize="sm"
+                type={passwordInputType(revealCPass)}
+                placeholder="Retype Password"
+              />
+              <InputRightElement>
+                <IconButton
+                  aria-label={passwordRevealButtonAriaLabel(revealCPass)}
+                  bg="transparent"
+                  disabled={isSubmitting}
+                  size="sm"
+                  icon={<ToggleRevealPasswordIcon reveal={revealCPass} />}
+                  onClick={toggleReveal(setRevealCPass)}
+                />
+              </InputRightElement>
+            </InputGroup>
+            {errors.confirmPassword !== undefined && (
+              <FormErrorMessage color={colors.error} fontSize="sm">
+                {errors.confirmPassword.message}
               </FormErrorMessage>
             )}
           </FormControl>
@@ -174,7 +206,7 @@ const LoginForm = () => {
             Sign in
           </Button>
           <div>
-            <p>Don&#39;t have an account? <DefaultLink to="/signup">Sign Up</DefaultLink></p>
+            <p>Already have an account? <DefaultLink to="/login">Sign In</DefaultLink></p>
           </div>
         </VStack>
       </form>
@@ -182,4 +214,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
