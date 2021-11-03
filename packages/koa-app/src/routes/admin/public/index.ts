@@ -62,7 +62,8 @@ router.route({
     output: {
       200: {
         body: {
-          message: "Signup success!"
+          token: Joi.string().required(),
+          refreshToken: Joi.string().required(),
         },
       },
     },
