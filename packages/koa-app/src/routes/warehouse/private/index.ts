@@ -3,6 +3,7 @@ import Router from "koa-joi-router";
 import { authRequired } from "../../../services/passport";
 
 import createWarehouse from "./createWarehouse";
+import deleteWarehouse from "./deleteWarehouse";
 import getWarehouses from "./getWarehouses";
 import searchWarehouses from "./searchWarehouses";
 
@@ -42,6 +43,12 @@ router.route({
     },
   },
   handler: searchWarehouses,
+});
+
+router.route({
+  method: "delete",
+  path: "/",
+  handler: deleteWarehouse,
 });
 
 export default router;
