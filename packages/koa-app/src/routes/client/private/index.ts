@@ -4,6 +4,7 @@ import { authRequired } from "../../../services/passport";
 
 import createClient from "./createClient";
 import deleteClient from "./deleteClient";
+import deleteClients from "./deleteClients";
 import getClients from "./getClients";
 import searchClients from "./searchClients";
 
@@ -53,5 +54,12 @@ router.route({
   path: "/:clientId",
   handler: deleteClient,
 });
+
+router.route({
+  method: "delete",
+  path: "/",
+  handler: deleteClients,
+});
+
 
 export default router;
