@@ -2,10 +2,11 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useContext } from "react";
 import { useQuery } from "react-query";
 
 import getAssets from "../../../api/assets/getAssets";
+import { DataContext } from "../../../contexts/DataContext";
 import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import usePreAdviceFilter from "../../../zustand/usePreAdviceFilter";
@@ -149,6 +150,8 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
   // get everything needed from the pre-advice filter zustand
   const { selectedPreAdviceId } = usePreAdviceFilter();
 
+  const { setAssets } = useContext(DataContext);
+
   // query for assets data
   const {
     data: assetsData,
@@ -157,6 +160,10 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
     isError: assetsDataIsError,
     refetch: refetchAssetsData,
   } = useQuery("assets", getAssets);
+
+  useEffect(() => {
+    if (assetsData) setAssets(assetsData);
+  }, [assetsData, setAssets]);
 
   const filteredAssetsData: Asset[] | undefined = useMemo(() => {
     if (!assetsData) return undefined;
@@ -207,7 +214,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
   if (assetsDataIsError)
     return (
       <DataTableError
-        message="There was an error fetching the assets data, try again?"
+        message='There was an error fetching the assets data, try again?'
         refetch={refetchAssetsData}
       />
     );
