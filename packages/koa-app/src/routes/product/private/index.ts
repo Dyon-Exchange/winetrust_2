@@ -45,7 +45,7 @@ router.route({
 
 router.route({
   method: "delete",
-  path: "/products",
+  path: "/",
   handler: deleteProducts,
 });
 
