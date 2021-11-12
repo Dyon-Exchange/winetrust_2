@@ -33,7 +33,8 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.productName,
+    (param.row as Asset).product.productName,
+    
   },
   {
     field: "productYear",
