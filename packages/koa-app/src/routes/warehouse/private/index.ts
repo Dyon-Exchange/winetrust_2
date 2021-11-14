@@ -4,7 +4,6 @@ import { authRequired } from "../../../services/passport";
 
 import createWarehouse from "./createWarehouse";
 import deleteWarehouse from "./deleteWarehouse";
-import deleteWarehouses from "./deleteWarehouses";
 import getWarehouses from "./getWarehouses";
 import searchWarehouses from "./searchWarehouses";
 
@@ -49,7 +48,7 @@ router.route({
 router.route({
   method: "delete",
   path: "/",
-  handler: deleteWarehouses,
+  handler: deleteWarehouse,
 });
 
 export default router;

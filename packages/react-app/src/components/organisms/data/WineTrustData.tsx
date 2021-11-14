@@ -79,23 +79,25 @@ const WineTrustData = () => {
   }, [tabIndex, openAddNewWarehouse, openAddNewClient, openAddNewProduct]);
 
   const removeSelectedRows = useCallback(async () => {
-    setIsLoading(true);
-    // Warehouse
-    if (tabIndex === 0) console.log(deleteList);
-    // Client
-    if (tabIndex === 1) {
-      const result = await removeClients(deleteList);
-      console.log(result);
+    try {
+      setIsLoading(true);
+      // Warehouse
+      if (tabIndex === 0) console.log(deleteList);
+      // Client
+      if (tabIndex === 1) {
+        const result = await removeClients(deleteList);
+        console.log(result);
+      }
+      // Product
+      if (tabIndex === 2) {
+        const result = await removeProducts(deleteList);
+        console.log(result);
+      }
+    } finally {
+      setIsLoading(false);
+      setDeleteList([]);
     }
-    // Product
-    if (tabIndex === 2) {
-      const result = await removeProducts(deleteList);
-      console.log(result);
-    }
-    setIsLoading(false);
-    setDeleteList([]);
-    console.log(assets);
-  }, [deleteList, tabIndex, assets]);
+  }, [deleteList, tabIndex]);
 
   return (
     <>

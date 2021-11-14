@@ -60,6 +60,4 @@ router.route({
   path: "/",
   handler: deleteClients,
 });
-
-
 export default router;

@@ -6,10 +6,8 @@ import { AssetState } from "../../../models/Asset";
 import { authRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
-import deleteAssets from "./deleteAssets";
 import getAssets from "./getAssets";
 import patchAsset from "./patchAsset";
-
 
 const { Joi } = Router;
 
@@ -51,12 +49,6 @@ router.route({
   method: "get",
   path: "/",
   handler: getAssets,
-});
-
-router.route({
-  method: "delete",
-  path: "/deleteassets",
-  handler: deleteAssets,
 });
 
 export default router;
