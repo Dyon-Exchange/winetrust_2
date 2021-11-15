@@ -6,6 +6,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import NotAdminWarningModal from "../../components/organisms/authentication/NotAdminWarningModal";
 import TabNav from "../../components/organisms/navigation/TabNav";
 import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSidePanel";
+import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
 import Data from "../data/Data";
 
@@ -15,21 +16,26 @@ const AuthenticatedConnected = () => {
   const showPreAdviceSidePanel = width > 700;
 
   return (
-    <Box display="flex" flexGrow={1}>
-      {/* Only show pre-advice side panel when window width is greater than 700 */}
-      {showPreAdviceSidePanel && <PreAdviceSidePanel />}
-      <VStack flex="1">
-        <TabNav />
-        <Switch>
-          <Route exact path="/assets">
-            <Assets />
-          </Route>
-          <Route exact path="/data">
-            <Data />
-          </Route>
-          <Redirect to="/assets" />
-        </Switch>
-      </VStack>
+    <Box display='flex' flexGrow={1}>
+      <DataContextProvider>
+        <>
+          {/* Only show pre-advice side panel when window width is greater than 700 */}
+          {showPreAdviceSidePanel && <PreAdviceSidePanel />}
+          <VStack flex='1'>
+            <TabNav />
+            <Switch>
+              <Route exact path='/assets'>
+                <Assets />
+              </Route>
+              <Route exact path='/data'>
+                <Data />
+              </Route>
+              <Redirect to='/assets' />
+            </Switch>
+          </VStack>
+        </>
+      </DataContextProvider>
+
       <NotAdminWarningModal />
     </Box>
   );

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { LoginData } from "./login";
+import { AuthData } from "./authenticate";
 
-export default async (refreshTokenParam: string): Promise<LoginData> => {
+export default async (refreshTokenParam: string): Promise<AuthData> => {
   const { data } = await axios.post("/admins/refresh", {
     refreshToken: refreshTokenParam,
   });

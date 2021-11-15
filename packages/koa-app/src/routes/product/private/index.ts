@@ -4,6 +4,8 @@ import Router from "koa-joi-router";
 import { authRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
+import deleteProduct from "./deleteProduct";
+import deleteProducts from "./deleteProducts";
 import getProducts from "./getProducts";
 import searchProducts from "./searchProducts";
 
@@ -33,6 +35,18 @@ router.route({
     },
   },
   handler: searchProducts,
+});
+
+router.route({
+  method: "delete",
+  path: "/:productId",
+  handler: deleteProduct,
+});
+
+router.route({
+  method: "delete",
+  path: "/",
+  handler: deleteProducts,
 });
 
 export default router;

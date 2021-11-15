@@ -8,10 +8,16 @@ import {
   Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
+import { useQuery } from "react-query";
 
+import removeClients from "../../../api/data/clients/removeClients";
+import removeProducts from "../../../api/data/products/removeProducts";
+import { DataContext } from "../../../contexts/DataContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
+import RemoveButton from "../../atoms/buttons/RemoveButton";
+import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
 import AddNewClientFormModal from "./clients/AddNewClientFormModal";
 import ClientsTable from "./clients/ClientsTable";
@@ -25,6 +31,10 @@ const WineTrustData = () => {
 
   // state for the tab index
   const [tabIndex, setTabIndex] = useState(0);
+  const [deleteList, setDeleteList] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { assets } = useContext(DataContext);
 
   // states for the add new modals
   const {
@@ -54,9 +64,10 @@ const WineTrustData = () => {
   // tab change handler
   const handleTabChange = useCallback(
     (index: number) => {
+      setDeleteList([]);
       setTabIndex(index);
     },
-    [setTabIndex]
+    [setTabIndex, setDeleteList]
   );
 
   // open add new handler
@@ -67,39 +78,78 @@ const WineTrustData = () => {
     if (tabIndex === 2) openAddNewProduct();
   }, [tabIndex, openAddNewWarehouse, openAddNewClient, openAddNewProduct]);
 
+  const removeSelectedRows = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      // Warehouse
+      if (tabIndex === 0) console.log(deleteList);
+      // Client
+      if (tabIndex === 1) {
+        const result = await removeClients(deleteList);
+        console.log(result);
+      }
+      // Product
+      if (tabIndex === 2) {
+        const result = await removeProducts(deleteList);
+        console.log(result);
+      }
+    } finally {
+      setIsLoading(false);
+      setDeleteList([]);
+    }
+  }, [deleteList, tabIndex]);
+
   return (
     <>
       <Box
         bg={colors.secondary}
-        boxShadow="sm"
-        flex="1"
-        m="20px auto"
-        maxW="80%"
-      >
+        boxShadow='sm'
+        flex='1'
+        m='20px auto'
+        maxW='80%'>
         <Tabs index={tabIndex} isLazy onChange={handleTabChange}>
           <HStack
-            justifyContent="space-between"
-            overflow="auto"
-            p="10px 20px"
-            w="100%"
-          >
-            <TabList mr="20px">
+            justifyContent='space-between'
+            overflow='auto'
+            p='10px 20px'
+            w='100%'>
+            <TabList mr='20px'>
               <Tab>Warehouses</Tab>
               <Tab>Clients</Tab>
               <Tab>Products</Tab>
             </TabList>
-            <AddNewButton onClick={openAddNew} />
+            <HStack>
+              {deleteList.length > 0 && (
+                <RemoveButton onClick={removeSelectedRows} />
+              )}
+              <AddNewButton onClick={openAddNew} />
+            </HStack>
           </HStack>
 
           <TabPanels>
             <TabPanel>
-              <WarehousesTable />
+              {isLoading ? (
+                <DataTableSpinner />
+              ) : (
+                <WarehousesTable
+                  setDeleteList={setDeleteList}
+                  assets={assets}
+                />
+              )}
             </TabPanel>
             <TabPanel>
-              <ClientsTable />
+              {isLoading ? (
+                <DataTableSpinner />
+              ) : (
+                <ClientsTable setDeleteList={setDeleteList} assets={assets} />
+              )}
             </TabPanel>
             <TabPanel>
-              <ProductsTable />
+              {isLoading ? (
+                <DataTableSpinner />
+              ) : (
+                <ProductsTable setDeleteList={setDeleteList} assets={assets} />
+              )}
             </TabPanel>
           </TabPanels>
         </Tabs>

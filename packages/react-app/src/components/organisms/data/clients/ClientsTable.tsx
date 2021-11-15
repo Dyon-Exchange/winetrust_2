@@ -1,4 +1,8 @@
-import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import {
+  GridColDef,
+  GridValueGetterParams,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
@@ -27,7 +31,12 @@ const clientsTableColumns: GridColDef[] = [
   { field: "ethAddress", headerName: "ETH Address", flex: 1, minWidth: 400 },
 ];
 
-const ClientsTable = () => {
+interface Props {
+  setDeleteList?: React.Dispatch<React.SetStateAction<any[]>>;
+  assets: Asset[];
+}
+
+const ClientsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   const toast = useDefaultToast();
 
   // query for clients data
@@ -57,7 +66,7 @@ const ClientsTable = () => {
   if (clientsDataIsError)
     return (
       <DataTableError
-        message="There was an error fetching the clients data, try again?"
+        message='There was an error fetching the clients data, try again?'
         refetch={refetchClientsData}
       />
     );
@@ -67,7 +76,15 @@ const ClientsTable = () => {
       disableSelectionOnClick
       disableColumnSelector
       columns={clientsTableColumns}
+      checkboxSelection
+      onSelectionModelChange={(ids) => {
+        if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
+      }}
       rows={orderBy(clientsData, "createdAt", "desc") ?? []}
+      isRowSelectable={(params: GridRowParams) => {
+        const asset = assets.find((a) => a.preAdvice?.owner?._id === params.id);
+        return !asset;
+      }}
     />
   );
 };

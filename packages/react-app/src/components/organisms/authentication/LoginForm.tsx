@@ -25,13 +25,14 @@ import isEmail from "validator/lib/isEmail";
 import { AuthContext } from "../../../contexts/AuthContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/icons/ToggleRevealPasswordIcon";
+import DefaultLink from "../../atoms/links/DefaultLink";
 
 const LoginForm = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
 
   // get the login function from auth context
-  const { login } = useContext(AuthContext);
+  const { login, authDetails } = useContext(AuthContext);
 
   // the form's min width
   const formMinWidth = width > 500 ? "400px" : undefined;
@@ -79,11 +80,12 @@ const LoginForm = () => {
 
       try {
         await login(email, password);
+        console.log(authDetails);
       } catch (error) {
         setLoginError((error as AxiosError).response?.data ?? "Network error.");
       }
     },
-    [login, setLoginError]
+    [login, setLoginError, authDetails]
   );
 
   return (
@@ -171,6 +173,9 @@ const LoginForm = () => {
           >
             Sign in
           </Button>
+          <div>
+            <p>Don&#39;t have an account? <DefaultLink to="/signup">Sign Up</DefaultLink></p>
+          </div>
         </VStack>
       </form>
     </Box>

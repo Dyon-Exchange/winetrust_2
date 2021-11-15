@@ -1,4 +1,4 @@
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
@@ -28,7 +28,12 @@ const warehousesTableColumns: GridColDef[] = [
   },
 ];
 
-const WarehousesTable = () => {
+interface Props {
+  setDeleteList?: React.Dispatch<React.SetStateAction<string[]>>;
+  assets: Asset[];
+}
+
+const WarehousesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   const toast = useDefaultToast();
 
   //  query for warehouses data
@@ -58,7 +63,7 @@ const WarehousesTable = () => {
   if (warehousesDataIsError)
     return (
       <DataTableError
-        message="There was an error fetching the warehouses data, try again?"
+        message='There was an error fetching the warehouses data, try again?'
         refetch={refetchWarehousesData}
       />
     );
@@ -68,7 +73,15 @@ const WarehousesTable = () => {
       disableSelectionOnClick
       disableColumnSelector
       columns={warehousesTableColumns}
+      checkboxSelection
+      onSelectionModelChange={(ids) => {
+        if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
+      }}
       rows={orderBy(warehousesData, "createdAt", "desc") ?? []}
+      // isRowSelectable={(params: GridRowParams) => {
+      //   const asset = assets.find((a) => a.product?._id === params.id);
+      //   return asset?.state === "Landed";
+      // }}
     />
   );
 };

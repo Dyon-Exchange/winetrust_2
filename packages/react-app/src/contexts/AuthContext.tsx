@@ -9,12 +9,12 @@ import React, {
   useMemo,
 } from "react";
 
-import loginRequest from "../api/authentication/login";
+import { loginRequest, signupRequest } from "../api/authentication/authenticate";
 import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
-// axios.defaults.baseURL = "http://localhost:3030/";
-axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
+axios.defaults.baseURL = "http://localhost:3030/";
+// axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
 interface AuthDetails {
   accessToken: string;
@@ -25,6 +25,7 @@ interface AuthDetails {
 interface IAuthContext {
   loggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
   logout: () => void;
   authDetails: AuthDetails | undefined;
 }
@@ -32,6 +33,7 @@ interface IAuthContext {
 const INITIAL_AUTH_CONTEXT = {
   loggedIn: false,
   login: async () => {},
+  signup: async () => {},
   logout: () => {},
   authDetails: undefined,
 };
@@ -61,6 +63,18 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     },
     [setAuthDetails]
   );
+
+  const signup = useCallback(
+    async (email: string, password: string) => {
+      const { token, refreshToken: refresh } = await signupRequest(
+        email,
+        password
+      );
+      setAuthDetails({ email, accessToken: token, refreshToken: refresh });
+    },
+    [setAuthDetails]
+  );
+
 
   // logout function to clear local storage and local context state
   const logout = useCallback(() => {
@@ -145,7 +159,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, [authDetails, logout, setAuthDetails]);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout, authDetails }}>
+    <AuthContext.Provider value={{ loggedIn, login, signup, logout, authDetails }}>
       {children}
     </AuthContext.Provider>
   );
