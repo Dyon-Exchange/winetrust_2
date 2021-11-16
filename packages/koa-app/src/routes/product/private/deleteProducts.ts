@@ -1,7 +1,8 @@
 import { Context } from "koa";
 
-import Product, { ProductClass } from "../../../models/Product";
 import Assets from "../../../models/Asset";
+import Product, { ProductClass } from "../../../models/Product";
+
 
 interface ProductBody {
   ids: string[];
