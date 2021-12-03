@@ -19,7 +19,6 @@ pipeline {
                         sh './packages/react-app/package.json'
                     }
                 }
-
     }
 }
 
