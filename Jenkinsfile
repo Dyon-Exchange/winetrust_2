@@ -1,8 +1,13 @@
-#!/bin/bash
-
-npm install
-yarn install
-
+pipeline {
+    agent { docker { image 'node:16-alpine' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'npm --version'
+            }
+        }
+    }
+}
 
 
 // pipeline {
