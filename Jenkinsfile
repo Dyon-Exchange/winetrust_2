@@ -26,9 +26,6 @@ pipeline {
 
 
 
-
-
-
 //pipeline {
 //    agent {
 //        docker {
