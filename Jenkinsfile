@@ -1,16 +1,12 @@
 pipeline {
-     agent any
-     stages {
-        stage("Build") {
+    agent any
+    tools {nodejs "node"}
+    
+    stages {
+        stage('Build') {
             steps {
-                sh "sudo npm install"
-                sh "sudo npm run build"
-            }
-        }
-        stage("Deploy") {
-            steps {
-                sh "sudo rm -rf /var/www/jenkins-react-app"
-                sh "sudo cp -r ${WORKSPACE}/build/ /var/www/winetrust_2/"
+                git credentialsId: 'd6dfe1be-1cf9-4c0a-b1cb-6f109dd70761', url: 'git@github.com:Dyon-Exchange/winetrust_2.git'
+                sh 'yarn install'
             }
         }
     }
