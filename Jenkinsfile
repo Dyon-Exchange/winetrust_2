@@ -1,68 +1,17 @@
 pipeline {
-    agent any
-    stages {
-        stage('build') {
+     agent any
+     stages {
+        stage("Build") {
             steps {
-                sh 'npm --install'
+                sh "sudo npm install"
+                sh "sudo npm run build"
+            }
+        }
+      #  stage("Deploy") {
+       #     steps {
+        #        sh "sudo rm -rf /var/www/jenkins-react-app"
+         #       sh "sudo cp -r ${WORKSPACE}/build/ /var/www/jenkins-react-app/"
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//pipeline {
-//    agent {
-//        docker {
-//            image 'node:6-alpine'
-//            args '-p 3000:3000'
-//        }
-//    }
-//     environment {
-//            CI = 'true'
-//        }
-//    stages {
-//        stage('Build') {
-//            steps {
-//                sh 'npm --version'
-//            }
-//        }
-//        stage('Test') {
-//                    steps {
-//                        sh './packages/react-app/package.json'
-//                    }
-//                }
-//    }
-//}
-
-
-// pipeline {
-//     agent {
-//         docker {
-//             image 'node:16-alpine'
-//             args '-p 3000:3000'
-//         }
-//     }
-// stages {
-//     stage('Build') {
-//         steps {
-//             sh 'yarn install'
-//         }
-//     }
-// }
-// }
