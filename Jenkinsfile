@@ -1,13 +1,17 @@
 pipeline {
     agent any
+    tools {nodejs "node"}
+    
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'npm --install'
+                git credentialsId: 'd6dfe1be-1cf9-4c0a-b1cb-6f109dd70761', url: 'git@github.com:Dyon-Exchange/winetrust_2.git'
+                sh 'yarn install'
             }
         }
     }
 }
+<<<<<<< HEAD
 
 //pipeline {
 //    agent {
@@ -49,3 +53,5 @@ pipeline {
 //     }
 // }
 // }
+=======
+>>>>>>> 777c9cadae1b69b5e2580088ffc959ea9148aaf9
