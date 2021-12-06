@@ -1,0 +1,11 @@
+-#!/bin/sh
+ssh root@35.224.75.219 < cd /var/www/html
+git pull
+yarn install --production
+cd /packages/react-app/
+yarn start
+cd /package/koa-app/
+yarn dev
+pm2 restart all
+exit
+EOF

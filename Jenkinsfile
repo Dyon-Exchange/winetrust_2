@@ -9,23 +9,6 @@ pipeline {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //pipeline {
 //    agent {
 //        docker {
