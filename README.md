@@ -1,6 +1,6 @@
 # WineTrust
 
-Monorepo for the WineTrust platform
+Monorepo for the WineTrust platform.
 
 ## Local Development
 
