@@ -13,7 +13,7 @@ import { loginRequest, signupRequest } from "../api/authentication/authenticate"
 import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
-axios.defaults.baseURL = "http://35.192.182.227:3000/"; 
+axios.defaults.baseURL = "http://prod.winetrust.org:3000/"; 
 // axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
 interface AuthDetails {
