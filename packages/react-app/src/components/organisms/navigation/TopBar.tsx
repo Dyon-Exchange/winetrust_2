@@ -18,7 +18,7 @@ const TopBar = () => {
       justifyContent="space-between"
     >
       <HStack h="50px" spacing="15px">
-        <Heading color="white" fontSize="2xl">
+        <Heading color="#002160" fontSize="2xl" >
           WineTrust
         </Heading>
         {/* responsiveness */}
