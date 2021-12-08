@@ -12,7 +12,7 @@ const WineTrustAssets = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <Box bg={colors.primary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
+    <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
       <HStack p="20px 40px" maxW="400px" minW="300px">
         <Input
           placeholder="Search"
