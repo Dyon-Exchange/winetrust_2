@@ -16,10 +16,24 @@ import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
 
 // column headers for the clients data table
 const clientsTableColumns: GridColDef[] = [
-  { field: "firstName", headerName: "First Name", flex: 1, minWidth: 200 },
-  { field: "lastName", headerName: "Last Name", flex: 1, minWidth: 200 },
+  { 
+    field: "firstName", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "First Name", 
+    flex: 1, minWidth: 200 
+  },
+  { 
+    field: "lastName", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Last Name", 
+    flex: 1, minWidth: 200 
+  },
   {
     field: "phoneNumber",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Phone Number",
     flex: 1,
     minWidth: 200,
@@ -28,7 +42,13 @@ const clientsTableColumns: GridColDef[] = [
         (param.value as PhoneNumber).phoneNumber
       }`,
   },
-  { field: "ethAddress", headerName: "ETH Address", flex: 1, minWidth: 400 },
+  { 
+    field: "ethAddress", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "ETH Address", 
+    flex: 1, minWidth: 400 
+  },
 ];
 
 interface Props {

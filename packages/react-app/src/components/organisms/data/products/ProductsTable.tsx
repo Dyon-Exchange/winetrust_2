@@ -16,11 +16,31 @@ import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
 
 // column headers for the products data table
 const productsTableColumns: GridColDef[] = [
-  { field: "productName", headerName: "Product Name", flex: 1, minWidth: 200 },
-  { field: "year", headerName: "Year", flex: 1, minWidth: 125 },
-  { field: "region", headerName: "Region", flex: 1, minWidth: 200 },
+  { 
+    field: "productName", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Product Name", 
+    flex: 1, minWidth: 200 
+  },
+  { 
+    field: "year",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center", 
+    headerName: "Year", 
+    flex: 1, minWidth: 125 
+  },
+  { 
+    field: "region", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Region", 
+    flex: 1, minWidth: 200 
+  },
   {
     field: "subRegion",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Sub-Region",
     flex: 1,
     minWidth: 200,
@@ -28,13 +48,27 @@ const productsTableColumns: GridColDef[] = [
   },
   {
     field: "subSubRegion",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Sub-Sub-Region",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) => param.value || "--",
   },
-  { field: "packSize", headerName: "Pack Size", flex: 1, minWidth: 150 },
-  { field: "dutyStatus", headerName: "Duty Status", flex: 1, minWidth: 150 },
+  { 
+    field: "packSize", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Pack Size", 
+    flex: 1, minWidth: 150 
+  },
+  { 
+    field: "dutyStatus", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Duty Status", 
+    flex: 1, minWidth: 150 
+  },
 ];
 
 interface Props {
