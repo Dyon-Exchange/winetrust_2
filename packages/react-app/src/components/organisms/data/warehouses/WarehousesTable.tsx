@@ -12,16 +12,30 @@ import DataTableSpinner from "../../../molecules/dataTables/DataTableSpinner";
 
 // column headers for the warehouses data table
 const warehousesTableColumns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1, minWidth: 200 },
-  { field: "address", headerName: "Address", flex: 2, minWidth: 400 },
+  { 
+    field: "name", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Name", flex: 1, minWidth: 200 },
+  { 
+    field: "address", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Address", 
+    flex: 2, minWidth: 400 
+  },
   {
     field: "contactName",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Contact Name",
     flex: 1,
     minWidth: 200,
   },
   {
     field: "contactEmail",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Contact Email",
     flex: 1,
     minWidth: 200,

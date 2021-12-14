@@ -1,3 +1,4 @@
+import { Box, HStack, Input, useColorModeValue } from "@chakra-ui/react";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
@@ -17,10 +18,14 @@ import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
+
+
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   {
     field: "preAdviceId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Pre-Advice ID",
     flex: 1,
     minWidth: 200,
@@ -29,6 +34,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productName",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Product",
     flex: 1,
     minWidth: 200,
@@ -37,6 +44,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productYear",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Year",
     flex: 1,
     minWidth: 150,
@@ -45,6 +54,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productPackSize",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Pack Size",
     flex: 1,
     minWidth: 150,
@@ -53,6 +64,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Product ID",
     flex: 1,
     minWidth: 250,
@@ -61,6 +74,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productDutyStatus",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Duty Status",
     flex: 1,
     minWidth: 150,
@@ -69,6 +84,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "price",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Original Price",
     flex: 1,
     minWidth: 200,
@@ -79,6 +96,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "transferringWarehouse",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Transferring Warehouse",
     flex: 1,
     minWidth: 250,
@@ -87,6 +106,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "arrivalWarehouse",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Arrival Warehouse",
     flex: 1,
     minWidth: 250,
@@ -95,6 +116,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "owner",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Owner",
     flex: 1,
     minWidth: 250,
@@ -105,6 +128,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "state",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "State",
     flex: 1,
     minWidth: 150,
@@ -114,6 +139,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "expectedArrivalDate",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Expected Arrival",
     flex: 1,
     minWidth: 200,
@@ -124,6 +151,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "assetId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Asset ID",
     flex: 1,
     minWidth: 250,
@@ -131,6 +160,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "tokenId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Token ID",
     flex: 1,
     minWidth: 250,
@@ -218,9 +249,10 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
         refetch={refetchAssetsData}
       />
     );
-
+      // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
+      
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}

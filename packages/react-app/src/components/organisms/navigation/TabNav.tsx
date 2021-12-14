@@ -1,5 +1,5 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { HStack, IconButton, Tab, TabList, Tabs } from "@chakra-ui/react";
+import { HStack, IconButton, Tab, TabList, Tabs, useColorModeValue, Text } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { useWindowWidth } from "@react-hook/window-size";
 import React, { useCallback } from "react";
@@ -32,8 +32,8 @@ const TabNav = () => {
         justifyContent="space-between"
       >
         <TabList>
-          <StyledTabButton>Assets</StyledTabButton>
-          <StyledTabButton>Data</StyledTabButton>
+          <StyledTabButton><Text color="#002160">Assets</Text></StyledTabButton>
+          <StyledTabButton><Text color="#002160">Data</Text></StyledTabButton>
         </TabList>
         {/* Show hamburger button when pre-advice side panel shrinks */}
         {width <= 700 && (
