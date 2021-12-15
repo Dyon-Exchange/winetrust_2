@@ -3,11 +3,10 @@ import React from "react";
 
 import Assets from "../asset/Assets";
 
-const Warehouse = () => (
+const Warehouses = () => (
   <Box display="flex" flexGrow={1} w="100%">
-    <Assets />
-    
+    <h1>Warehouses page</h1>    
   </Box>
 );
 
-export default Warehouse;
+export default Warehouses;

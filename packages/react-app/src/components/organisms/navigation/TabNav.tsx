@@ -16,10 +16,14 @@ const TabNav = () => {
   const history = useHistory();
   const width = useWindowWidth();
 
+  const getUrl = function(index: number) : string{
+    const urlTabs = ["/assets","/warehouses","/clients","/products"]
+    return urlTabs[index]
+  }
   // push to history on tab change
   const handleTabChange = useCallback(
     (index: number) => {
-      history.push(index === 0 ? "/assets" : "/data");
+      history.push(getUrl(index));
     },
     [history]
   );
