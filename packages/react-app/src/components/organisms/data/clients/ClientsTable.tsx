@@ -96,7 +96,7 @@ const ClientsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       disableSelectionOnClick
       disableColumnSelector
       columns={clientsTableColumns}
-      checkboxSelection
+      // checkboxSelection
       onSelectionModelChange={(ids) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}

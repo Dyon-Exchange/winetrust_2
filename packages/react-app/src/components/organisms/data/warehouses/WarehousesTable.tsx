@@ -87,7 +87,7 @@ const WarehousesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       disableSelectionOnClick
       disableColumnSelector
       columns={warehousesTableColumns}
-      checkboxSelection
+      // checkboxSelection
       onSelectionModelChange={(ids) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}
