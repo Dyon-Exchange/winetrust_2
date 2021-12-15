@@ -252,7 +252,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
-      
+    style={{backgroundColor: "darkgray", fontStyle:"bold"}}
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}
