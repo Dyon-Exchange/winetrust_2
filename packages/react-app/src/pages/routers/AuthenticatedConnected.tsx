@@ -1,14 +1,28 @@
-import { Box, VStack } from "@chakra-ui/react";
+
+import {
+  Box,
+  VStack,
+  HStack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import NotAdminWarningModal from "../../components/organisms/authentication/NotAdminWarningModal";
+import WineTrustData from "../../components/organisms/data/WineTrustData";
 import TabNav from "../../components/organisms/navigation/TabNav";
 import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSidePanel";
 import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
 import Data from "../data/Data";
+
+
 
 // Authenticated and wallet connected routes
 const AuthenticatedConnected = () => {
@@ -26,9 +40,6 @@ const AuthenticatedConnected = () => {
             <Switch>
               <Route exact path='/assets'>
                 <Assets />
-              </Route>
-              <Route exact path='/data'>
-                <Data />
               </Route>
               <Redirect to='/assets' />
             </Switch>

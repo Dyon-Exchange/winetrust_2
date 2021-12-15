@@ -25,6 +25,7 @@ const assetsTableColumns: GridColDef[] = [
   {
     field: "preAdviceId",
     headerClassName: "super-app-theme--header",
+    cellClassName: "super-app-theme--cell",
     headerAlign: "center",
     headerName: "Pre-Advice ID",
     flex: 1,
@@ -252,7 +253,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
-    style={{backgroundColor: "darkgray", fontStyle:"bold"}}
+    
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}
