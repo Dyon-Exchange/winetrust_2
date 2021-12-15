@@ -83,7 +83,7 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       disableSelectionOnClick
       disableColumnSelector
       columns={productsTableColumns}
-      checkboxSelection
+      // checkboxSelection
       onSelectionModelChange={(ids) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}
