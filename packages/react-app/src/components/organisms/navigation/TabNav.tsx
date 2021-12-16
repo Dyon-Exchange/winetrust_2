@@ -16,7 +16,7 @@ const TabNav = () => {
   const history = useHistory();
   const width = useWindowWidth();
 
-  const getUrl = function(index: number) : string{
+  function getUrl(index: number) : string{
     const urlTabs = ["/assets","/warehouses","/clients","/products"]
     return urlTabs[index]
   }
