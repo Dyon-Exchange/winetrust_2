@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
-import Assets from "../asset/Assets";
+import WineTrustWarehouses from "../../components/organisms/warehouses/WineTrustWarehouses";
 
 const Warehouses = () => (
   <Box display="flex" flexGrow={1} w="100%">
-    <h1>Warehouses page</h1>    
+    <WineTrustWarehouses/>
   </Box>
 );
 
