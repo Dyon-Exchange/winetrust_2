@@ -15,12 +15,13 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import NotAdminWarningModal from "../../components/organisms/authentication/NotAdminWarningModal";
-import WineTrustData from "../../components/organisms/data/WineTrustData";
 import TabNav from "../../components/organisms/navigation/TabNav";
 import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSidePanel";
 import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
-import Data from "../data/Data";
+import Clients from "../client/Clients";
+import Products from "../product/Products";
+import Warehouses from "../warehouse/Warehouses";
 
 
 
@@ -40,6 +41,15 @@ const AuthenticatedConnected = () => {
             <Switch>
               <Route exact path='/assets'>
                 <Assets />
+              </Route>
+              <Route exact path='/warehouses'>
+                <Warehouses />
+              </Route>
+              <Route exact path='/clients'>
+                <Clients />
+              </Route>
+              <Route exact path='/products'>
+                <Products />
               </Route>
               <Redirect to='/assets' />
             </Switch>
