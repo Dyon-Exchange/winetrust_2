@@ -20,6 +20,7 @@ import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSi
 import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
 import Clients from "../client/Clients";
+import Data from "../data/Data";
 import Products from "../product/Products";
 import Warehouses from "../warehouse/Warehouses";
 
@@ -50,6 +51,9 @@ const AuthenticatedConnected = () => {
               </Route>
               <Route exact path='/products'>
                 <Products />
+              </Route>
+              <Route exact path='/preadvices'>
+                  <h1>Pre advices page</h1>
               </Route>
               <Redirect to='/assets' />
             </Switch>

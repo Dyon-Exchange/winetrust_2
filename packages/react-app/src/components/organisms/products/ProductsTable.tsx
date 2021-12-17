@@ -72,12 +72,11 @@ const productsTableColumns: GridColDef[] = [
 ];
 
 interface Props {
-  setDeleteList?: React.Dispatch<React.SetStateAction<any[]>>;
+  setDeleteList?: React.Dispatch<React.SetStateAction<string[]>>;
   assets: Asset[];
 }
 
 const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
-  const dataGrid = useRef<any>(null);
   const toast = useDefaultToast();
 
   // query for products data
