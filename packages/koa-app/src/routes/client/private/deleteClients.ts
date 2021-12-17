@@ -9,6 +9,7 @@ interface ClientBody {
 }
 
 export default async (ctx: Context) => {
+  console.log(ctx.request.body);
   const { ids }: ClientBody = JSON.parse(ctx.request.body);
 
   if (!ids) {

@@ -13,6 +13,7 @@ import { useQuery } from "react-query";
 
 import removeClients from "../../../api/data/clients/removeClients";
 import removeProducts from "../../../api/data/products/removeProducts";
+import removeWarehouses from "../../../api/data/warehouses/removeWarehouses";
 import { DataContext } from "../../../contexts/DataContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
@@ -82,7 +83,10 @@ const WineTrustData = () => {
     try {
       setIsLoading(true);
       // Warehouse
-      if (tabIndex === 0) console.log(deleteList);
+      if (tabIndex === 0) {
+        const result = await removeWarehouses(deleteList);
+        console.log(result);
+      }
       // Client
       if (tabIndex === 1) {
         const result = await removeClients(deleteList);

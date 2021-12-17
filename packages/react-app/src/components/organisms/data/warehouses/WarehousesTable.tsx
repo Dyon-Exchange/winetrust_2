@@ -78,10 +78,14 @@ const WarehousesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}
       rows={orderBy(warehousesData, "createdAt", "desc") ?? []}
-      // isRowSelectable={(params: GridRowParams) => {
-      //   const asset = assets.find((a) => a.product?._id === params.id);
-      //   return asset?.state === "Landed";
-      // }}
+      isRowSelectable={(params: GridRowParams) => {
+        const asset = assets.find(
+          (a) =>
+            a.preAdvice?.arrivalWarehouse?._id === params.id ||
+            a.preAdvice?.transferringWarehouse?._id === params.id
+        );
+        return !asset;
+      }}
     />
   );
 };

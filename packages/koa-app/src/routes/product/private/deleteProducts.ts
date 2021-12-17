@@ -1,7 +1,7 @@
 import { Context } from "koa";
 
+import Assets, { AssetClass } from "../../../models/Asset";
 import Product, { ProductClass } from "../../../models/Product";
-import Assets from "../../../models/Asset";
 
 interface ProductBody {
   ids: string[];
@@ -23,15 +23,16 @@ export default async (ctx: Context) => {
   });
 
   await Product.deleteMany({
-    _id: ids.filter(
-      (id) =>
-        !assets.some((a) => {
-          const prod = a.product as ProductClass & {
-            id: any;
-          };
-          return prod?.id === id;
-        })
-    ),
+    _id: ids.filter((id) => {
+      const asset: AssetClass = assets.find((a) => {
+        const prod = a.product as ProductClass & {
+          id: any;
+        };
+        return prod?.id === id;
+      });
+
+      return !asset;
+    }),
   });
 
   ctx.body = { res: await Product.find() };

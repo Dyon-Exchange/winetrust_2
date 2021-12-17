@@ -90,7 +90,7 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       rows={orderBy(productsData, "createdAt", "desc") ?? []}
       isRowSelectable={(params: GridRowParams) => {
         const asset = assets.find((a) => a.product?._id === params.id);
-        return !asset || asset.state === "Landed";
+        return !asset;
       }}
     />
   );
