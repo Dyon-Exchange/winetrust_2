@@ -52,7 +52,7 @@ const clientsTableColumns: GridColDef[] = [
 ];
 
 interface Props {
-  setDeleteList?: React.Dispatch<React.SetStateAction<any[]>>;
+  setDeleteList?: React.Dispatch<React.SetStateAction<string[]>>;
   assets: Asset[];
 }
 

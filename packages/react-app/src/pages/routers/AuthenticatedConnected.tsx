@@ -20,6 +20,8 @@ import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSi
 import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
 import Clients from "../client/Clients";
+import Data from "../data/Data";
+import Preadvices from "../preadvice/Preadivce";
 import Products from "../product/Products";
 import Warehouses from "../warehouse/Warehouses";
 
@@ -35,7 +37,7 @@ const AuthenticatedConnected = () => {
       <DataContextProvider>
         <>
           {/* Only show pre-advice side panel when window width is greater than 700 */}
-          {showPreAdviceSidePanel && <PreAdviceSidePanel />}
+          {/* {showPreAdviceSidePanel && <PreAdviceSidePanel />} */}
           <VStack flex='1'>
             <TabNav />
             <Switch>
@@ -50,6 +52,9 @@ const AuthenticatedConnected = () => {
               </Route>
               <Route exact path='/products'>
                 <Products />
+              </Route>
+              <Route exact path='/preadvices'>
+                  <Preadvices />
               </Route>
               <Redirect to='/assets' />
             </Switch>

@@ -6,10 +6,11 @@ import useThemeColors from "../../../hooks/theme/useThemeColors";
 import AddNewButton from "../../atoms/buttons/AddNewButton";
 import RemoveButton from "../../atoms/buttons/RemoveButton";
 
-import AddNewClientFormModal from "./AddNewClientFormModal";
-import ClientsTable from "./ClientsTable";
+import AddNewPreAdviceFormModal from "./AddNewPreAdviceFormModal";
+import PreAdvicesTable from "./PreAdvicesTable";
 
-const WineTrustClients = () => {
+
+const WineTrustPreadvices = () => {
   const colors = useThemeColors();
   const { assets } = useContext(DataContext);
   const [deleteList, setDeleteList] = useState<string[]>([]);
@@ -17,17 +18,17 @@ const WineTrustClients = () => {
 
   // states for the add new modals
   const {
-    isOpen: isAddNewClientOpen,
-    onOpen: openAddNewClient,
-    onClose: closeAddNewClient,
+    isOpen: isAddNewPreadvicesOpen,
+    onOpen: openAddNewPreadvices,
+    onClose: closeAddNewPreadvices,
   } = useDisclosure({
     defaultIsOpen: false,
   });
 
   const openAddNew = useCallback(() => {
     // open the appropriate add new modal
-    openAddNewClient();
-  }, [openAddNewClient]);
+    openAddNewPreadvices();
+  }, [openAddNewPreadvices]);
 
   const removeSelectedRows = useCallback(async () => {
     try {
@@ -43,7 +44,7 @@ const WineTrustClients = () => {
     <>
     <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
       <Box p="16px">
-      <HStack justifyContent="space-between" overflow="auto" p="10px 20px"  w="100%">
+        <HStack justifyContent="space-between" overflow="auto" p="10px 20px"  w="100%">
           <HStack>
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
@@ -51,17 +52,17 @@ const WineTrustClients = () => {
             <AddNewButton onClick={openAddNew}/>
           </HStack>
         </HStack>
-        <ClientsTable setDeleteList={setDeleteList} assets={assets} />
+        <PreAdvicesTable setDeleteList={setDeleteList} assets={assets} />
       </Box>
     </Box>
-    {isAddNewClientOpen && (
-      <AddNewClientFormModal
-        isOpen={isAddNewClientOpen}
-        onClose={closeAddNewClient}
+    {isAddNewPreadvicesOpen && (
+      <AddNewPreAdviceFormModal
+        isOpen={isAddNewPreadvicesOpen}
+        onClose={closeAddNewPreadvices}
       />
     )}
     </>
   );
 };
 
-export default WineTrustClients;
+export default WineTrustPreadvices;
