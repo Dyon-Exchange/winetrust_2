@@ -37,7 +37,7 @@ const AuthenticatedConnected = () => {
       <DataContextProvider>
         <>
           {/* Only show pre-advice side panel when window width is greater than 700 */}
-          {showPreAdviceSidePanel && <PreAdviceSidePanel />}
+          {/* {showPreAdviceSidePanel && <PreAdviceSidePanel />} */}
           <VStack flex='1'>
             <TabNav />
             <Switch>
