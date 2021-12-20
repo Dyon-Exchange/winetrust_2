@@ -17,7 +17,7 @@ const TabNav = () => {
   const width = useWindowWidth();
 
   function getUrl(index: number) : string{
-    const urlTabs = ["/assets","/warehouses","/clients","/products","/preadvices"]
+    const urlTabs = ["/assets","/clients","/products","/warehouses","/preadvices"]
     return urlTabs[index]
   }
   // push to history on tab change
@@ -37,9 +37,9 @@ const TabNav = () => {
       >
         <TabList>
           <StyledTabButton><Text color="#002160">Assets</Text></StyledTabButton>
-          <StyledTabButton><Text color="#002160">Warehouse</Text></StyledTabButton>
           <StyledTabButton><Text color="#002160">Clients</Text></StyledTabButton>
           <StyledTabButton><Text color="#002160">Products</Text></StyledTabButton>
+          <StyledTabButton><Text color="#002160">Warehouse</Text></StyledTabButton>
           <StyledTabButton><Text color="#002160">Pre-Advices</Text></StyledTabButton>
         </TabList>
         {/* Show hamburger button when pre-advice side panel shrinks */}

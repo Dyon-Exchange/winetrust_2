@@ -63,12 +63,26 @@ const productsTableColumns: GridColDef[] = [
     flex: 1, minWidth: 150 
   },
   { 
-    field: "dutyStatus", 
+    field: "_id", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Duty Status", 
-    flex: 1, minWidth: 150 
+    headerName: "Product ID", 
+    flex: 1, minWidth: 300 
   },
+  { 
+    field: "description", 
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Description", 
+    flex: 1, minWidth: 200 
+  },
+  // { 
+  //   field: "dutyStatus", 
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Duty Status", 
+  //   flex: 1, minWidth: 150 
+  // },
 ];
 
 interface Props {

@@ -28,7 +28,7 @@ const warehousesTableColumns: GridColDef[] = [
     field: "contactName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Contact Name",
+    headerName: "Contact",
     flex: 1,
     minWidth: 200,
   },
