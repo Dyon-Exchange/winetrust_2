@@ -20,7 +20,7 @@ const preAdviceTableColumns: GridColDef[] = [
     field: "preAdviceId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Pre-Advice ID",
+    headerName: "Number",
     flex: 1,
     minWidth: 175,
   },
@@ -28,7 +28,7 @@ const preAdviceTableColumns: GridColDef[] = [
     field: "owner",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Transferrer",
+    headerName: "Transferring Client",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) => `${
@@ -37,10 +37,20 @@ const preAdviceTableColumns: GridColDef[] = [
     `,
   },
   {
+    field: "transferringWarehouse",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Origin Warehouse",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.value as Warehouse).name,
+  },
+  {
     field: "arrivalWarehouse",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Arrival Warehouse",
+    headerName: "Destination Warehouse",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
@@ -50,9 +60,26 @@ const preAdviceTableColumns: GridColDef[] = [
     field: "state",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Status",
+    headerName: "Landing Status",
     flex: 1,
     minWidth: 200,
+  },
+  {
+    field: "createdAt",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Date Placed",
+    flex: 1,
+    minWidth: 200,
+  },
+  {
+    field: "_id",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Products",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) => "See Products", //  WIP button that open a modal with list of products
   },
 ];
 
