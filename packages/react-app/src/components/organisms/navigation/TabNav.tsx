@@ -31,16 +31,16 @@ const TabNav = () => {
   return (
     <Tabs onChange={handleTabChange} w="100%">
       <HStack
-        bg={colors.secondary}
+        bg="#002160"
         boxShadow="sm"
         justifyContent="space-between"
       >
-        <TabList>
-          <StyledTabButton><Text color="#002160">Assets</Text></StyledTabButton>
-          <StyledTabButton><Text color="#002160">Clients</Text></StyledTabButton>
-          <StyledTabButton><Text color="#002160">Products</Text></StyledTabButton>
-          <StyledTabButton><Text color="#002160">Warehouse</Text></StyledTabButton>
-          <StyledTabButton><Text color="#002160">Pre-Advices</Text></StyledTabButton>
+        <TabList bg="#002160">
+          <StyledTabButton><Text color="#FFFFFF">Assets</Text></StyledTabButton>
+          <StyledTabButton><Text color="#FFFFFF">Warehouse</Text></StyledTabButton>
+          <StyledTabButton><Text color="#FFFFFF">Clients</Text></StyledTabButton>
+          <StyledTabButton><Text color="#FFFFFF">Products</Text></StyledTabButton>
+          <StyledTabButton><Text color="#FFFFFF">Pre-Advices</Text></StyledTabButton>
         </TabList>
         {/* Show hamburger button when pre-advice side panel shrinks */}
         {width <= 700 && (
