@@ -76,10 +76,10 @@ const preAdviceTableColumns: GridColDef[] = [
     field: "_id",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Destination Warehouse",
+    headerName: "Products",
     flex: 1,
     minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) => `${param.value}`, //  WIP button that open a modal with list of products
+    valueGetter: (param: GridValueGetterParams) => "See Products", //  WIP button that open a modal with list of products
   },
 ];
 
