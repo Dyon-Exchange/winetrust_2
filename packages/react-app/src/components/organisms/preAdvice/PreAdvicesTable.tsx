@@ -1,8 +1,7 @@
 import {
   GridColDef,
   GridValueGetterParams,
-  GridRowParams,
-  GridRenderCellParams,
+  GridRenderCellParams
 } from "@mui/x-data-grid";
 import axios, { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -11,10 +10,11 @@ import { useQuery } from "react-query";
 
 import getPreAdvices from "../../../api/preAdvice/getPreAdvices";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
-import ViewProductsButton from "../../atoms/buttons/ViewProductsButton";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
+
+import ProductsModal from "./ProductsModal";
 
 // column headers for the preAdvices data table
 const preAdviceTableColumns: GridColDef[] = [
@@ -82,13 +82,9 @@ const preAdviceTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     renderCell: (params: GridRenderCellParams) => {
-      const getProducts = async () => {
-        const { data } = await axios.get(`/pre-advice/assets/${params.value}`);
-        console.log(JSON.stringify(data))
-        return data;
-      }
-
-      return <ViewProductsButton onClick={getProducts} />;
+      const preAdviceId = params.value
+      const modal = ProductsModal(preAdviceId);
+      return modal;
     },
   },
 ];
@@ -133,16 +129,16 @@ const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     );
 
   return (
-      <StyledDataGrid
-        disableSelectionOnClick
-        disableColumnSelector
-        columns={preAdviceTableColumns}
-        checkboxSelection
-        onSelectionModelChange={(ids) => {
-          if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
-        }}
-        rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
-      />
+    <StyledDataGrid
+      disableSelectionOnClick
+      disableColumnSelector
+      columns={preAdviceTableColumns}
+      checkboxSelection
+      onSelectionModelChange={(ids) => {
+        if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
+      }}
+      rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
+    />
   );
 };
 
