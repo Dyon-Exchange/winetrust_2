@@ -116,7 +116,7 @@ const assetsTableColumns: GridColDef[] = [
     field: "state",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "State",
+    headerName: "Landing Status",
     flex: 1,
     minWidth: 150,
     renderCell: (param: GridValueGetterParams) => (
