@@ -87,9 +87,9 @@ const preAdviceTableColumns: GridColDef[] = [
         console.log(JSON.stringify(data))
         return data;
       }
-    
-      return <ViewProductsButton onClick={getProducts} />
-    }
+
+      return <ViewProductsButton onClick={getProducts} />;
+    },
   },
 ];
 
@@ -100,7 +100,6 @@ interface Props {
 
 const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   const toast = useDefaultToast();
-
   // query for pre-advices data
   const {
     data: preAdvicesData,
@@ -134,16 +133,16 @@ const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     );
 
   return (
-    <StyledDataGrid
-      disableSelectionOnClick
-      disableColumnSelector
-      columns={preAdviceTableColumns}
-      checkboxSelection
-      onSelectionModelChange={(ids) => {
-        if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
-      }}
-      rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
-    />
+      <StyledDataGrid
+        disableSelectionOnClick
+        disableColumnSelector
+        columns={preAdviceTableColumns}
+        checkboxSelection
+        onSelectionModelChange={(ids) => {
+          if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
+        }}
+        rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
+      />
   );
 };
 
