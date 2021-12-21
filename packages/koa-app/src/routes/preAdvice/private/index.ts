@@ -4,6 +4,7 @@ import { authRequired } from "../../../services/passport";
 
 import createPreAdvice from "./createPreAdvice";
 import getPreAdvices from "./getPreAdvices";
+import getPreAdvicesAssets from "./getPreAdvicesAssets";
 
 const { Joi } = Router;
 
@@ -43,6 +44,12 @@ router.route({
   method: "get",
   path: "/",
   handler: getPreAdvices,
+});
+
+router.route({
+  method: "get",
+  path: "/assets/:preadviceId",
+  handler: getPreAdvicesAssets,
 });
 
 export default router;

@@ -2,14 +2,16 @@ import {
   GridColDef,
   GridValueGetterParams,
   GridRowParams,
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { orderBy } from "lodash";
 import React, { useEffect, useState, useRef, Ref } from "react";
 import { useQuery } from "react-query";
 
 import getPreAdvices from "../../../api/preAdvice/getPreAdvices";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
+import ViewProductsButton from "../../atoms/buttons/ViewProductsButton";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
@@ -79,7 +81,15 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Products",
     flex: 1,
     minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) => "See Products", //  WIP button that open a modal with list of products
+    renderCell: (params: GridRenderCellParams) => {
+      const getProducts = async () => {
+        const { data } = await axios.get(`/pre-advice/assets/${params.value}`);
+        console.log(JSON.stringify(data))
+        return data;
+      }
+
+      return <ViewProductsButton onClick={getProducts} />;
+    },
   },
 ];
 
@@ -90,7 +100,6 @@ interface Props {
 
 const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   const toast = useDefaultToast();
-
   // query for pre-advices data
   const {
     data: preAdvicesData,
@@ -124,16 +133,16 @@ const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     );
 
   return (
-    <StyledDataGrid
-      disableSelectionOnClick
-      disableColumnSelector
-      columns={preAdviceTableColumns}
-      checkboxSelection
-      onSelectionModelChange={(ids) => {
-        if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
-      }}
-      rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
-    />
+      <StyledDataGrid
+        disableSelectionOnClick
+        disableColumnSelector
+        columns={preAdviceTableColumns}
+        checkboxSelection
+        onSelectionModelChange={(ids) => {
+          if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
+        }}
+        rows={orderBy(preAdvicesData, "createdAt", "desc") ?? []}
+      />
   );
 };
 
