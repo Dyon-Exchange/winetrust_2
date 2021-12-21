@@ -37,9 +37,9 @@ const TabNav = () => {
       >
         <TabList bg="#002160">
           <StyledTabButton><Text color="#FFFFFF">Assets</Text></StyledTabButton>
-          <StyledTabButton><Text color="#FFFFFF">Warehouse</Text></StyledTabButton>
           <StyledTabButton><Text color="#FFFFFF">Clients</Text></StyledTabButton>
           <StyledTabButton><Text color="#FFFFFF">Products</Text></StyledTabButton>
+          <StyledTabButton><Text color="#FFFFFF">Warehouses</Text></StyledTabButton>
           <StyledTabButton><Text color="#FFFFFF">Pre-Advices</Text></StyledTabButton>
         </TabList>
         {/* Show hamburger button when pre-advice side panel shrinks */}
