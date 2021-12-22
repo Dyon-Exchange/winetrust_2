@@ -26,7 +26,6 @@ const DataContextProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (assetsData) setAssets(assetsData);
-    console.log("okay", assetsData);
   }, [assetsData]);
 
   return (
