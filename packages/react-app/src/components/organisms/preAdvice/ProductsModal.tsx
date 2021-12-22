@@ -11,17 +11,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { GridCellValue } from "@mui/x-data-grid";
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
+
+import PreAdviceAssetsTable from "./PreAdviceAssetsTable";
 
 
 const ProductsModal = (data: GridCellValue) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const getTableData = async() => {
-    const tableData = await axios.get(`/pre-advice/assets/${data}`);
-    console.log(JSON.stringify(tableData))
-    onOpen()
-  }
   return (
     <>
       {/* eslint-disable-next-line */}
@@ -31,17 +27,18 @@ const ProductsModal = (data: GridCellValue) => {
         fontSize="xs"
         minW="100px"
         size="sm"
-        onClick={() => getTableData()}
+        onClick={() => onOpen()}
       >
-        Open Modal
+        See Products
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Products</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{data}</ModalBody>
-
+          <ModalBody>
+          <PreAdviceAssetsTable prop={data}/>
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

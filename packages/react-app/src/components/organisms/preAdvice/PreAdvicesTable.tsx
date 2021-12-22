@@ -104,7 +104,6 @@ const PreAdvicesTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     isError: preAdvicesDataIsError,
     refetch: refetchPreAdvicesData,
   } = useQuery("pre-advices", getPreAdvices);
-  console.log(preAdvicesData);
   // pop an error toast if preAdvices data query errors
   useEffect(() => {
     if (preAdvicesDataIsError && preAdvicesDataError) {
