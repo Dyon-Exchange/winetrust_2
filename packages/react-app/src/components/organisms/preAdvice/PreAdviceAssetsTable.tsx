@@ -28,7 +28,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.productName,
+      (param.row as Asset).product?.productName || "",
   },
   {
     field: "productPackSize",
@@ -38,7 +38,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.packSize,
+      (param.row as Asset).product?.packSize || "",
   },
   {
     field: "productId",
@@ -48,7 +48,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 250,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product._id,
+      (param.row as Asset).product?._id || "",
   },
   {
     field: "productDutyStatus",
@@ -58,7 +58,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.dutyStatus,
+      (param.row as Asset).product?.dutyStatus || "",
   },
   {
     field: "state",
