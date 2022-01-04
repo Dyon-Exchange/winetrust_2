@@ -13,13 +13,16 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 })
 export class ProductClass extends TimeStamps {
   @prop({ required: true })
-  public productName: string;
+  public simpleName: string;
 
   @prop({ required: true })
-  public description: string;
+  public longName: string;
 
-  // @prop({ maxlength: 18, required: true })
-  // public skuCode?: string;
+  @prop({ required: true })
+  public productID: string;
+
+  @prop({ required: true })
+  public Description: string;
 
   @prop({ required: true })
   public year: string;
@@ -40,7 +43,22 @@ export class ProductClass extends TimeStamps {
   public dutyStatus: string;
 
   @prop({ required: true })
-  public image: string;
+  public labelImage: string;
+
+  @prop({ required: true })
+  public bottleImage: string;
+
+  @prop({ required: true })
+  public marketingImage1: string;
+
+  @prop({ required: true })
+  public marketingImage2: string;
+
+  @prop({ required: true })
+  public marketingImage3: string;
+
+  @prop({ required: true })
+  public marketingImage4: string;
 }
 
 export default getModelForClass(ProductClass);
