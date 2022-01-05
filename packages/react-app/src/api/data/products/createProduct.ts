@@ -3,6 +3,7 @@ import axios from "axios";
 export default async (newProduct: NewProductForm) => {
   // deconstruct the new product object
   const {
+    simpleName,
     productName,
     year,
     region,
@@ -22,6 +23,7 @@ export default async (newProduct: NewProductForm) => {
 
   // construct a stringified JSON of the product data to append to the product form data
   const productData = JSON.stringify({
+    simpleName,
     productName,
     year,
     region,
