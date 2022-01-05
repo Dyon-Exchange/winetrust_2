@@ -6,7 +6,10 @@ import pinataUrl from "../../../constants/pinataUrl";
 import Product, { ProductClass } from "../../../models/Product";
 
 interface CreateProductRequestBody {
+  simpleName: string;
   productName: string;
+  longName: string;
+  productId: string;
   description: string;
   year: string;
   region: string;
