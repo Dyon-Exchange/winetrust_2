@@ -55,14 +55,68 @@ const AddNewProductFormModal = ({
 
   // image file input ref
   const imageFileInputRef = useRef<any>(null);
+  const labelImageFileInputRef = useRef<any>(null);
+  const bottleImageFileInputRef = useRef<any>(null);
+  const marketing1ImageFileInputRef = useRef<any>(null);
+  const marketing2ImageFileInputRef = useRef<any>(null);
+  const marketing3ImageFileInputRef = useRef<any>(null);
+  const marketing4ImageFileInputRef = useRef<any>(null);
 
   // controller hook for the image file input
   const {
-    field: { value: imageValue, onChange: onImageChange, ...inputProps },
+    field: { value: imageValue, onChange: onImageChange, ...imageProps },
   } = useController({
     name: "image",
     control,
     rules: { required: "Image is required" },
+  });
+
+  const {
+    field: { value: labelImageValue, onChange: onLabelImageChange, ...labelImageProps },
+  } = useController({
+    name: "labelImage",
+    control,
+    rules: { required: "Label Image is required" },
+  });
+
+  const {
+    field: { value: bottleImageValue, onChange: onBottleImageChange, ...bottleImageProps },
+  } = useController({
+    name: "bottleImage",
+    control,
+    rules: { required: "Bottle Image is required" },
+  });
+
+  const {
+    field: { value: marketing1ImageValue, onChange: onMarketing1ImageChange, ...marketing1ImageProps },
+  } = useController({
+    name: "marketingImage1",
+    control,
+    rules: { required: "Marketing Image is required" },
+  });
+
+  const {
+    field: { value: marketing2ImageValue, onChange: onMarketing2ImageChange, ...marketing2ImageProps },
+  } = useController({
+    name: "marketingImage2",
+    control,
+    rules: { required: "Marketing Image is required" },
+  });
+
+  const {
+    field: { value: marketing3ImageValue, onChange: onMarketing3ImageChange, ...marketing3ImageProps },
+  } = useController({
+    name: "marketingImage3",
+    control,
+    rules: { required: "Marketing Image is required" },
+  });
+
+  const {
+    field: { value: marketing4ImageValue, onChange: onMarketing4ImageChange, ...marketing4ImageProps },
+  } = useController({
+    name: "marketingImage4",
+    control,
+    rules: { required: "Marketing Image is required" },
   });
 
   // submit handler
@@ -347,7 +401,7 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...imageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
@@ -388,13 +442,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...labelImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onLabelImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={labelImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -408,10 +462,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => labelImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={labelImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Label image"
                   />
                 </InputGroup>
@@ -429,13 +483,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...bottleImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onBottleImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={bottleImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -449,10 +503,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => bottleImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={bottleImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Bottle image"
                   />
                 </InputGroup>
@@ -470,13 +524,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...marketing1ImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onMarketing1ImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={marketing1ImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -490,10 +544,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => marketing1ImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={marketing1ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
@@ -501,7 +555,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="imarketingimage2"
+                id="marketingimage2"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -511,13 +565,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...marketing2ImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onMarketing2ImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={marketing2ImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -531,10 +585,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => marketing2ImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={marketing2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
@@ -552,13 +606,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...marketing3ImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onMarketing3ImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={marketing3ImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -572,10 +626,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => marketing3ImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={marketing3ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
@@ -593,13 +647,13 @@ const AddNewProductFormModal = ({
                     <AttachmentIcon />
                   </InputLeftElement>
                   <input
-                    {...inputProps}
+                    {...marketing4ImageProps}
                     accept=".jpg, .jpeg, .png" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
+                      onMarketing4ImageChange(event.target.files[0]);
                     }}
-                    ref={imageFileInputRef}
+                    ref={marketing4ImageFileInputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -613,10 +667,10 @@ const AddNewProductFormModal = ({
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
+                    onClick={() => marketing4ImageFileInputRef.current.click()}
                     readOnly
                     type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    value={marketing4ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
                     placeholder="Marketing Image"
                   />
                 </InputGroup>

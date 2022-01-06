@@ -21,9 +21,9 @@ interface CreateProductRequestBody {
 
 export default async (ctx: Context) => {
   // request body in this case is a stringified JSON in a form data object with 'product-data' as it's key
-  const requestFile = ctx.request.file;
+  const requestFiles = ctx.request.files;
   const requestBody = JSON.parse(
-    ctx.request.body["product-data"]
+    ctx.request["body"]["product-data"]
   ) as CreateProductRequestBody;
 
   // upload the image file to pinata
@@ -31,7 +31,7 @@ export default async (ctx: Context) => {
   const pinataSecret = process.env.PINATA_API_SECRET;
 
   const imageData = new FormData();
-  imageData.append("file", requestFile.buffer, requestFile.originalname);
+  imageData.append("file", requestFiles[0].buffer, requestFiles[0].originalname);
 
   try {
     // try to upload the image file to pinata
