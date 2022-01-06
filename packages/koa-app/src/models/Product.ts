@@ -50,7 +50,7 @@ export class ProductClass extends TimeStamps {
   @prop({ required: false })
   public image: string;
 
-  @prop({ required: false })
+  @prop({ required: true })
   public labelImage: string; 
 
   @prop({ required: false })
