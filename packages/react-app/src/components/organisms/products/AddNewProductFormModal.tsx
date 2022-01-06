@@ -378,7 +378,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="labelimage"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -419,7 +419,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="bottleimage"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -460,7 +460,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage1"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -501,7 +501,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="imarketingimage2"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -542,7 +542,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage3"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
@@ -583,7 +583,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage4"
                 isDisabled={isSubmitting}
                 isInvalid={errors.image !== undefined}
               >
