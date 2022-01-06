@@ -48,6 +48,7 @@ const WineTrustProducts = () => {
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}
+
             <AddNewButton onClick={openAddNew}/>
           </HStack>
         </HStack>

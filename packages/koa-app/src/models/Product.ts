@@ -47,25 +47,25 @@ export class ProductClass extends TimeStamps {
   @prop({ required: true })
   public dutyStatus: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public image: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public labelImage: string; 
 
-  @prop({ required: true })
+  @prop({ required: false })
   public bottleImage: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public marketingImage1: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public marketingImage2: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public marketingImage3: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public marketingImage4: string;
 
 }

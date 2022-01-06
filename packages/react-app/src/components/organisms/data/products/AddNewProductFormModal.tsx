@@ -395,17 +395,12 @@ const AddNewProductFormModal = ({
                     placeholder="Product image"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="labelimage"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
               >
                 <FormLabel fontSize="sm">Label Image</FormLabel>
                 <InputGroup>
@@ -440,17 +435,12 @@ const AddNewProductFormModal = ({
                     placeholder="Label image"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="bottleimage"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
               >
                 <FormLabel fontSize="sm">Bottle Image</FormLabel>
                 <InputGroup>
@@ -485,17 +475,12 @@ const AddNewProductFormModal = ({
                     placeholder="Bottle image"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage1"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
               >
                 <FormLabel fontSize="sm">Marketing Image 1</FormLabel>
                 <InputGroup>
@@ -530,17 +515,12 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image 1"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage2"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
               >
                 <FormLabel fontSize="sm">Marketing Image 2</FormLabel>
                 <InputGroup>
@@ -575,17 +555,12 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image 2"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage3"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
               >
                 <FormLabel fontSize="sm">Marketing Image 3</FormLabel>
                 <InputGroup>
@@ -620,17 +595,13 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image 3"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
               <ModalFormControl
-                id="image"
+                id="marketingimage4"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
+                
               >
                 <FormLabel fontSize="sm">Marketing Image 4</FormLabel>
                 <InputGroup>
@@ -665,11 +636,7 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image 4"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
 
             </ModalBody>
