@@ -14,6 +14,7 @@ const WineTrustProducts = () => {
   const { assets } = useContext(DataContext);
   const [deleteList, setDeleteList] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // states for the add new modals
   const {
@@ -48,7 +49,14 @@ const WineTrustProducts = () => {
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}
-
+            <Input
+          placeholder="Search"
+          size="sm"
+          value={searchQuery}
+          onChange={(event: React.FormEvent<HTMLInputElement>) =>
+            setSearchQuery(event.currentTarget.value)
+          }
+        />
             <AddNewButton onClick={openAddNew}/>
           </HStack>
         </HStack>

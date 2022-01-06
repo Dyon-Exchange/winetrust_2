@@ -415,7 +415,11 @@ const AddNewProductFormModal = ({
                     placeholder="Label image"
                   />
                 </InputGroup>
-                
+                {errors.image !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.image}
+                  </FormErrorMessage>
+                )}
               </ModalFormControl>
 
               <ModalFormControl
