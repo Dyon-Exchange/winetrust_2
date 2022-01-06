@@ -5,6 +5,9 @@ export default async (newProduct: NewProductForm) => {
   const {
     simpleName,
     productName,
+    longName,
+    productId,
+    description,
     year,
     region,
     subRegion,
@@ -12,7 +15,12 @@ export default async (newProduct: NewProductForm) => {
     packSize,
     dutyStatus,
     image,
-    description,
+    labelImage,
+    bottleImage,
+    marketingImage1,
+    marketingImage2,
+    marketingImage3,
+    marketingImage4
   } = newProduct;
 
   // construct a form data object for the product, so image file can be uploaded
@@ -25,13 +33,22 @@ export default async (newProduct: NewProductForm) => {
   const productData = JSON.stringify({
     simpleName,
     productName,
+    longName,
+    productId,
+    description,
     year,
     region,
     subRegion,
     subSubRegion,
     packSize,
     dutyStatus,
-    description,
+    image,
+    labelImage,
+    bottleImage,
+    marketingImage1,
+    marketingImage2,
+    marketingImage3,
+    marketingImage4
   });
 
   productFormData.append("product-data", productData);
