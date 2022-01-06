@@ -122,19 +122,20 @@ const AddNewProductFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
+
               <ModalFormControl
-                id="productName"
+                id="simpleName"
                 isDisabled={isSubmitting}
                 isInvalid={errors.productName !== undefined}
               >
-                <FormLabel fontSize="sm">Product name</FormLabel>
+                <FormLabel fontSize="sm">Simple name</FormLabel>
                 <Input
-                  {...register("productName", {
-                    required: "Product name is required",
+                  {...register("simpleName", {
+                    required: "Simple name is required",
                   })}
                   fontSize="sm"
                   type="text"
-                  placeholder="Product name"
+                  placeholder="Simple name"
                 />
                 {errors.productName !== undefined && (
                   <FormErrorMessage color={colors.error} fontSize="sm">
@@ -142,6 +143,28 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
+              <ModalFormControl
+                id="longName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productName !== undefined}
+              >
+                <FormLabel fontSize="sm">Long name</FormLabel>
+                <Input
+                  {...register("productName", {
+                    required: "Long name is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Long name"
+                />
+                {errors.productName !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productName.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
               <ModalFormControl
                 id="description"
                 isDisabled={isSubmitting}
