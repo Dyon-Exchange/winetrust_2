@@ -18,7 +18,17 @@ const multer = Multer();
 
 router.prefix("/products");
 
-router.post("/", multer.single("product-image"), createProduct);
+const imageFields = [
+  { name: "product-image", maxCount: 1 },
+  { name: "label-image", maxCount: 1 },
+  { name: "bottle-image", maxCount: 1 },
+  { name: "marketing1-image", maxCount: 1 },
+  { name: "marketing2-image", maxCount: 1 },
+  { name: "marketing3-image", maxCount: 1 },
+  { name: "marketing4-image", maxCount: 1 },
+];
+
+router.post("/", multer.fields(imageFields), createProduct);
 
 router.route({
   method: "get",
