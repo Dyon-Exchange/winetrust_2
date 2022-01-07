@@ -28,6 +28,13 @@ export default async (newProduct: NewProductForm) => {
 
   // append the image file
   productFormData.append("product-image", image);
+  productFormData.append("label-image", labelImage);
+  productFormData.append("bottle-image", bottleImage);
+  productFormData.append("marketing1-image", marketingImage1);
+  productFormData.append("marketing2-image", marketingImage2);
+  productFormData.append("marketing3-image", marketingImage3);
+  productFormData.append("marketing4-image", marketingImage4);
+
 
   // construct a stringified JSON of the product data to append to the product form data
   const productData = JSON.stringify({
@@ -52,6 +59,6 @@ export default async (newProduct: NewProductForm) => {
   });
 
   productFormData.append("product-data", productData);
-
+  console.log(JSON.stringify(productData))
   await axios.post("/products", productFormData);
 };
