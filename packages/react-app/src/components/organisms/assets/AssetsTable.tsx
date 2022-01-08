@@ -1,3 +1,4 @@
+import { Box, HStack, Input, useColorModeValue } from "@chakra-ui/react";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
@@ -17,18 +18,25 @@ import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
+
+
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
-  {
-    field: "preAdviceId",
-    headerName: "Pre-Advice ID",
-    flex: 1,
-    minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).preAdvice.preAdviceId,
-  },
+  // {
+  //   field: "preAdviceId",
+  //   headerClassName: "super-app-theme--header",
+  //   cellClassName: "super-app-theme--cell",
+  //   headerAlign: "center",
+  //   headerName: "Pre-Advice ID",
+  //   flex: 1,
+  //   minWidth: 200,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     (param.row as Asset).preAdvice.preAdviceId,
+  // },
   {
     field: "productName",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Product",
     flex: 1,
     minWidth: 200,
@@ -37,6 +45,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productYear",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Year",
     flex: 1,
     minWidth: 150,
@@ -44,7 +54,19 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).product.year,
   },
   {
+    field: "productRegion",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Region",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.region,
+  },
+  {
     field: "productPackSize",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Pack Size",
     flex: 1,
     minWidth: 150,
@@ -52,7 +74,19 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).product.packSize,
   },
   {
+    field: "warehouseId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Warehouse ID",
+    flex: 1,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).preAdvice.transferringWarehouse._id,
+  },
+  {
     field: "productId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Product ID",
     flex: 1,
     minWidth: 250,
@@ -61,6 +95,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "productDutyStatus",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Duty Status",
     flex: 1,
     minWidth: 150,
@@ -68,44 +104,19 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).product.dutyStatus,
   },
   {
-    field: "price",
-    headerName: "Original Price",
+    field: "assetLocation",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Location",
     flex: 1,
-    minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) =>
-      `${(param.row as Asset).cost.currency} ${(
-        param.row as Asset
-      ).cost.amount.toLocaleString()}`,
-  },
-  {
-    field: "transferringWarehouse",
-    headerName: "Transferring Warehouse",
-    flex: 1,
-    minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).preAdvice.transferringWarehouse.name,
-  },
-  {
-    field: "arrivalWarehouse",
-    headerName: "Arrival Warehouse",
-    flex: 1,
-    minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).preAdvice.arrivalWarehouse.name,
-  },
-  {
-    field: "owner",
-    headerName: "Owner",
-    flex: 1,
-    minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) =>
-      `${(param.row as Asset).preAdvice.owner.firstName} ${
-        (param.row as Asset).preAdvice.owner.lastName
-      }`,
+    minWidth: 150,
+    valueGetter: (param: GridValueGetterParams) => "",
   },
   {
     field: "state",
-    headerName: "State",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Landing Status",
     flex: 1,
     minWidth: 150,
     renderCell: (param: GridValueGetterParams) => (
@@ -113,17 +124,9 @@ const assetsTableColumns: GridColDef[] = [
     ),
   },
   {
-    field: "expectedArrivalDate",
-    headerName: "Expected Arrival",
-    flex: 1,
-    minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) =>
-      dayjs((param.row as Asset).expectedArrivalDate).format(
-        "ddd MMM DD, YYYY"
-      ),
-  },
-  {
     field: "assetId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Asset ID",
     flex: 1,
     minWidth: 250,
@@ -131,6 +134,8 @@ const assetsTableColumns: GridColDef[] = [
   },
   {
     field: "tokenId",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
     headerName: "Token ID",
     flex: 1,
     minWidth: 250,
@@ -138,6 +143,62 @@ const assetsTableColumns: GridColDef[] = [
       <NFTDisplayHandler row={param.row as Asset} />
     ),
   },
+  // {
+  //   field: "price",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Original Price",
+  //   flex: 1,
+  //   minWidth: 200,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     `${(param.row as Asset).cost.currency} ${(
+  //       param.row as Asset
+  //     ).cost.amount.toLocaleString()}`,
+  // },
+  // {
+  //   field: "transferringWarehouse",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Transferring Warehouse",
+  //   flex: 1,
+  //   minWidth: 250,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     (param.row as Asset).preAdvice.transferringWarehouse.name,
+  // },
+  // {
+  //   field: "arrivalWarehouse",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Arrival Warehouse",
+  //   flex: 1,
+  //   minWidth: 250,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     (param.row as Asset).preAdvice.arrivalWarehouse.name,
+  // },
+  // {
+  //   field: "owner",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Owner",
+  //   flex: 1,
+  //   minWidth: 250,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     `${(param.row as Asset).preAdvice.owner.firstName} ${
+  //       (param.row as Asset).preAdvice.owner.lastName
+  //     }`,
+  // },
+  // {
+  //   field: "expectedArrivalDate",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Expected Arrival",
+  //   flex: 1,
+  //   minWidth: 200,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     dayjs((param.row as Asset).expectedArrivalDate).format(
+  //       "ddd MMM DD, YYYY"
+  //     ),
+  // }
 ];
 
 interface AssetsTableProps {
@@ -218,9 +279,10 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
         refetch={refetchAssetsData}
       />
     );
-
+      // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
+    
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}

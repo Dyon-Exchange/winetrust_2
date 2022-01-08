@@ -6,6 +6,5 @@ export default async (): Promise<Asset[]> => {
   const filteredAssets = assets.filter(
     (a) => a.product != null && a.preAdvice != null
   );
-  console.log(filteredAssets);
   return filteredAssets;
 };

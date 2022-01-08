@@ -122,6 +122,28 @@ const AddNewProductFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
+
+              <ModalFormControl
+                id="simpleName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productName !== undefined}
+              >
+                <FormLabel fontSize="sm">Simple name</FormLabel>
+                <Input
+                  {...register("simpleName", {
+                    required: "Simple name is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Simple name"
+                />
+                {errors.productName !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productName.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
               <ModalFormControl
                 id="productName"
                 isDisabled={isSubmitting}
@@ -142,6 +164,49 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
+              <ModalFormControl
+                id="longName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productName !== undefined}
+              >
+                <FormLabel fontSize="sm">Product name</FormLabel>
+                <Input
+                  {...register("longName", {
+                    required: "Long name is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Long name"
+                />
+                {errors.productName !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productName.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="longName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productName !== undefined}
+              >
+                <FormLabel fontSize="sm">Product ID</FormLabel>
+                <Input
+                  {...register("productId", {
+                    required: "Product ID is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Product ID"
+                />
+                {errors.productName !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productName.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
               <ModalFormControl
                 id="description"
                 isDisabled={isSubmitting}
@@ -295,7 +360,7 @@ const AddNewProductFormModal = ({
               <ModalFormControl
                 id="image"
                 isDisabled={isSubmitting}
-                isInvalid={errors.image !== undefined}
+                
               >
                 <FormLabel fontSize="sm">Image</FormLabel>
                 <InputGroup>
@@ -330,12 +395,250 @@ const AddNewProductFormModal = ({
                     placeholder="Product image"
                   />
                 </InputGroup>
-                {errors.image !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.image.message}
-                  </FormErrorMessage>
-                )}
+                
               </ModalFormControl>
+
+              <ModalFormControl
+                id="labelimage"
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Label Image</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Label image"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="bottleimage"
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Bottle Image</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Bottle image"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="marketingimage1"
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Marketing Image 1</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Marketing Image 1"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="marketingimage2"
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Marketing Image 2</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Marketing Image 2"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="marketingimage3"
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Marketing Image 3</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Marketing Image 3"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="marketingimage4"
+                isDisabled={isSubmitting}
+                
+              >
+                <FormLabel fontSize="sm">Marketing Image 4</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onImageChange(event.target.files[0]);
+                    }}
+                    ref={imageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => imageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Marketing Image 4"
+                  />
+                </InputGroup>
+                
+              </ModalFormControl>
+
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton
