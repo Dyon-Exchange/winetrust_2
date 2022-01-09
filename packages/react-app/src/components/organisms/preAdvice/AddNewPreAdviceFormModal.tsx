@@ -369,7 +369,7 @@ const AddNewPreAdviceFormModal = ({
                 isInvalid={assetsError !== ""}
               >
                 <FormLabel fontSize="sm">
-                  Assets {`(${assets.length})`}
+                  Products {`(${assets.length})`}
                 </FormLabel>
                 {assets.map((asset) => (
                   <AssetCard
