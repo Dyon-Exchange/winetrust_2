@@ -43,9 +43,6 @@ const imageFieldsMap = {
 
 
 export default async (ctx: Context) => {
-  // console.log("ctx.request.files", ctx.request['files']);
-  // console.log("ctx.files", ctx['files']);
-  // console.log("ctx.request.body", ctx.request['body']);
   // request body in this case is a stringified JSON in a form data object with 'product-data' as it's key
   const requestFiles = JSON.parse(
     JSON.stringify(ctx["files"])
@@ -53,8 +50,6 @@ export default async (ctx: Context) => {
   const requestBody = JSON.parse(
     ctx.request["body"]["product-data"]
   ) as CreateProductRequestBody;
-
-  // console.log(requestFiles)
 
   // upload the image file to pinata
   const pinataKey = process.env.PINATA_API_KEY;

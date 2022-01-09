@@ -2,6 +2,7 @@ import {
   GridColDef,
   GridValueGetterParams,
   GridRowParams,
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
@@ -13,6 +14,8 @@ import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
+
+import ClientsModal from "./ClientsModal";
 
 // column headers for the clients data table
 const clientsTableColumns: GridColDef[] = [
@@ -48,6 +51,18 @@ const clientsTableColumns: GridColDef[] = [
     headerAlign: "center",
     headerName: "ETH Address", 
     flex: 1, minWidth: 400 
+  },
+  {
+    field: "_id",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 200,
+    renderCell: (params: GridRenderCellParams) => {
+      const modal = ClientsModal(params.row);
+      return modal;
+    },
   },
 ];
 
