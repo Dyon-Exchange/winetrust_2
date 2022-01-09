@@ -123,7 +123,7 @@ const AddNewAssetFormModal = ({
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
-            <ModalHeader>Add New Asset</ModalHeader>
+            <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%" overflow="inherit">
               <ModalFormControl isInvalid={errors.product !== undefined}>
                 <FormLabel fontSize="sm">Product</FormLabel>

@@ -76,7 +76,7 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
           size="sm"
           onClick={openConfirmLandedModal}
         >
-          Set Landed
+          Land
         </Button>
       </>
     );
