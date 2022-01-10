@@ -20,10 +20,10 @@ import ProductsModal from "./ProductsModal";
 // column headers for the products data table
 const productsTableColumns: GridColDef[] = [
   { 
-    field: "productName", 
+    field: "longName", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Product Name", 
+    headerName: "Long Name", 
     flex: 1, minWidth: 200 
   },
   { 

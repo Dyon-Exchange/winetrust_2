@@ -34,14 +34,14 @@ const assetsTableColumns: GridColDef[] = [
   //     (param.row as Asset).preAdvice.preAdviceId,
   // },
   {
-    field: "productName",
+    field: "longName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.productName,
+      (param.row as Asset).product.longName,
   },
   {
     field: "productYear",
@@ -240,7 +240,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
     filteredAssetsData || [],
     [
       "preAdvice.preAdviceId",
-      "product.productName",
+      "product.longName",
       "product.year",
       "product.packSize",
       "product._id",
