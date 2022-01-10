@@ -193,6 +193,27 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
+                id="productName"
+                isDisabled={isSubmitting}
+                isInvalid={errors.simpleName !== undefined}
+              >
+                <FormLabel fontSize="sm">Product name</FormLabel>
+                <Input
+                  {...register("simpleName", {
+                    required: "Product name is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Product name"
+                />
+                {errors.simpleName !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.simpleName.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
                 id="longName"
                 isDisabled={isSubmitting}
                 isInvalid={errors.longName !== undefined}
