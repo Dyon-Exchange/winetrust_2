@@ -55,19 +55,28 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   };
 
   if (asset.state === "Due In") {
+    const _landingproduct = `You are Landing Product ${asset.product.productName}`
+    const _quantity = `Quantity ${asset.product.packSize}`
     return (
+      
       <>
+     
         {isConfirmLandedModalOpen && (
+         
           <ConfirmCancelChangesModal
             onConfirm={setAsLandedHandler}
             isOpen={isConfirmLandedModalOpen}
             onClose={closeConfirmLandedModal}
             overrideHeader="Warning: Setting as Landed"
-            overrideBody="Are you sure you want to mark as landed? This cannot be undone."
+            landingProduct={_landingproduct}
+            landingWarehouse="Landing Warehouse"
+            quantity={_quantity}
+            warehouseLocation="Warehosue Location"
             isSubmitting={isSubmitting}
           />
-        )}
 
+        )}
+         
         <Button
           colorScheme="blue"
           // leftIcon={<AddIcon />}
@@ -76,7 +85,7 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
           size="sm"
           onClick={openConfirmLandedModal}
         >
-          Set Landed
+          Land
         </Button>
       </>
     );
