@@ -63,7 +63,7 @@ const AddNewAssetFormModal = ({
   } = useFilteredData<Product>({
     useQueryKey: "products",
     getFunction: getProducts,
-    filterFields: ["productName"],
+    filterFields: ["longName"],
   });
 
   // pop a toast for any of the search query errors
@@ -152,7 +152,7 @@ const AddNewAssetFormModal = ({
                       options={filteredProductsData?.map(
                         (product: Product) => ({
                           value: product,
-                          label: product.productName,
+                          label: product.longName,
                         })
                       )}
                     />

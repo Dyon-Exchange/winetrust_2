@@ -21,14 +21,14 @@ import AssetStateHandler from "../assets/AssetStateHandler";
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   {
-    field: "productName",
+    field: "longName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product?.productName || "",
+      (param.row as Asset).product.longName,
   },
   {
     field: "productPackSize",

@@ -40,27 +40,31 @@ const WineTrustProducts = () => {
     }
   }, [deleteList]);
 
+  // const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <>
     <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
       <Box p="16px">
         <HStack justifyContent="space-between" overflow="auto" p="10px 20px"  w="100%">
-          <HStack>
+          <Input
+            placeholder="Search"
+            size="sm"
+            value={searchQuery}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setSearchQuery(event.currentTarget.value)
+            }
+            w="20%"
+          />
+          <HStack ml="auto">
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}
-            <Input
-          placeholder="Search"
-          size="sm"
-          value={searchQuery}
-          onChange={(event: React.FormEvent<HTMLInputElement>) =>
-            setSearchQuery(event.currentTarget.value)
-          }
-        />
+            
             <AddNewButton onClick={openAddNew}/>
           </HStack>
         </HStack>
-        <ProductsTable setDeleteList={setDeleteList} assets={assets} />
+        <ProductsTable setDeleteList={setDeleteList} assets={assets} searchQuery={searchQuery} />
       </Box>
     </Box>
     {isAddNewProductOpen && (

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export default async (productName: string): Promise<Product[]> => {
+export default async (longName: string): Promise<Product[]> => {
   const { data } = await axios.get(
-    `/products/search?product-name=${productName}`
+    `/products/search?long-name=${longName}`
   );
   return data;
 };

@@ -35,7 +35,7 @@ const AssetCard = ({ asset, removeAsset, removeDisabled }: AssetCardProps) => {
       <Stat>
         <HStack>
           <StatLabel>Product:</StatLabel>
-          <StatHelpText>{` ${asset.product.productName}`}</StatHelpText>
+          <StatHelpText>{` ${asset.product.simpleName}`}</StatHelpText>
         </HStack>
         <HStack>
           <StatLabel>Cost:</StatLabel>
