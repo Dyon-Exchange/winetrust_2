@@ -1,4 +1,4 @@
-import { GridColDef, GridRowParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams, GridRowParams } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
@@ -9,6 +9,8 @@ import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
+
+import WarehousesModal from "./WarehousesModal";
 
 // column headers for the warehouses data table
 const warehousesTableColumns: GridColDef[] = [
@@ -40,6 +42,18 @@ const warehousesTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
   },
+  {
+    field: "_id",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 200,
+    renderCell: (params: GridRenderCellParams) => {
+      const modal = WarehousesModal(params.row);
+      return modal;
+    }
+  }
 ];
 
 interface Props {
