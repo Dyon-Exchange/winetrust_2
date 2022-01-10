@@ -6,10 +6,11 @@ import {
 } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
-import React, { useEffect, useState, useRef, Ref } from "react";
+import React, { useEffect, useState, useRef, Ref, useMemo } from "react";
 import { useQuery } from "react-query";
 
 import getProducts from "../../../api/data/products/getProducts";
+import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
@@ -64,9 +65,10 @@ const productsTableColumns: GridColDef[] = [
 interface Props {
   setDeleteList?: React.Dispatch<React.SetStateAction<string[]>>;
   assets: Asset[];
+  searchQuery: string;
 }
 
-const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
+const ProductsTable: React.FC<Props> = ({ setDeleteList, assets, searchQuery }) => {
   const toast = useDefaultToast();
 
   // query for products data
@@ -91,6 +93,20 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     }
   }, [productsDataError, productsDataIsError, toast]);
 
+  const filteredProductsData: Product[] | undefined = useMemo(() => {
+    if (!productsData) return undefined;
+    return productsData;
+  }, [productsData])
+
+  const searchFilteredProductsData = useFuseSearch(
+    filteredProductsData || [],
+    [
+      "longName",
+      "_id",
+    ],
+    searchQuery
+  );
+  
   if (productsDataIsLoading) return <DataTableSpinner />;
 
   if (productsDataIsError)
@@ -110,7 +126,7 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       onSelectionModelChange={(ids) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}
-      rows={orderBy(productsData, "createdAt", "desc") ?? []}
+      rows={orderBy(searchFilteredProductsData, "createdAt", "desc") ?? []}
       isRowSelectable={(params: GridRowParams) => {
         const asset = assets.find((a) => a.product?._id === params.id);
         return !asset || asset.state === "Landed";
