@@ -58,14 +58,7 @@ const WineTrustProducts = () => {
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}
-            <Input
-          placeholder="Search"
-          size="sm"
-          value={searchQuery}
-          onChange={(event: React.FormEvent<HTMLInputElement>) =>
-            setSearchQuery(event.currentTarget.value)
-          }
-        />
+            
             <AddNewButton onClick={openAddNew}/>
           </HStack>
         </HStack>
