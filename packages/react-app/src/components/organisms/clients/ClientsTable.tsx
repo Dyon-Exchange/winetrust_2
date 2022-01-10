@@ -45,13 +45,6 @@ const clientsTableColumns: GridColDef[] = [
         (param.value as PhoneNumber).phoneNumber
       }`,
   },
-  { 
-    field: "ethAddress", 
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "ETH Address", 
-    flex: 1, minWidth: 400 
-  },
   {
     field: "_id",
     headerClassName: "super-app-theme--header",

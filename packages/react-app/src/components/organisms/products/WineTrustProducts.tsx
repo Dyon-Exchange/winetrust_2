@@ -40,8 +40,6 @@ const WineTrustProducts = () => {
     }
   }, [deleteList]);
 
-  const [searchQuery, setSearchQuery] = useState("");
-
   return (
     <>
     <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">

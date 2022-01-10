@@ -193,7 +193,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
-                id="productName"
+                id="simpleName"
                 isDisabled={isSubmitting}
                 isInvalid={errors.simpleName !== undefined}
               >
