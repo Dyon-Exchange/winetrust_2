@@ -55,7 +55,7 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   };
 
   if (asset.state === "Due In") {
-    const _landingproduct = `You are Landing Product ${asset.product.longName}`
+    const _landingproduct = `You are Landing Product ${asset.product.simpleName}`
     const _quantity = `Quantity ${asset.product.packSize}`
     return (
       

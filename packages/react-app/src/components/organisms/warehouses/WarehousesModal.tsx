@@ -1,5 +1,6 @@
 import { ViewIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
   Modal,
   ModalBody,
@@ -9,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { GridRowData } from "@mui/x-data-grid";
 import React from "react";
@@ -48,7 +50,13 @@ const WarehousesModal = (data: GridRowData) => {
           <ModalHeader>Warehouse Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            ID: {_id}
+            <VStack w="100%" align="start">
+              <Box>ID : {id}</Box>
+              <Box>Name : {name}</Box>
+              <Box>Address : {address}</Box>
+              <Box>Contact Name: {contactName}</Box>
+              <Box>Contact Email : {contactEmail}</Box>
+            </VStack>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
