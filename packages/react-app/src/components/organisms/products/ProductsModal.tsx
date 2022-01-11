@@ -11,6 +11,7 @@ import {
   ModalOverlay,
   useDisclosure,
   VStack,
+  Image,
 } from "@chakra-ui/react";
 import { GridRowData } from "@mui/x-data-grid";
 import React from "react";
@@ -70,31 +71,64 @@ const ProductsModal = (data: GridRowData) => {
               <Box>Description : {description}</Box>
               <Box>Year : {year}</Box>
               <Box>Duty Status : : {dutyStatus}</Box>
-              <Box>Pack Size : {packSize }</Box>
+              <Box>Pack Size : {packSize}</Box>
               <Box>Region : {region}</Box>
               <Box>Sub Region : {subRegion}</Box>
               <Box>Sub Sub Region : {subSubRegion}</Box>
-              {image &&
-                <Box>Image : {image}</Box>
-              }
-              {labelImage &&
-                <Box>Label Image : {labelImage}</Box>
-              }
-              {bottleImage &&
-                <Box>Bottle Image : {bottleImage}</Box>
-              }
-              {marketingImage1 &&
-                <Box>Marketing Image 1: {marketingImage1}</Box>
-              }
-              {marketingImage2 &&
-                <Box>Marketing Image 2: {marketingImage2}</Box>
-              }
-              {marketingImage3 &&
-                <Box>Marketing Image 3: {marketingImage3}</Box>
-              }
-              {marketingImage4 &&
-                <Box>Marketing Image 4: {marketingImage4}</Box>
-              }
+              {image && (
+                <Box>
+                  Image :
+                  <Image src={`https://gateway.pinata.cloud/ipfs/${image}`} />
+                </Box>
+              )}
+              {labelImage && (
+                <Box>
+                  Label Image :
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`}
+                  />
+                </Box>
+              )}
+              {bottleImage && (
+                <Box>
+                  Bottle Image :
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`}
+                  />
+                </Box>
+              )}
+              {marketingImage1 && (
+                <Box>
+                  Marketing Image 1:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`}
+                  />
+                </Box>
+              )}
+              {marketingImage2 && (
+                <Box>
+                  Marketing Image 2:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`}
+                  />
+                </Box>
+              )}
+              {marketingImage3 && (
+                <Box>
+                  Marketing Image 3:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`}
+                  />
+                </Box>
+              )}
+              {marketingImage4 && (
+                <Box>
+                  Marketing Image 4:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`}
+                  />
+                </Box>
+              )}
             </VStack>
           </ModalBody>
           <ModalFooter>
