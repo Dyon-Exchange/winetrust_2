@@ -110,7 +110,8 @@ const assetsTableColumns: GridColDef[] = [
     headerName: "Location",
     flex: 1,
     minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) => "",
+    valueGetter: (param: GridValueGetterParams) =>
+    (param.row as Asset).preAdvice.transferringWarehouse.address,
   },
   {
     field: "state",
