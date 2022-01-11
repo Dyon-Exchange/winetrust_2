@@ -33,4 +33,4 @@ yarn-error.log*
 /packages/smart-contracts/artifacts
 /packages/smart-contracts/cache
 /packages/react-app/build
-/packages/react-app/src/contexts/AuthContext.tsx
+packages/react-app/src/contexts/AuthContext.tsx

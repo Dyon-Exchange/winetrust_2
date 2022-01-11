@@ -2,25 +2,29 @@ import {
   GridColDef,
   GridValueGetterParams,
   GridRowParams,
+  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
 import { orderBy } from "lodash";
-import React, { useEffect, useState, useRef, Ref } from "react";
+import React, { useEffect, useState, useRef, Ref, useMemo } from "react";
 import { useQuery } from "react-query";
 
 import getProducts from "../../../api/data/products/getProducts";
+import useFuseSearch from "../../../hooks/search/useFuseSearch";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import ProductsModal from "./ProductsModal";
+
 // column headers for the products data table
 const productsTableColumns: GridColDef[] = [
   { 
-    field: "productName", 
+    field: "longName", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Product Name", 
+    headerName: "Long Name", 
     flex: 1, minWidth: 200 
   },
   { 
@@ -37,38 +41,6 @@ const productsTableColumns: GridColDef[] = [
     headerName: "Region", 
     flex: 1, minWidth: 200 
   },
-  {
-    field: "subRegion",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Sub-Region",
-    flex: 1,
-    minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) => param.value || "--",
-  },
-  {
-    field: "subSubRegion",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Sub-Sub-Region",
-    flex: 1,
-    minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) => param.value || "--",
-  },
-  { 
-    field: "packSize", 
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Pack Size", 
-    flex: 1, minWidth: 150 
-  },
-  { 
-    field: "_id", 
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Product ID", 
-    flex: 1, minWidth: 300 
-  },
   { 
     field: "description", 
     headerClassName: "super-app-theme--header",
@@ -76,21 +48,27 @@ const productsTableColumns: GridColDef[] = [
     headerName: "Description", 
     flex: 1, minWidth: 200 
   },
-  // { 
-  //   field: "dutyStatus", 
-  //   headerClassName: "super-app-theme--header",
-  //   headerAlign: "center",
-  //   headerName: "Duty Status", 
-  //   flex: 1, minWidth: 150 
-  // },
+  {
+    field: "_id",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 200,
+    renderCell: (params: GridRenderCellParams) => {
+      const modal = ProductsModal(params.row);
+      return modal;
+    },
+  },
 ];
 
 interface Props {
   setDeleteList?: React.Dispatch<React.SetStateAction<string[]>>;
   assets: Asset[];
+  searchQuery: string;
 }
 
-const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
+const ProductsTable: React.FC<Props> = ({ setDeleteList, assets, searchQuery }) => {
   const toast = useDefaultToast();
 
   // query for products data
@@ -115,6 +93,20 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
     }
   }, [productsDataError, productsDataIsError, toast]);
 
+  const filteredProductsData: Product[] | undefined = useMemo(() => {
+    if (!productsData) return undefined;
+    return productsData;
+  }, [productsData])
+
+  const searchFilteredProductsData = useFuseSearch(
+    filteredProductsData || [],
+    [
+      "longName",
+      "_id",
+    ],
+    searchQuery
+  );
+  
   if (productsDataIsLoading) return <DataTableSpinner />;
 
   if (productsDataIsError)
@@ -134,7 +126,7 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
       onSelectionModelChange={(ids) => {
         if (setDeleteList) setDeleteList(ids.map((id) => id.toString()));
       }}
-      rows={orderBy(productsData, "createdAt", "desc") ?? []}
+      rows={orderBy(searchFilteredProductsData, "createdAt", "desc") ?? []}
       isRowSelectable={(params: GridRowParams) => {
         const asset = assets.find((a) => a.product?._id === params.id);
         return !asset || asset.state === "Landed";

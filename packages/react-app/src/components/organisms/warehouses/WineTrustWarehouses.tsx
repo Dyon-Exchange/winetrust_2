@@ -45,7 +45,7 @@ const WineTrustWarehouses = () => {
     <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
       <Box p="16px">
         <HStack justifyContent="space-between" overflow="auto" p="10px 20px" w="100%">
-          <HStack>
+          <HStack ml="auto">
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}

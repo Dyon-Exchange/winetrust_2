@@ -247,7 +247,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 <Stat>
                   <AssetFieldDisplay
                     title="Product Name"
-                    defaultValue={row.product.productName}
+                    defaultValue={row.product.longName}
                   />
                   <AssetFieldDisplay
                     title="Description"

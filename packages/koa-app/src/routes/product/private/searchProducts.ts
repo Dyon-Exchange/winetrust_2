@@ -18,6 +18,6 @@ export default async (ctx: ExtendedContext<SearchProductsRequest>) => {
   }
 
   ctx.body = await Product.find({
-    productName: { $regex: searchName, $options: "i" },
+    longName: { $regex: searchName, $options: "i" },
   });
 };

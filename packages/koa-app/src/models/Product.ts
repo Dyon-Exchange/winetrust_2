@@ -16,10 +16,6 @@ export class ProductClass extends TimeStamps {
   @prop({ required: true })
   public simpleName: string;
   
-
-  @prop({ required: true })
-  public productName: string;
-
   @prop({ required: true })
   public longName: string;
 

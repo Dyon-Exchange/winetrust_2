@@ -63,7 +63,7 @@ const AddNewAssetFormModal = ({
   } = useFilteredData<Product>({
     useQueryKey: "products",
     getFunction: getProducts,
-    filterFields: ["productName"],
+    filterFields: ["longName"],
   });
 
   // pop a toast for any of the search query errors
@@ -123,7 +123,7 @@ const AddNewAssetFormModal = ({
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
-            <ModalHeader>Add New Asset</ModalHeader>
+            <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%" overflow="inherit">
               <ModalFormControl isInvalid={errors.product !== undefined}>
                 <FormLabel fontSize="sm">Product</FormLabel>
@@ -152,7 +152,7 @@ const AddNewAssetFormModal = ({
                       options={filteredProductsData?.map(
                         (product: Product) => ({
                           value: product,
-                          label: product.productName,
+                          label: product.longName,
                         })
                       )}
                     />

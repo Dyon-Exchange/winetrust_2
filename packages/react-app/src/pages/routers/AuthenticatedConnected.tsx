@@ -20,7 +20,6 @@ import PreAdviceSidePanel from "../../components/organisms/preAdvice/PreAdviceSi
 import DataContextProvider from "../../contexts/DataContext";
 import Assets from "../asset/Assets";
 import Clients from "../client/Clients";
-import Data from "../data/Data";
 import Preadvices from "../preadvice/Preadivce";
 import Products from "../product/Products";
 import Warehouses from "../warehouse/Warehouses";
