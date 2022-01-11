@@ -55,8 +55,10 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   };
 
   if (asset.state === "Due In") {
-    const _landingproduct = `You are Landing Product ${asset.product.simpleName}`
+    const _landingproduct = `You are Landing Product ${asset.product.longName}`
     const _quantity = `Quantity ${asset.product.packSize}`
+    const _landingwarehouse = `Landing Warehouse ${asset.preAdvice.arrivalWarehouse.name}`
+    const _warehouselocation = `Warehouse location ${asset.preAdvice.arrivalWarehouse.address}`
     return (
       
       <>
@@ -69,9 +71,9 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
             onClose={closeConfirmLandedModal}
             overrideHeader="Warning: Setting as Landed"
             landingProduct={_landingproduct}
-            landingWarehouse="Landing Warehouse"
+            landingWarehouse={_landingwarehouse}
             quantity={_quantity}
-            warehouseLocation="Warehosue Location"
+            warehouseLocation={_warehouselocation}
             isSubmitting={isSubmitting}
           />
 
