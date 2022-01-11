@@ -81,7 +81,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 150,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).preAdvice.transferringWarehouse._id,
+      (param.row as Asset).preAdvice.transferringWarehouse.name,
   },
   {
     field: "productId",
