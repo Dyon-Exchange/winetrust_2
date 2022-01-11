@@ -197,14 +197,14 @@ const AddNewProductFormModal = ({
                 isDisabled={isSubmitting}
                 isInvalid={errors.simpleName !== undefined}
               >
-                <FormLabel fontSize="sm">Product name</FormLabel>
+                <FormLabel fontSize="sm">Producer name</FormLabel>
                 <Input
                   {...register("simpleName", {
                     required: "Product name is required",
                   })}
                   fontSize="sm"
                   type="text"
-                  placeholder="Product name"
+                  placeholder="Producer name"
                 />
                 {errors.simpleName !== undefined && (
                   <FormErrorMessage color={colors.error} fontSize="sm">
