@@ -65,6 +65,9 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public txHash: string;
+
+  @prop()
+  public warehouseLocationNo: string;
 }
 
 const Asset = getModelForClass(AssetClass);
