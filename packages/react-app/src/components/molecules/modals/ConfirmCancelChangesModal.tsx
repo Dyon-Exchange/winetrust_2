@@ -5,6 +5,9 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  InputGroup,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import { StringIterator } from "lodash";
 import React from "react";
@@ -34,9 +37,9 @@ const ConfirmCancelChangesModal = ({
   landingProduct,
   landingWarehouse,
   quantity,
-  warehouseLocation
-  
+  warehouseLocation,
 }: ConfirmCancelChangesModalProps) => (
+  
   <Modal
     closeOnOverlayClick={!isSubmitting}
     closeOnEsc={!isSubmitting}
@@ -46,17 +49,13 @@ const ConfirmCancelChangesModal = ({
     <ModalOverlay />
     <ModalContent>
       <ModalHeader>{overrideHeader ?? "Are you sure?"}</ModalHeader>
-      <ModalBody>
-        { landingProduct } 
-      </ModalBody>
-      <ModalBody>
-        { landingWarehouse } 
-      </ModalBody>
-      <ModalBody>
-        { quantity } 
-      </ModalBody>
-      <ModalBody>
-        {warehouseLocation } 
+      <ModalBody>{landingProduct}</ModalBody>
+      <ModalBody>{landingWarehouse}</ModalBody>
+      <ModalBody>{quantity}</ModalBody>
+      <ModalBody>{warehouseLocation}</ModalBody>
+      <ModalBody id="warehouseLocationNo">
+        <FormLabel fontSize="sm">Warehouse Location #</FormLabel>
+        <Input fontSize="sm" type="text" placeholder="Warehouse Location #" />
       </ModalBody>
       <ModalFooter>
         <ModalFooterButton
@@ -64,7 +63,7 @@ const ConfirmCancelChangesModal = ({
           onClick={onConfirm}
           isLoading={isSubmitting}
         >
-          Confirm
+          Land Now
         </ModalFooterButton>
         <ModalFooterButton
           colorScheme="blue"
