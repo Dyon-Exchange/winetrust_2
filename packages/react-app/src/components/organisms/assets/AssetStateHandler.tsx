@@ -30,6 +30,7 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
       await patchAsset({
         assetId: asset._id,
         assetUpdates: { state: "Landed" },
+        warehouseLocationNo: ""
       });
       await queryClient.invalidateQueries("pre-advices");
       await queryClient.invalidateQueries("assets");

@@ -3,6 +3,7 @@ import axios from "axios";
 interface Props {
   assetId: string;
   assetUpdates: Partial<Asset>;
+  warehouseLocationNo: string;
 }
 
 export default async ({ assetId, assetUpdates }: Props) => {
