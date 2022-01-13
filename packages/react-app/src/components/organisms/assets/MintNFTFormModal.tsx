@@ -108,6 +108,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         await patchAsset({
           assetId: row._id,
           assetUpdates: { txHash },
+          warehouseLocationNo: ""
         });
 
         await queryClient.invalidateQueries("assets");
