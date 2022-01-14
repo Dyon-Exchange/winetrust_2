@@ -66,7 +66,7 @@ export class AssetClass extends TimeStamps {
   @prop()
   public txHash: string;
 
-  @prop()
+  @prop({required: true})
   public warehouseLocationNo: string;
 }
 
