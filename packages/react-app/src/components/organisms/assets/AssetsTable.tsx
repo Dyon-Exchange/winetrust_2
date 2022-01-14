@@ -84,6 +84,16 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).preAdvice.transferringWarehouse.name,
   },
   {
+    field: "warehouseLocationNo",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Warehouse Location #",
+    flex: 1,
+    minWidth: 200,
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).warehouseLocationNo || "",
+  },
+  {
     field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
