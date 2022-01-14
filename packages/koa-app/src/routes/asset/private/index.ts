@@ -39,6 +39,7 @@ router.route({
       assetUpdates: Joi.object().keys({
         txHash: Joi.string().allow(""),
         state: Joi.string().valid(...Object.values(AssetState)),
+        warehouseLocationNo: Joi.allow("")
       }),
     },
   },
