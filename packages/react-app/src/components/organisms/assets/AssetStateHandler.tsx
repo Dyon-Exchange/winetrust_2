@@ -1,6 +1,6 @@
 import { Button, Text, useDisclosure } from "@chakra-ui/react";
 import { AxiosError } from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 
 import patchAsset from "../../../api/data/assets/patchAsset";
@@ -24,13 +24,12 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
 
   const toast = useDefaultToast();
 
-  const setAsLandedHandler = async () => {
+  const setAsLandedHandler = async (warehouseLocNo: string) => {
     toggleIsSubmitting();
     try {
       await patchAsset({
         assetId: asset._id,
-        assetUpdates: { state: "Landed" },
-        warehouseLocationNo: ""
+        assetUpdates: { state: "Landed", warehouseLocationNo: warehouseLocNo },
       });
       await queryClient.invalidateQueries("pre-advices");
       await queryClient.invalidateQueries("assets");
@@ -56,16 +55,13 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   };
 
   if (asset.state === "Due In") {
-    const _landingproduct = `You are Landing Product ${asset.product.longName}`
-    const _quantity = `Quantity ${asset.product.packSize}`
-    const _landingwarehouse = `Landing Warehouse ${asset.preAdvice.arrivalWarehouse.name}`
-    const _warehouselocation = `Warehouse location ${asset.preAdvice.arrivalWarehouse.address}`
+    const _landingproduct = `You are Landing Product ${asset.product.longName}`;
+    const _quantity = `Quantity ${asset.product.packSize}`;
+    const _landingwarehouse = `Landing Warehouse ${asset.preAdvice.arrivalWarehouse.name}`;
+    const _warehouselocation = `Warehouse location ${asset.preAdvice.arrivalWarehouse.address}`;
     return (
-      
       <>
-     
         {isConfirmLandedModalOpen && (
-         
           <ConfirmCancelChangesModal
             onConfirm={setAsLandedHandler}
             isOpen={isConfirmLandedModalOpen}
@@ -77,9 +73,8 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
             warehouseLocation={_warehouselocation}
             isSubmitting={isSubmitting}
           />
-
         )}
-         
+
         <Button
           colorScheme="blue"
           // leftIcon={<AddIcon />}
