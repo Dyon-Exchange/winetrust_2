@@ -5,7 +5,8 @@ import { useQueryClient } from "react-query";
 
 import patchAsset from "../../../api/data/assets/patchAsset";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
-import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
+
+import LandAssetModal from "./LandAssetModal";
 
 const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   const {
@@ -62,7 +63,7 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
     return (
       <>
         {isConfirmLandedModalOpen && (
-          <ConfirmCancelChangesModal
+          <LandAssetModal
             onConfirm={setAsLandedHandler}
             isOpen={isConfirmLandedModalOpen}
             onClose={closeConfirmLandedModal}
