@@ -6,7 +6,6 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { StringIterator } from "lodash";
 import React from "react";
 
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
@@ -18,10 +17,6 @@ interface ConfirmCancelChangesModalProps {
   overrideHeader?: string;
   overrideBody?: string;
   isSubmitting?: boolean;
-  landingProduct?: string;
-  landingWarehouse?: string;
-  quantity?: string;
-  warehouseLocation?: string;
 }
 
 const ConfirmCancelChangesModal = ({
@@ -31,11 +26,6 @@ const ConfirmCancelChangesModal = ({
   overrideHeader,
   overrideBody,
   isSubmitting,
-  landingProduct,
-  landingWarehouse,
-  quantity,
-  warehouseLocation
-  
 }: ConfirmCancelChangesModalProps) => (
   <Modal
     closeOnOverlayClick={!isSubmitting}
@@ -47,16 +37,7 @@ const ConfirmCancelChangesModal = ({
     <ModalContent>
       <ModalHeader>{overrideHeader ?? "Are you sure?"}</ModalHeader>
       <ModalBody>
-        { landingProduct } 
-      </ModalBody>
-      <ModalBody>
-        { landingWarehouse } 
-      </ModalBody>
-      <ModalBody>
-        { quantity } 
-      </ModalBody>
-      <ModalBody>
-        {warehouseLocation } 
+        {overrideBody ?? "Changes you made may not be saved."}
       </ModalBody>
       <ModalFooter>
         <ModalFooterButton
