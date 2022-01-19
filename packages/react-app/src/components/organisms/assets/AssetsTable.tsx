@@ -93,7 +93,7 @@ const assetsTableColumns: GridColDef[] = [
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).warehouseLocationNo || "",
   },
-  {
+  /* {
     field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
@@ -102,7 +102,7 @@ const assetsTableColumns: GridColDef[] = [
     minWidth: 250,
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product._id,
-  },
+  }, */
   {
     field: "productDutyStatus",
     headerClassName: "super-app-theme--header",
