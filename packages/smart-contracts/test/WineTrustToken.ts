@@ -45,6 +45,7 @@ describe("WineTrust token contract", () => {
 
   describe("Minting", () => {
     it("Mint a new WineTrust token to the owner address", async () => {
+      console.log(`Owner Address ${owner.address}`)
       await hardhatToken.mintNFT(owner.address, tokenMetadata);
       expect(await hardhatToken.balanceOf(owner.address, 1)).to.equal(1);
     });

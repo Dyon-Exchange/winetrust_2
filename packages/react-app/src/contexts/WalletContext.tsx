@@ -165,7 +165,7 @@ export const WalletContextProvider = ({
     userDetails,
     networkDetails,
   });
-
+  
   return (
     <WalletContext.Provider
       value={{
