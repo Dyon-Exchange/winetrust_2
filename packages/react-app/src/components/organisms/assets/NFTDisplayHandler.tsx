@@ -14,6 +14,7 @@ const MintNFTDisplay = ({ row }: { row: Asset }) => {
   const toast = useDefaultToast();
 
   const handleOpen = () => {
+    // console.log(`userRoles ${userRoles?.isAdmin} ${userRoles?.isMinter}`)
     if (!userRoles?.isMinter) {
       toast({
         title: "Error cannot mint",
