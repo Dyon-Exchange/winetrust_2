@@ -26,35 +26,46 @@ const AssetStateHandler = ({ asset }: { asset: Asset }) => {
   const toast = useDefaultToast();
 
   const setAsLandedHandler = async (warehouseLocNo: string) => {
-    toggleIsSubmitting();
-    try {
-      await patchAsset({
-        assetId: asset._id,
-        assetUpdates: { state: "Landed", warehouseLocationNo: warehouseLocNo },
-      });
-      await queryClient.invalidateQueries("pre-advices");
-      await queryClient.invalidateQueries("assets");
-
-      closeConfirmLandedModal();
-      toast({
-        title: "Asset Landed",
-        description: "Successfully set asset as landed",
-        status: "success",
-      });
-    } catch (error) {
-      closeConfirmLandedModal();
+    if (warehouseLocNo === "" || warehouseLocNo === undefined) {
       toast({
         title: "Error setting landed",
-        description:
-          (error as AxiosError).response?.data ||
-          "There was an error setting this asset as landed, please try again.",
+        description: "Warehouse Location Number Required ",
         status: "error",
       });
-    } finally {
-      toggleIsSubmitting();
+    } else {
+    toggleIsSubmitting();
+      try {
+        await patchAsset({
+          assetId: asset._id,
+          assetUpdates: {
+            state: "Landed",
+            warehouseLocationNo: warehouseLocNo,
+          },
+        });
+        await queryClient.invalidateQueries("pre-advices");
+        await queryClient.invalidateQueries("assets");
+
+        closeConfirmLandedModal();
+        toast({
+          title: "Asset Landed",
+          description: "Successfully set asset as landed",
+          status: "success",
+        });
+      } catch (error) {
+        closeConfirmLandedModal();
+        toast({
+          title: "Error setting landed",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error setting this asset as landed, please try again.",
+          status: "error",
+        });
+      } finally {
+        toggleIsSubmitting();
+      }
     }
   };
-
+  
   if (asset.state === "Due In") {
     const _landingproduct = `You are Landing Product ${asset.product.longName}`;
     const _quantity = `Quantity ${asset.product.packSize}`;
