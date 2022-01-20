@@ -22,6 +22,7 @@ interface NewProductForm {
 
 interface Product {
   _id: string;
+  productId?: string,
   simpleName: string;
   longName: string;
   description: string;
