@@ -3,6 +3,7 @@ import { ContractFactory } from "@ethersproject/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { task } from "hardhat/config";
 
 import { WineTrustToken } from "../typechain/WineTrustToken";
 
@@ -15,6 +16,7 @@ describe("WineTrust token contract", () => {
   let addrs: SignerWithAddress[];
   let contractMetadata: string;
   let tokenMetadata: string;
+  let accounts;
 
   beforeEach(async () => {
     // Get the ContractFactory and Signers here.
@@ -42,7 +44,7 @@ describe("WineTrust token contract", () => {
       expect(await hardhatToken.contractURI()).to.equal(contractMetadata);
     });
   });
-
+  
   describe("Minting", () => {
     it("Mint a new WineTrust token to the owner address", async () => {
       console.log(`Owner Address ${owner.address}`)
