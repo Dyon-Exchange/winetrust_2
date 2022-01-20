@@ -15,10 +15,12 @@ export default async (ctx: Context) => {
     ctx.body = assets;
   }
   if (type === "product") {
-    const productId : mongoose.Types.ObjectId = id
-    assets = await Asset.find({product:productId}).populate({
+    assets = await Asset.find().populate({
       path: "product",
-    });
+      match: {
+        productId:id
+      }
+    })
     ctx.body = assets;
   }
 };
