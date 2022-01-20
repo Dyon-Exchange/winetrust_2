@@ -20,7 +20,10 @@ export default async (ctx: Context) => {
       match: {
         productId:id
       }
-    })
-    ctx.body = assets;
+    });
+    ctx.body = assets.filter(function(asset) {
+      return asset.product;
+    });
+    console.log(ctx.body)
   }
 };
