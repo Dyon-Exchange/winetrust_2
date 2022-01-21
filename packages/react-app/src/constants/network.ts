@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-// Currently only supporting goerli, networkId of 5
+// Currently only supporting rinkeby, networkId of 4
 interface SupportedNetwork {
   chainId: number;
   name: string;
