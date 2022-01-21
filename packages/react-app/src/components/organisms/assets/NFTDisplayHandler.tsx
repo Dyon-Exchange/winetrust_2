@@ -52,7 +52,7 @@ const NFTDisplayHandler = ({ row }: { row: Asset }) => {
   }
 
   return (
-    <Link href={`https://goerli.etherscan.io/tx/${row.txHash}`} isExternal>
+    <Link href={`https://rinkeby.etherscan.io/tx/${row.txHash}`} isExternal>
       View on Etherscan <ExternalLinkIcon mx="2px" />
     </Link>
   );
