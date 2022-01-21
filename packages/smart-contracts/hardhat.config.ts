@@ -1,4 +1,5 @@
 import "hardhat-deploy";
+import "@nomiclabs/hardhat-web3";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "@float-capital/solidity-coverage";
@@ -6,7 +7,7 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import { config as dotEnvConfig } from "dotenv";
 import { removeConsoleLog } from "hardhat-preprocessor";
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 
 dotEnvConfig();
 const {
@@ -16,6 +17,15 @@ const {
   MNEMONIC,
   REPORT_GAS,
 } = process.env;
+
+task("accounts", "Prints the list of accounts", async (args, hre) => {
+  const [owner, addr1, addr2, ...addrs] = await hre.ethers.getSigners();
+  console.log(`Owner.address ${owner.address}`)
+});
+
+task("balance", "Prints an account's balance").setAction(async (args, hre) => {
+
+});
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -72,6 +82,9 @@ const config: HardhatUserConfig = {
         hre.network.name !== "hardhat" && hre.network.name !== "localhost"
     ),
   },
+  
 };
 
-export default config;
+module.exports = { 
+  config
+}
