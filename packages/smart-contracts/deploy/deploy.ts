@@ -6,24 +6,17 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 const deployContract: DeployFunction = async (
   hre: HardhatRuntimeEnvironment
 ) => {
-  // check deploy account mnemonic exists
-  if (!process.env.MNEMONIC) throw new Error("Need to set the mnemonic");
-
   // hardhat runtime environment (hre)
-  const { deployments } = hre;
-
-  // Connect to a ether wallet (metamask) with the mnemonic sentence
-  const ethersWallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC);
-
-  // Connect the wallet with this address
-  const wallet = ethersWallet.connect(ethers.provider);
+  const { deployments, getNamedAccounts } = hre;
 
   // Define whats in deployment????
   const { deploy } = deployments;
 
+  const { deployer } = await getNamedAccounts();
+
   // Deploy StableCoinToken
   const WineTrustToken = await deploy("WineTrustToken", {
-    from: wallet.address,
+    from: deployer,
     args: [],
   });
 

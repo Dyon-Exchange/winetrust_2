@@ -1,5 +1,6 @@
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@float-capital/solidity-coverage";
 import "@typechain/hardhat";
@@ -13,7 +14,8 @@ const {
   ALCHEMY_API_URL_GOERLI,
   ALCHEMY_API_URL_RINKEBY,
   ALCHEMY_API_URL_POLYGON_MUMBAI,
-  MNEMONIC,
+  ETHERSCAN_API_KEY,
+  PRIVATE_KEY,
   REPORT_GAS,
 } = process.env;
 
@@ -40,11 +42,10 @@ const config: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      accounts: { mnemonic: MNEMONIC || "" },
     },
     goerli: {
       url: ALCHEMY_API_URL_GOERLI || "",
-      accounts: { mnemonic: MNEMONIC || "" },
+      accounts: [`${PRIVATE_KEY}`],
       gas: 21000000,
       gasPrice: 80000000000,
       chainId: 5,
@@ -52,11 +53,11 @@ const config: HardhatUserConfig = {
     },
     rinkeby: {
       url: ALCHEMY_API_URL_RINKEBY || "",
-      accounts: { mnemonic: MNEMONIC || "" },
+      accounts: [`${PRIVATE_KEY}`],
     },
     mumbai_testnet: {
       url: ALCHEMY_API_URL_POLYGON_MUMBAI || "",
-      accounts: { mnemonic: MNEMONIC || "" },
+      accounts: [`${PRIVATE_KEY}`],
       gas: 21000000,
       gasPrice: 80000000000,
       chainId: 80001,
@@ -65,6 +66,14 @@ const config: HardhatUserConfig = {
     coverage: {
       url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
     },
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY,
   },
   preprocess: {
     eachLine: removeConsoleLog(
