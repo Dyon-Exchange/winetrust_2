@@ -7,5 +7,5 @@ interface SupportedNetwork {
 }
 
 export const SUPPORTED_NETWORKS: SupportedNetwork[] = [
-  { chainId: 5, name: "Goerli" },
+  { chainId: 4, name: "Rinkeby" },
 ];
