@@ -43,6 +43,12 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
     },
+    rinkeby: {
+      url: ALCHEMY_API_URL_RINKEBY || "",
+      accounts: [`${PRIVATE_KEY}`],
+      chainId: 4,
+      saveDeployments: true,
+    },
     goerli: {
       url: ALCHEMY_API_URL_GOERLI || "",
       accounts: [`${PRIVATE_KEY}`],
@@ -50,10 +56,6 @@ const config: HardhatUserConfig = {
       gasPrice: 80000000000,
       chainId: 5,
       saveDeployments: true,
-    },
-    rinkeby: {
-      url: ALCHEMY_API_URL_RINKEBY || "",
-      accounts: [`${PRIVATE_KEY}`],
     },
     mumbai_testnet: {
       url: ALCHEMY_API_URL_POLYGON_MUMBAI || "",

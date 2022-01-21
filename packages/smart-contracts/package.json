@@ -10,11 +10,12 @@
     "coverage": "npx hardhat coverage",
     "deploy:local": "npx hardhat --network hardhat deploy --export ./lib/export.json",
     "deploy:goerli": "npx hardhat --network goerli deploy",
-    "deploy:rinkeby": "npx hardhat --network rinkeby deploy --export ./lib/export.json",
+    "deploy:rinkeby": "npx hardhat --network rinkeby deploy",
     "deploy:mumbai": "npx hardhat --network mumbai_testnet deploy --export ./lib/export.json",
     "deploy:mainnet": "npx hardhat --network mainnet deploy --export ./lib/export.json",
     "test": "npx hardhat test --show-stack-traces",
     "verify:mainnet": "hardhat --network mainnet etherscan-verify",
+    "verify:rinkeby": "hardhat --network rinkeby etherscan-verify",
     "verify:goerli": "hardhat --network goerli etherscan-verify"
   },
   "author": "",
