@@ -5,7 +5,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { task } from "hardhat/config";
 
-import { WineTrustToken } from "../typechain/WineTrustToken";
+import { WineTrustToken } from "../typechain-types/WineTrustToken";
 
 describe("WineTrust token contract", () => {
   let Token: ContractFactory;
