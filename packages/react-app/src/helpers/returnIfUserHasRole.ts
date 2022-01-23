@@ -1,4 +1,4 @@
-import { WineTrustToken } from "@winetrust/smart-contracts/typechain/WineTrustToken";
+import { WineTrustToken } from "@winetrust/smart-contracts/typechain-types/WineTrustToken";
 
 export default async (
   userAddress: string,

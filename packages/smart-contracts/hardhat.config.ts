@@ -29,7 +29,7 @@ task("balance", "Prints an account's balance").setAction(async (args, hre) => {
 
 });
 
-const config: HardhatUserConfig = {
+export default {
   defaultNetwork: "hardhat",
   solidity: {
     compilers: [
@@ -84,6 +84,9 @@ const config: HardhatUserConfig = {
       default: 0,
     },
   },
+  typechain: {
+    target: "ethers-v5",
+  },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
   },
@@ -93,9 +96,5 @@ const config: HardhatUserConfig = {
         hre.network.name !== "hardhat" && hre.network.name !== "localhost"
     ),
   },
-  
-};
 
-module.exports = { 
-  config
-}
+};
