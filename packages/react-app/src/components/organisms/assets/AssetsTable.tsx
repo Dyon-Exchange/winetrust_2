@@ -37,7 +37,7 @@ const assetsTableColumns: GridColDef[] = [
     field: "longName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Products",
+    headerName: "Productstaging",
     flex: 1,
     minWidth: 200,
     valueGetter: (param: GridValueGetterParams) =>
