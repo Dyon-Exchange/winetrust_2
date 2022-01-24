@@ -175,7 +175,7 @@ const LoginForm = () => {
             Sign in
           </Button>
           <div>
-            <p>Don&#39;t have an account? <DefaultLink to="/signup">Sign Up</DefaultLink></p>
+            <p>Don&#39;t have an account? <Link to="/signup">Sign Up</Link></p>
             <p><Link to="/forgetpassword">Forgot Password?</Link></p>
           </div>
         </VStack>
