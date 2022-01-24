@@ -4,6 +4,7 @@ export default async (newProduct: NewProductForm) => {
   // deconstruct the new product object
   const {
     simpleName,
+    producerName,
     longName,
     productId,
     description,
@@ -51,6 +52,7 @@ export default async (newProduct: NewProductForm) => {
   // construct a stringified JSON of the product data to append to the product form data
   const productData = JSON.stringify({
     simpleName,
+    producerName,
     longName,
     productId,
     description,
