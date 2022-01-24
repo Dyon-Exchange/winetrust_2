@@ -12,10 +12,12 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
   },
 })
 export class ProductClass extends TimeStamps {
-
   @prop({ required: true })
   public simpleName: string;
-  
+
+  @prop({ required: true })
+  public producerName: string;
+
   @prop({ required: true })
   public longName: string;
 
@@ -47,7 +49,7 @@ export class ProductClass extends TimeStamps {
   public image: string;
 
   @prop({ required: true })
-  public labelImage: string; 
+  public labelImage: string;
 
   @prop({ required: false })
   public bottleImage: string;
@@ -63,7 +65,6 @@ export class ProductClass extends TimeStamps {
 
   @prop({ required: false })
   public marketingImage4: string;
-
 }
 
 export default getModelForClass(ProductClass);

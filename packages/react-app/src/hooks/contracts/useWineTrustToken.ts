@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
-import WineTrustTokenJSON from "@winetrust/smart-contracts/deployments/goerli/WineTrustToken.json";
-import { WineTrustToken__factory } from "@winetrust/smart-contracts/typechain/factories/WineTrustToken__factory";
-import { WineTrustToken } from "@winetrust/smart-contracts/typechain/WineTrustToken";
+import WineTrustTokenJSON from "@winetrust/smart-contracts/deployments/rinkeby/WineTrustToken.json";
+import { WineTrustToken__factory } from "@winetrust/smart-contracts/typechain-types/factories/WineTrustToken__factory";
+import { WineTrustToken } from "@winetrust/smart-contracts/typechain-types/WineTrustToken";
 import { ContractTransaction, providers } from "ethers";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 
-// Currently only supporting goerli, networkId of 5
+// Currently only supporting rinkeby, networkId of 4
 interface SupportedNetwork {
   chainId: number;
   name: string;
 }
 
 export const SUPPORTED_NETWORKS: SupportedNetwork[] = [
-  { chainId: 5, name: "Goerli" },
+  { chainId: 4, name: "Rinkeby" },
 ];

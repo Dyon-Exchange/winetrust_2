@@ -20,6 +20,7 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -174,7 +175,8 @@ const LoginForm = () => {
             Sign in
           </Button>
           <div>
-            <p>Don&#39;t have an account? <DefaultLink to="/signup">Sign Up</DefaultLink></p>
+            <p>Don&#39;t have an account? <Link to="/signup">Sign Up</Link></p>
+            <p><Link to="/forgotpassword">Forgot Password?</Link></p>
           </div>
         </VStack>
       </form>
