@@ -1,0 +1,3 @@
+interface ForgotPasswordForm {
+  email: string;
+}
