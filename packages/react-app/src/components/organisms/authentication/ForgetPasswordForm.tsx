@@ -1,93 +1,72 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button,
-  CloseButton,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  IconButton,
   Input,
-  InputGroup,
-  InputRightElement,
-  useBoolean,
   VStack,
 } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import { AuthContext } from "../../../contexts/AuthContext";
+import forgotPassword  from "../../../api/authentication/forgotPassword";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
-import ToggleRevealPasswordIcon from "../../atoms/icons/ToggleRevealPasswordIcon";
-// import DefaultLink from "../../atoms/links/DefaultLink";
+import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 
 const ForgetPasswordForm = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
-
-  // get the login function from auth context
-  const { login, authDetails } = useContext(AuthContext);
+  const toast = useDefaultToast();
 
   // the form's min width
   const formMinWidth = width > 500 ? "400px" : undefined;
 
-  // state to reveal or hide password
-  const [reveal, setReveal] = useBoolean(false);
-
   // state for login error
-  const [loginError, setLoginError] = useState<string | undefined>();
-
-  // returns the input type for the password field depending on `reveal``
-  const passwordInputType: "text" | "password" = useMemo(() => {
-    if (reveal) return "text";
-    return "password";
-  }, [reveal]);
-
-  // aria label for the password input reveal button
-  const passwordRevealButtonAriaLabel: "Hide password" | "Reveal password" =
-    useMemo(() => {
-      if (reveal) return "Hide password";
-      return "Reveal password";
-    }, [reveal]);
-
-  // function to toggle revealing password
-  const toggleRevealPassword = useCallback(
-    () => setReveal.toggle(),
-    [setReveal]
-  );
+  const [forgotPasswordError, setForgotPasswordError] = useState<
+    string | undefined
+  >();
 
   // react hook form
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginForm>();
+  } = useForm<ForgotPasswordForm>();
 
   // submit handler
   const onSubmit = useCallback(
-    async (data: LoginForm) => {
+    async (data: ForgotPasswordForm) => {
       // reset the login error
-      setLoginError(undefined);
-      const { email, password } = data;
+      setForgotPasswordError(undefined);
+      const { email } = data;
       // return if email or password is undefined
-      if (!email || !password) return;
+      if (!email) return;
 
       try {
-        await login(email, password);
-        console.log(authDetails);
+        await forgotPassword(email);
+        toast({
+          title: "Password Reset Sent.",
+          description: "Password Reset sent successfully.",
+          status: "success",
+        });
       } catch (error) {
-        setLoginError((error as AxiosError).response?.data ?? "Network error.");
+        toast({
+          title: "Error password reset.",
+          description:
+            (error as AxiosError).response?.data ||
+            "There was an error trying to create this reset password, please try again later.",
+          status: "error",
+        });
       }
     },
-    [login, setLoginError, authDetails]
+    [setForgotPasswordError,toast]
   );
-  
+
   return (
     <Box
       bg={colors.secondary}
@@ -99,57 +78,25 @@ const ForgetPasswordForm = () => {
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="25px">
-         
           <FormControl
-            id="password"
+            id="email"
             isDisabled={isSubmitting}
-            isInvalid={errors.password !== undefined}
+            isInvalid={errors.email !== undefined}
           >
-            <FormLabel fontSize="sm">New Password</FormLabel>
-            <InputGroup>
-              <Input
-                {...register("password", { required: "Password is required" })}
-                fontSize="sm"
-                type={passwordInputType}
-                placeholder="Password"
-              />
-              <InputRightElement>
-                <IconButton
-                  aria-label={passwordRevealButtonAriaLabel}
-                  bg="transparent"
-                  disabled={isSubmitting}
-                  size="sm"
-                  icon={<ToggleRevealPasswordIcon reveal={reveal} />}
-                  onClick={toggleRevealPassword}
-                />
-              </InputRightElement>
-            </InputGroup>
-
-            <FormLabel fontSize="sm">Confirm Password</FormLabel>
-            <InputGroup>
-              <Input
-                {...register("password", { required: "Password is required" })}
-                fontSize="sm"
-                type={passwordInputType}
-                placeholder="Password"
-              />
-
-              <InputRightElement>
-                <IconButton
-                  aria-label={passwordRevealButtonAriaLabel}
-                  bg="transparent"
-                  disabled={isSubmitting}
-                  size="sm"
-                  icon={<ToggleRevealPasswordIcon reveal={reveal} />}
-                  onClick={toggleRevealPassword}
-                />
-              </InputRightElement>
-            </InputGroup>
-
-
-            {errors.password !== undefined && (
+            <FormLabel fontSize="sm">Email address</FormLabel>
+            <Input
+              {...register("email", {
+                required: "Email address is required",
+                validate: (email?: string) =>
+                  isEmail(email || "") ? undefined : "Invalid email address",
+              })}
+              fontSize="sm"
+              type="email"
+              placeholder="Email"
+            />
+            {errors.email !== undefined && (
               <FormErrorMessage color={colors.error} fontSize="sm">
-                {errors.password.message}
+                {errors.email.message}
               </FormErrorMessage>
             )}
           </FormControl>
@@ -159,9 +106,8 @@ const ForgetPasswordForm = () => {
             isFullWidth
             type="submit"
           >
-            Change Password
+            Forgot Password
           </Button>
-          
         </VStack>
       </form>
     </Box>
