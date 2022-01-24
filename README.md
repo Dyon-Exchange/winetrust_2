@@ -24,8 +24,4 @@ The `main` branch and pull requests are automatically deployed on vercel.
 
 Main Vercel Deployment: https://winetrust.vercel.app/
 
-### Dev To Do
 
-1. Remove all hard codes and into .env file
-2. Get new developer keys for TOKEN_SECRET, REFRESH_SECRET, PINATA_API_KEY, PINATA_API_SECRET, PINATA_API_JWT
-3. Move landing page out of WordPress and into vanilla html5/css
