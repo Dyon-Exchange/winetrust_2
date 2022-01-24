@@ -20,15 +20,14 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 
 import { AuthContext } from "../../../contexts/AuthContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import ToggleRevealPasswordIcon from "../../atoms/icons/ToggleRevealPasswordIcon";
-import DefaultLink from "../../atoms/links/DefaultLink";
+// import DefaultLink from "../../atoms/links/DefaultLink";
 
-const LoginForm = () => {
+const ForgetPasswordForm = () => {
   const colors = useThemeColors();
   const width = useWindowWidth();
 
@@ -88,7 +87,7 @@ const LoginForm = () => {
     },
     [login, setLoginError, authDetails]
   );
-
+  
   return (
     <Box
       bg={colors.secondary}
@@ -100,48 +99,13 @@ const LoginForm = () => {
     >
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="25px">
-          {loginError !== undefined && (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertDescription fontSize="sm" maxW="200px">
-                {loginError}
-              </AlertDescription>
-              <CloseButton
-                onClick={() => setLoginError(undefined)}
-                position="absolute"
-                right="8px"
-                top="8px"
-              />
-            </Alert>
-          )}
-          <FormControl
-            id="email"
-            isDisabled={isSubmitting}
-            isInvalid={errors.email !== undefined}
-          >
-            <FormLabel fontSize="sm">Email address</FormLabel>
-            <Input
-              {...register("email", {
-                required: "Email address is required",
-                validate: (email?: string) =>
-                  isEmail(email || "") ? undefined : "Invalid email address",
-              })}
-              fontSize="sm"
-              type="email"
-              placeholder="Email"
-            />
-            {errors.email !== undefined && (
-              <FormErrorMessage color={colors.error} fontSize="sm">
-                {errors.email.message}
-              </FormErrorMessage>
-            )}
-          </FormControl>
+         
           <FormControl
             id="password"
             isDisabled={isSubmitting}
             isInvalid={errors.password !== undefined}
           >
-            <FormLabel fontSize="sm">Password</FormLabel>
+            <FormLabel fontSize="sm">New Password</FormLabel>
             <InputGroup>
               <Input
                 {...register("password", { required: "Password is required" })}
@@ -160,6 +124,29 @@ const LoginForm = () => {
                 />
               </InputRightElement>
             </InputGroup>
+
+            <FormLabel fontSize="sm">Confirm Password</FormLabel>
+            <InputGroup>
+              <Input
+                {...register("password", { required: "Password is required" })}
+                fontSize="sm"
+                type={passwordInputType}
+                placeholder="Password"
+              />
+
+              <InputRightElement>
+                <IconButton
+                  aria-label={passwordRevealButtonAriaLabel}
+                  bg="transparent"
+                  disabled={isSubmitting}
+                  size="sm"
+                  icon={<ToggleRevealPasswordIcon reveal={reveal} />}
+                  onClick={toggleRevealPassword}
+                />
+              </InputRightElement>
+            </InputGroup>
+
+
             {errors.password !== undefined && (
               <FormErrorMessage color={colors.error} fontSize="sm">
                 {errors.password.message}
@@ -172,16 +159,13 @@ const LoginForm = () => {
             isFullWidth
             type="submit"
           >
-            Sign in
+            Change Password
           </Button>
-          <div>
-            <p>Don&#39;t have an account? <DefaultLink to="/signup">Sign Up</DefaultLink></p>
-            <p><Link to="/forgetpassword">Forgot Password?</Link></p>
-          </div>
+          
         </VStack>
       </form>
     </Box>
   );
 };
 
-export default LoginForm;
+export default ForgetPasswordForm;
