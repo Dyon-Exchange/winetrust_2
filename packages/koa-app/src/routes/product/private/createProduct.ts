@@ -8,6 +8,7 @@ import Product, { ProductClass } from "../../../models/Product";
 
 interface CreateProductRequestBody {
   simpleName: string;
+  producerName: string;
   longName: string;
   productId: string;
   description: string;

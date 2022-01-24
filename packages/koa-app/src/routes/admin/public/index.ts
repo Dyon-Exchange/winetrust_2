@@ -1,8 +1,10 @@
 import Router from "koa-joi-router";
 
+import forgetpassword from "./forgetpassword";
 import login from "./login";
 import refreshToken from "./refreshToken";
 import signup from "./signup";
+
 
 const { Joi } = Router;
 
@@ -69,6 +71,26 @@ router.route({
     },
   },
   handler: signup,
+});
+
+router.route({
+  method: "post",
+  path: "/forgetpassword",
+  validate: {
+    body: {
+      password: Joi.string().required(),
+    },
+    type: "json",
+    output: {
+      200: {
+        body: {
+          token: Joi.string().required(),
+          refreshToken: Joi.string().required(),
+        },
+      },
+    },
+  },
+  handler: forgetpassword,
 });
 
 export default router;
