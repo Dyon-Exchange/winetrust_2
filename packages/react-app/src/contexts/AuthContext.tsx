@@ -14,7 +14,7 @@ import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
 
-axios.defaults.baseURL = "http://prod.winetrust.org:3030/";
+axios.defaults.baseURL = "http://staging.winetrust.org:3030/";
 // axios.defaults.baseURL = "http://localhost:3030/";
 // axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
