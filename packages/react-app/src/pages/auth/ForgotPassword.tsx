@@ -3,7 +3,7 @@ import React from "react";
 
 import ForgetPasswordForm from "../../components/organisms/authentication/ForgetPasswordForm";
 
-const Signup: React.FC = () => (
+const ForgotPassword: React.FC = () => (
   <Center py="100px">
     <VStack spacing="50px">
       <Heading fontSize="3xl">Forgot Password</Heading>
@@ -12,4 +12,4 @@ const Signup: React.FC = () => (
   </Center>
 );
 
-export default Signup;
+export default ForgotPassword;
