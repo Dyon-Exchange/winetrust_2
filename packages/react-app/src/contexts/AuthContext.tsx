@@ -61,6 +61,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         password
       );
       setAuthDetails({ email, accessToken: token, refreshToken: refresh });
+      
     },
     [setAuthDetails]
   );
