@@ -176,7 +176,7 @@ const LoginForm = () => {
           </Button>
           <div>
             <p>Don&#39;t have an account? <Link to="/signup">Sign Up</Link></p>
-            <p><Link to="/forgetpassword">Forgot Password?</Link></p>
+            <p><Link to="/forgotpassword">Forgot Password?</Link></p>
           </div>
         </VStack>
       </form>
