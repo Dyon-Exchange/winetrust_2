@@ -2,7 +2,7 @@
 
 Monorepo for the WineTrust platform.
 
-###3 Local Development
+### Local Development
 
 ### Yarn Workspaces
 
