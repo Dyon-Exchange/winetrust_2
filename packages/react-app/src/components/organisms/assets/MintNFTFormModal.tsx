@@ -55,6 +55,11 @@ interface MintNFTFormModalProps {
 export interface MintNFTForm {
   externalURL: string;
   initialConditionReport: File;
+  initialConditionReport2: File;
+  initialConditionReport3: File;
+  initialConditionReport4: File;
+  initialConditionReport5: File;
+  initialConditionReport6: File;
 }
 
 const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
@@ -75,18 +80,62 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   // pdf file input ref
   const pdfFileInputRef = useRef<any>(null);
 
+
   // controller hook for the pdf file input
   const {
-    field: {
-      value: conditionReportValue,
-      onChange: onConditionReportChange,
-      ...inputProps
-    },
+    field: { value: conditionReportValue, onChange: onConditionReportChange, ...inputProps },
   } = useController({
     name: "initialConditionReport",
     control,
     rules: { required: "Initial Condition Report is required" },
   });
+
+  const {
+    field: { value: conditionReportValue2, onChange: onConditionReportChange2, ...inputProps2 },
+  } = useController({
+    name: "initialConditionReport2",
+    control,
+    
+  });
+
+  const {
+    field: { value: conditionReportValue3, onChange: onConditionReportChange3, ...inputProps3 },
+  } = useController({
+    name: "initialConditionReport3",
+    control,
+    
+  });
+
+  const {
+    field: { value: conditionReportValue4, onChange: onConditionReportChange4, ...inputProps4 },
+  } = useController({
+    name: "initialConditionReport4",
+    control,
+    
+  });
+
+  const {
+    field: { value: conditionReportValue5, onChange: onConditionReportChange5, ...inputProps5 },
+  } = useController({
+    name: "initialConditionReport5",
+    control,
+    
+  });
+
+  const {
+    field: { value: conditionReportValue6, onChange: onConditionReportChange6, ...inputProps6 },
+  } = useController({
+    name: "initialConditionReport6",
+    control,
+    
+  });
+
+  /* const {
+    field: { value: imageValue, onChange: onImageChange, ...imageProps },
+  } = useController({
+    name: "image",
+    control,
+  }); */
 
   // submit handler
   const onSubmit = useCallback(
@@ -190,8 +239,10 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
+
               <ModalFormControl
-                id="pdf"
+                id="pdf1"
                 isDisabled={isSubmitting}
                 isInvalid={errors.initialConditionReport !== undefined}
               >
@@ -236,6 +287,242 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
+              <ModalFormControl
+                id="pdf2"
+                isDisabled={isSubmitting}
+                
+              >
+                
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps2}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange2(event.target.files[0]);
+                    }}
+                    ref={pdfFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => pdfFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue2?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="pdf3"
+                isDisabled={isSubmitting}
+                
+              >
+                
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps3}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange3(event.target.files[0]);
+                    }}
+                    ref={pdfFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => pdfFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue3?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="pdf4"
+                isDisabled={isSubmitting}
+                
+              >
+                
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps4}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange4(event.target.files[0]);
+                    }}
+                    ref={pdfFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => pdfFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue4?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="pdf5"
+                isDisabled={isSubmitting}
+                
+              >
+                
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps5}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange5(event.target.files[0]);
+                    }}
+                    ref={pdfFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => pdfFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue5?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="pdf6"
+                isDisabled={isSubmitting}
+                
+              >
+                
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...inputProps6}
+                    accept=".pdf" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onConditionReportChange6(event.target.files[0]);
+                    }}
+                    ref={pdfFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.initialConditionReport
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => pdfFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={conditionReportValue6?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Initial Condition Report PDF"
+                  />
+                </InputGroup>
+                {errors.initialConditionReport !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.initialConditionReport.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
               <HStack
                 alignItems="start"
                 bg={colors.tertiary}
