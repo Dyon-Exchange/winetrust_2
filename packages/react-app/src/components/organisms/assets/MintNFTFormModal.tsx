@@ -79,8 +79,12 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
 
   // pdf file input ref
   const pdfFileInputRef = useRef<any>(null);
-
-
+  const pdfFile2InputRef = useRef<any>(null);
+  const pdfFile3InputRef = useRef<any>(null);
+  const pdfFile4InputRef = useRef<any>(null);
+  const pdfFile5InputRef = useRef<any>(null);
+  const pdfFile6InputRef = useRef<any>(null);
+  
   // controller hook for the pdf file input
   const {
     field: { value: conditionReportValue, onChange: onConditionReportChange, ...inputProps },
@@ -305,7 +309,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange2(event.target.files[0]);
                     }}
-                    ref={pdfFileInputRef}
+                    ref={pdfFile2InputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -321,7 +325,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => pdfFileInputRef.current.click()}
+                    onClick={() => pdfFile2InputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue2?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
@@ -352,7 +356,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange3(event.target.files[0]);
                     }}
-                    ref={pdfFileInputRef}
+                    ref={pdfFile3InputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -368,7 +372,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => pdfFileInputRef.current.click()}
+                    onClick={() => pdfFile3InputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue3?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
@@ -399,7 +403,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange4(event.target.files[0]);
                     }}
-                    ref={pdfFileInputRef}
+                    ref={pdfFile4InputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -415,7 +419,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => pdfFileInputRef.current.click()}
+                    onClick={() => pdfFile4InputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue4?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
@@ -446,7 +450,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange5(event.target.files[0]);
                     }}
-                    ref={pdfFileInputRef}
+                    ref={pdfFile5InputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -462,7 +466,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => pdfFileInputRef.current.click()}
+                    onClick={() => pdfFile5InputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue5?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
@@ -493,7 +497,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange6(event.target.files[0]);
                     }}
-                    ref={pdfFileInputRef}
+                    ref={pdfFile6InputRef}
                     style={{ display: "none" }}
                     type="file"
                   />
@@ -509,7 +513,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                     `}
                     cursor="pointer"
                     fontSize="sm"
-                    onClick={() => pdfFileInputRef.current.click()}
+                    onClick={() => pdfFile6InputRef.current.click()}
                     readOnly
                     type="text"
                     value={conditionReportValue6?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
