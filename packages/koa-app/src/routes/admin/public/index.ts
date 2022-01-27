@@ -75,17 +75,16 @@ router.route({
 
 router.route({
   method: "post",
-  path: "/forgetpassword",
+  path: "/forgotpassword",
   validate: {
     body: {
-      password: Joi.string().required(),
+      email: Joi.string().required(),
     },
     type: "json",
     output: {
       200: {
         body: {
-          token: Joi.string().required(),
-          refreshToken: Joi.string().required(),
+          status: "Password reset sent successfully.",
         },
       },
     },

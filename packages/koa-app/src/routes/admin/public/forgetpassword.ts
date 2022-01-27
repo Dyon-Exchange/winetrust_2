@@ -14,16 +14,11 @@ interface ForgetPassword extends Request {
 }
 
 export default async (ctx: ExtendedContext<ForgetPassword>) => {
-  const { email, password } = ctx.request.body;
+  const { email } = ctx.request.body;
 
   const account = await Admin.findOne({ email });
-
   if (account === undefined || account === null) {
     ctx.throw(404, "Account not found.");
-  }
-
-  if (!(await compare(password, account.password))) {
-    ctx.throw(401, "Email or Password is incorrect");
   }
 
   const payload = {
@@ -31,10 +26,11 @@ export default async (ctx: ExtendedContext<ForgetPassword>) => {
   };
 
   const token = sign(payload, process.env.TOKEN_SECRET, { expiresIn: 36000 });
-  const refreshToken = sign(payload, process.env.REFRESH_SECRET, {
-    expiresIn: "7d",
-  });
+  console.log(token)
+  // const refreshToken = sign(payload, process.env.REFRESH_SECRET, {
+  //   expiresIn: "7d",
+  // });
 
-  ctx.body = { token, refreshToken };
+  ctx.body = { status: "Password reset sent successfully." };
 };
 

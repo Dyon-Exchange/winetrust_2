@@ -51,7 +51,7 @@ const ForgetPasswordForm = () => {
         await forgotPassword(email);
         toast({
           title: "Password Reset Sent.",
-          description: "Password Reset sent successfully.",
+          description: "Password reset sent successfully.",
           status: "success",
         });
       } catch (error) {
