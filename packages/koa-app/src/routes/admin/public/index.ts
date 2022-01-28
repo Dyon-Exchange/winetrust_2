@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
+import forgotPassword from "./forgotPassword";
 
-import forgetpassword from "./forgetpassword";
 import login from "./login";
 import refreshToken from "./refreshToken";
 import signup from "./signup";
@@ -89,7 +89,7 @@ router.route({
       },
     },
   },
-  handler: forgetpassword,
+  handler: forgotPassword,
 });
 
 export default router;
