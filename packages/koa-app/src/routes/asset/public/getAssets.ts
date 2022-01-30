@@ -11,11 +11,11 @@ export default async (ctx: Context) => {
   const {id} = ctx.request.params;
   let assets: any;
   if (type === "token") {
-    assets = await Asset.find({ tokenId: id });
+    assets = await Asset.find({ tokenid: id });
     ctx.body = assets;
   }
   if (type === "product") {
-    assets = await Asset.find({ productname: id }).populate({
+    assets = await Asset.find({ productName: id }).populate({
       path: "product",
       match: {
         productName:id
