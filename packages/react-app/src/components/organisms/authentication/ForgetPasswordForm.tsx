@@ -12,6 +12,7 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { AxiosError } from "axios";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 
 import forgotPassword  from "../../../api/authentication/forgotPassword";
@@ -51,7 +52,7 @@ const ForgetPasswordForm = () => {
         await forgotPassword(email);
         toast({
           title: "Password Reset Sent.",
-          description: "Password Reset sent successfully.",
+          description: "Password reset sent successfully.",
           status: "success",
         });
       } catch (error) {
@@ -108,6 +109,9 @@ const ForgetPasswordForm = () => {
           >
             Forgot Password
           </Button>
+          <div>
+            <p>Already have an account? <Link to="/login">Login</Link></p>
+          </div>
         </VStack>
       </form>
     </Box>
