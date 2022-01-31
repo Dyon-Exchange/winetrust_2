@@ -15,13 +15,10 @@ export default async (ctx: Context) => {
     ctx.body = assets;
   }
   if (type === "product") {
-    assets = await Asset.find({ productname: searchtext }).populate({
-      path: "product",
-      match: {
-        productName:searchtext
-      }
+    assets = await Asset.find({ simpleName: searchtext }).populate({
+      path: "product"
     });
-    ctx.body = assets.filter((asset) => asset.product);
+    ctx.body = assets.filter((asset) => asset.product.simpleName.includes(searchtext.replace(/%20/g, " ")));
     console.log(ctx.body)
   }
 };
