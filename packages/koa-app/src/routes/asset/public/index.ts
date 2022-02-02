@@ -6,7 +6,7 @@ router.prefix("/public/assets");
 
 router.route({
   method: "get",
-  path: "/:type/:id",
+  path: "/:type/:searchtext",
   handler: getAssets,
 });
 export default router;
