@@ -4,7 +4,7 @@ interface NewProductForm {
   simpleName: string;
   producerName: string;
   longName: string;
-  productId: string;
+  productId?: string;
   description: string;
   year: string;
   region: string;
