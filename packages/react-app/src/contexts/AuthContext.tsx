@@ -14,7 +14,7 @@ import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 // require('dotenv').config();
 
-axios.defaults.baseURL = "https://dev.winetrust.org/db/";
+axios.defaults.baseURL = "https://db-dev.winetrust.org/";
 // axios.defaults.baseURL = "http://localhost:3030/";
 // axios.defaults.baseURL = "https://winetrust.ts.r.appspot.com/";
 
