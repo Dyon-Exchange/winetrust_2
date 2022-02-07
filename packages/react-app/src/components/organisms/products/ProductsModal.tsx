@@ -65,7 +65,7 @@ const ProductsModal = (data: GridRowData) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
-              <Box>Product ID : {productId}</Box>
+              <Box>Product ID : {id}</Box>
               <Box>Simple Name : {simpleName}</Box>
               <Box>Long Name : {longName}</Box>
               <Box>Description : {description}</Box>
