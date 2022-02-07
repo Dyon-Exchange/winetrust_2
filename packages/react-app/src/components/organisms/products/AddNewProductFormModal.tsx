@@ -122,7 +122,7 @@ const AddNewProductFormModal = ({
         queryClient.invalidateQueries("products");
         toast({
           title: "Product created.",
-          description: "Product created successfully test.",
+          description: "Product created successfully.",
           status: "success",
         });
         onClose();
