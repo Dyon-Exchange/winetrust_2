@@ -234,6 +234,7 @@ const AddNewProductFormModal = ({
                 )}
               </ModalFormControl>
 
+
               {/* <ModalFormControl
                 id="productId"
                 isDisabled={isSubmitting}
@@ -254,6 +255,7 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl> */}
+
 
               <ModalFormControl
                 id="description"
