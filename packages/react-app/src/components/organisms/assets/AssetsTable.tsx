@@ -101,7 +101,7 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 250,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.productId || "",
+      (param.row as Asset).product._id || "",
   },
   {
     field: "productDutyStatus",
