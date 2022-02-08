@@ -49,7 +49,7 @@ const productsTableColumns: GridColDef[] = [
     flex: 1, minWidth: 200 
   },
   {
-    field: "_id",
+    field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Details",
