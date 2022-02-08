@@ -234,7 +234,9 @@ const AddNewProductFormModal = ({
                 )}
               </ModalFormControl>
 
+
               <ModalFormControl
+
                 id="productId"
                 isDisabled={isSubmitting}
                 isInvalid={errors.productId !== undefined}
@@ -254,6 +256,7 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+
 
               <ModalFormControl
                 id="description"
