@@ -235,27 +235,7 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
 
-              <ModalFormControl
-
-                id="productId"
-                isDisabled={isSubmitting}
-                isInvalid={errors.productId !== undefined}
-              >
-                <FormLabel fontSize="sm">Product ID</FormLabel>
-                <Input
-                  {...register("productId", {
-                    required: "Product ID is required",
-                  })}
-                  fontSize="sm"
-                  type="text"
-                  placeholder="Product ID"
-                />
-                {errors.productId !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.productId.message}
-                  </FormErrorMessage>
-                )}
-              </ModalFormControl>
+              
 
 
               <ModalFormControl
