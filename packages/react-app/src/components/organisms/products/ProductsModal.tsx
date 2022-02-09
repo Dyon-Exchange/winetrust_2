@@ -70,7 +70,7 @@ const ProductsModal = (data: GridRowData) => {
               <Box>Long Name : {longName}</Box>
               <Box>Description : {description}</Box>
               <Box>Year : {year}</Box>
-              <Box>Duty Status : : {dutyStatus}</Box>
+              
               <Box>Pack Size : {packSize}</Box>
               <Box>Region : {region}</Box>
               <Box>Sub Region : {subRegion}</Box>
