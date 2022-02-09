@@ -11,3 +11,5 @@ This developer note is to document anything that may come up during chat and mee
 5. How does WT tie into Dyon Exchange platform
 6. Consult Biser about increasing power of MongoDB server for production
 7. Create an admin@winetrust.org to use for all WT and Dyon account to be used instead of using personal GMail accounts
+
+0x6472A63Da4581Dd9090faF7B92C09282b94a06EA

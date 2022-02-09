@@ -1,7 +1,7 @@
 const  hre = require("hardhat");
 const { ethers } = hre;
 
-let addresses = [
+const addresses = [
     "0x6472A63Da4581Dd9090faF7B92C09282b94a06EA"
 ];
 
