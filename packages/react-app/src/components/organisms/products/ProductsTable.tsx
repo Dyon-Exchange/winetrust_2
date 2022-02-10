@@ -53,7 +53,7 @@ const productsTableColumns: GridColDef[] = [
     align: "center", 
   },
   {
-    field: "_id",
+    field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Details",

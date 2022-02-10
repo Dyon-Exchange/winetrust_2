@@ -68,6 +68,7 @@ const ProductsModal = (data: GridRowData) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
+
               <StyledBox>
                 <StyledLabel>Product ID </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
@@ -118,6 +119,7 @@ const ProductsModal = (data: GridRowData) => {
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{subSubRegion}</StyledText>
               </StyledBox>
+
               {image && (
                 <Box>
                   Image :
