@@ -18,13 +18,15 @@ const warehousesTableColumns: GridColDef[] = [
     field: "name", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
+    align: "center",
     headerName: "Name", flex: 1, minWidth: 200 },
   { 
     field: "address", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Address", 
-    flex: 2, minWidth: 400 
+    flex: 2, minWidth: 400,
+    align: "center",
   },
   {
     field: "contactName",
@@ -33,6 +35,7 @@ const warehousesTableColumns: GridColDef[] = [
     headerName: "Contact",
     flex: 1,
     minWidth: 200,
+    align: "center",
   },
   {
     field: "contactEmail",
@@ -41,6 +44,7 @@ const warehousesTableColumns: GridColDef[] = [
     headerName: "Contact Email",
     flex: 1,
     minWidth: 200,
+    align: "center",
   },
   {
     field: "_id",
@@ -49,6 +53,7 @@ const warehousesTableColumns: GridColDef[] = [
     headerName: "Details",
     flex: 1,
     minWidth: 200,
+    align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = WarehousesModal(params.row);
       return modal;
