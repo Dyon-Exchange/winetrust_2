@@ -39,7 +39,6 @@ const assetsTableColumns: GridColDef[] = [
     headerAlign: "center",
     headerName: "Products",
     minWidth: 300,
-    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.longName,
   },

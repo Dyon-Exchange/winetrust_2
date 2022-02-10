@@ -26,7 +26,6 @@ const productsTableColumns: GridColDef[] = [
     headerAlign: "center",
     headerName: "Long Name", 
     flex: 1, minWidth: 200,
-    align: "center",
   },
   { 
     field: "year",

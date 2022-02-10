@@ -17,17 +17,19 @@ interface Props {
 const ReadMore : React.FC<Props> = ({ children }) => {
   const classes = useStyles();
   const [isHidden, setIsHidden] = useState(true);
+  const showBtn = children.toString() && children.toString().length > 150
   return (
     <>
       <div className = {isHidden ? classes.hidden : ""}>{children}</div>
-      <Button 
-        size="sm"
-        colorScheme="gray" 
-        fontSize="xs"
-        minW="86px"
-        onClick={() => setIsHidden(!isHidden)}>
-        {isHidden ? "Read More" : "Read Less"}
-      </Button>
+      { showBtn ? <Button 
+                    size="sm"
+                    colorScheme="gray" 
+                    fontSize="xs"
+                    minW="86px"
+                    onClick={() => setIsHidden(!isHidden)}>
+                    {isHidden ? "Read More" : "Read Less"}
+                  </Button> : ""}
+     
     </>
   );
 }
