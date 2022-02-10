@@ -1,13 +1,11 @@
 import { ViewIcon } from "@chakra-ui/icons";
 import {
-  Box,
   Button,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   useDisclosure,
   VStack,
@@ -15,7 +13,8 @@ import {
 import { GridRowData } from "@mui/x-data-grid";
 import React from "react";
 
-
+import { StyledBox, StyledText, StyledLabel, StyledSeparator } from "../../atoms/chakraModal/StyledBox"
+import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader"
 
 const WarehousesModal = (data: GridRowData) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,15 +46,35 @@ const WarehousesModal = (data: GridRowData) => {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Warehouse Details</ModalHeader>
+          <StyledModalHeader>Warehouse Details</StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
-              <Box>ID : {id}</Box>
-              <Box>Name : {name}</Box>
-              <Box>Address : {address}</Box>
-              <Box>Contact Name: {contactName}</Box>
-              <Box>Contact Email : {contactEmail}</Box>
+              <StyledBox>
+                <StyledLabel>ID</StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{id}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{name}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Address </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{address}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Contact Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{contactName}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Contact Email</StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{contactEmail}</StyledText>
+              </StyledBox>
             </VStack>
           </ModalBody>
           <ModalFooter>

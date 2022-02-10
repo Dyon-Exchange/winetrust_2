@@ -38,8 +38,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Products",
-    flex: 1,
-    minWidth: 200,
+    minWidth: 300,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.longName,
   },
@@ -48,8 +48,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Year",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 50,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.year,
   },
@@ -58,8 +58,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Region",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 140,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.region,
   },
@@ -68,8 +68,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Pack Size",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 50,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.packSize,
   },
@@ -78,8 +78,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Warehouse Name",
-    flex: 1,
     minWidth: 150,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).preAdvice.transferringWarehouse.name,
   },
@@ -87,9 +87,9 @@ const assetsTableColumns: GridColDef[] = [
     field: "warehouseLocationNo",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Warehouse Location #",
-    flex: 1,
-    minWidth: 200,
+    headerName: "Warehouse #",
+    minWidth: 120,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).warehouseLocationNo || "",
   },
@@ -98,38 +98,18 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product ID",
-    flex: 1,
-    minWidth: 250,
+    minWidth: 180,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product._id || "",
-  },
-  {
-    field: "productDutyStatus",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Duty Status",
-    flex: 1,
-    minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.dutyStatus,
-  },
-  {
-    field: "assetLocation",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Location",
-    flex: 1,
-    minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) =>
-    (param.row as Asset).preAdvice.transferringWarehouse.address,
   },
   {
     field: "state",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Landing Status",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 130,
+    align: "center",
     renderCell: (param: GridValueGetterParams) => (
       <AssetStateHandler asset={param.row as Asset} />
     ),
@@ -139,8 +119,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Asset ID",
-    flex: 1,
-    minWidth: 250,
+    minWidth: 180,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
   },
   {
@@ -148,8 +128,9 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Token ID",
+    minWidth: 200,
+    align: "center",
     flex: 1,
-    minWidth: 250,
     renderCell: (param: GridValueGetterParams) => (
       <NFTDisplayHandler row={param.row as Asset} />
     ),
@@ -255,7 +236,6 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       "product.year",
       "product.packSize",
       "product._id",
-      "product.dutyStatus",
       "product.cost.currency",
       "product.cost.amount",
       "preAdvice.transferringWarehouse.name",
@@ -293,7 +273,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
-    
+      
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}

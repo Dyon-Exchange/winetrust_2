@@ -7,14 +7,17 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   useDisclosure,
   VStack,
   Image,
 } from "@chakra-ui/react";
 import { GridRowData } from "@mui/x-data-grid";
-import React from "react";
+import React, { useState } from "react";
+
+import ReadMore from "../../atoms/buttons/ReadMoreButton";
+import { StyledBox, StyledText, StyledLabel, StyledSeparator } from "../../atoms/chakraModal/StyledBox"
+import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader"
 
 const ProductsModal = (data: GridRowData) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,31 +64,71 @@ const ProductsModal = (data: GridRowData) => {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Product Details</ModalHeader>
+          <StyledModalHeader>Product Details</StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
-              <Box>Product ID : {id}</Box>
-              <Box>Simple Name : {simpleName}</Box>
-              <Box>Long Name : {longName}</Box>
-              <Box>Description : {description}</Box>
-              <Box>Year : {year}</Box>
-              <Box>Duty Status : : {dutyStatus}</Box>
-              <Box>Pack Size : {packSize}</Box>
-              <Box>Region : {region}</Box>
-              <Box>Sub Region : {subRegion}</Box>
-              <Box>Sub Sub Region : {subSubRegion}</Box>
+              <StyledBox>
+                <StyledLabel>Product ID </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{id}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Simple Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{simpleName}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Long Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{longName}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Description </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText><ReadMore>{description}</ReadMore></StyledText>                 
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Year </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{year}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Duty Status </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{dutyStatus}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Pack Size </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{packSize}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Region </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{region}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Sub Region </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{subRegion}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Sub Sub Region </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{subSubRegion}</StyledText>
+              </StyledBox>
               {image && (
                 <Box>
                   Image :
-                  <Image src={`https://gateway.pinata.cloud/ipfs/${image}`} />
+                  <Image src={`https://gateway.pinata.cloud/ipfs/${image}`} h="250px"/>
                 </Box>
               )}
               {labelImage && (
                 <Box>
                   Label Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`} h="250px"
                   />
                 </Box>
               )}
@@ -93,7 +136,7 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Bottle Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`} h="250px"
                   />
                 </Box>
               )}
@@ -101,7 +144,7 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 1:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`} h="250px"
                   />
                 </Box>
               )}
@@ -109,7 +152,7 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 2:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`} h="250px"
                   />
                 </Box>
               )}
@@ -117,7 +160,7 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 3:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`} h="250px"
                   />
                 </Box>
               )}
@@ -125,7 +168,7 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 4:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`}
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`} h="250px"
                   />
                 </Box>
               )}
