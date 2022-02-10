@@ -24,14 +24,16 @@ const clientsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "First Name", 
-    flex: 1, minWidth: 200 
+    flex: 1, minWidth: 200 ,
+    align: "center",
   },
   { 
     field: "lastName", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Last Name", 
-    flex: 1, minWidth: 200 
+    flex: 1, minWidth: 200,
+    align: "center",
   },
   {
     field: "phoneNumber",
@@ -40,6 +42,7 @@ const clientsTableColumns: GridColDef[] = [
     headerName: "Phone Number",
     flex: 1,
     minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       `(${(param.value as PhoneNumber).countryCode}) ${
         (param.value as PhoneNumber).phoneNumber
@@ -52,6 +55,7 @@ const clientsTableColumns: GridColDef[] = [
     headerName: "Details",
     flex: 1,
     minWidth: 200,
+    align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = ClientsModal(params.row);
       return modal;
