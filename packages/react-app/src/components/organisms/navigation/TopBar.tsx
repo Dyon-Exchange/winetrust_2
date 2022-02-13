@@ -2,7 +2,7 @@ import { Divider, Heading, HStack, Text, Image } from "@chakra-ui/react";
 import { useWindowWidth } from "@react-hook/window-size";
 import React from "react";
 
-import WineTrustLogoPNG from "../../../assets/icons/img/WineTrust_Final_cv_02092021.png";
+import WineTrustLogoPNG from "../../../assets/icons/img/WineTrust_Final.png";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 
 import TopMenu from "./TopMenu";

@@ -25,8 +25,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product",
-    flex: 1,
-    minWidth: 200,
+    minWidth: 350,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.longName,
   },
@@ -35,8 +35,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Pack Size",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 100,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product?.packSize || "",
   },
@@ -45,8 +45,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product ID",
-    flex: 1,
-    minWidth: 250,
+    minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product?._id || "",
   },
@@ -55,8 +55,9 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Duty Status",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 100,
+    align: "center",
+    flex:1,
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product?.dutyStatus || "",
   },
@@ -65,8 +66,9 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Landing Status",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 100,
+    align: "center",
+    flex:1
   },
 ];
 
