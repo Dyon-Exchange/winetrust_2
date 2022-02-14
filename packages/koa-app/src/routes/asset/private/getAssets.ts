@@ -5,6 +5,18 @@ import Asset from "../../../models/Asset";
 export default async (ctx: Context) => {
   ctx.body = await Asset.find()
     .populate({
+      path: "client",
+      populate: {
+        path: "firstName",
+      }
+    })
+    .populate({
+      path: "client",
+      populate: {
+        path: "lastName",
+      }
+    })
+    .populate({
       path: "preAdvice",
       populate: {
         path: "owner",
