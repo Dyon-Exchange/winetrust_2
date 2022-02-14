@@ -87,7 +87,6 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Products",
     flex: 1,
     minWidth: 200,
-    align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const preAdviceId = params.value
       const modal = ProductsModal(preAdviceId);

@@ -39,7 +39,6 @@ const assetsTableColumns: GridColDef[] = [
     headerAlign: "center",
     headerName: "Products",
     minWidth: 300,
-    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.longName,
   },
@@ -97,11 +96,9 @@ const assetsTableColumns: GridColDef[] = [
     field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-
-    headerName: "Product ID",
+    headerName: "Product Code",
     minWidth: 180,
     align: "center",
-
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.productId || "",
   },
