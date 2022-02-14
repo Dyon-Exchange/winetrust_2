@@ -13,6 +13,12 @@ export default async (ctx: Context) => {
     .populate({
       path: "preAdvice",
       populate: {
+        path: "firstName"
+      }
+    })
+    .populate({
+      path: "preAdvice",
+      populate: {
         path: "transferringWarehouse",
       },
     })
