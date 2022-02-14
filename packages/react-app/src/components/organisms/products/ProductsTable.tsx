@@ -25,28 +25,31 @@ const productsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Long Name", 
-    flex: 1, minWidth: 200 
+    flex: 1, minWidth: 200,
   },
   { 
     field: "year",
     headerClassName: "super-app-theme--header",
     headerAlign: "center", 
     headerName: "Year", 
-    flex: 1, minWidth: 125 
+    flex: 1, minWidth: 125,
+    align: "center", 
   },
   { 
     field: "region", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Region", 
-    flex: 1, minWidth: 200 
+    flex: 1, minWidth: 200,
+    align: "center",
   },
   { 
     field: "description", 
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Description", 
-    flex: 1, minWidth: 200 
+    flex: 1, minWidth: 200,
+    align: "center", 
   },
   {
     field: "productId",
@@ -55,6 +58,7 @@ const productsTableColumns: GridColDef[] = [
     headerName: "Details",
     flex: 1,
     minWidth: 200,
+    align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = ProductsModal(params.row);
       return modal;

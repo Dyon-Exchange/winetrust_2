@@ -13,8 +13,9 @@ import {
 import { GridCellValue } from "@mui/x-data-grid";
 import React from "react";
 
-import PreAdviceAssetsTable from "./PreAdviceAssetsTable";
+import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader"
 
+import PreAdviceAssetsTable from "./PreAdviceAssetsTable";
 
 const ProductsModal = (data: GridCellValue) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,10 +32,10 @@ const ProductsModal = (data: GridCellValue) => {
       >
         See Products
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
+      <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Products</ModalHeader>
+          <StyledModalHeader>Products</StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <PreAdviceAssetsTable prop={data}/>

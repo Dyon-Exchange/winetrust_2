@@ -10,14 +10,18 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  VStack,
+  VStack,Text, chakra, flexbox
 } from "@chakra-ui/react";
+import { makeStyles } from "@material-ui/core";
 import { GridRowData } from "@mui/x-data-grid";
 import React from "react";
 
+import { StyledBox, StyledText, StyledLabel, StyledSeparator } from "../../atoms/chakraModal/StyledBox"
+import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader"
 
 
 const ClientsModal = (data: GridRowData) => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     createdAt,
@@ -47,15 +51,35 @@ const ClientsModal = (data: GridRowData) => {
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Client Details</ModalHeader>
+          <StyledModalHeader>Client Details</StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
-              <Box>ID : {id}</Box>
-              <Box>First Name : {firstName} </Box>
-              <Box>Last Name : {lastName}</Box>
-              <Box>Ethereum Address : {ethAddress}</Box>
-              <Box>Phone Number : {phoneNumber.countryCode} {phoneNumber.phoneNumber}</Box>
+              <StyledBox>
+                <StyledLabel>ID </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{id}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>First Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{firstName}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Last Name </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{lastName}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Ethereum Address </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{ethAddress}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Phone Number  </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{phoneNumber.countryCode} {phoneNumber.phoneNumber}</StyledText>
+              </StyledBox>
             </VStack>
           </ModalBody>
           <ModalFooter>
