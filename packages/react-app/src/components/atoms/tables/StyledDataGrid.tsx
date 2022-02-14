@@ -9,10 +9,19 @@ const StyledDataGrid = styled(DataGrid)({
   minHeight: "225px",
   height: "calc(100vh - 300px)",
   "& .MuiDataGrid-columnsContainer" : {
-    background: "rgba(43, 108, 176, 0.5)"
+        background: "rgba(43, 108, 176, 0.5)"
   },
   "& .MuiDataGrid-columnHeaderTitleContainer" : {
-    color: "#fff"
+        color: "#fff"
+  },
+  "& .MuiDataGrid-cell" :{
+        "font-size" : "13px"
+  },
+  "& .MuiDataGrid-iconButtonContainer, .MuiDataGrid-menuIcon":{
+        display : "none"
+  },
+  "& .MuiDataGrid-columnHeader:hover .MuiDataGrid-iconButtonContainer, .MuiDataGrid-columnHeader:hover .MuiDataGrid-menuIcon":{
+        display : "block"
   }
 });
 
