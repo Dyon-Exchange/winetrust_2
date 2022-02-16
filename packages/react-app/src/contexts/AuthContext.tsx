@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import env from "react-dotenv";
+// import env from "react-dotenv";
 
 import { loginRequest, signupRequest } from "../api/authentication/authenticate";
 import refreshRequest from "../api/authentication/refresh";
