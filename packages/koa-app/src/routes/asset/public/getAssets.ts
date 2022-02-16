@@ -34,7 +34,7 @@ export default async (ctx: Context) => {
         path: "owner",
       },
     });
-    ctx.body = assets.filter((asset) => asset.product.simpleName.includes(searchtext.replace(/%20/g, " ")));
+    ctx.body = assets.filter((asset) => asset.product.simpleName.toLocaleLowerCase().includes(searchtext.replace(/%20/g, " ").toLocaleLowerCase()));
     console.log(ctx.body)
   }
 };
