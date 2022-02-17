@@ -12,13 +12,27 @@ export default async (ctx: Context) => {
   if (type === "token") {
 
     const tokenId : number = +searchtext
-    assets = await Asset.find({ tokenId });
+    assets = await Asset.find({ tokenId })
+    .populate({
+      path: "product"
+    })
+    .populate({
+      path: "preAdvice",
+      populate: {
+        path: "owner",
+      },
+    });
     ctx.body = assets;
   }
   if (type === "product") {
     assets = await Asset.find({ simpleName: searchtext }).populate({
       path: "product"
-
+    })
+    .populate({
+      path: "preAdvice",
+      populate: {
+        path: "owner",
+      },
     });
     ctx.body = assets.filter((asset) => asset.product.simpleName.includes(searchtext.replace(/%20/g, " ")));
     console.log(ctx.body)
