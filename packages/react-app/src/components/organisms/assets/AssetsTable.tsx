@@ -18,8 +18,6 @@ import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
-
-
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   // {
@@ -77,7 +75,7 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Warehouse Name",
-    minWidth: 150,
+    minWidth: 300,
     align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).preAdvice.transferringWarehouse.name,
@@ -87,12 +85,12 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Warehouse #",
-    minWidth: 120,
+    minWidth: 160,
     align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).warehouseLocationNo || "",
   },
- {
+  {
     field: "productId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
@@ -118,7 +116,7 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Asset ID",
-    minWidth: 180,
+    minWidth: 220,
     align: "center",
     valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
   },
@@ -126,8 +124,8 @@ const assetsTableColumns: GridColDef[] = [
     field: "tokenId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Token ID",
-    minWidth: 200,
+    headerName: "Action",
+    minWidth: 100,
     align: "center",
     flex: 1,
     renderCell: (param: GridValueGetterParams) => (
@@ -265,14 +263,13 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
   if (assetsDataIsError)
     return (
       <DataTableError
-        message='There was an error fetching the assets data, try again?'
+        message="There was an error fetching the assets data, try again?"
         refetch={refetchAssetsData}
       />
     );
-      // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
+  // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
-      
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}
