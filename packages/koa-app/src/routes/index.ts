@@ -8,6 +8,8 @@ import PreAdviceRouter from "./preAdvice";
 import ProductRouter from "./product";
 import TokenRouter from "./token";
 import WarehouseRouter from "./warehouse";
+import ProfileRouter from "./profile";
+
 
 const router = new Router<DefaultState, Context>();
 
@@ -30,7 +32,9 @@ router.use(
   TokenRouter.Public.middleware(),
   TokenRouter.Private.middleware(),
   WarehouseRouter.Public.middleware(),
-  WarehouseRouter.Private.middleware()
+  WarehouseRouter.Private.middleware(),
+  ProfileRouter.Public.middleware(),
+  ProfileRouter.Private.middleware()
 );
 
 export default router;
