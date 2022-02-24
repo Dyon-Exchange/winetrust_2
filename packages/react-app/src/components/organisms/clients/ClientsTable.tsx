@@ -19,20 +19,31 @@ import ClientsModal from "./ClientsModal";
 
 // column headers for the clients data table
 const clientsTableColumns: GridColDef[] = [
-  { 
-    field: "firstName", 
+  {
+    field: "ethAddress",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "First Name", 
-    flex: 1, minWidth: 200 ,
+    headerName: "Wallet",
+    flex: 1,
+    minWidth: 200,
     align: "center",
   },
-  { 
-    field: "lastName", 
+  {
+    field: "firstName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Last Name", 
-    flex: 1, minWidth: 200,
+    headerName: "First Name",
+    flex: 1,
+    minWidth: 200,
+    align: "center",
+  },
+  {
+    field: "lastName",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Last Name",
+    flex: 1,
+    minWidth: 200,
     align: "center",
   },
   {
@@ -98,7 +109,7 @@ const ClientsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   if (clientsDataIsError)
     return (
       <DataTableError
-        message='There was an error fetching the clients data, try again?'
+        message="There was an error fetching the clients data, try again?"
         refetch={refetchClientsData}
       />
     );

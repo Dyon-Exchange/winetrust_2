@@ -16,19 +16,26 @@ import { GridRowData } from "@mui/x-data-grid";
 import React, { useState } from "react";
 
 import ReadMore from "../../atoms/buttons/ReadMoreButton";
-import { StyledBox, StyledText, StyledLabel, StyledSeparator } from "../../atoms/chakraModal/StyledBox"
-import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader"
+import {
+  StyledBox,
+  StyledText,
+  StyledLabel,
+  StyledSeparator,
+} from "../../atoms/chakraModal/StyledBox";
+import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader";
 
 const ProductsModal = (data: GridRowData) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     bottleImage,
+    bottleImage2,
     createdAt,
     description,
     dutyStatus,
     id,
     image,
     labelImage,
+    labelImage2,
     longName,
     marketingImage1,
     marketingImage2,
@@ -36,6 +43,7 @@ const ProductsModal = (data: GridRowData) => {
     marketingImage4,
     packSize,
     productId,
+    productCode,
     region,
     simpleName,
     subRegion,
@@ -68,7 +76,6 @@ const ProductsModal = (data: GridRowData) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack w="100%" align="start">
-
               <StyledBox>
                 <StyledLabel>Product ID </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
@@ -84,20 +91,24 @@ const ProductsModal = (data: GridRowData) => {
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{longName}</StyledText>
               </StyledBox>
+              {productCode && (
+                <StyledBox>
+                  <StyledLabel>Product Code </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{productCode}</StyledText>
+                </StyledBox>
+              )}
               <StyledBox>
                 <StyledLabel>Description </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
-                <StyledText><ReadMore>{description}</ReadMore></StyledText>                 
+                <StyledText>
+                  <ReadMore>{description}</ReadMore>
+                </StyledText>
               </StyledBox>
               <StyledBox>
                 <StyledLabel>Year </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{year}</StyledText>
-              </StyledBox>
-              <StyledBox>
-                <StyledLabel>Duty Status </StyledLabel>
-                <StyledSeparator> : </StyledSeparator>
-                <StyledText>{dutyStatus}</StyledText>
               </StyledBox>
               <StyledBox>
                 <StyledLabel>Pack Size </StyledLabel>
@@ -119,18 +130,30 @@ const ProductsModal = (data: GridRowData) => {
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{subSubRegion}</StyledText>
               </StyledBox>
-
               {image && (
                 <Box>
                   Image :
-                  <Image src={`https://gateway.pinata.cloud/ipfs/${image}`} h="250px"/>
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${image}`}
+                    h="250px"
+                  />
                 </Box>
               )}
               {labelImage && (
                 <Box>
                   Label Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`}
+                    h="250px"
+                  />
+                </Box>
+              )}
+              {labelImage2 && (
+                <Box>
+                  Label Image 2:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${labelImage2}`}
+                    h="250px"
                   />
                 </Box>
               )}
@@ -138,7 +161,17 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Bottle Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`}
+                    h="250px"
+                  />
+                </Box>
+              )}
+              {bottleImage2 && (
+                <Box>
+                  Bottle Image 2:
+                  <Image
+                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage2}`}
+                    h="250px"
                   />
                 </Box>
               )}
@@ -146,7 +179,8 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 1:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`}
+                    h="250px"
                   />
                 </Box>
               )}
@@ -154,7 +188,8 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 2:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`}
+                    h="250px"
                   />
                 </Box>
               )}
@@ -162,7 +197,8 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 3:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`}
+                    h="250px"
                   />
                 </Box>
               )}
@@ -170,7 +206,8 @@ const ProductsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 4:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`} h="250px"
+                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`}
+                    h="250px"
                   />
                 </Box>
               )}

@@ -56,7 +56,9 @@ const AddNewProductFormModal = ({
   // image file input ref
   const imageFileInputRef = useRef<any>(null);
   const labelImageFileInputRef = useRef<any>(null);
+  const label2ImageFileInputRef = useRef<any>(null);
   const bottleImageFileInputRef = useRef<any>(null);
+  const bottle2ImageFileInputRef = useRef<any>(null);
   const marketing1ImageFileInputRef = useRef<any>(null);
   const marketing2ImageFileInputRef = useRef<any>(null);
   const marketing3ImageFileInputRef = useRef<any>(null);
@@ -71,7 +73,11 @@ const AddNewProductFormModal = ({
   });
 
   const {
-    field: { value: labelImageValue, onChange: onLabelImageChange, ...labelImageProps },
+    field: {
+      value: labelImageValue,
+      onChange: onLabelImageChange,
+      ...labelImageProps
+    },
   } = useController({
     name: "labelImage",
     control,
@@ -79,35 +85,77 @@ const AddNewProductFormModal = ({
   });
 
   const {
-    field: { value: bottleImageValue, onChange: onBottleImageChange, ...bottleImageProps },
+    field: {
+      value: label2ImageValue,
+      onChange: onLabel2ImageChange,
+      ...label2ImageProps
+    },
+  } = useController({
+    name: "labelImage2",
+    control,
+  });
+
+  const {
+    field: {
+      value: bottleImageValue,
+      onChange: onBottleImageChange,
+      ...bottleImageProps
+    },
   } = useController({
     name: "bottleImage",
     control,
   });
 
   const {
-    field: { value: marketing1ImageValue, onChange: onMarketing1ImageChange, ...marketing1ImageProps },
+    field: {
+      value: bottle2ImageValue,
+      onChange: onBottle2ImageChange,
+      ...bottle2ImageProps
+    },
+  } = useController({
+    name: "bottleImage2",
+    control,
+  });
+
+  const {
+    field: {
+      value: marketing1ImageValue,
+      onChange: onMarketing1ImageChange,
+      ...marketing1ImageProps
+    },
   } = useController({
     name: "marketingImage1",
     control,
   });
 
   const {
-    field: { value: marketing2ImageValue, onChange: onMarketing2ImageChange, ...marketing2ImageProps },
+    field: {
+      value: marketing2ImageValue,
+      onChange: onMarketing2ImageChange,
+      ...marketing2ImageProps
+    },
   } = useController({
     name: "marketingImage2",
     control,
   });
 
   const {
-    field: { value: marketing3ImageValue, onChange: onMarketing3ImageChange, ...marketing3ImageProps },
+    field: {
+      value: marketing3ImageValue,
+      onChange: onMarketing3ImageChange,
+      ...marketing3ImageProps
+    },
   } = useController({
     name: "marketingImage3",
     control,
   });
 
   const {
-    field: { value: marketing4ImageValue, onChange: onMarketing4ImageChange, ...marketing4ImageProps },
+    field: {
+      value: marketing4ImageValue,
+      onChange: onMarketing4ImageChange,
+      ...marketing4ImageProps
+    },
   } = useController({
     name: "marketingImage4",
     control,
@@ -170,7 +218,6 @@ const AddNewProductFormModal = ({
           <ModalContent>
             <ModalHeader>Add New Product</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
-
               <ModalFormControl
                 id="simpleName"
                 isDisabled={isSubmitting}
@@ -234,9 +281,35 @@ const AddNewProductFormModal = ({
                 )}
               </ModalFormControl>
 
-
-              
-
+              <ModalFormControl
+                id="productCode"
+                isDisabled={isSubmitting}
+                isInvalid={errors.productCode !== undefined}
+              >
+                <FormLabel fontSize="sm">Product Code</FormLabel>
+                <Input
+                  {...register("productCode", {
+                    maxLength: "18",
+                    minLength: "18",
+                  })}
+                  fontSize="sm"
+                  type="number"
+                  maxLength={18}
+                  placeholder="Product code"
+                />
+                {errors.productCode !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productCode &&
+                      errors.productCode.type === "maxLength" && (
+                        <span>Product Code should be 18 digit long</span>
+                      )}
+                    {errors.productCode &&
+                      errors.productCode.type === "minLength" && (
+                        <span>Product Code should be 18 digit long</span>
+                      )}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
 
               <ModalFormControl
                 id="description"
@@ -365,37 +438,7 @@ const AddNewProductFormModal = ({
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="dutyStatus"
-                isDisabled={isSubmitting}
-                isInvalid={errors.dutyStatus !== undefined}
-              >
-                <FormLabel fontSize="sm">Duty status</FormLabel>
-                <Select
-                  {...register("dutyStatus", {
-                    required: "Duty status is required",
-                  })}
-                  fontSize="sm"
-                  placeholder="Select"
-                >
-                  <option value={ProductDutyStatus.InBond}>
-                    {ProductDutyStatus.InBond}
-                  </option>
-                  <option value={ProductDutyStatus.DutyPaid}>
-                    {ProductDutyStatus.DutyPaid}
-                  </option>
-                </Select>
-                {errors.dutyStatus !== undefined && (
-                  <FormErrorMessage color={colors.error} fontSize="sm">
-                    {errors.dutyStatus.message}
-                  </FormErrorMessage>
-                )}
-              </ModalFormControl>
-
-              <ModalFormControl
-                id="image"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="image" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Image</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -435,9 +478,8 @@ const AddNewProductFormModal = ({
                 id="labelimage"
                 isDisabled={isSubmitting}
                 isInvalid={errors.labelImage !== undefined}
-
               >
-                <FormLabel fontSize="sm">Label Image</FormLabel>
+                <FormLabel fontSize="sm">Label Image 1</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -476,12 +518,44 @@ const AddNewProductFormModal = ({
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
+              <ModalFormControl id="labelimage2" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Label Image 2</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...label2ImageProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onLabel2ImageChange(event.target.files[0]);
+                    }}
+                    ref={label2ImageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.labelImage ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => label2ImageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={label2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Label image"
+                  />
+                </InputGroup>
+              </ModalFormControl>
 
-              <ModalFormControl
-                id="bottleimage"
-                isDisabled={isSubmitting}
-              >
-                <FormLabel fontSize="sm">Bottle Image</FormLabel>
+              <ModalFormControl id="bottleimage" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Bottle Image 1</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -514,13 +588,45 @@ const AddNewProductFormModal = ({
                     placeholder="Bottle image"
                   />
                 </InputGroup>
-                
               </ModalFormControl>
 
-              <ModalFormControl
-                id="marketingimage1"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="bottleimage2" isDisabled={isSubmitting}>
+                <FormLabel fontSize="sm">Bottle Image 2</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...bottle2ImageProps}
+                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onBottle2ImageChange(event.target.files[0]);
+                    }}
+                    ref={bottle2ImageFileInputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.image ? "3px" : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => bottle2ImageFileInputRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={bottle2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Bottle image"
+                  />
+                </InputGroup>
+              </ModalFormControl>
+
+              <ModalFormControl id="marketingimage1" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Marketing Image 1</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -554,13 +660,9 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
-                
               </ModalFormControl>
 
-              <ModalFormControl
-                id="marketingimage2"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="marketingimage2" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Marketing Image 2</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -594,13 +696,9 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
-                
               </ModalFormControl>
 
-              <ModalFormControl
-                id="marketingimage3"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="marketingimage3" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Marketing Image 3</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -634,13 +732,9 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
-                
               </ModalFormControl>
 
-              <ModalFormControl
-                id="marketingimage4"
-                isDisabled={isSubmitting}
-              >
+              <ModalFormControl id="marketingimage4" isDisabled={isSubmitting}>
                 <FormLabel fontSize="sm">Marketing Image 4</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -674,9 +768,7 @@ const AddNewProductFormModal = ({
                     placeholder="Marketing Image"
                   />
                 </InputGroup>
-                
               </ModalFormControl>
-
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton
