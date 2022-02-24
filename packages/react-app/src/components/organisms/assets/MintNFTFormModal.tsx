@@ -19,6 +19,7 @@ import {
   StatHelpText,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
+import { Box } from "@material-ui/core";
 import { AxiosError } from "axios";
 import React, { useCallback, useRef, useContext } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -30,6 +31,12 @@ import { WalletContext } from "../../../contexts/WalletContext";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
+import {
+  StyledBox,
+  StyledLabel,
+  StyledSeparator,
+  StyledText,
+} from "../../atoms/chakraModal/StyledBox";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
 
@@ -84,10 +91,14 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   const pdfFile4InputRef = useRef<any>(null);
   const pdfFile5InputRef = useRef<any>(null);
   const pdfFile6InputRef = useRef<any>(null);
-  
+
   // controller hook for the pdf file input
   const {
-    field: { value: conditionReportValue, onChange: onConditionReportChange, ...inputProps },
+    field: {
+      value: conditionReportValue,
+      onChange: onConditionReportChange,
+      ...inputProps
+    },
   } = useController({
     name: "initialConditionReport",
     control,
@@ -95,43 +106,58 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   });
 
   const {
-    field: { value: conditionReportValue2, onChange: onConditionReportChange2, ...inputProps2 },
+    field: {
+      value: conditionReportValue2,
+      onChange: onConditionReportChange2,
+      ...inputProps2
+    },
   } = useController({
     name: "initialConditionReport2",
     control,
-    
   });
 
   const {
-    field: { value: conditionReportValue3, onChange: onConditionReportChange3, ...inputProps3 },
+    field: {
+      value: conditionReportValue3,
+      onChange: onConditionReportChange3,
+      ...inputProps3
+    },
   } = useController({
     name: "initialConditionReport3",
     control,
-    
   });
 
   const {
-    field: { value: conditionReportValue4, onChange: onConditionReportChange4, ...inputProps4 },
+    field: {
+      value: conditionReportValue4,
+      onChange: onConditionReportChange4,
+      ...inputProps4
+    },
   } = useController({
     name: "initialConditionReport4",
     control,
-    
   });
 
   const {
-    field: { value: conditionReportValue5, onChange: onConditionReportChange5, ...inputProps5 },
+    field: {
+      value: conditionReportValue5,
+      onChange: onConditionReportChange5,
+      ...inputProps5
+    },
   } = useController({
     name: "initialConditionReport5",
     control,
-    
   });
 
   const {
-    field: { value: conditionReportValue6, onChange: onConditionReportChange6, ...inputProps6 },
+    field: {
+      value: conditionReportValue6,
+      onChange: onConditionReportChange6,
+      ...inputProps6
+    },
   } = useController({
     name: "initialConditionReport6",
     control,
-    
   });
 
   /* const {
@@ -223,7 +249,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
             <ModalHeader>Mint NFT</ModalHeader>
-            <ModalBody alignSelf="center" w="80%">
+            <ModalBody alignSelf="center" w="88%">
               <ModalFormControl
                 isInvalid={errors.externalURL !== undefined}
                 isDisabled={isSubmitting}
@@ -243,7 +269,6 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
-
 
               <ModalFormControl
                 id="pdf1"
@@ -292,12 +317,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="pdf2"
-                isDisabled={isSubmitting}
-                
-              >
-                
+              <ModalFormControl id="pdf2" isDisabled={isSubmitting}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -339,12 +359,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="pdf3"
-                isDisabled={isSubmitting}
-                
-              >
-                
+              <ModalFormControl id="pdf3" isDisabled={isSubmitting}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -386,12 +401,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="pdf4"
-                isDisabled={isSubmitting}
-                
-              >
-                
+              <ModalFormControl id="pdf4" isDisabled={isSubmitting}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -433,12 +443,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="pdf5"
-                isDisabled={isSubmitting}
-                
-              >
-                
+              <ModalFormControl id="pdf5" isDisabled={isSubmitting}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -480,12 +485,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl
-                id="pdf6"
-                isDisabled={isSubmitting}
-                
-              >
-                
+              <ModalFormControl id="pdf6" isDisabled={isSubmitting}>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -526,59 +526,66 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
-
-              <HStack
-                alignItems="start"
-                bg={colors.tertiary}
-                borderWidth="1px"
-                borderRadius="lg"
-                p="10px 15px"
-                mb="15px"
+              <Box
+                sx={{
+                  fontSize: "14px",
+                  bgcolor: "#e2e8f0",
+                  borderRadius: "10px",
+                  p: "10px 15px",
+                  mb: "15px",
+                }}
               >
-                <Stat>
-                  <AssetFieldDisplay
-                    title="Product Name"
-                    defaultValue={row.product.longName}
-                  />
-                  <AssetFieldDisplay
-                    title="Description"
-                    defaultValue={row.product.description}
-                  />
-                  {/* <AssetFieldDisplay
-                    title="SKU Code"
-                    defaultValue={row.product.skuCode}
-                  /> */}
-                  <AssetFieldDisplay title="Asset ID" defaultValue={row._id} />
-                  <AssetFieldDisplay
-                    title="Product Year"
-                    defaultValue={row.product.year}
-                  />
-                  <AssetFieldDisplay
-                    title="Region"
-                    defaultValue={row.product.region}
-                  />
-                  <AssetFieldDisplay
-                    title="Sub-Region"
-                    defaultValue={row.product.subRegion}
-                  />
-                  <AssetFieldDisplay
-                    title="Sub-Sub-Region"
-                    defaultValue={row.product.subSubRegion}
-                  />
-                  <AssetFieldDisplay
-                    title="Pack Size"
-                    defaultValue={row.product.packSize}
-                  />
-                  <AssetFieldDisplay
-                    title="Duty Status"
-                    defaultValue={row.product.dutyStatus}
-                  />
-                  <AssetFieldDisplay
-                    title="Warehouse ID"
-                    defaultValue={row.preAdvice.arrivalWarehouse._id}
-                  />
-                </Stat>
-              </HStack>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Product Name </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.longName}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Description </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.description}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Asset ID </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row._id}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Product Year </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.year}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Region</StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.region}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Sub-Region </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.subRegion}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Sub-Sub-Region</StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.subSubRegion}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Pack Size </StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.packSize}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Duty Status</StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.dutyStatus}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Warehouse ID</StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.preAdvice.arrivalWarehouse._id}</StyledText>
+                </StyledBox>
+              </Box>
             </ModalBody>
             <ModalFooter>
               <ModalFooterButton
