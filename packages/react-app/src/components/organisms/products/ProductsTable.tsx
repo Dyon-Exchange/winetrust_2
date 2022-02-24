@@ -20,36 +20,36 @@ import ProductsModal from "./ProductsModal";
 
 // column headers for the products data table
 const productsTableColumns: GridColDef[] = [
-  { 
-    field: "longName", 
+  {
+    field: "longName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Long Name", 
-    flex: 1, minWidth: 200,
+    headerName: "Long Name",
+    minWidth: 380,
   },
-  { 
+  {
     field: "year",
     headerClassName: "super-app-theme--header",
-    headerAlign: "center", 
-    headerName: "Year", 
-    flex: 1, minWidth: 125,
-    align: "center", 
-  },
-  { 
-    field: "region", 
-    headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Region", 
-    flex: 1, minWidth: 200,
+    headerName: "Year",
+    minWidth: 100,
     align: "center",
   },
-  { 
-    field: "description", 
+  {
+    field: "region",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Description", 
-    flex: 1, minWidth: 200,
-    align: "center", 
+    headerName: "Region",
+    minWidth: 180,
+    align: "center",
+  },
+  {
+    field: "description",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Description",
+    minWidth: 450,
+    align: "center",
   },
   {
     field: "productId",
@@ -57,7 +57,7 @@ const productsTableColumns: GridColDef[] = [
     headerAlign: "center",
     headerName: "Details",
     flex: 1,
-    minWidth: 200,
+    minWidth: 100,
     align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = ProductsModal(params.row);
@@ -72,7 +72,11 @@ interface Props {
   searchQuery: string;
 }
 
-const ProductsTable: React.FC<Props> = ({ setDeleteList, assets, searchQuery }) => {
+const ProductsTable: React.FC<Props> = ({
+  setDeleteList,
+  assets,
+  searchQuery,
+}) => {
   const toast = useDefaultToast();
 
   // query for products data
@@ -100,23 +104,20 @@ const ProductsTable: React.FC<Props> = ({ setDeleteList, assets, searchQuery }) 
   const filteredProductsData: Product[] | undefined = useMemo(() => {
     if (!productsData) return undefined;
     return productsData;
-  }, [productsData])
+  }, [productsData]);
 
   const searchFilteredProductsData = useFuseSearch(
     filteredProductsData || [],
-    [
-      "longName",
-      "_id",
-    ],
+    ["longName", "_id"],
     searchQuery
   );
-  
+
   if (productsDataIsLoading) return <DataTableSpinner />;
 
   if (productsDataIsError)
     return (
       <DataTableError
-        message='There was an error fetching the products data, try again?'
+        message="There was an error fetching the products data, try again?"
         refetch={refetchProductsData}
       />
     );

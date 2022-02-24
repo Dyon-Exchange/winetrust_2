@@ -24,6 +24,9 @@ export class ProductClass extends TimeStamps {
   @prop({ required: false })
   public productId: string;
 
+  @prop({ required: false })
+  public productCode: number;
+
   @prop({ required: true })
   public description: string;
 
@@ -42,7 +45,7 @@ export class ProductClass extends TimeStamps {
   @prop({ required: true })
   public packSize: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public dutyStatus: string;
 
   @prop({ required: false })
@@ -52,7 +55,13 @@ export class ProductClass extends TimeStamps {
   public labelImage: string;
 
   @prop({ required: false })
+  public labelImage2: string;
+
+  @prop({ required: false })
   public bottleImage: string;
+
+  @prop({ required: false })
+  public bottleImage2: string;
 
   @prop({ required: false })
   public marketingImage1: string;
