@@ -30,15 +30,22 @@ export class ClientClass extends TimeStamps {
   public lastName?: string;
 
   @prop({
+    required: true,
+    unique: true,
     validate: {
       validator: (address: string) => isEthereumAddress(address),
       message: "Value is not an ethereum address.",
     },
   })
-  public ethAddress?: string;
+  public ethAddress!: string;
 
   @prop()
   public phoneNumber?: PhoneNumber;
+
+  @prop({
+    default: () => Math.floor(Math.random() * 1000000),
+  })
+  public nonce?: number;
 }
 
 export default getModelForClass(ClientClass);

@@ -1,17 +1,17 @@
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createProfile from "./createProfile";
 import deleteProfile from "./deleteProfile";
-import getProfiles from "./getProfiles";
 import getProfile from "./getProfile";
+import getProfiles from "./getProfiles";
 
 
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 router.prefix("/profiles");
 
 router.route({
