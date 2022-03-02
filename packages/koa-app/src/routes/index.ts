@@ -6,9 +6,10 @@ import AssetRouter from "./asset";
 import ClientRouter from "./client";
 import PreAdviceRouter from "./preAdvice";
 import ProductRouter from "./product";
-import TokenRouter from "./token";
-import WarehouseRouter from "./warehouse";
 import ProfileRouter from "./profile";
+import TokenRouter from "./token";
+import UserRouter from "./user";
+import WarehouseRouter from "./warehouse";
 
 
 const router = new Router<DefaultState, Context>();
@@ -34,7 +35,8 @@ router.use(
   WarehouseRouter.Public.middleware(),
   WarehouseRouter.Private.middleware(),
   ProfileRouter.Public.middleware(),
-  ProfileRouter.Private.middleware()
+  ProfileRouter.Private.middleware(),
+  UserRouter.Public.middleware()
 );
 
 export default router;

@@ -54,10 +54,8 @@ const clientsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     align: "center",
-    valueGetter: (param: GridValueGetterParams) =>
-      `(${(param.value as PhoneNumber).countryCode}) ${
-        (param.value as PhoneNumber).phoneNumber
-      }`,
+    valueGetter: (param: GridValueGetterParams) => !param.value ? "" :
+      `(${(param.value as PhoneNumber).countryCode}) ${(param.value as PhoneNumber).phoneNumber}`,
   },
   {
     field: "_id",
