@@ -7,14 +7,19 @@ import Asset from "../../../models/Asset";
 
 export default async (ctx: Context) => {
   // ctx.body = ctx.request.params
-  const {type,searchtext} = ctx.request.params;
-  let assets: any;
-  if (type === "token") {
+  const { type, searchtext } = ctx.request.params;
 
-    const tokenId : number = +searchtext
-    assets = await Asset.find({ tokenId })
+  let $find: any = [];
+
+  try {
+    $find = { _id: new mongoose.Types.ObjectId(searchtext) };
+  } catch (err) {
+    $find = { simpleName: searchtext };
+  }
+
+  const assets: any = await Asset.find($find)
     .populate({
-      path: "product"
+      path: "product",
     })
     .populate({
       path: "preAdvice",
@@ -22,19 +27,12 @@ export default async (ctx: Context) => {
         path: "owner",
       },
     });
-    ctx.body = assets;
-  }
-  if (type === "product") {
-    assets = await Asset.find({ simpleName: searchtext }).populate({
-      path: "product"
-    })
-    .populate({
-      path: "preAdvice",
-      populate: {
-        path: "owner",
-      },
-    });
-    ctx.body = assets.filter((asset) => asset.product.simpleName.toLocaleLowerCase().includes(searchtext.replace(/%20/g, " ").toLocaleLowerCase()));
-    console.log(ctx.body)
-  }
+
+  ctx.body = $find.simpleName
+    ? assets.filter((asset) =>
+        asset.product.simpleName
+          .toLocaleLowerCase()
+          .includes(searchtext.replace(/%20/g, " ").toLocaleLowerCase())
+      )
+    : assets;
 };
