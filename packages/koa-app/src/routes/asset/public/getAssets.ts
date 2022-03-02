@@ -14,7 +14,7 @@ export default async (ctx: Context) => {
   try {
     $find = { _id: new mongoose.Types.ObjectId(searchtext) };
   } catch (err) {
-    $find = { simpleName: searchtext };
+    $find = { longName: searchtext };
   }
 
   const assets: any = await Asset.find($find)
@@ -28,9 +28,9 @@ export default async (ctx: Context) => {
       },
     });
 
-  ctx.body = $find.simpleName
+  ctx.body = $find.longName
     ? assets.filter((asset) =>
-        asset.product.simpleName
+        asset.product.longName
           .toLocaleLowerCase()
           .includes(searchtext.replace(/%20/g, " ").toLocaleLowerCase())
       )
