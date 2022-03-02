@@ -95,7 +95,7 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product Code",
-    minWidth: 180,
+    minWidth: 150,
     align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.productId || "",
@@ -125,7 +125,7 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Action",
-    minWidth: 100,
+    minWidth: 130,
     align: "center",
     flex: 1,
     renderCell: (param: GridValueGetterParams) => (
