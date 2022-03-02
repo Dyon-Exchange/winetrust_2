@@ -112,13 +112,13 @@ const assetsTableColumns: GridColDef[] = [
     ),
   },
   {
-    field: "tokenId",
+    field: "assetId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Token ID",
-    minWidth: 220,
+    headerName: "Asset ID",
+    minWidth: 180,
     align: "center",
-    valueGetter: (param: GridValueGetterParams) => (param.row as Asset).tokenId,
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
   },
   {
     field: "action",
