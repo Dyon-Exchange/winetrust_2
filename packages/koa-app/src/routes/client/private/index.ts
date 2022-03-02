@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createClient from "./createClient";
 import deleteClient from "./deleteClient";
@@ -11,7 +11,7 @@ import searchClients from "./searchClients";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 router.prefix("/clients");
 
 router.route({

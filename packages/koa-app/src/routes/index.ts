@@ -36,7 +36,8 @@ router.use(
   WarehouseRouter.Private.middleware(),
   ProfileRouter.Public.middleware(),
   ProfileRouter.Private.middleware(),
-  UserRouter.Public.middleware()
+  UserRouter.Public.middleware(),
+  UserRouter.Private.middleware(),
 );
 
 export default router;

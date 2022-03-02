@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createPreAdvice from "./createPreAdvice";
 import getPreAdvices from "./getPreAdvices";
@@ -9,7 +9,7 @@ import getPreAdvicesAssets from "./getPreAdvicesAssets";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 
 router.prefix("/pre-advice");
 

@@ -3,7 +3,7 @@ import Router from "koa-joi-router";
 
 import validateObjectId from "../../../helpers/validateObjectId";
 import { AssetState } from "../../../models/Asset";
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
 import getAssets from "./getAssets";
@@ -12,7 +12,7 @@ import patchAsset from "./patchAsset";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 
 const multer = Multer();
 

@@ -1,7 +1,7 @@
 import Multer from "@koa/multer";
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
 import deleteProduct from "./deleteProduct";
@@ -12,7 +12,7 @@ import searchProducts from "./searchProducts";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 
 const multer = Multer();
 

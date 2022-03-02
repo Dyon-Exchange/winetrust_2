@@ -1,9 +1,28 @@
-import Router from "koa-joi-router";
+import Router, { Joi } from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { userAuthRequired } from "../../../services/passport";
+
+import updateUserProfile from "./updateUserProfile";
 
 const router = Router();
-authRequired(router);
+userAuthRequired(router);
 router.prefix("/users");
+
+router.route({
+  method: "patch",
+  path: "/profile",
+  validate: {
+    type: "json",
+    body: {
+      firstName: Joi.string(),
+      lastName: Joi.string(),
+      phoneNumber: {
+        countryCode: Joi.string().required(),
+        phoneNumber: Joi.string().required(),
+      },
+    },
+  },
+  handler: updateUserProfile,
+});
 
 export default router;
