@@ -1,5 +1,6 @@
 import Router, { Joi } from "koa-joi-router";
 
+import authenticate from "./authenticate";
 import createUser from "./createUser";
 import searchUsers from "./searchUsers";
 
@@ -27,6 +28,26 @@ router.route({
     },
   },
   handler: searchUsers,
+});
+
+router.route({
+  method: "post",
+  path: "/auth",
+  validate: {
+    body: {
+      address: Joi.string().required(),
+      signature: Joi.string().required(),
+    },
+    type: "json",
+    output: {
+      200: {
+        body: {
+          token: Joi.string().required(),
+        },
+      },
+    },
+  },
+  handler: authenticate,
 });
 
 export default router;
