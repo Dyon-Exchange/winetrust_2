@@ -26,6 +26,12 @@ export default async (ctx: Context) => {
       populate: {
         path: "owner",
       },
+    })
+    .populate({
+      path: "preAdvice",
+      populate: {
+        path: "arrivalWarehouse",
+      },
     });
 
   ctx.body = $find.longName
