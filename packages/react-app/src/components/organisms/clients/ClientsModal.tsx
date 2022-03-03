@@ -78,7 +78,7 @@ const ClientsModal = (data: GridRowData) => {
               <StyledBox>
                 <StyledLabel>Phone Number  </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
-                <StyledText>{phoneNumber.countryCode} {phoneNumber.phoneNumber}</StyledText>
+                <StyledText>{phoneNumber?.countryCode} {phoneNumber?.phoneNumber}</StyledText>
               </StyledBox>
             </VStack>
           </ModalBody>

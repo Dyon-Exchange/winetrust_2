@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createWarehouse from "./createWarehouse";
 import deleteWarehouse from "./deleteWarehouse";
@@ -10,7 +10,7 @@ import searchWarehouses from "./searchWarehouses";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 router.prefix("/warehouses");
 
 router.route({
