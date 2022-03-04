@@ -47,6 +47,15 @@ const clientsTableColumns: GridColDef[] = [
     align: "center",
   },
   {
+    field: "email",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Email",
+    flex: 1,
+    minWidth: 200,
+    align: "center",
+  },
+  {
     field: "phoneNumber",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",

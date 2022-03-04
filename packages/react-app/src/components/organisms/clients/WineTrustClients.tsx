@@ -48,7 +48,7 @@ const WineTrustClients = () => {
             {deleteList.length > 0 && (
               <RemoveButton onClick={removeSelectedRows} />
             )}
-            <AddNewButton onClick={openAddNew}/>
+            {/* <AddNewButton onClick={openAddNew}/> */}
           </HStack>
         </HStack>
         <ClientsTable setDeleteList={setDeleteList} assets={assets} />
