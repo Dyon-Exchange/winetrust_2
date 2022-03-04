@@ -12,7 +12,7 @@ interface GetAssetRequest extends Request {
 export default async (ctx: ExtendedContext<GetAssetRequest>) => {
   ctx.body = await Asset.findById(ctx.request.params.assetId)
     .populate({
-      path: "preAdvice",
+      path: "product",
     })
     .populate({
       path: "preAdvice",
