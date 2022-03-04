@@ -1,20 +1,27 @@
 import { mongoose } from "@typegoose/typegoose";
-import { Context } from "koa";
+import { Request } from "koa";
 import { isInteger, toInteger } from "lodash";
 
 // import asset from "..";
 import Asset from "../../../models/Asset";
+import ExtendedContext from "../../../types/koa/ExtendedContext";
 
-export default async (ctx: Context) => {
+interface SearchAssetsRequest extends Request {
+  query: {
+    "query": string;
+  };
+}
+
+export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
   // ctx.body = ctx.request.params
-  const { type, searchtext } = ctx.request.params;
+  const { query: searchText } = ctx.request.query;
 
   let $find: any = [];
 
   try {
-    $find = { _id: new mongoose.Types.ObjectId(searchtext) };
+    $find = { _id: new mongoose.Types.ObjectId(searchText) };
   } catch (err) {
-    $find = { longName: searchtext };
+    $find = { longName: searchText };
   }
 
   const assets: any = await Asset.find($find)
@@ -23,22 +30,13 @@ export default async (ctx: Context) => {
     })
     .populate({
       path: "preAdvice",
-      populate: {
-        path: "owner",
-      },
-    })
-    .populate({
-      path: "preAdvice",
-      populate: {
-        path: "arrivalWarehouse",
-      },
     });
 
   ctx.body = $find.longName
     ? assets.filter((asset) =>
         asset.product.longName
           .toLocaleLowerCase()
-          .includes(searchtext.replace(/%20/g, " ").toLocaleLowerCase())
+          .includes(searchText.replace(/%20/g, " ").toLocaleLowerCase())
       )
     : assets;
 };
