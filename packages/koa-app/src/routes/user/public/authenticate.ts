@@ -3,6 +3,7 @@ import * as ethUtil from "ethereumjs-util";
 import { sign } from "jsonwebtoken";
 import { Request } from "koa";
 
+import getClientProfile from "../../../helpers/getClientProfile";
 import Client from "../../../models/Client";
 import ExtendedContext from "../../../types/koa/ExtendedContext";
 
@@ -44,5 +45,5 @@ export default async (ctx: ExtendedContext<AuthRequest>) => {
 
   const token = sign(payload, process.env.TOKEN_SECRET);
 
-  ctx.body = { token };
+  ctx.body = { token, user: getClientProfile(client) };
 };
