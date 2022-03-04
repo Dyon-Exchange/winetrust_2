@@ -2,6 +2,7 @@ import multer from "@koa/multer";
 import { Request } from "koa";
 import { pick } from "lodash";
 
+import getClientProfile from "../../../helpers/getClientProfile";
 import uploadFileToCloudStorage from "../../../helpers/uploadFileToCloudStorage";
 import Client, { ClientClass } from "../../../models/Client";
 import ExtendedContext from "../../../types/koa/ExtendedContext";
@@ -31,7 +32,8 @@ export default async (ctx: ExtendedContext<UpdateUserProfileRequest>) => {
     updates.profileImage = url;
   }
 
-  await Client.findByIdAndUpdate(ctx.user.id, updates);
+  const client = await Client.findByIdAndUpdate(ctx.user.id, updates);
 
+  ctx.body = getClientProfile(client);
   ctx.status = 200;
 };

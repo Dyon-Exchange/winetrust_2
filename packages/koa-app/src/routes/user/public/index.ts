@@ -43,6 +43,16 @@ router.route({
       200: {
         body: {
           token: Joi.string().required(),
+          user: {
+            firstName: Joi.string(),
+            lastName: Joi.string(),
+            email: Joi.string(),
+            phoneNumber: {
+              countryCode: Joi.string(),
+              phoneNumber: Joi.string(),
+            },
+            profileImage: Joi.string(),
+          }
         },
       },
     },
