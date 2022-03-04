@@ -44,10 +44,3 @@ There is one smart contract implemented in this package - WineTrustToken.sol whi
 
 Rinkeby Contract Address: 0x00F97A0f0FB628fe638a0BD216Ef0EE35a1cA7C5
 
-
-
-
-
-
-
-
