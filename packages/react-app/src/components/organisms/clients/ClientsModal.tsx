@@ -26,6 +26,7 @@ const ClientsModal = (data: GridRowData) => {
   const {
     createdAt,
     ethAddress,
+    email,
     firstName,
     id,
     lastName,
@@ -61,6 +62,11 @@ const ClientsModal = (data: GridRowData) => {
                 <StyledText>{id}</StyledText>
               </StyledBox>
               <StyledBox>
+                <StyledLabel>Ethereum Address </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{ethAddress}</StyledText>
+              </StyledBox>
+              <StyledBox>
                 <StyledLabel>First Name </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{firstName}</StyledText>
@@ -71,9 +77,9 @@ const ClientsModal = (data: GridRowData) => {
                 <StyledText>{lastName}</StyledText>
               </StyledBox>
               <StyledBox>
-                <StyledLabel>Ethereum Address </StyledLabel>
+                <StyledLabel>Email </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
-                <StyledText>{ethAddress}</StyledText>
+                <StyledText>{email}</StyledText>
               </StyledBox>
               <StyledBox>
                 <StyledLabel>Phone Number  </StyledLabel>
