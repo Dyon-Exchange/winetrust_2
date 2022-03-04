@@ -30,13 +30,16 @@ export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
     })
     .populate({
       path: "preAdvice",
+      populate: {
+        path: "arrivalWarehouse",
+      },
     });
 
   ctx.body = $find.longName
     ? assets.filter((asset) =>
-        asset.product.longName
-          .toLocaleLowerCase()
-          .includes(searchText.replace(/%20/g, " ").toLocaleLowerCase())
-      )
+      asset.product.longName
+        .toLocaleLowerCase()
+        .includes(searchText.replace(/%20/g, " ").toLocaleLowerCase())
+    )
     : assets;
 };

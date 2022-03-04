@@ -15,6 +15,9 @@ export default async (ctx: ExtendedContext<GetAssetRequest>) => {
       path: "preAdvice",
     })
     .populate({
-      path: "product",
+      path: "preAdvice",
+      populate: {
+        path: "arrivalWarehouse",
+      },
     });
 };
