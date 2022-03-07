@@ -2,7 +2,6 @@ import multer from "@koa/multer";
 import { Request } from "koa";
 import { pick } from "lodash";
 
-import getClientProfile from "../../../helpers/getClientProfile";
 import uploadFileToCloudStorage from "../../../helpers/uploadFileToCloudStorage";
 import Client, { ClientClass } from "../../../models/Client";
 import ExtendedContext from "../../../types/koa/ExtendedContext";
@@ -34,6 +33,6 @@ export default async (ctx: ExtendedContext<UpdateUserProfileRequest>) => {
 
   const client = await Client.findByIdAndUpdate(ctx.user.id, updates);
 
-  ctx.body = getClientProfile(client);
+  ctx.body = updates;
   ctx.status = 200;
 };
