@@ -35,10 +35,12 @@ const preAdviceTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     align: "center",
-    valueGetter: (param: GridValueGetterParams) => `${
-      (param.value as Client).firstName
-    } ${(param.value as Client).lastName}
-    `,
+    valueGetter: (param: GridValueGetterParams) => {
+      const client = param.value as Client;
+      return !client.firstName ?
+        client.ethAddress :
+        `${client.firstName} ${client.lastName || ""} (${client.ethAddress})`;
+    },
   },
   {
     field: "transferringWarehouse",

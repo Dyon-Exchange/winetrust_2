@@ -31,6 +31,13 @@ export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
     .populate({
       path: "preAdvice",
       populate: {
+        path: "owner",
+        select: "ethAddress firstName lastName profileImage",
+      },
+    })
+    .populate({
+      path: "preAdvice",
+      populate: {
         path: "arrivalWarehouse",
       },
     });

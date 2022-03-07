@@ -265,7 +265,9 @@ const AddNewPreAdviceFormModal = ({
                       }
                       options={clientsData?.map((client: Client) => ({
                         value: client,
-                        label: `${client.firstName} ${client.lastName}`,
+                        label: !client.firstName ?
+                          client.ethAddress :
+                          `${client.firstName} ${client.lastName || ""} (${client.ethAddress})`,
                       }))}
                     />
                   )}
