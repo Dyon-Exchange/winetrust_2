@@ -11,7 +11,7 @@ router.prefix("/users");
 
 const multer = Multer();
 
-router.patch(
+router.post(
   "/profile",
   // {
   //   validate: {
@@ -28,7 +28,7 @@ router.patch(
   //   },
   // },
   multer.single("profile-image"),
-  updateUserProfile,
+  updateUserProfile
 );
 
 export default router;
