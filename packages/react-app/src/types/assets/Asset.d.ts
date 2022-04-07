@@ -23,6 +23,7 @@ type AssetState = "Due In" | "Landed" | "Tokenised";
 
 interface Asset {
   _id: string;
+  assetId: number;
   preAdvice: PreAdvice;
   product: Product;
   cost: {

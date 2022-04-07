@@ -118,7 +118,7 @@ const assetsTableColumns: GridColDef[] = [
     headerName: "Asset ID",
     minWidth: 180,
     align: "center",
-    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset).assetId,
   },
   {
     field: "action",

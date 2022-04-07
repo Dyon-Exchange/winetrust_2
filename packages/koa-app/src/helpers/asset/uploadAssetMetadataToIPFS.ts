@@ -7,7 +7,7 @@ import { WarehouseClass } from "../../models/Warehouse";
 type ClassWithId<T> = T & { _id: string };
 
 const formatAssetMetadata = (
-  assetId: string,
+  assetId: number,
   product: ProductClass,
   arrivalWarehouse: ClassWithId<WarehouseClass>,
   initialConditionReportHash: string,
@@ -26,7 +26,7 @@ const formatAssetMetadata = (
       // },
       {
         trait_type: "ID Number",
-        value: assetId,
+        value: assetId.toString(),
       },
       {
         trait_type: "Year",
@@ -64,7 +64,7 @@ const formatAssetMetadata = (
 });
 
 export default async (
-  assetId: string,
+  assetId: number,
   product: ProductClass,
   arrivalWarehouse: ClassWithId<WarehouseClass>,
   initialConditionReportHash: string,

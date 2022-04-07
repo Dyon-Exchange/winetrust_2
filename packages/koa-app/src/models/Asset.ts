@@ -4,9 +4,11 @@
  * Asset model, the individual wine/token asset which is a type of product
  */
 
+import { AutoIncrementID } from "@typegoose/auto-increment";
 import {
   getModelForClass,
   modelOptions,
+  plugin,
   pre,
   prop,
   Ref,
@@ -31,6 +33,7 @@ export enum AssetState {
   Tokenised = "Tokenised",
 }
 
+@plugin(AutoIncrementID, { field: "assetId", startAt: 1 })
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -38,6 +41,9 @@ export enum AssetState {
   },
 })
 export class AssetClass extends TimeStamps {
+  @prop({ unique: true })
+  public assetId: number;
+
   @prop({ required: true, ref: () => PreAdviceClass })
   public preAdvice: Ref<PreAdviceClass>;
 

@@ -55,7 +55,7 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
     );
 
     const metadataHash = await uploadAssetMetadataToIPFS(
-      assetId,
+      asset.assetId,
       asset.product as ProductClass,
       (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
         _id: string;
