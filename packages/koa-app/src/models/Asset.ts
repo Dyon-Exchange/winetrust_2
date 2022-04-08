@@ -9,11 +9,12 @@ import {
   getModelForClass,
   modelOptions,
   plugin,
-  pre,
   prop,
   Ref,
 } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
+
+import { AutoIncrementAssetID } from "../plugins/autoIncrementAssetId";
 
 import { PreAdviceClass } from "./PreAdvice";
 import { ProductClass } from "./Product";
@@ -33,7 +34,7 @@ export enum AssetState {
   Tokenised = "Tokenised",
 }
 
-@plugin(AutoIncrementID, { field: "assetId", startAt: 1 })
+@plugin(AutoIncrementAssetID)
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -42,7 +43,7 @@ export enum AssetState {
 })
 export class AssetClass extends TimeStamps {
   @prop({ unique: true })
-  public assetId: number;
+  public assetId: string;
 
   @prop({ required: true, ref: () => PreAdviceClass })
   public preAdvice: Ref<PreAdviceClass>;
