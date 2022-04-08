@@ -114,8 +114,8 @@ export function AutoIncrementAssetID(schema: mongoose.Schema<any>): void {
 
     logger.info("Setting \"%s\" to \"%d\"", opt.field, leandoc.count);
 
-    const productId = this.product?.productId ?? "";
-    const productIdChecksum = crc8(productId).toString(16);
-    this[opt.field] = `${leandoc.count}${productIdChecksum}`;
+    const productCode = (this.product?.productCode ?? 0).toString();
+    const productCodeChecksum = crc8(productCode).toString(16).padStart(2, '0');
+    this[opt.field] = `${leandoc.count}${productCodeChecksum}`;
   });
 }
