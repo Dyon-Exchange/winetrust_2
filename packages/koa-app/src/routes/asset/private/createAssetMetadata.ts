@@ -74,7 +74,6 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
 
     ctx.status = 200;
   } catch (error) {
-    console.log(error);
     ctx.throw(
       500,
       (error as AxiosError).response?.data ||
