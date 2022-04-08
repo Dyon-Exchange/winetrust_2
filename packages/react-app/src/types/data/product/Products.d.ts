@@ -5,7 +5,6 @@ interface NewProductForm {
   producerName: string;
   longName: string;
   productCode: number;
-  productId: string;
   description: string;
   year: string;
   region: string;
@@ -26,7 +25,6 @@ interface NewProductForm {
 
 interface Product {
   _id: string;
-  productId?: string;
   simpleName: string;
   producerName: string;
   longName: string;

@@ -10,7 +10,6 @@ interface CreateProductRequestBody {
   simpleName: string;
   producerName: string;
   longName: string;
-  productId: string;
   productCode: number;
   description: string;
   year: string;

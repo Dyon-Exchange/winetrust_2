@@ -289,6 +289,7 @@ const AddNewProductFormModal = ({
                 <FormLabel fontSize="sm">Product Code</FormLabel>
                 <Input
                   {...register("productCode", {
+                    required: "Product code is required",
                     maxLength: "18",
                     minLength: "18",
                   })}
@@ -299,6 +300,10 @@ const AddNewProductFormModal = ({
                 />
                 {errors.productCode !== undefined && (
                   <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.productCode &&
+                      errors.productCode.type === "required" && (
+                        <span>{errors.productCode.message}</span>
+                      )}
                     {errors.productCode &&
                       errors.productCode.type === "maxLength" && (
                         <span>Product Code should be 18 digit long</span>

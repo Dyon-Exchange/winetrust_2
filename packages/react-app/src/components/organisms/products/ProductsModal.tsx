@@ -42,7 +42,6 @@ const ProductsModal = (data: GridRowData) => {
     marketingImage3,
     marketingImage4,
     packSize,
-    productId,
     productCode,
     region,
     simpleName,
