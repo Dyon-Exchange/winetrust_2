@@ -36,7 +36,7 @@ export class ProductClass extends TimeStamps {
   @prop({ required: true })
   public subRegion: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public subSubRegion: string;
 
   @prop({ required: true })

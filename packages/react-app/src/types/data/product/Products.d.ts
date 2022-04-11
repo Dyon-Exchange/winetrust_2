@@ -9,7 +9,7 @@ interface NewProductForm {
   year: string;
   region: string;
   subRegion: string;
-  subSubRegion: string;
+  subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
   image?: File;
@@ -34,7 +34,7 @@ interface Product {
   year: string;
   region: string;
   subRegion: string;
-  subSubRegion: string;
+  subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
   image?: File;
