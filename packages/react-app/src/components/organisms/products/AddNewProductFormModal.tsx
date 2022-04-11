@@ -409,7 +409,7 @@ const AddNewProductFormModal = ({
                 <FormLabel fontSize="sm">Sub sub region</FormLabel>
                 <Input
                   {...register("subSubRegion", {
-                    required: "Sub Sub Region is required",
+                    // required: "Sub Sub Region is required",
                   })}
                   fontSize="sm"
                   type="text"

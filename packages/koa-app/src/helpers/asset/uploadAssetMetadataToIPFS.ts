@@ -25,7 +25,7 @@ const formatAssetMetadata = (
       //   value: product.skuCode ?? "",
       // },
       {
-        trait_type: "ID Number",
+        trait_type: "Asset ID",
         value: assetId,
       },
       {
@@ -37,24 +37,24 @@ const formatAssetMetadata = (
         value: product.region,
       },
       {
-        trait_type: "Sub-Region",
+        trait_type: "Sub Region",
         value: product.subRegion,
       },
-      {
-        trait_type: "Sub-Sub-Region",
-        value: product.subSubRegion,
-      },
+      // {
+      //   trait_type: "Sub-Sub-Region",
+      //   value: product.subSubRegion,
+      // },
       {
         trait_type: "Pack Size",
         value: product.packSize,
       },
+      // {
+      //   trait_type: "Duty Status",
+      //   value: product.dutyStatus,
+      // },
       {
-        trait_type: "Duty Status",
-        value: product.dutyStatus,
-      },
-      {
-        trait_type: "Warehouse ID",
-        value: arrivalWarehouse._id.toString(),
+        trait_type: "Warehouse Name",
+        value: arrivalWarehouse.name,
       },
     ],
   },
