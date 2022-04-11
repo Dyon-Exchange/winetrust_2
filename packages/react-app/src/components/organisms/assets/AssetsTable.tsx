@@ -15,6 +15,7 @@ import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import AssetsModal from "./AssetsModal";
 import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
@@ -131,6 +132,19 @@ const assetsTableColumns: GridColDef[] = [
     renderCell: (param: GridValueGetterParams) => (
       <NFTDisplayHandler row={param.row as Asset} />
     ),
+  },
+  {
+    field: "details",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 100,
+    align: "center",
+    renderCell: (params: GridValueGetterParams) => {
+      const modal = AssetsModal(params.row);
+      return modal;
+    },
   },
   // {
   //   field: "price",
