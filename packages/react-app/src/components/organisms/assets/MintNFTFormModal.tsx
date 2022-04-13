@@ -282,7 +282,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf, .png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange(event.target.files[0]);
@@ -324,7 +324,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps2}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf, .png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange2(event.target.files[0]);
@@ -366,7 +366,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps3}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf,.png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange3(event.target.files[0]);
@@ -408,7 +408,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps4}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf, .png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange4(event.target.files[0]);
@@ -450,7 +450,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps5}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf, .png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange5(event.target.files[0]);
@@ -492,7 +492,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   </InputLeftElement>
                   <input
                     {...inputProps6}
-                    accept=".pdf" // allow only jpeg and png files
+                    accept=".pdf, .png, .jpeg,.svg,.jpg" // allow only jpeg and png files
                     onChange={(event) => {
                       if (!event || !event.target?.files?.[0]) return;
                       onConditionReportChange6(event.target.files[0]);
