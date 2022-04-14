@@ -14,7 +14,7 @@ const formatAssetMetadata = (
   externalURL: string
 ) => ({
   pinataContent: {
-    name: product.longName,
+    name: product.simpleName,
     description: product.description,
     image: `ipfs://${product.image}`,
     initial_condition_report: `ipfs://${initialConditionReportHash}`,
