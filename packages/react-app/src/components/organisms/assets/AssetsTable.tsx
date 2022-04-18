@@ -33,13 +33,13 @@ const assetsTableColumns: GridColDef[] = [
   //     (param.row as Asset).preAdvice.preAdviceId,
   // },
   {
-    field: "longName",
+    field: "simpleName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Products",
     minWidth: 300,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.longName,
+      (param.row as Asset).product.simpleName,
   },
   {
     field: "productYear",
@@ -92,14 +92,14 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).warehouseLocationNo || "",
   },
   {
-    field: "productCode",
+    field: "preAdviceId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Product Code",
+    headerName: "Pre-Advice",
     minWidth: 200,
     align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.productCode || "",
+      (param.row as Asset).preAdvice.preAdviceId || "",
   },
   {
     field: "state",
