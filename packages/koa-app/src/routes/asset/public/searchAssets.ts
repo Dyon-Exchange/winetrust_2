@@ -16,15 +16,14 @@ export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
   // ctx.body = ctx.request.params
   const { query: searchText } = ctx.request.query;
 
-  let $find: any = [];
+  const $filter = {
+    $or: [
+      { assetId: { $regex: searchText, $options: "i" } },
+      { longName: { $regex: searchText, $options: "i" } },
+    ],
+  };
 
-  try {
-    $find = { _id: new mongoose.Types.ObjectId(searchText) };
-  } catch (err) {
-    $find = { longName: searchText };
-  }
-
-  const assets: any = await Asset.find($find)
+  const assets: any = await Asset.find($filter)
     .populate({
       path: "product",
     })
@@ -42,11 +41,5 @@ export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
       },
     });
 
-  ctx.body = $find.longName
-    ? assets.filter((asset) =>
-      asset.product.longName
-        .toLocaleLowerCase()
-        .includes(searchText.replace(/%20/g, " ").toLocaleLowerCase())
-    )
-    : assets;
+  ctx.body = assets;
 };
