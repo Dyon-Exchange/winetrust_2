@@ -254,6 +254,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       "preAdvice.owner.firstName",
       "preAdvice.owner.lastName",
       "state",
+      "assetId",
       "_id",
     ],
     searchQuery
