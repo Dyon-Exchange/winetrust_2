@@ -35,5 +35,7 @@ interface Asset {
   initialConditionReport?: string;
   tokenId?: number;
   txHash?: string;
-  warehouseLocationNo?: string
+  warehouseLocationNo?: string;
+  landedAt?: Date;
+  tokenisedAt?: Date;
 }

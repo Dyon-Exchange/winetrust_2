@@ -75,6 +75,12 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public warehouseLocationNo: string;
+
+  @prop()
+  public landedAt: Date;
+
+  @prop()
+  public tokenisedAt: Date;
 }
 
 const Asset = getModelForClass(AssetClass);
