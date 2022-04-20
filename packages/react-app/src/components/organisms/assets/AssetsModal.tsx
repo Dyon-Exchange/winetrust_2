@@ -124,6 +124,16 @@ const AssetsModal = (data: GridRowData) => {
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{subSubRegion}</StyledText>
               </StyledBox>
+              <StyledBox>
+                <StyledLabel>Date Landed </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{assetData.landedAt}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Date Tokenised </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{assetData.tokenisedAt}</StyledText>
+              </StyledBox>
               {image && (
                 <Box>
                   Image :

@@ -24,8 +24,7 @@ const clientsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Wallet",
-    flex: 1,
-    minWidth: 200,
+    minWidth: 350,
     align: "center",
   },
   {
@@ -63,8 +62,12 @@ const clientsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 200,
     align: "center",
-    valueGetter: (param: GridValueGetterParams) => !param.value ? "" :
-      `(${(param.value as PhoneNumber).countryCode}) ${(param.value as PhoneNumber).phoneNumber}`,
+    valueGetter: (param: GridValueGetterParams) =>
+      !param.value
+        ? ""
+        : `(${(param.value as PhoneNumber).countryCode}) ${
+            (param.value as PhoneNumber).phoneNumber
+          }`,
   },
   {
     field: "_id",
