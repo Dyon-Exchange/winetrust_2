@@ -1,4 +1,3 @@
-import multer from "@koa/multer";
 import { AxiosError } from "axios";
 import { Request } from "koa";
 
@@ -10,15 +9,23 @@ import { WarehouseClass } from "../../../models/Warehouse";
 import ExtendedContext from "../../../types/koa/ExtendedContext";
 
 interface CreateAssetMetadataBody extends Request {
-  file: multer.File;
   body: {
     assetId: string;
     externalURL: string;
   };
 }
 
+const imageFieldsMap = {
+  "initial-condition-report": "initialConditionReport",
+  "initial-condition-report2": "initialConditionReport2",
+  "initial-condition-report3": "initialConditionReport3",
+  "initial-condition-report4": "initialConditionReport4",
+  "initial-condition-report5": "initialConditionReport5",
+  "initial-condition-report6": "initialConditionReport6",
+};
+
 export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
-  const initialConditionReport = ctx.request.file;
+  const { files } = ctx.request;
 
   const { externalURL, assetId } = ctx.request.body;
 
@@ -50,9 +57,26 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
 
     if (!asset) throw new Error("Asset not found");
 
-    const initialConditionReportHash = await uploadFileToIPFS(
-      initialConditionReport
-    );
+    let initialConditionReportHash;
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const fieldFiles of Object.values(files)) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const file of fieldFiles) {
+        const propName = imageFieldsMap[file.fieldname];
+        if (propName) {
+          // eslint-disable-next-line no-await-in-loop
+          const hash = await uploadFileToIPFS(
+            file
+          );
+          asset[propName] = hash;
+
+          if (propName === "initialConditionReport") {
+            initialConditionReportHash = hash;
+          }
+        }
+      }
+    }
 
     const metadataHash = await uploadAssetMetadataToIPFS(
       asset.assetId,
@@ -64,7 +88,6 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
       externalURL
     );
 
-    asset.initialConditionReport = initialConditionReportHash;
     asset.metadataHash = metadataHash;
 
     await asset.save();
@@ -77,7 +100,7 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
     ctx.throw(
       500,
       (error as AxiosError).response?.data ||
-        "Error uploading image file to IPFS"
+      "Error uploading image file to IPFS"
     );
   }
 };

@@ -20,7 +20,14 @@ router.prefix("/assets");
 
 router.post(
   "/",
-  multer.single("initial-condition-report"),
+  multer.fields([
+    { name: "initial-condition-report" },
+    { name: "initial-condition-report2" },
+    { name: "initial-condition-report3" },
+    { name: "initial-condition-report4" },
+    { name: "initial-condition-report5" },
+    { name: "initial-condition-report6" },
+  ]),
   createAssetMetadata
 );
 

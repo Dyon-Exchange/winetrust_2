@@ -65,6 +65,21 @@ export class AssetClass extends TimeStamps {
   public initialConditionReport: string;
 
   @prop()
+  public initialConditionReport2: string;
+
+  @prop()
+  public initialConditionReport3: string;
+
+  @prop()
+  public initialConditionReport4: string;
+
+  @prop()
+  public initialConditionReport5: string;
+
+  @prop()
+  public initialConditionReport6: string;
+
+  @prop()
   public metadataHash: string;
 
   @prop()
