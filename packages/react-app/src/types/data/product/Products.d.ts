@@ -8,7 +8,7 @@ interface NewProductForm {
   description: string;
   year: string;
   region: string;
-  subRegion: string;
+  subRegion?: string;
   subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
@@ -33,7 +33,7 @@ interface Product {
   skuCode?: string;
   year: string;
   region: string;
-  subRegion: string;
+  subRegion?: string;
   subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
