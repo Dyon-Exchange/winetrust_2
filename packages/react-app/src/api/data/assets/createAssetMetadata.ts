@@ -3,6 +3,7 @@ import axios from "axios";
 interface Props {
   assetId: string;
   externalURL: string;
+  initialConditionText: string;
   initialConditionReport: File;
   initialConditionReport2: File;
   initialConditionReport3: File;
@@ -13,6 +14,7 @@ interface Props {
 
 export default async ({
   externalURL,
+  initialConditionText,
   initialConditionReport,
   initialConditionReport2,
   initialConditionReport3,
@@ -48,6 +50,7 @@ export default async ({
 
   formData.append("assetId", assetId);
   formData.append("externalURL", externalURL);
+  formData.append("initialConditionText", initialConditionText);
 
   const { data } = await axios.post("/assets", formData);
 

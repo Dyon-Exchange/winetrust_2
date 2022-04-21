@@ -61,6 +61,7 @@ interface MintNFTFormModalProps {
 
 export interface MintNFTForm {
   externalURL: string;
+  initialConditionText: string;
   initialConditionReport: File;
   initialConditionReport2: File;
   initialConditionReport3: File;
@@ -266,6 +267,26 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 {errors.externalURL !== undefined && (
                   <FormErrorMessage fontSize="sm">
                     {errors.externalURL.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                isInvalid={errors.initialConditionText !== undefined}
+                isDisabled={isSubmitting}
+              >
+                <FormLabel fontSize="sm">Condition Text</FormLabel>
+                <Input
+                  {...register("initialConditionText", {
+                    required: "Condition Text is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Condition Text"
+                />
+                {errors.initialConditionText !== undefined && (
+                  <FormErrorMessage fontSize="sm">
+                    {errors.initialConditionText.message}
                   </FormErrorMessage>
                 )}
               </ModalFormControl>

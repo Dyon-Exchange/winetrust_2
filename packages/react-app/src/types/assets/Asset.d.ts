@@ -32,7 +32,13 @@ interface Asset {
   };
   expectedArrivalDate: Date;
   state: AssetState;
+  initialConditionText?: string;
   initialConditionReport?: string;
+  initialConditionReport2?: string;
+  initialConditionReport3?: string;
+  initialConditionReport4?: string;
+  initialConditionReport5?: string;
+  initialConditionReport6?: string;
   tokenId?: number;
   txHash?: string;
   warehouseLocationNo?: string;

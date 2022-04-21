@@ -12,6 +12,7 @@ interface CreateAssetMetadataBody extends Request {
   body: {
     assetId: string;
     externalURL: string;
+    initialConditionText: string;
   };
 }
 
@@ -27,7 +28,7 @@ const imageFieldsMap = {
 export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
   const { files } = ctx.request;
 
-  const { externalURL, assetId } = ctx.request.body;
+  const { externalURL, initialConditionText, assetId } = ctx.request.body;
 
   //   Potentially sign the tx on the frontend and send the signed tx to the backend, which executes it and waits for the tx hash
 
@@ -88,6 +89,7 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
       externalURL
     );
 
+    asset.initialConditionText = initialConditionText;
     asset.metadataHash = metadataHash;
 
     await asset.save();
