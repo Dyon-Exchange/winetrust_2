@@ -596,11 +596,11 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   <StyledSeparator> : </StyledSeparator>
                   <StyledText>{row.product.packSize}</StyledText>
                 </StyledBox>
-                <StyledBox sx={{ mt: "9px" }}>
+                {/* <StyledBox sx={{ mt: "9px" }}>
                   <StyledLabel>Duty Status</StyledLabel>
                   <StyledSeparator> : </StyledSeparator>
                   <StyledText>{row.product.dutyStatus}</StyledText>
-                </StyledBox>
+                </StyledBox> */}
                 <StyledBox sx={{ mt: "9px" }}>
                   <StyledLabel>Warehouse ID</StyledLabel>
                   <StyledSeparator> : </StyledSeparator>

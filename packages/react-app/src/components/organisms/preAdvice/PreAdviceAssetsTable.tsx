@@ -50,17 +50,17 @@ const assetsTableColumns: GridColDef[] = [
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).assetId || "",
   },
-  {
-    field: "productDutyStatus",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Duty Status",
-    minWidth: 100,
-    align: "center",
-    flex:1,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product?.dutyStatus || "",
-  },
+  // {
+  //   field: "productDutyStatus",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Duty Status",
+  //   minWidth: 100,
+  //   align: "center",
+  //   flex:1,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     (param.row as Asset).product?.dutyStatus || "",
+  // },
   {
     field: "state",
     headerClassName: "super-app-theme--header",
