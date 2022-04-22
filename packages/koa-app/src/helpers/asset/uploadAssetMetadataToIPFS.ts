@@ -18,7 +18,7 @@ const formatAssetMetadata = (
     description: product.description,
     image: `ipfs://${product.labelImage}`,
     initial_condition_report: `ipfs://${initialConditionReportHash}`,
-    external_url: externalURL,
+    external_url: externalURL || `https://winetrust.org/asset-home/${assetId}`,
     attributes: [
       // {
       //   trait_type: "SKU Code",

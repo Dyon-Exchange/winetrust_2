@@ -258,7 +258,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 <FormLabel fontSize="sm">External URL</FormLabel>
                 <Input
                   {...register("externalURL", {
-                    required: "External URL is required",
+                    // required: "External URL is required",
                   })}
                   fontSize="sm"
                   type="text"
