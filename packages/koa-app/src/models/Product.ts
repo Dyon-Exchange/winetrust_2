@@ -31,6 +31,9 @@ export class ProductClass extends TimeStamps {
   public year: string;
 
   @prop({ required: true })
+  public country: string;
+
+  @prop({ required: true })
   public region: string;
 
   @prop({ required: false })

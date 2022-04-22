@@ -360,6 +360,27 @@ const AddNewProductFormModal = ({
               </ModalFormControl>
 
               <ModalFormControl
+                id="country"
+                isDisabled={isSubmitting}
+                isInvalid={errors.country !== undefined}
+              >
+                <FormLabel fontSize="sm">Country</FormLabel>
+                <Input
+                  {...register("country", {
+                    required: "Country is required",
+                  })}
+                  fontSize="sm"
+                  type="text"
+                  placeholder="Country"
+                />
+                {errors.country !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.country.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
                 id="region"
                 isDisabled={isSubmitting}
                 isInvalid={errors.region !== undefined}

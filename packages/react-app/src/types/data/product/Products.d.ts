@@ -7,6 +7,7 @@ interface NewProductForm {
   productCode: number;
   description: string;
   year: string;
+  country: string;
   region: string;
   subRegion?: string;
   subSubRegion?: string;
@@ -32,6 +33,7 @@ interface Product {
   description: string;
   skuCode?: string;
   year: string;
+  country: string;
   region: string;
   subRegion?: string;
   subSubRegion?: string;

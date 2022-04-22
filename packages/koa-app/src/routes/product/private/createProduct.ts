@@ -13,6 +13,7 @@ interface CreateProductRequestBody {
   productCode: number;
   description: string;
   year: string;
+  country: string;
   region: string;
   subRegion?: string;
   subSubRegion?: string;

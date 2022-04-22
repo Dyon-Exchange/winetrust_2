@@ -33,6 +33,10 @@ const formatAssetMetadata = (
         value: product.year,
       },
       {
+        trait_type: "Country",
+        value: product.country,
+      },
+      {
         trait_type: "Region",
         value: product.region,
       },

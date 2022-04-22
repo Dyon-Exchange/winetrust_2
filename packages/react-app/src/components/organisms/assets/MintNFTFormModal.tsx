@@ -577,6 +577,11 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                   <StyledText>{row.product.year}</StyledText>
                 </StyledBox>
                 <StyledBox sx={{ mt: "9px" }}>
+                  <StyledLabel>Country</StyledLabel>
+                  <StyledSeparator> : </StyledSeparator>
+                  <StyledText>{row.product.country}</StyledText>
+                </StyledBox>
+                <StyledBox sx={{ mt: "9px" }}>
                   <StyledLabel>Region</StyledLabel>
                   <StyledSeparator> : </StyledSeparator>
                   <StyledText>{row.product.region}</StyledText>

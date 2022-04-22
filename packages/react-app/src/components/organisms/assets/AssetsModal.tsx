@@ -43,8 +43,9 @@ const AssetsModal = (data: GridRowData) => {
     marketingImage4,
     packSize,
     productCode,
-    region,
     simpleName,
+    country,
+    region,
     subRegion,
     subSubRegion,
     year,
@@ -108,6 +109,11 @@ const AssetsModal = (data: GridRowData) => {
                 <StyledLabel>Pack Size </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{packSize}</StyledText>
+              </StyledBox>
+              <StyledBox>
+                <StyledLabel>Country </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{country}</StyledText>
               </StyledBox>
               <StyledBox>
                 <StyledLabel>Region </StyledLabel>

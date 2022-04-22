@@ -52,6 +52,16 @@ const assetsTableColumns: GridColDef[] = [
       (param.row as Asset).product.year,
   },
   {
+    field: "productCountry",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Country",
+    minWidth: 140,
+    align: "center",
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.country,
+  },
+  {
     field: "productRegion",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",

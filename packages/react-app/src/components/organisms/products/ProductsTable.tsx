@@ -36,6 +36,14 @@ const productsTableColumns: GridColDef[] = [
     align: "center",
   },
   {
+    field: "country",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Country",
+    minWidth: 180,
+    align: "center",
+  },
+  {
     field: "region",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
