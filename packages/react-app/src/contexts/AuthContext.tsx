@@ -17,8 +17,8 @@ import {
 import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
-axios.defaults.baseURL = "https://staging.winetrust.org/db";
-// axios.defaults.baseURL = "http://localhost:3030/db";
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+// axios.defaults.baseURL = "http://localhost:3030";
 // console.log(env.LOCALHOST_AXIOS_DEFAULT_BASE_URL)
 
 interface AuthDetails {
