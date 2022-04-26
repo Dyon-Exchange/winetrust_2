@@ -24,6 +24,8 @@ import {
 } from "../../atoms/chakraModal/StyledBox";
 import StyledModalHeader from "../../atoms/chakraModal/StyledModalHeader";
 
+const pinataGateway = process.env.REACT_APP_PINATA_GATEWAY;
+
 const AssetsModal = (data: GridRowData) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -144,7 +146,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${image}`}
+                    src={`${pinataGateway}/${image}`}
                     h="250px"
                   />
                 </Box>
@@ -153,7 +155,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Label Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${labelImage}`}
+                    src={`${pinataGateway}/${labelImage}`}
                     h="250px"
                   />
                 </Box>
@@ -162,7 +164,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Label Image 2:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${labelImage2}`}
+                    src={`${pinataGateway}/${labelImage2}`}
                     h="250px"
                   />
                 </Box>
@@ -171,7 +173,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Bottle Image :
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage}`}
+                    src={`${pinataGateway}/${bottleImage}`}
                     h="250px"
                   />
                 </Box>
@@ -180,7 +182,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Bottle Image 2:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${bottleImage2}`}
+                    src={`${pinataGateway}/${bottleImage2}`}
                     h="250px"
                   />
                 </Box>
@@ -189,7 +191,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 1:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage1}`}
+                    src={`${pinataGateway}/${marketingImage1}`}
                     h="250px"
                   />
                 </Box>
@@ -198,7 +200,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 2:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage2}`}
+                    src={`${pinataGateway}/${marketingImage2}`}
                     h="250px"
                   />
                 </Box>
@@ -207,7 +209,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 3:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage3}`}
+                    src={`${pinataGateway}/${marketingImage3}`}
                     h="250px"
                   />
                 </Box>
@@ -216,7 +218,7 @@ const AssetsModal = (data: GridRowData) => {
                 <Box>
                   Marketing Image 4:
                   <Image
-                    src={`https://gateway.pinata.cloud/ipfs/${marketingImage4}`}
+                    src={`${pinataGateway}/${marketingImage4}`}
                     h="250px"
                   />
                 </Box>
