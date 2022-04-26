@@ -4,17 +4,20 @@ interface NewProductForm {
   simpleName: string;
   producerName: string;
   longName: string;
-  productId?: string;
+  productCode: number;
   description: string;
   year: string;
+  country: string;
   region: string;
-  subRegion: string;
-  subSubRegion: string;
+  subRegion?: string;
+  subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
   image?: File;
   labelImage?: File;
+  labelImage2?: File;
   bottleImage?: File;
+  bottleImage2?: File;
   marketingImage1?: File;
   marketingImage2?: File;
   marketingImage3?: File;
@@ -23,21 +26,24 @@ interface NewProductForm {
 
 interface Product {
   _id: string;
-  productId?: string,
   simpleName: string;
   producerName: string;
   longName: string;
+  productCode: number;
   description: string;
   skuCode?: string;
   year: string;
+  country: string;
   region: string;
-  subRegion: string;
-  subSubRegion: string;
+  subRegion?: string;
+  subSubRegion?: string;
   packSize: string;
   dutyStatus: ProductDutyStatus;
   image?: File;
   labelImage?: File;
+  labelImage2?: File;
   bottleImage?: File;
+  bottleImage2?: File;
   marketingImage1?: File;
   marketingImage2?: File;
   marketingImage3?: File;

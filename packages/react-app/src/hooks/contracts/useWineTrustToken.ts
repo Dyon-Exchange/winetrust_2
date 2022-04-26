@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
-import WineTrustTokenJSON from "@winetrust/smart-contracts/deployments/rinkeby/WineTrustToken.json";
 import { WineTrustToken__factory } from "@winetrust/smart-contracts/typechain-types/factories/WineTrustToken__factory";
 import { WineTrustToken } from "@winetrust/smart-contracts/typechain-types/WineTrustToken";
 import { ContractTransaction, providers } from "ethers";
@@ -37,7 +36,7 @@ const useWineTrustTokenInstance = ({
     useState<WineTrustTokenInstanceHook["userRoles"]>();
 
   // destructure WineTrustTokenInstance json
-  const { address } = WineTrustTokenJSON;
+  const address = process.env.REACT_APP_WINETRUST_CONTRACT_ADDRESS as string;
 
   // set a wine trust token contract instance
   useEffect(() => {
@@ -55,21 +54,24 @@ const useWineTrustTokenInstance = ({
       !networkDetails?.onSupportedNetwork
     )
       return;
+    try {
+      const [hasAdminRole, hasMinterRole] = await Promise.all([
+        returnIfUserHasRole(
+          userDetails.address,
+          WineTrustTokenInstance,
+          DEFAULT_ADMIN_ROLE
+        ),
+        returnIfUserHasRole(
+          userDetails.address,
+          WineTrustTokenInstance,
+          MINTER_ROLE
+        ),
+      ]);
 
-    const [hasAdminRole, hasMinterRole] = await Promise.all([
-      returnIfUserHasRole(
-        userDetails.address,
-        WineTrustTokenInstance,
-        DEFAULT_ADMIN_ROLE
-      ),
-      returnIfUserHasRole(
-        userDetails.address,
-        WineTrustTokenInstance,
-        MINTER_ROLE
-      ),
-    ]);
-
-    setUserRoles({ isAdmin: hasAdminRole, isMinter: hasMinterRole });
+      setUserRoles({ isAdmin: hasAdminRole, isMinter: hasMinterRole });
+    } catch (e) {
+      console.error("Error occurred");
+    }
   }, [userDetails, WineTrustTokenInstance, networkDetails]);
 
   // run the admin check with the current user's address

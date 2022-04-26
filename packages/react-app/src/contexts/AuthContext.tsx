@@ -8,13 +8,18 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
+// import env from "react-dotenv";
 
-import { loginRequest, signupRequest } from "../api/authentication/authenticate";
+import {
+  loginRequest,
+  signupRequest,
+} from "../api/authentication/authenticate";
 import refreshRequest from "../api/authentication/refresh";
 import useLocalStorage from "../hooks/localStorage/useLocalStorage";
 
-axios.defaults.baseURL = "https://app.winetrust.org/db";
-// axios.defaults.baseURL = "http://localhost:3030/";
+axios.defaults.baseURL = "https://staging.winetrust.org/db";
+// axios.defaults.baseURL = "http://localhost:3030/db";
+// console.log(env.LOCALHOST_AXIOS_DEFAULT_BASE_URL)
 
 interface AuthDetails {
   accessToken: string;
@@ -60,7 +65,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         password
       );
       setAuthDetails({ email, accessToken: token, refreshToken: refresh });
-      
     },
     [setAuthDetails]
   );
@@ -75,7 +79,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     },
     [setAuthDetails]
   );
-
 
   // logout function to clear local storage and local context state
   const logout = useCallback(() => {
@@ -160,7 +163,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, [authDetails, logout, setAuthDetails]);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, login, signup, logout, authDetails }}>
+    <AuthContext.Provider
+      value={{ loggedIn, login, signup, logout, authDetails }}
+    >
       {children}
     </AuthContext.Provider>
   );

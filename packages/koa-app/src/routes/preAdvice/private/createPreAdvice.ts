@@ -88,7 +88,7 @@ export default async (ctx: ExtendedContext<CreatePreAdviceRequest>) => {
         }));
 
         // create the asset/s in the db
-        await Asset.insertMany(formattedAssets, { session });
+        await Asset.create(formattedAssets, { session });
       })
     );
 

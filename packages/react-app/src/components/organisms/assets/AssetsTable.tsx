@@ -15,10 +15,9 @@ import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import AssetsModal from "./AssetsModal";
 import AssetStateHandler from "./AssetStateHandler";
 import NFTDisplayHandler from "./NFTDisplayHandler";
-
-
 
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
@@ -34,32 +33,41 @@ const assetsTableColumns: GridColDef[] = [
   //     (param.row as Asset).preAdvice.preAdviceId,
   // },
   {
-    field: "longName",
+    field: "simpleName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Products",
-    flex: 1,
-    minWidth: 200,
+    minWidth: 300,
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.longName,
+      (param.row as Asset).product.simpleName,
   },
   {
     field: "productYear",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Year",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 50,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.year,
+  },
+  {
+    field: "productCountry",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Country",
+    minWidth: 140,
+    align: "center",
+    valueGetter: (param: GridValueGetterParams) =>
+      (param.row as Asset).product.country,
   },
   {
     field: "productRegion",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Region",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 140,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.region,
   },
@@ -68,8 +76,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Pack Size",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 50,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product.packSize,
   },
@@ -78,8 +86,8 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Warehouse Name",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 300,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).preAdvice.transferringWarehouse.name,
   },
@@ -87,49 +95,29 @@ const assetsTableColumns: GridColDef[] = [
     field: "warehouseLocationNo",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Warehouse Location #",
-    flex: 1,
-    minWidth: 200,
+    headerName: "Warehouse #",
+    minWidth: 160,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).warehouseLocationNo || "",
   },
- {
-    field: "productId",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Product ID",
-    flex: 1,
-    minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product._id || "",
-  },
   {
-    field: "productDutyStatus",
+    field: "preAdviceId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Duty Status",
-    flex: 1,
-    minWidth: 150,
+    headerName: "Pre-Advice",
+    minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.dutyStatus,
-  },
-  {
-    field: "assetLocation",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Location",
-    flex: 1,
-    minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) =>
-    (param.row as Asset).preAdvice.transferringWarehouse.address,
+      (param.row as Asset).preAdvice.preAdviceId || "",
   },
   {
     field: "state",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Landing Status",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 130,
+    align: "center",
     renderCell: (param: GridValueGetterParams) => (
       <AssetStateHandler asset={param.row as Asset} />
     ),
@@ -139,20 +127,34 @@ const assetsTableColumns: GridColDef[] = [
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Asset ID",
-    flex: 1,
-    minWidth: 250,
-    valueGetter: (param: GridValueGetterParams) => (param.row as Asset)._id,
+    minWidth: 180,
+    align: "center",
+    valueGetter: (param: GridValueGetterParams) => (param.row as Asset).assetId,
   },
   {
-    field: "tokenId",
+    field: "action",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Token ID",
+    headerName: "Action",
+    minWidth: 130,
+    align: "center",
     flex: 1,
-    minWidth: 250,
     renderCell: (param: GridValueGetterParams) => (
       <NFTDisplayHandler row={param.row as Asset} />
     ),
+  },
+  {
+    field: "details",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 100,
+    align: "center",
+    renderCell: (params: GridValueGetterParams) => {
+      const modal = AssetsModal(params.row);
+      return modal;
+    },
   },
   // {
   //   field: "price",
@@ -255,7 +257,6 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       "product.year",
       "product.packSize",
       "product._id",
-      "product.dutyStatus",
       "product.cost.currency",
       "product.cost.amount",
       "preAdvice.transferringWarehouse.name",
@@ -263,6 +264,7 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
       "preAdvice.owner.firstName",
       "preAdvice.owner.lastName",
       "state",
+      "assetId",
       "_id",
     ],
     searchQuery
@@ -286,14 +288,13 @@ const AssetsTable = ({ searchQuery }: AssetsTableProps) => {
   if (assetsDataIsError)
     return (
       <DataTableError
-        message='There was an error fetching the assets data, try again?'
+        message="There was an error fetching the assets data, try again?"
         refetch={refetchAssetsData}
       />
     );
-      // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
+  // style={{backgroundColor: "darkgray", fontStyle:"bold"}}
   return (
     <StyledDataGrid
-    
       disableSelectionOnClick
       disableColumnSelector
       columns={assetsTableColumns}

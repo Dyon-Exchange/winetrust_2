@@ -1,6 +1,6 @@
 import Router from "koa-joi-router";
-import forgotPassword from "./forgotPassword";
 
+import forgotPassword from "./forgotPassword";
 import login from "./login";
 import refreshToken from "./refreshToken";
 import signup from "./signup";

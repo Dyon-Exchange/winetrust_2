@@ -8,4 +8,5 @@ interface SupportedNetwork {
 
 export const SUPPORTED_NETWORKS: SupportedNetwork[] = [
   { chainId: 4, name: "Rinkeby" },
+  { chainId: 137, name: "Polygon" },
 ];

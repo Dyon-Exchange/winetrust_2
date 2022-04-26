@@ -4,14 +4,17 @@
  * Asset model, the individual wine/token asset which is a type of product
  */
 
+import { AutoIncrementID } from "@typegoose/auto-increment";
 import {
   getModelForClass,
   modelOptions,
-  pre,
+  plugin,
   prop,
   Ref,
 } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
+
+import { AutoIncrementAssetID } from "../plugins/autoIncrementAssetId";
 
 import { PreAdviceClass } from "./PreAdvice";
 import { ProductClass } from "./Product";
@@ -31,6 +34,7 @@ export enum AssetState {
   Tokenised = "Tokenised",
 }
 
+@plugin(AutoIncrementAssetID)
 @modelOptions({
   schemaOptions: {
     toJSON: { virtuals: true },
@@ -38,6 +42,9 @@ export enum AssetState {
   },
 })
 export class AssetClass extends TimeStamps {
+  @prop({ unique: true })
+  public assetId: string;
+
   @prop({ required: true, ref: () => PreAdviceClass })
   public preAdvice: Ref<PreAdviceClass>;
 
@@ -53,9 +60,28 @@ export class AssetClass extends TimeStamps {
   @prop({ enum: AssetState, default: AssetState.DueIn })
   public state: AssetState;
 
+
+  @prop()
+  public initialConditionText: string;
+  
   // The IPFS hash of the condition report
   @prop()
   public initialConditionReport: string;
+
+  @prop()
+  public initialConditionReport2: string;
+
+  @prop()
+  public initialConditionReport3: string;
+
+  @prop()
+  public initialConditionReport4: string;
+
+  @prop()
+  public initialConditionReport5: string;
+
+  @prop()
+  public initialConditionReport6: string;
 
   @prop()
   public metadataHash: string;
@@ -68,6 +94,12 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public warehouseLocationNo: string;
+
+  @prop()
+  public landedAt: Date;
+
+  @prop()
+  public tokenisedAt: Date;
 }
 
 const Asset = getModelForClass(AssetClass);

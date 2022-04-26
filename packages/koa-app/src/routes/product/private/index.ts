@@ -1,7 +1,7 @@
 import Multer from "@koa/multer";
 import Router from "koa-joi-router";
 
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createProduct from "./createProduct";
 import deleteProduct from "./deleteProduct";
@@ -12,7 +12,7 @@ import searchProducts from "./searchProducts";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 
 const multer = Multer();
 
@@ -21,7 +21,9 @@ router.prefix("/products");
 const imageFields = [
   { name: "product-image" },
   { name: "label-image" },
+  { name: "label2-image" },
   { name: "bottle-image" },
+  { name: "bottle2-image" },
   { name: "marketing1-image" },
   { name: "marketing2-image" },
   { name: "marketing3-image" },

@@ -19,19 +19,40 @@ import ClientsModal from "./ClientsModal";
 
 // column headers for the clients data table
 const clientsTableColumns: GridColDef[] = [
-  { 
-    field: "firstName", 
+  {
+    field: "ethAddress",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "First Name", 
-    flex: 1, minWidth: 200 
+    headerName: "Wallet",
+    minWidth: 350,
+    align: "center",
   },
-  { 
-    field: "lastName", 
+  {
+    field: "firstName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Last Name", 
-    flex: 1, minWidth: 200 
+    headerName: "First Name",
+    flex: 1,
+    minWidth: 200,
+    align: "center",
+  },
+  {
+    field: "lastName",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Last Name",
+    flex: 1,
+    minWidth: 200,
+    align: "center",
+  },
+  {
+    field: "email",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Email",
+    flex: 1,
+    minWidth: 200,
+    align: "center",
   },
   {
     field: "phoneNumber",
@@ -40,10 +61,13 @@ const clientsTableColumns: GridColDef[] = [
     headerName: "Phone Number",
     flex: 1,
     minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      `(${(param.value as PhoneNumber).countryCode}) ${
-        (param.value as PhoneNumber).phoneNumber
-      }`,
+      !param.value
+        ? ""
+        : `(${(param.value as PhoneNumber).countryCode}) ${
+            (param.value as PhoneNumber).phoneNumber
+          }`,
   },
   {
     field: "_id",
@@ -52,6 +76,7 @@ const clientsTableColumns: GridColDef[] = [
     headerName: "Details",
     flex: 1,
     minWidth: 200,
+    align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = ClientsModal(params.row);
       return modal;
@@ -94,7 +119,7 @@ const ClientsTable: React.FC<Props> = ({ setDeleteList, assets }) => {
   if (clientsDataIsError)
     return (
       <DataTableError
-        message='There was an error fetching the clients data, try again?'
+        message="There was an error fetching the clients data, try again?"
         refetch={refetchClientsData}
       />
     );

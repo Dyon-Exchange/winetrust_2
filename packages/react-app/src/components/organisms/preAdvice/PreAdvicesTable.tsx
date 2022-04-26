@@ -25,6 +25,7 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Number",
     flex: 1,
     minWidth: 175,
+    align: "center",
   },
   {
     field: "owner",
@@ -33,10 +34,13 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Transferring Client",
     flex: 1,
     minWidth: 200,
-    valueGetter: (param: GridValueGetterParams) => `${
-      (param.value as Client).firstName
-    } ${(param.value as Client).lastName}
-    `,
+    align: "center",
+    valueGetter: (param: GridValueGetterParams) => {
+      const client = param.value as Client;
+      return !client.firstName ?
+        client.ethAddress :
+        `${client.firstName} ${client.lastName || ""} (${client.ethAddress})`;
+    },
   },
   {
     field: "transferringWarehouse",
@@ -45,6 +49,7 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Origin Warehouse",
     flex: 1,
     minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.value as Warehouse).name,
   },
@@ -55,6 +60,7 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Destination Warehouse",
     flex: 1,
     minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.value as Warehouse).name,
   },
@@ -65,6 +71,7 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Landing Status",
     flex: 1,
     minWidth: 200,
+    align: "center",
   },
   {
     field: "createdAt",
@@ -73,6 +80,7 @@ const preAdviceTableColumns: GridColDef[] = [
     headerName: "Date Placed",
     flex: 1,
     minWidth: 200,
+    align: "center",
   },
   {
     field: "_id",

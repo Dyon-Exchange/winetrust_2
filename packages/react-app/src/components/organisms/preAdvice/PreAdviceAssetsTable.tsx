@@ -21,52 +21,54 @@ import AssetStateHandler from "../assets/AssetStateHandler";
 // column headers for the assets data table
 const assetsTableColumns: GridColDef[] = [
   {
-    field: "longName",
+    field: "simpleName",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Product",
-    flex: 1,
-    minWidth: 200,
+    minWidth: 350,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product.longName,
+      (param.row as Asset).product.simpleName,
   },
   {
     field: "productPackSize",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Pack Size",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 100,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
       (param.row as Asset).product?.packSize || "",
   },
   {
-    field: "productId",
+    field: "assetId",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
-    headerName: "Product ID",
-    flex: 1,
-    minWidth: 250,
+    headerName: "Asset ID",
+    minWidth: 200,
+    align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product?._id || "",
+      (param.row as Asset).assetId || "",
   },
-  {
-    field: "productDutyStatus",
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    headerName: "Duty Status",
-    flex: 1,
-    minWidth: 150,
-    valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).product?.dutyStatus || "",
-  },
+  // {
+  //   field: "productDutyStatus",
+  //   headerClassName: "super-app-theme--header",
+  //   headerAlign: "center",
+  //   headerName: "Duty Status",
+  //   minWidth: 100,
+  //   align: "center",
+  //   flex:1,
+  //   valueGetter: (param: GridValueGetterParams) =>
+  //     (param.row as Asset).product?.dutyStatus || "",
+  // },
   {
     field: "state",
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     headerName: "Landing Status",
-    flex: 1,
-    minWidth: 150,
+    minWidth: 100,
+    align: "center",
+    flex:1
   },
 ];
 

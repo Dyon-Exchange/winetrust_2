@@ -5,6 +5,7 @@
 
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
+import isEmail from "validator/lib/isEmail";
 import isEthereumAddress from "validator/lib/isEthereumAddress";
 
 // phone number class, will not be turned into a model
@@ -30,15 +31,34 @@ export class ClientClass extends TimeStamps {
   public lastName?: string;
 
   @prop({
+    required: true,
+    unique: true,
     validate: {
       validator: (address: string) => isEthereumAddress(address),
       message: "Value is not an ethereum address.",
     },
   })
-  public ethAddress?: string;
+  public ethAddress!: string;
 
   @prop()
   public phoneNumber?: PhoneNumber;
+
+  @prop({
+    default: () => Math.floor(Math.random() * 1000000),
+  })
+  public nonce?: number;
+
+  @prop({
+    unique: true,
+    validate: {
+      validator: (email: string) => isEmail(email),
+      message: "Value is not an email address.",
+    },
+  })
+  public email?: string;
+
+  @prop({ required: false })
+  public profileImage?: string;
 }
 
 export default getModelForClass(ClientClass);

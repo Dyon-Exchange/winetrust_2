@@ -29,10 +29,15 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
     );
 
     await preAdviceClass.save();
+
+    if (ctx.request.body.assetUpdates.state === AssetState.Landed) {
+      asset.landedAt = new Date();
+    }
   }
 
   if (ctx.request.body.assetUpdates.txHash) {
     asset.state = AssetState.Tokenised;
+    asset.tokenisedAt = new Date();
   }
 
   const mergedAsset = merge(

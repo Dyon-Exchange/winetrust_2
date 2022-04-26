@@ -3,7 +3,7 @@ import Router from "koa-joi-router";
 
 import validateObjectId from "../../../helpers/validateObjectId";
 import { AssetState } from "../../../models/Asset";
-import { authRequired } from "../../../services/passport";
+import { adminAuthRequired } from "../../../services/passport";
 
 import createAssetMetadata from "./createAssetMetadata";
 import getAssets from "./getAssets";
@@ -12,7 +12,7 @@ import patchAsset from "./patchAsset";
 const { Joi } = Router;
 
 const router = Router();
-authRequired(router);
+adminAuthRequired(router);
 
 const multer = Multer();
 
@@ -20,7 +20,14 @@ router.prefix("/assets");
 
 router.post(
   "/",
-  multer.single("initial-condition-report"),
+  multer.fields([
+    { name: "initial-condition-report" },
+    { name: "initial-condition-report2" },
+    { name: "initial-condition-report3" },
+    { name: "initial-condition-report4" },
+    { name: "initial-condition-report5" },
+    { name: "initial-condition-report6" },
+  ]),
   createAssetMetadata
 );
 

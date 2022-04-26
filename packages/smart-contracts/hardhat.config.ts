@@ -15,6 +15,7 @@ const {
   ALCHEMY_API_URL_GOERLI,
   ALCHEMY_API_URL_RINKEBY,
   ALCHEMY_API_URL_POLYGON_MUMBAI,
+  ALCHEMY_API_URL_POLYGON_MAINNET,
   ETHERSCAN_API_KEY,
   PRIVATE_KEY,
   REPORT_GAS,
@@ -65,6 +66,13 @@ export default {
       gas: 21000000,
       gasPrice: 80000000000,
       chainId: 5,
+      saveDeployments: true,
+    },
+    polygon: {
+      url: ALCHEMY_API_URL_POLYGON_MAINNET || "",
+      accounts: [`${PRIVATE_KEY}`],
+      gasPrice: 80000000000,
+      chainId: 137,
       saveDeployments: true,
     },
     mumbai_testnet: {

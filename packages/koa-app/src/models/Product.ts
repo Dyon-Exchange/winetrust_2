@@ -22,7 +22,7 @@ export class ProductClass extends TimeStamps {
   public longName: string;
 
   @prop({ required: false })
-  public productId: string;
+  public productCode: number;
 
   @prop({ required: true })
   public description: string;
@@ -31,18 +31,21 @@ export class ProductClass extends TimeStamps {
   public year: string;
 
   @prop({ required: true })
+  public country: string;
+
+  @prop({ required: true })
   public region: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public subRegion: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public subSubRegion: string;
 
   @prop({ required: true })
   public packSize: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public dutyStatus: string;
 
   @prop({ required: false })
@@ -52,7 +55,13 @@ export class ProductClass extends TimeStamps {
   public labelImage: string;
 
   @prop({ required: false })
+  public labelImage2: string;
+
+  @prop({ required: false })
   public bottleImage: string;
+
+  @prop({ required: false })
+  public bottleImage2: string;
 
   @prop({ required: false })
   public marketingImage1: string;

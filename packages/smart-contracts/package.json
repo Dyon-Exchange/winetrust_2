@@ -17,7 +17,8 @@
     "verify:mainnet": "hardhat --network mainnet etherscan-verify",
     "verify:rinkeby": "hardhat --network rinkeby etherscan-verify",
     "verify:goerli": "hardhat --network goerli etherscan-verify",
-    "assign:rinkeby": "hardhat --network rinkeby run ./scripts/assignMinterRole.ts"
+    "assign:rinkeby": "hardhat --network rinkeby run ./scripts/assignMinterRole.ts",
+    "setMinterRole:rinkeby": "hardhat --network rinkeby run ./scripts/setMinterRole.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "@shopify/eslint-plugin": "^40.4.0",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "all": "^0.0.0",
     "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",

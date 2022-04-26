@@ -1,4 +1,12 @@
-import { Box, HStack, Input, Tab, TabList, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Input,
+  Tab,
+  TabList,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useCallback, useState, useContext } from "react";
 
 import { DataContext } from "../../../contexts/DataContext";
@@ -41,25 +49,36 @@ const WineTrustClients = () => {
 
   return (
     <>
-    <Box bg={colors.secondary} boxShadow="sm" flex="1" m="20px auto" maxW="80%">
-      <Box p="16px">
-      <HStack justifyContent="space-between" overflow="auto" p="10px 20px"  w="100%">
-          <HStack ml="auto">
-            {deleteList.length > 0 && (
-              <RemoveButton onClick={removeSelectedRows} />
-            )}
-            <AddNewButton onClick={openAddNew}/>
+      <Box
+        bg={colors.secondary}
+        boxShadow="sm"
+        flex="1"
+        m="20px auto"
+        maxW="100%"
+      >
+        <Box p="16px">
+          <HStack
+            justifyContent="space-between"
+            overflow="auto"
+            p="10px 20px"
+            w="100%"
+          >
+            <HStack ml="auto">
+              {deleteList.length > 0 && (
+                <RemoveButton onClick={removeSelectedRows} />
+              )}
+              {/* <AddNewButton onClick={openAddNew}/> */}
+            </HStack>
           </HStack>
-        </HStack>
-        <ClientsTable setDeleteList={setDeleteList} assets={assets} />
+          <ClientsTable setDeleteList={setDeleteList} assets={assets} />
+        </Box>
       </Box>
-    </Box>
-    {isAddNewClientOpen && (
-      <AddNewClientFormModal
-        isOpen={isAddNewClientOpen}
-        onClose={closeAddNewClient}
-      />
-    )}
+      {isAddNewClientOpen && (
+        <AddNewClientFormModal
+          isOpen={isAddNewClientOpen}
+          onClose={closeAddNewClient}
+        />
+      )}
     </>
   );
 };

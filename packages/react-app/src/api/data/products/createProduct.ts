@@ -6,9 +6,10 @@ export default async (newProduct: NewProductForm) => {
     simpleName,
     producerName,
     longName,
-    productId,
+    productCode,
     description,
     year,
+    country,
     region,
     subRegion,
     subSubRegion,
@@ -16,7 +17,9 @@ export default async (newProduct: NewProductForm) => {
     dutyStatus,
     image,
     labelImage,
+    labelImage2,
     bottleImage,
+    bottleImage2,
     marketingImage1,
     marketingImage2,
     marketingImage3,
@@ -33,8 +36,14 @@ export default async (newProduct: NewProductForm) => {
   if (labelImage) {
     productFormData.append("label-image", labelImage);
   }
+  if (labelImage2) {
+    productFormData.append("label2-image", labelImage2);
+  }
   if (bottleImage) {
     productFormData.append("bottle-image", bottleImage);
+  }
+  if (bottleImage2) {
+    productFormData.append("bottle2-image", bottleImage2);
   }
   if (marketingImage1) {
     productFormData.append("marketing1-image", marketingImage1);
@@ -54,9 +63,10 @@ export default async (newProduct: NewProductForm) => {
     simpleName,
     producerName,
     longName,
-    productId,
+    productCode,
     description,
     year,
+    country,
     region,
     subRegion,
     subSubRegion,
@@ -64,7 +74,9 @@ export default async (newProduct: NewProductForm) => {
     dutyStatus,
     image,
     labelImage,
+    labelImage2,
     bottleImage,
+    bottleImage2,
     marketingImage1,
     marketingImage2,
     marketingImage3,

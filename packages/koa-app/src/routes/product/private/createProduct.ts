@@ -10,9 +10,10 @@ interface CreateProductRequestBody {
   simpleName: string;
   producerName: string;
   longName: string;
-  productId?: string;
+  productCode: number;
   description: string;
   year: string;
+  country: string;
   region: string;
   subRegion?: string;
   subSubRegion?: string;
@@ -23,7 +24,9 @@ interface CreateProductRequestBody {
 const imageFields: string[] = [
   "product-image",
   "label-image",
+  "label2-image",
   "bottle-image",
+  "bottle2-image",
   "marketing1-image",
   "marketing2-image",
   "marketing3-image",
@@ -33,7 +36,9 @@ const imageFields: string[] = [
 const imageFieldsMap = {
   "product-image": "image",
   "label-image": "labelImage",
+  "label2-image": "labelImage2",
   "bottle-image": "bottleImage",
+  "bottle2-image": "bottleImage2",
   "marketing1-image": "marketingImage1",
   "marketing2-image": "marketingImage2",
   "marketing3-image": "marketingImage3",
