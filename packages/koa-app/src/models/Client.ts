@@ -49,6 +49,8 @@ export class ClientClass extends TimeStamps {
   public nonce?: number;
 
   @prop({
+    unique: true,
+    sparse: true,
     validate: {
       validator: (email: string) => isEmail(email),
       message: "Value is not an email address.",
