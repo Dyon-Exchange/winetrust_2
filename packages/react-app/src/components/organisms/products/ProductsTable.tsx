@@ -16,6 +16,7 @@ import StyledDataGrid from "../../atoms/tables/StyledDataGrid";
 import DataTableError from "../../molecules/dataTables/DataTableError";
 import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
+import EditProductFormModal from "./EditProductFormModal";
 import ProductsModal from "./ProductsModal";
 
 // column headers for the products data table
@@ -69,6 +70,19 @@ const productsTableColumns: GridColDef[] = [
     align: "center",
     renderCell: (params: GridRenderCellParams) => {
       const modal = ProductsModal(params.row);
+      return modal;
+    },
+  },
+  {
+    field: "actions",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Details",
+    flex: 1,
+    minWidth: 100,
+    align: "center",
+    renderCell: (params: GridRenderCellParams) => {
+      const modal = EditProductFormModal(params.row);
       return modal;
     },
   },

@@ -7,6 +7,7 @@ import createProduct from "./createProduct";
 import deleteProduct from "./deleteProduct";
 import deleteProducts from "./deleteProducts";
 import getProducts from "./getProducts";
+import patchProduct from "./patchProduct";
 import searchProducts from "./searchProducts";
 
 const { Joi } = Router;
@@ -48,6 +49,8 @@ router.route({
   },
   handler: searchProducts,
 });
+
+router.patch("/:productId", multer.fields(imageFields), patchProduct);
 
 router.route({
   method: "delete",
