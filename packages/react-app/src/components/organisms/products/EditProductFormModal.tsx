@@ -57,23 +57,10 @@ const EditProductFormModal = (rowData: GridRowData) => {
   });
 
   // image file input ref
-  const imageFileInputRef = useRef<any>(null);
   const labelImageFileInputRef = useRef<any>(null);
-  const label2ImageFileInputRef = useRef<any>(null);
   const bottleImageFileInputRef = useRef<any>(null);
-  const bottle2ImageFileInputRef = useRef<any>(null);
-  const marketing1ImageFileInputRef = useRef<any>(null);
-  const marketing2ImageFileInputRef = useRef<any>(null);
-  const marketing3ImageFileInputRef = useRef<any>(null);
-  const marketing4ImageFileInputRef = useRef<any>(null);
 
   // controller hook for the image file input
-  const {
-    field: { value: imageValue, onChange: onImageChange, ...imageProps },
-  } = useController({
-    name: "image",
-    control,
-  });
 
   const {
     field: {
@@ -87,16 +74,6 @@ const EditProductFormModal = (rowData: GridRowData) => {
     rules: { required: "Label Image is required" },
   });
 
-  const {
-    field: {
-      value: label2ImageValue,
-      onChange: onLabel2ImageChange,
-      ...label2ImageProps
-    },
-  } = useController({
-    name: "labelImage2",
-    control,
-  });
 
   const {
     field: {
@@ -107,61 +84,7 @@ const EditProductFormModal = (rowData: GridRowData) => {
   } = useController({
     name: "bottleImage",
     control,
-  });
-
-  const {
-    field: {
-      value: bottle2ImageValue,
-      onChange: onBottle2ImageChange,
-      ...bottle2ImageProps
-    },
-  } = useController({
-    name: "bottleImage2",
-    control,
-  });
-
-  const {
-    field: {
-      value: marketing1ImageValue,
-      onChange: onMarketing1ImageChange,
-      ...marketing1ImageProps
-    },
-  } = useController({
-    name: "marketingImage1",
-    control,
-  });
-
-  const {
-    field: {
-      value: marketing2ImageValue,
-      onChange: onMarketing2ImageChange,
-      ...marketing2ImageProps
-    },
-  } = useController({
-    name: "marketingImage2",
-    control,
-  });
-
-  const {
-    field: {
-      value: marketing3ImageValue,
-      onChange: onMarketing3ImageChange,
-      ...marketing3ImageProps
-    },
-  } = useController({
-    name: "marketingImage3",
-    control,
-  });
-
-  const {
-    field: {
-      value: marketing4ImageValue,
-      onChange: onMarketing4ImageChange,
-      ...marketing4ImageProps
-    },
-  } = useController({
-    name: "marketingImage4",
-    control,
+    rules: { required: "Bottle Image is required" },
   });
 
   // submit handler
@@ -480,48 +403,12 @@ const EditProductFormModal = (rowData: GridRowData) => {
                 )}
               </ModalFormControl>
 
-              <ModalFormControl id="image" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Image</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...imageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onImageChange(event.target.files[0]);
-                    }}
-                    ref={imageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => imageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={imageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Product image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
-
               <ModalFormControl
                 id="labelimage"
                 isDisabled={isSubmitting}
                 isInvalid={errors.labelImage !== undefined}
               >
-                <FormLabel fontSize="sm">Label Image 1</FormLabel>
+                <FormLabel fontSize="sm">Label Image</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -560,44 +447,13 @@ const EditProductFormModal = (rowData: GridRowData) => {
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
-              <ModalFormControl id="labelimage2" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Label Image 2</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...label2ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onLabel2ImageChange(event.target.files[0]);
-                    }}
-                    ref={label2ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.labelImage ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => label2ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={label2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Label image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
 
-              <ModalFormControl id="bottleimage" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Bottle Image 1</FormLabel>
+              <ModalFormControl
+                id="bottleimage"
+                isDisabled={isSubmitting}
+                isInvalid={errors.bottleImage !== undefined}
+              >
+                <FormLabel fontSize="sm">Bottle Image</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <AttachmentIcon />
@@ -616,7 +472,7 @@ const EditProductFormModal = (rowData: GridRowData) => {
                   <Input
                     // styles to make the input consistent with the other inputs but remain read only
                     css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
+                      border-width: ${errors.bottleImage ? "3px" : "1px"};
                       :focus {
                         border-width: 3px;
                       }
@@ -630,186 +486,11 @@ const EditProductFormModal = (rowData: GridRowData) => {
                     placeholder="Bottle image"
                   />
                 </InputGroup>
-              </ModalFormControl>
-
-              <ModalFormControl id="bottleimage2" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Bottle Image 2</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...bottle2ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onBottle2ImageChange(event.target.files[0]);
-                    }}
-                    ref={bottle2ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => bottle2ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={bottle2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Bottle image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
-
-              <ModalFormControl id="marketingimage1" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Marketing Image 1</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...marketing1ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onMarketing1ImageChange(event.target.files[0]);
-                    }}
-                    ref={marketing1ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => marketing1ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={marketing1ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Marketing Image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
-
-              <ModalFormControl id="marketingimage2" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Marketing Image 2</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...marketing2ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onMarketing2ImageChange(event.target.files[0]);
-                    }}
-                    ref={marketing2ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => marketing2ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={marketing2ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Marketing Image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
-
-              <ModalFormControl id="marketingimage3" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Marketing Image 3</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...marketing3ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onMarketing3ImageChange(event.target.files[0]);
-                    }}
-                    ref={marketing3ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => marketing3ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={marketing3ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Marketing Image"
-                  />
-                </InputGroup>
-              </ModalFormControl>
-
-              <ModalFormControl id="marketingimage4" isDisabled={isSubmitting}>
-                <FormLabel fontSize="sm">Marketing Image 4</FormLabel>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <AttachmentIcon />
-                  </InputLeftElement>
-                  <input
-                    {...marketing4ImageProps}
-                    accept=".jpg, .jpeg, .png" // allow only jpeg and png files
-                    onChange={(event) => {
-                      if (!event || !event.target?.files?.[0]) return;
-                      onMarketing4ImageChange(event.target.files[0]);
-                    }}
-                    ref={marketing4ImageFileInputRef}
-                    style={{ display: "none" }}
-                    type="file"
-                  />
-                  <Input
-                    // styles to make the input consistent with the other inputs but remain read only
-                    css={css`
-                      border-width: ${errors.image ? "3px" : "1px"};
-                      :focus {
-                        border-width: 3px;
-                      }
-                    `}
-                    cursor="pointer"
-                    fontSize="sm"
-                    onClick={() => marketing4ImageFileInputRef.current.click()}
-                    readOnly
-                    type="text"
-                    value={marketing4ImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
-                    placeholder="Marketing Image"
-                  />
-                </InputGroup>
+                {errors.bottleImage !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.bottleImage.message}
+                  </FormErrorMessage>
+                )}
               </ModalFormControl>
             </ModalBody>
             <ModalFooter>

@@ -22,27 +22,13 @@ interface UpdateProductRequestBody {
 }
 
 const imageFields: string[] = [
-  "product-image",
   "label-image",
-  "label2-image",
   "bottle-image",
-  "bottle2-image",
-  "marketing1-image",
-  "marketing2-image",
-  "marketing3-image",
-  "marketing4-image",
 ];
 
 const imageFieldsMap = {
-  "product-image": "image",
   "label-image": "labelImage",
-  "label2-image": "labelImage2",
   "bottle-image": "bottleImage",
-  "bottle2-image": "bottleImage2",
-  "marketing1-image": "marketingImage1",
-  "marketing2-image": "marketingImage2",
-  "marketing3-image": "marketingImage3",
-  "marketing4-image": "marketingImage4",
 };
 
 export default async (ctx: Context) => {

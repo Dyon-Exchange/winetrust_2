@@ -22,56 +22,44 @@ interface CreateProductRequestBody {
 }
 
 const imageFields: string[] = [
-  "product-image",
   "label-image",
-  "label2-image",
   "bottle-image",
-  "bottle2-image",
-  "marketing1-image",
-  "marketing2-image",
-  "marketing3-image",
-  "marketing4-image",
 ];
 
 const imageFieldsMap = {
-  "product-image": "image",
   "label-image": "labelImage",
-  "label2-image": "labelImage2",
   "bottle-image": "bottleImage",
-  "bottle2-image": "bottleImage2",
-  "marketing1-image": "marketingImage1",
-  "marketing2-image": "marketingImage2",
-  "marketing3-image": "marketingImage3",
-  "marketing4-image": "marketingImage4",
 };
 
 export default async (ctx: Context) => {
   // request body in this case is a stringified JSON in a form data object with 'product-data' as it's key
   const requestFiles = JSON.parse(
-    JSON.stringify(ctx["files"])
+    JSON.stringify(ctx.files)
   ) as multer.File[];
   const requestBody = JSON.parse(
-    ctx.request["body"]["product-data"]
+    ctx.request.body["product-data"]
   ) as CreateProductRequestBody;
 
   // upload the image file to pinata
   const pinataKey = process.env.PINATA_API_KEY;
   const pinataSecret = process.env.PINATA_API_SECRET;
 
-  let imageHashes = [];
+  const imageHashes = [];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const imageField of imageFields) {
     // console.log(requestFiles[imageField][0]);
     if (requestFiles[imageField]) {
       const imageData = new FormData();
       imageData.append(
         "file",
-        Buffer.from(requestFiles[imageField][0]["buffer"]),
+        Buffer.from(requestFiles[imageField][0].buffer),
         requestFiles[imageField][0].originalname
       );
 
       try {
         // try to upload the image file to pinata
+        // eslint-disable-next-line no-await-in-loop
         const response = await axios.post(
           `${pinataUrl}/pinning/pinFileToIPFS`,
           imageData,
@@ -87,7 +75,7 @@ export default async (ctx: Context) => {
 
         // get the image IPFS hash from response
         const imageHash = response.data.IpfsHash;
-        imageHashes.push({ field: imageField, imageHash: imageHash });
+        imageHashes.push({ field: imageField, imageHash });
 
         ctx.status = 200;
       } catch (error) {
@@ -100,9 +88,10 @@ export default async (ctx: Context) => {
     }
   }
 
-  let images = {};
+  const images = {};
+  // eslint-disable-next-line no-restricted-syntax
   for (const imageHash of imageHashes) {
-    images[imageFieldsMap[imageHash["field"]]] = imageHash["imageHash"];
+    images[imageFieldsMap[imageHash.field]] = imageHash.imageHash;
   }
 
   // save the product in the db

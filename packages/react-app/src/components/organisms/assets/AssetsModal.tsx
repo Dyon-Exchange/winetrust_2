@@ -33,16 +33,9 @@ const AssetsModal = (data: GridRowData) => {
 
   const {
     bottleImage,
-    bottleImage2,
-    description,
-    image,
     labelImage,
-    labelImage2,
+    description,
     longName,
-    marketingImage1,
-    marketingImage2,
-    marketingImage3,
-    marketingImage4,
     packSize,
     productCode,
     simpleName,
@@ -142,15 +135,6 @@ const AssetsModal = (data: GridRowData) => {
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{assetData.tokenisedAt}</StyledText>
               </StyledBox>
-              {image && (
-                <Box>
-                  Image :
-                  <Image
-                    src={`${pinataGateway}/${image}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
               {labelImage && (
                 <Box>
                   Label Image :
@@ -160,65 +144,11 @@ const AssetsModal = (data: GridRowData) => {
                   />
                 </Box>
               )}
-              {labelImage2 && (
-                <Box>
-                  Label Image 2:
-                  <Image
-                    src={`${pinataGateway}/${labelImage2}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
               {bottleImage && (
                 <Box>
                   Bottle Image :
                   <Image
                     src={`${pinataGateway}/${bottleImage}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
-              {bottleImage2 && (
-                <Box>
-                  Bottle Image 2:
-                  <Image
-                    src={`${pinataGateway}/${bottleImage2}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
-              {marketingImage1 && (
-                <Box>
-                  Marketing Image 1:
-                  <Image
-                    src={`${pinataGateway}/${marketingImage1}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
-              {marketingImage2 && (
-                <Box>
-                  Marketing Image 2:
-                  <Image
-                    src={`${pinataGateway}/${marketingImage2}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
-              {marketingImage3 && (
-                <Box>
-                  Marketing Image 3:
-                  <Image
-                    src={`${pinataGateway}/${marketingImage3}`}
-                    h="250px"
-                  />
-                </Box>
-              )}
-              {marketingImage4 && (
-                <Box>
-                  Marketing Image 4:
-                  <Image
-                    src={`${pinataGateway}/${marketingImage4}`}
                     h="250px"
                   />
                 </Box>
