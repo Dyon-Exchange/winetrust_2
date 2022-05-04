@@ -63,7 +63,7 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public initialConditionText: string;
-  
+
   // The IPFS hash of the condition report
   @prop()
   public initialConditionReport: string;
@@ -100,6 +100,12 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public tokenisedAt: Date;
+
+  @prop()
+  public externalMarketingImage: string;
+
+  @prop()
+  public internalMarketingImage: string;
 }
 
 const Asset = getModelForClass(AssetClass);

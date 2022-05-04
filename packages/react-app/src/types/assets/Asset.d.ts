@@ -44,4 +44,6 @@ interface Asset {
   warehouseLocationNo?: string;
   landedAt?: Date;
   tokenisedAt?: Date;
+  internalMarketingImage: string;
+  externalMarketingImage: string;
 }

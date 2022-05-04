@@ -17,6 +17,8 @@ interface CreateAssetMetadataBody extends Request {
 }
 
 const imageFieldsMap = {
+  "internal-marketing-image": "internalMarketingImage",
+  "external-marketing-image": "externalMarketingImage",
   "initial-condition-report": "initialConditionReport",
   "initial-condition-report2": "initialConditionReport2",
   "initial-condition-report3": "initialConditionReport3",
@@ -58,8 +60,6 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
 
     if (!asset) throw new Error("Asset not found");
 
-    let initialConditionReportHash;
-
     // eslint-disable-next-line no-restricted-syntax
     for (const fieldFiles of Object.values(files)) {
       // eslint-disable-next-line no-restricted-syntax
@@ -71,10 +71,6 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
             file
           );
           asset[propName] = hash;
-
-          if (propName === "initialConditionReport") {
-            initialConditionReportHash = hash;
-          }
         }
       }
     }
@@ -85,7 +81,8 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
       (asset as any).preAdvice.arrivalWarehouse as WarehouseClass & {
         _id: string;
       },
-      initialConditionReportHash,
+      asset.externalMarketingImage,
+      asset.initialConditionReport,
       externalURL
     );
 

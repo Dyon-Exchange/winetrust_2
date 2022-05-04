@@ -10,13 +10,14 @@ const formatAssetMetadata = (
   assetId: string,
   product: ProductClass,
   arrivalWarehouse: ClassWithId<WarehouseClass>,
+  imageHash: string,
   initialConditionReportHash: string,
   externalURL: string
 ) => ({
   pinataContent: {
     name: product.simpleName,
     description: product.description,
-    image: `ipfs://${product.labelImage}`,
+    image: `ipfs://${imageHash}`,
     initial_condition_report: `ipfs://${initialConditionReportHash}`,
     external_url: externalURL || `https://winetrust.org/asset-home/${assetId}`,
     attributes: [
@@ -71,6 +72,7 @@ export default async (
   assetId: string,
   product: ProductClass,
   arrivalWarehouse: ClassWithId<WarehouseClass>,
+  imageHash: string,
   initialConditionReportHash: string,
   externalURL: string
 ) => {
@@ -81,6 +83,7 @@ export default async (
       assetId,
       product,
       arrivalWarehouse,
+      imageHash,
       initialConditionReportHash,
       externalURL
     ),
