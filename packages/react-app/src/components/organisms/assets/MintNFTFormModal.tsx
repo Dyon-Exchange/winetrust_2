@@ -72,6 +72,8 @@ export interface MintNFTForm {
   initialConditionReport6: File;
 }
 
+const landingBaseURL = process.env.REACT_APP_LANDING_BASE_URL;
+
 const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   const { wineTrustTokenAPI } = useContext(WalletContext);
   // get theme colors
@@ -85,7 +87,11 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isSubmitting },
-  } = useForm<MintNFTForm>();
+  } = useForm<MintNFTForm>({
+    defaultValues: {
+      externalURL: `${landingBaseURL}/asset-home/${row.assetId}`
+    }
+  });
 
   // pdf file input ref
   const externalMarketingImageRef = useRef<any>(null);
@@ -287,7 +293,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 <FormLabel fontSize="sm">External URL</FormLabel>
                 <Input
                   {...register("externalURL", {
-                    // required: "External URL is required",
+                    required: "External URL is required",
                   })}
                   fontSize="sm"
                   type="text"
