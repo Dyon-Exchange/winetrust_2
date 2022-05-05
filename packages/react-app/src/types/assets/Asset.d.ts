@@ -46,4 +46,5 @@ interface Asset {
   tokenisedAt?: Date;
   internalMarketingImage: string;
   externalMarketingImage: string;
+  externalURL?: string;
 }
