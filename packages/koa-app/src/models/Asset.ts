@@ -106,6 +106,9 @@ export class AssetClass extends TimeStamps {
 
   @prop()
   public internalMarketingImage: string;
+
+  @prop()
+  public externalURL: string;
 }
 
 const Asset = getModelForClass(AssetClass);
