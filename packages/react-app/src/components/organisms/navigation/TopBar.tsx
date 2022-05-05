@@ -19,7 +19,7 @@ const TopBar = () => {
       justifyContent="space-between"
     >
       <HStack h="50px" spacing="15px">
-        <Image alt="Winetrust Logo" src={WineTrustLogoPNG} w="10%" />
+        <Image alt="" src={WineTrustLogoPNG} w="15%" />
         {/* responsiveness */}
         {width > 500 && (
           <>
