@@ -237,7 +237,7 @@ const AddNewPreAdviceFormModal = ({
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
             <ModalHeader>Add New Pre-Advice</ModalHeader>
-            <ModalBody alignSelf="center" w="80%" overflow="inherit">
+            <ModalBody alignSelf="center" w="80%" overflow="auto" >
               <ModalFormControl
                 isDisabled={isSubmitting}
                 isInvalid={errors.owner !== undefined}

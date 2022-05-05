@@ -1,7 +1,11 @@
 import axios from "axios";
 
-export default async (newProduct: NewProductForm) => {
-  // deconstruct the new product object
+interface Props {
+  productId: string;
+  updates: NewProductForm;
+}
+
+export default async ({ productId, updates }: Props) => {
   const {
     simpleName,
     producerName,
@@ -17,13 +21,13 @@ export default async (newProduct: NewProductForm) => {
     dutyStatus,
     labelImage,
     bottleImage,
-  } = newProduct;
+  } = updates;
 
   // construct a form data object for the product, so image file can be uploaded
   const productFormData = new FormData();
 
   // append the image file
-  
+ 
   if (labelImage) {
     productFormData.append("label-image", labelImage);
   }
@@ -31,7 +35,7 @@ export default async (newProduct: NewProductForm) => {
   if (bottleImage) {
     productFormData.append("bottle-image", bottleImage);
   }
-
+  
   // construct a stringified JSON of the product data to append to the product form data
   const productData = JSON.stringify({
     simpleName,
@@ -51,5 +55,5 @@ export default async (newProduct: NewProductForm) => {
   });
 
   productFormData.append("product-data", productData);
-  await axios.post("/products", productFormData);
+  await axios.patch(`/products/${productId}`, productFormData);
 };

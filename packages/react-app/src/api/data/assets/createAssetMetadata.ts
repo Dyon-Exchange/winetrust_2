@@ -3,6 +3,8 @@ import axios from "axios";
 interface Props {
   assetId: string;
   externalURL: string;
+  internalMarketingImage: File;
+  externalMarketingImage: File;
   initialConditionText: string;
   initialConditionReport: File;
   initialConditionReport2: File;
@@ -14,6 +16,8 @@ interface Props {
 
 export default async ({
   externalURL,
+  internalMarketingImage,
+  externalMarketingImage,
   initialConditionText,
   initialConditionReport,
   initialConditionReport2,
@@ -26,6 +30,8 @@ export default async ({
   const formData = new FormData();
 
   // append the initial condition report
+  formData.append("internal-marketing-image", internalMarketingImage);
+  formData.append("external-marketing-image", externalMarketingImage);
   formData.append("initial-condition-report", initialConditionReport);
 
   if (initialConditionReport2) {

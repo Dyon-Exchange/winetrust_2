@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { AttachmentIcon } from "@chakra-ui/icons";
+import { AttachmentIcon, ViewIcon } from "@chakra-ui/icons";
 import {
+  Button,
   FormErrorMessage,
   FormLabel,
   Input,
@@ -18,12 +19,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
+import { GridRowData } from "@mui/x-data-grid";
 import { AxiosError } from "axios";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
 import createProduct from "../../../api/data/products/createProduct";
+import patchProduct from "../../../api/data/products/patchProduct";
 import useThemeColors from "../../../hooks/theme/useThemeColors";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ProductDutyStatus from "../../../types/data/product/ProductDutyStatus";
@@ -31,33 +34,34 @@ import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 import ModalFormControl from "../../atoms/forms/ModalFormControl";
 import ConfirmCancelChangesModal from "../../molecules/modals/ConfirmCancelChangesModal";
 
-interface AddNewProductFormModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const isEmpty = (obj: object) => Object.keys(obj).length === 0;
 
-const AddNewProductFormModal = ({
-  isOpen,
-  onClose,
-}: AddNewProductFormModalProps) => {
+const EditProductFormModal = (rowData: GridRowData) => {
   // get theme colors
   const colors = useThemeColors();
   const toast = useDefaultToast();
   const queryClient = useQueryClient();
+
+  const product = rowData as Product;
 
   // react hook form
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors, isDirty, isSubmitting },
-  } = useForm<NewProductForm>();
+    formState: { errors, isDirty, dirtyFields, isSubmitting },
+  } = useForm<NewProductForm>({ defaultValues: product });
+
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    defaultIsOpen: false,
+  });
 
   // image file input ref
   const labelImageFileInputRef = useRef<any>(null);
   const bottleImageFileInputRef = useRef<any>(null);
 
   // controller hook for the image file input
+
   const {
     field: {
       value: labelImageValue,
@@ -69,6 +73,7 @@ const AddNewProductFormModal = ({
     control,
     rules: { required: "Label Image is required" },
   });
+
 
   const {
     field: {
@@ -87,7 +92,7 @@ const AddNewProductFormModal = ({
     async (data: NewProductForm) => {
       try {
         // await creating the product and then invalidate the products query data
-        await createProduct(data);
+        await patchProduct({ productId: product._id, updates: data });
         queryClient.invalidateQueries("products");
         toast({
           title: "Product created.",
@@ -105,8 +110,9 @@ const AddNewProductFormModal = ({
         });
       }
     },
-    [onClose, queryClient, toast]
+    [onClose, product, queryClient, toast]
   );
+
 
   // state for the confirm cancel modal
   const {
@@ -117,17 +123,29 @@ const AddNewProductFormModal = ({
     defaultIsOpen: false,
   });
 
+  const isFormModified = isDirty && !isEmpty(dirtyFields);
+
   // close modal handler
   const closeModal = useCallback(
-    () => (isDirty ? openConfirmCancel() : onClose()),
-    [isDirty, openConfirmCancel, onClose]
+    () => (isFormModified ? openConfirmCancel() : onClose()),
+    [isFormModified, openConfirmCancel, onClose]
   );
 
   return (
     <>
+      <Button
+        colorScheme="blue"
+        leftIcon={<ViewIcon />}
+        fontSize="xs"
+        minW="100px"
+        size="sm"
+        onClick={() => onOpen()}
+      >
+        Edit
+      </Button>
       <Modal
-        closeOnEsc={!isDirty}
-        closeOnOverlayClick={!isDirty}
+        closeOnEsc={!isFormModified}
+        closeOnOverlayClick={!isFormModified}
         isCentered
         isOpen={isOpen}
         onClose={closeModal}
@@ -137,7 +155,7 @@ const AddNewProductFormModal = ({
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
-            <ModalHeader>Add New Product</ModalHeader>
+            <ModalHeader>Edit Product Details</ModalHeader>
             <ModalBody alignSelf="center" w="80%">
               <ModalFormControl
                 id="simpleName"
@@ -481,7 +499,7 @@ const AddNewProductFormModal = ({
                 isLoading={isSubmitting}
                 type="submit"
               >
-                Add
+                Save
               </ModalFooterButton>
               <ModalFooterButton
                 colorScheme="blue"
@@ -498,10 +516,13 @@ const AddNewProductFormModal = ({
       <ConfirmCancelChangesModal
         isOpen={isConfirmCancelModalOpen}
         onClose={closeConfirmCancel}
-        onConfirm={onClose}
+        onConfirm={() => {
+          closeConfirmCancel();
+          onClose();
+        }}
       />
     </>
   );
 };
 
-export default AddNewProductFormModal;
+export default EditProductFormModal;

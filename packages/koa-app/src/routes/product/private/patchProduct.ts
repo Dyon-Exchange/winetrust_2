@@ -6,7 +6,7 @@ import { Context } from "koa";
 import pinataUrl from "../../../constants/pinataUrl";
 import Product, { ProductClass } from "../../../models/Product";
 
-interface CreateProductRequestBody {
+interface UpdateProductRequestBody {
   simpleName: string;
   producerName: string;
   longName: string;
@@ -38,7 +38,8 @@ export default async (ctx: Context) => {
   ) as multer.File[];
   const requestBody = JSON.parse(
     ctx.request.body["product-data"]
-  ) as CreateProductRequestBody;
+  ) as UpdateProductRequestBody;
+  const { productId } = ctx.params;
 
   // upload the image file to pinata
   const pinataKey = process.env.PINATA_API_KEY;
@@ -82,7 +83,7 @@ export default async (ctx: Context) => {
         ctx.throw(
           500,
           (error as AxiosError).response.data ||
-            "Error uploading image file to IPFS"
+          "Error uploading image file to IPFS"
         );
       }
     }
@@ -94,6 +95,12 @@ export default async (ctx: Context) => {
     images[imageFieldsMap[imageHash.field]] = imageHash.imageHash;
   }
 
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    ctx.throw(500, "Product not found");
+  }
   // save the product in the db
-  await Product.create({ ...requestBody, ...images } as ProductClass);
+  await product.update({ ...requestBody, ...images } as ProductClass);
+  ctx.status = 200;
 };

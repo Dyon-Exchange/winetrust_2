@@ -21,6 +21,8 @@ router.prefix("/assets");
 router.post(
   "/",
   multer.fields([
+    { name: "internal-marketing-image" },
+    { name: "external-marketing-image" },
     { name: "initial-condition-report" },
     { name: "initial-condition-report2" },
     { name: "initial-condition-report3" },

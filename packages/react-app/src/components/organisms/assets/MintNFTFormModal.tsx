@@ -61,6 +61,8 @@ interface MintNFTFormModalProps {
 
 export interface MintNFTForm {
   externalURL: string;
+  externalMarketingImage: File;
+  internalMarketingImage: File;
   initialConditionText: string;
   initialConditionReport: File;
   initialConditionReport2: File;
@@ -69,6 +71,8 @@ export interface MintNFTForm {
   initialConditionReport5: File;
   initialConditionReport6: File;
 }
+
+const landingBaseURL = process.env.REACT_APP_LANDING_BASE_URL;
 
 const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   const { wineTrustTokenAPI } = useContext(WalletContext);
@@ -83,9 +87,15 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isSubmitting },
-  } = useForm<MintNFTForm>();
+  } = useForm<MintNFTForm>({
+    defaultValues: {
+      externalURL: `${landingBaseURL}/asset-home/${row.assetId}`
+    }
+  });
 
   // pdf file input ref
+  const externalMarketingImageRef = useRef<any>(null);
+  const internalMarketingImageRef = useRef<any>(null);
   const pdfFileInputRef = useRef<any>(null);
   const pdfFile2InputRef = useRef<any>(null);
   const pdfFile3InputRef = useRef<any>(null);
@@ -93,7 +103,32 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
   const pdfFile5InputRef = useRef<any>(null);
   const pdfFile6InputRef = useRef<any>(null);
 
-  // controller hook for the pdf file input
+  // controller hook for the file input
+
+  const {
+    field: {
+      value: externalMarketingImageValue,
+      onChange: onExternalMarketingImageChange,
+      ...externalMarketingImageProps
+    },
+  } = useController({
+    name: "externalMarketingImage",
+    control,
+    rules: { required: "External Marketing Image is required" },
+  });
+
+  const {
+    field: {
+      value: internalMarketingImageValue,
+      onChange: onInternalMarketingImageChange,
+      ...internalMarketingImageProps
+    },
+  } = useController({
+    name: "internalMarketingImage",
+    control,
+    rules: { required: "Internal Marketing Image is required" },
+  });
+
   const {
     field: {
       value: conditionReportValue,
@@ -258,7 +293,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 <FormLabel fontSize="sm">External URL</FormLabel>
                 <Input
                   {...register("externalURL", {
-                    // required: "External URL is required",
+                    required: "External URL is required",
                   })}
                   fontSize="sm"
                   type="text"
@@ -267,6 +302,100 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 {errors.externalURL !== undefined && (
                   <FormErrorMessage fontSize="sm">
                     {errors.externalURL.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="internalMarketingImage"
+                isDisabled={isSubmitting}
+                isInvalid={errors.internalMarketingImage !== undefined}
+              >
+                <FormLabel fontSize="sm">Internal Marketing Image</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...internalMarketingImageProps}
+                    accept=".png, .jpeg,.svg,.jpg" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onInternalMarketingImageChange(event.target.files[0]);
+                    }}
+                    ref={internalMarketingImageRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.internalMarketingImage
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => internalMarketingImageRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={internalMarketingImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="Internal Marketing Image"
+                  />
+                </InputGroup>
+                {errors.internalMarketingImage !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.internalMarketingImage.message}
+                  </FormErrorMessage>
+                )}
+              </ModalFormControl>
+
+              <ModalFormControl
+                id="externalMarketingImage"
+                isDisabled={isSubmitting}
+                isInvalid={errors.externalMarketingImage !== undefined}
+              >
+                <FormLabel fontSize="sm">External Marketing Image</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <AttachmentIcon />
+                  </InputLeftElement>
+                  <input
+                    {...externalMarketingImageProps}
+                    accept=".png, .jpeg,.svg,.jpg" // allow only jpeg and png files
+                    onChange={(event) => {
+                      if (!event || !event.target?.files?.[0]) return;
+                      onExternalMarketingImageChange(event.target.files[0]);
+                    }}
+                    ref={externalMarketingImageRef}
+                    style={{ display: "none" }}
+                    type="file"
+                  />
+                  <Input
+                    // styles to make the input consistent with the other inputs but remain read only
+                    css={css`
+                      border-width: ${errors.externalMarketingImage
+                        ? "3px"
+                        : "1px"};
+                      :focus {
+                        border-width: 3px;
+                      }
+                    `}
+                    cursor="pointer"
+                    fontSize="sm"
+                    onClick={() => externalMarketingImageRef.current.click()}
+                    readOnly
+                    type="text"
+                    value={externalMarketingImageValue?.name || ""} // can't have value as undefined otherwise react complains (going from uncontrolled to control)
+                    placeholder="External Marketing Image"
+                  />
+                </InputGroup>
+                {errors.externalMarketingImage !== undefined && (
+                  <FormErrorMessage color={colors.error} fontSize="sm">
+                    {errors.externalMarketingImage.message}
                   </FormErrorMessage>
                 )}
               </ModalFormControl>
