@@ -237,7 +237,7 @@ const AddNewPreAdviceFormModal = ({
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
             <ModalHeader>Add New Pre-Advice</ModalHeader>
-            <ModalBody alignSelf="center" w="80%" overflow="auto" >
+            <ModalBody alignSelf="center" w="85%" overflow="auto">
               <ModalFormControl
                 isDisabled={isSubmitting}
                 isInvalid={errors.owner !== undefined}
@@ -265,9 +265,11 @@ const AddNewPreAdviceFormModal = ({
                       }
                       options={clientsData?.map((client: Client) => ({
                         value: client,
-                        label: !client.firstName ?
-                          client.ethAddress :
-                          `${client.firstName} ${client.lastName || ""} (${client.ethAddress})`,
+                        label: !client.firstName
+                          ? client.ethAddress
+                          : `${client.firstName} ${client.lastName || ""} (${
+                              client.ethAddress
+                            })`,
                       }))}
                     />
                   )}
@@ -371,7 +373,7 @@ const AddNewPreAdviceFormModal = ({
                 isInvalid={assetsError !== ""}
               >
                 <FormLabel fontSize="sm">
-                Products {`(${assets.length})`}
+                  Products {`(${assets.length})`}
                 </FormLabel>
                 {assets.map((asset) => (
                   <AssetCard
