@@ -235,7 +235,7 @@ const AddNewPreAdviceFormModal = ({
       >
         <ModalOverlay />
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <ModalContent>
+          <ModalContent height="78vh">
             <ModalHeader>Add New Pre-Advice</ModalHeader>
             <ModalBody alignSelf="center" w="85%" overflow="auto">
               <ModalFormControl
