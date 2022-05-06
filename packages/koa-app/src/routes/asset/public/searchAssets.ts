@@ -24,6 +24,7 @@ export default async (ctx: ExtendedContext<SearchAssetsRequest>) => {
       { assetId: { $regex: searchText, $options: "i" } },
       { product: { $in: productIds } },
     ],
+    tokenisedAt: { $ne: null }
   };
 
   const assets: any = await Asset.find($filter)
