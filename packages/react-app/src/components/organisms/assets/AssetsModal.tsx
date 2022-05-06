@@ -126,6 +126,11 @@ const AssetsModal = (data: GridRowData) => {
                 <StyledText>{subSubRegion}</StyledText>
               </StyledBox>
               <StyledBox>
+                <StyledLabel>External URL </StyledLabel>
+                <StyledSeparator> : </StyledSeparator>
+                <StyledText>{assetData.externalURL}</StyledText>
+              </StyledBox>
+              <StyledBox>
                 <StyledLabel>Date Landed </StyledLabel>
                 <StyledSeparator> : </StyledSeparator>
                 <StyledText>{assetData.landedAt}</StyledText>

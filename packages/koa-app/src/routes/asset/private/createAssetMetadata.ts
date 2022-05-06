@@ -88,6 +88,7 @@ export default async (ctx: ExtendedContext<CreateAssetMetadataBody>) => {
 
     asset.initialConditionText = initialConditionText;
     asset.metadataHash = metadataHash;
+    asset.externalURL = externalURL;
 
     await asset.save();
 
