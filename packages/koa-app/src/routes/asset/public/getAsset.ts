@@ -10,7 +10,10 @@ interface GetAssetRequest extends Request {
 }
 
 export default async (ctx: ExtendedContext<GetAssetRequest>) => {
-  ctx.body = await Asset.findOne({ assetId: ctx.request.params.assetId })
+  ctx.body = await Asset.findOne({
+    assetId: ctx.request.params.assetId,
+    tokenisedAt: { $ne: null }
+  })
     .populate({
       path: "product",
     })
