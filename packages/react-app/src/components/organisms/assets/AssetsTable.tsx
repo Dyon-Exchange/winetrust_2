@@ -17,6 +17,7 @@ import DataTableSpinner from "../../molecules/dataTables/DataTableSpinner";
 
 import AssetsModal from "./AssetsModal";
 import AssetStateHandler from "./AssetStateHandler";
+import EditAssetModal from "./EditAssetModal";
 import NFTDisplayHandler from "./NFTDisplayHandler";
 
 // column headers for the assets data table
@@ -153,6 +154,19 @@ const assetsTableColumns: GridColDef[] = [
     align: "center",
     renderCell: (params: GridValueGetterParams) => {
       const modal = AssetsModal(params.row);
+      return modal;
+    },
+  },
+  {
+    field: "edit",
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    headerName: "Edit",
+    flex: 1,
+    minWidth: 100,
+    align: "center",
+    renderCell: (params: GridValueGetterParams) => {
+      const modal = EditAssetModal(params.row as Asset);
       return modal;
     },
   },
