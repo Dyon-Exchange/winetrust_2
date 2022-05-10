@@ -32,6 +32,7 @@ export enum AssetState {
   DueIn = "Due In",
   Landed = "Landed",
   Tokenised = "Tokenised",
+  Redeemed = "Redeemed",
 }
 
 @plugin(AutoIncrementAssetID)

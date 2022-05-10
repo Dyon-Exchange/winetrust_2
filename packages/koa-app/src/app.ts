@@ -8,6 +8,7 @@ import Passport from "koa-passport";
 import router from "./routes";
 import connect from "./services/database";
 import configPassport from "./services/passport";
+import startCron from "./services/transferLog";
 
 // configure env file
 config({ path: `${__dirname}/../.env` });
@@ -46,3 +47,5 @@ app.on("error", (err: Error, ctx: Koa.Context) => {
 
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Listening on ${port}`));
+
+startCron();

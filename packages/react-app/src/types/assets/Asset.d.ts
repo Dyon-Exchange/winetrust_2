@@ -19,7 +19,7 @@ interface NewAssetRequestForm {
   quantity: number;
 }
 
-type AssetState = "Due In" | "Landed" | "Tokenised";
+type AssetState = "Due In" | "Landed" | "Tokenised" | "Redeemed";
 
 interface Asset {
   _id: string;
