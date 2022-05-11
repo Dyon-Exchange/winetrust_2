@@ -748,7 +748,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 isLoading={isSubmitting}
                 type="submit"
               >
-                Add
+                Mint
               </ModalFooterButton>
               <ModalFooterButton
                 colorScheme="blue"
