@@ -90,7 +90,7 @@ const assetsTableColumns: GridColDef[] = [
     minWidth: 300,
     align: "center",
     valueGetter: (param: GridValueGetterParams) =>
-      (param.row as Asset).preAdvice.transferringWarehouse.name,
+      (param.row as Asset).preAdvice.arrivalWarehouse.name,
   },
   {
     field: "warehouseLocationNo",
