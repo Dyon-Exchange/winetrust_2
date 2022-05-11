@@ -698,7 +698,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
                 <StyledBox sx={{ mt: "9px" }}>
                   <StyledLabel>Asset ID </StyledLabel>
                   <StyledSeparator> : </StyledSeparator>
-                  <StyledText>{row._id}</StyledText>
+                  <StyledText>{row.assetId}</StyledText>
                 </StyledBox>
                 <StyledBox sx={{ mt: "9px" }}>
                   <StyledLabel>Product Year </StyledLabel>
