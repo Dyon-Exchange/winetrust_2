@@ -6,9 +6,10 @@ import "../interfaces/IWineTrustToken.sol";
 
 // Import the open zepplin ERC1155 token standard, minter pauser preset
 import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /** @title The main wine trust token contract which extends the ERC1155 minter pauser preset */
-contract WineTrustToken is ERC1155PresetMinterPauser, IWineTrustToken {
+contract WineTrustToken is ERC1155PresetMinterPauser, Ownable, IWineTrustToken {
     /* GLOBAL VARIABLES */
     /**
      * @notice Mapping of token ids to token metadata hashes
