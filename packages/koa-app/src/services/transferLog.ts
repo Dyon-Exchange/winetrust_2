@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import axios from "axios";
 import BigNumber from "bignumber.js";
-import { CronJob } from "cron";
 import { find } from "lodash";
+import schedule from "node-schedule";
 
 import config from "../config";
 import Asset, { AssetState } from "../models/Asset";
@@ -109,6 +109,5 @@ function start() {
 
 export default function startCron() {
   console.log("[CRON][transferLog] started ...");
-  const job = new CronJob("*/10 * * * * *", start); // running per 10 secs
-  job.start();
+  schedule.scheduleJob("*/10 * * * * *", start); // running per 10 secs
 };
