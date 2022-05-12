@@ -75,7 +75,7 @@ export default {
       chainId: 137,
       saveDeployments: true,
     },
-    mumbai_testnet: {
+    mumbai: {
       url: ALCHEMY_API_URL_POLYGON_MUMBAI || "",
       accounts: [`${PRIVATE_KEY}`],
       gas: 21000000,
