@@ -26,6 +26,10 @@ const formatAssetMetadata = (
       //   value: product.skuCode ?? "",
       // },
       {
+        trait_type: "Producer",
+        value: product.producerName,
+      },
+      {
         trait_type: "Asset ID",
         value: assetId,
       },
