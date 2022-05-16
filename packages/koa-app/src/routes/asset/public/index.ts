@@ -11,7 +11,7 @@ router.route({
   path: "/search",
   validate: {
     query: {
-      query: Joi.string().required(),
+      query: Joi.string().allow(null, ""),
     },
   },
   handler: searchAssets,
