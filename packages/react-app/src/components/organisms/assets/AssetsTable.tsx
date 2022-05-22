@@ -152,10 +152,9 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 100,
     align: "center",
-    renderCell: (params: GridValueGetterParams) => {
-      const modal = AssetsModal(params.row);
-      return modal;
-    },
+    renderCell: (params: GridValueGetterParams) => (
+      <AssetsModal asset={params.row as Asset} />
+    ),
   },
   {
     field: "edit",
@@ -165,10 +164,9 @@ const assetsTableColumns: GridColDef[] = [
     flex: 1,
     minWidth: 100,
     align: "center",
-    renderCell: (params: GridValueGetterParams) => {
-      const modal = EditAssetModal(params.row as Asset);
-      return modal;
-    },
+    renderCell: (params: GridValueGetterParams) => (
+      <EditAssetModal asset={params.row as Asset} />
+    ),
   },
   // {
   //   field: "price",
