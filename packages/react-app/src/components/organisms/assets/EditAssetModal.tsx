@@ -8,7 +8,7 @@ import patchAsset from "../../../api/data/assets/patchAsset";
 import useDefaultToast from "../../../hooks/toast/useDefaultToast";
 import ModalFooterButton from "../../atoms/buttons/ModalFooterButton";
 
-const EditAssetModal = (asset: Asset) => {
+const EditAssetModal = ({ asset }: { asset: Asset }) => {
   const { warehouseLocationNo: orgWarehouseLocationNo, _id: assetId } = asset;
   const [warehouseLocationNo, setWarehouseLocationNo] = useState(orgWarehouseLocationNo || "");
 
