@@ -71,7 +71,9 @@
     ]
   },
   "react-dotenv": {
-    "whitelist": ["API_URL"]
+    "whitelist": [
+      "API_URL"
+    ]
   },
   "devDependencies": {
     "@shopify/eslint-plugin": "^40.4.0",

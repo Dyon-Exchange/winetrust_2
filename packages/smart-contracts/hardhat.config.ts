@@ -5,6 +5,7 @@ import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@float-capital/solidity-coverage";
 import "@typechain/hardhat";
+import "@openzeppelin/hardhat-upgrades";
 import "hardhat-gas-reporter";
 import { config as dotEnvConfig } from "dotenv";
 import { removeConsoleLog } from "hardhat-preprocessor";
@@ -35,7 +36,7 @@ export default {
   solidity: {
     compilers: [
       {
-        version: "0.8.0",
+        version: "0.8.4",
         settings: {
           optimizer: {
             enabled: true,
@@ -57,6 +58,7 @@ export default {
     rinkeby: {
       url: ALCHEMY_API_URL_RINKEBY || "",
       accounts: [`${PRIVATE_KEY}`],
+      gasPrice: 80000000000,
       chainId: 4,
       saveDeployments: true,
     },
