@@ -10,9 +10,16 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["@types", "./node_modules/@types"],
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types"
+    ],
     "emitDecoratorMetadata": true
   },
-  "include": ["./scripts", "./test", "./hardhat.config.ts", "./deploy"],
-  "files": ["./hardhat.config.ts"]
+  "include": [
+    "./scripts",
+    "./test",
+    "./deploy",
+    "./hardhat.config.ts"
+  ]
 }

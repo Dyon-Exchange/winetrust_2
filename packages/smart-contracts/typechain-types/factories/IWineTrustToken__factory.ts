@@ -11,8 +11,42 @@ import type {
 
 const _abi = [
   {
-    inputs: [],
-    name: "contractURI",
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "tokenMetadataHash",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_productId",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_productCode",
+        type: "string",
+      },
+    ],
+    name: "mintNFT",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "productCode",
     outputs: [
       {
         internalType: "string",
@@ -26,19 +60,20 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "account",
-        type: "address",
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
+    ],
+    name: "productId",
+    outputs: [
       {
         internalType: "string",
-        name: "tokenMetadataHash",
+        name: "",
         type: "string",
       },
     ],
-    name: "mintNFT",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
 ];
