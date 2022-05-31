@@ -10,7 +10,7 @@ import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../../constants/roles";
 import returnIfUserHasRole from "../../helpers/returnIfUserHasRole";
 
 interface WineTrustTokenAPI {
-  mintNFT: (to: string, metadataHash: string) => Promise<string>;
+  mintNFT: (to: string, metadataHash: string, productId: string, productCode: string) => Promise<string>;
   grantRole: (role: string, to: string) => Promise<ContractTransaction>;
 }
 export interface WineTrustTokenInstanceHook {
@@ -84,8 +84,8 @@ const useWineTrustTokenInstance = ({
     if (!WineTrustTokenInstance) return undefined;
 
     return {
-      mintNFT: async (to: string, metadataHash: string) => {
-        const data = await WineTrustTokenInstance.mintNFT(to, metadataHash);
+      mintNFT: async (to: string, metadataHash: string, productId: string, productCode: string) => {
+        const data = await WineTrustTokenInstance.mintNFT(to, metadataHash, productId, productCode);
         return data.hash;
       },
       grantRole: async (role: string, to: string) =>

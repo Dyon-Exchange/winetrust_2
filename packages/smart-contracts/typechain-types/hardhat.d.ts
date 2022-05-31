@@ -13,65 +13,73 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "AccessControl",
+      name: "AccessControlEnumerableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccessControl__factory>;
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable__factory>;
     getContractFactory(
-      name: "AccessControlEnumerable",
+      name: "AccessControlUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccessControlEnumerable__factory>;
+    ): Promise<Contracts.AccessControlUpgradeable__factory>;
     getContractFactory(
-      name: "IAccessControl",
+      name: "IAccessControlEnumerableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IAccessControl__factory>;
+    ): Promise<Contracts.IAccessControlEnumerableUpgradeable__factory>;
     getContractFactory(
-      name: "IAccessControlEnumerable",
+      name: "IAccessControlUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IAccessControlEnumerable__factory>;
+    ): Promise<Contracts.IAccessControlUpgradeable__factory>;
     getContractFactory(
-      name: "Ownable",
+      name: "OwnableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Ownable__factory>;
+    ): Promise<Contracts.OwnableUpgradeable__factory>;
     getContractFactory(
-      name: "Pausable",
+      name: "Initializable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Pausable__factory>;
+    ): Promise<Contracts.Initializable__factory>;
     getContractFactory(
-      name: "ERC1155",
+      name: "PausableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155__factory>;
+    ): Promise<Contracts.PausableUpgradeable__factory>;
     getContractFactory(
-      name: "ERC1155Burnable",
+      name: "ERC1155Upgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155Burnable__factory>;
+    ): Promise<Contracts.ERC1155Upgradeable__factory>;
     getContractFactory(
-      name: "ERC1155Pausable",
+      name: "ERC1155BurnableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155Pausable__factory>;
+    ): Promise<Contracts.ERC1155BurnableUpgradeable__factory>;
     getContractFactory(
-      name: "IERC1155MetadataURI",
+      name: "ERC1155PausableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC1155MetadataURI__factory>;
+    ): Promise<Contracts.ERC1155PausableUpgradeable__factory>;
     getContractFactory(
-      name: "IERC1155",
+      name: "IERC1155MetadataURIUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC1155__factory>;
+    ): Promise<Contracts.IERC1155MetadataURIUpgradeable__factory>;
     getContractFactory(
-      name: "IERC1155Receiver",
+      name: "IERC1155ReceiverUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC1155Receiver__factory>;
+    ): Promise<Contracts.IERC1155ReceiverUpgradeable__factory>;
     getContractFactory(
-      name: "ERC1155PresetMinterPauser",
+      name: "IERC1155Upgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155PresetMinterPauser__factory>;
+    ): Promise<Contracts.IERC1155Upgradeable__factory>;
     getContractFactory(
-      name: "ERC165",
+      name: "ERC1155PresetMinterPauserUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC165__factory>;
+    ): Promise<Contracts.ERC1155PresetMinterPauserUpgradeable__factory>;
     getContractFactory(
-      name: "IERC165",
+      name: "ContextUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC165__factory>;
+    ): Promise<Contracts.ContextUpgradeable__factory>;
+    getContractFactory(
+      name: "ERC165Upgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC165Upgradeable__factory>;
+    getContractFactory(
+      name: "IERC165Upgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC165Upgradeable__factory>;
     getContractFactory(
       name: "WineTrustToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -82,80 +90,90 @@ declare module "hardhat/types/runtime" {
     ): Promise<Contracts.IWineTrustToken__factory>;
 
     getContractAt(
-      name: "AccessControl",
+      name: "AccessControlEnumerableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.AccessControl>;
+    ): Promise<Contracts.AccessControlEnumerableUpgradeable>;
     getContractAt(
-      name: "AccessControlEnumerable",
+      name: "AccessControlUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.AccessControlEnumerable>;
+    ): Promise<Contracts.AccessControlUpgradeable>;
     getContractAt(
-      name: "IAccessControl",
+      name: "IAccessControlEnumerableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IAccessControl>;
+    ): Promise<Contracts.IAccessControlEnumerableUpgradeable>;
     getContractAt(
-      name: "IAccessControlEnumerable",
+      name: "IAccessControlUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IAccessControlEnumerable>;
+    ): Promise<Contracts.IAccessControlUpgradeable>;
     getContractAt(
-      name: "Ownable",
+      name: "OwnableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Ownable>;
+    ): Promise<Contracts.OwnableUpgradeable>;
     getContractAt(
-      name: "Pausable",
+      name: "Initializable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Pausable>;
+    ): Promise<Contracts.Initializable>;
     getContractAt(
-      name: "ERC1155",
+      name: "PausableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155>;
+    ): Promise<Contracts.PausableUpgradeable>;
     getContractAt(
-      name: "ERC1155Burnable",
+      name: "ERC1155Upgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155Burnable>;
+    ): Promise<Contracts.ERC1155Upgradeable>;
     getContractAt(
-      name: "ERC1155Pausable",
+      name: "ERC1155BurnableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155Pausable>;
+    ): Promise<Contracts.ERC1155BurnableUpgradeable>;
     getContractAt(
-      name: "IERC1155MetadataURI",
+      name: "ERC1155PausableUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IERC1155MetadataURI>;
+    ): Promise<Contracts.ERC1155PausableUpgradeable>;
     getContractAt(
-      name: "IERC1155",
+      name: "IERC1155MetadataURIUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IERC1155>;
+    ): Promise<Contracts.IERC1155MetadataURIUpgradeable>;
     getContractAt(
-      name: "IERC1155Receiver",
+      name: "IERC1155ReceiverUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IERC1155Receiver>;
+    ): Promise<Contracts.IERC1155ReceiverUpgradeable>;
     getContractAt(
-      name: "ERC1155PresetMinterPauser",
+      name: "IERC1155Upgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155PresetMinterPauser>;
+    ): Promise<Contracts.IERC1155Upgradeable>;
     getContractAt(
-      name: "ERC165",
+      name: "ERC1155PresetMinterPauserUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC165>;
+    ): Promise<Contracts.ERC1155PresetMinterPauserUpgradeable>;
     getContractAt(
-      name: "IERC165",
+      name: "ContextUpgradeable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IERC165>;
+    ): Promise<Contracts.ContextUpgradeable>;
+    getContractAt(
+      name: "ERC165Upgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC165Upgradeable>;
+    getContractAt(
+      name: "IERC165Upgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165Upgradeable>;
     getContractAt(
       name: "WineTrustToken",
       address: string,

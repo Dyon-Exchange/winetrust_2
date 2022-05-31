@@ -10,7 +10,7 @@ const deployContract: DeployFunction = async (
   const { deployments, getNamedAccounts } = hre;
 
   // Define whats in deployment????
-  const { deploy } = deployments;
+  const { deploy, } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
@@ -18,7 +18,13 @@ const deployContract: DeployFunction = async (
   const WineTrustToken = await deploy("WineTrustToken", {
     from: deployer,
     args: [],
+    proxy: {
+      methodName: "initialize",
+      owner: deployer,
+      proxyContract: "OpenZeppelinTransparentProxy",
+    },
   });
+
 
   console.log(`Deployed token to: ${WineTrustToken.address}`);
 };

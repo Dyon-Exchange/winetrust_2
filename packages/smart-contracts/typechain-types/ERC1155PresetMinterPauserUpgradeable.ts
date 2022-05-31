@@ -17,8 +17,9 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface WineTrustTokenInterface extends utils.Interface {
-  contractName: "WineTrustToken";
+export interface ERC1155PresetMinterPauserUpgradeableInterface
+  extends utils.Interface {
+  contractName: "ERC1155PresetMinterPauserUpgradeable";
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
@@ -32,25 +33,18 @@ export interface WineTrustTokenInterface extends utils.Interface {
     "getRoleMemberCount(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "initialize()": FunctionFragment;
+    "initialize(string)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address,uint256,uint256,bytes)": FunctionFragment;
     "mintBatch(address,uint256[],uint256[],bytes)": FunctionFragment;
-    "mintNFT(address,string,string,string)": FunctionFragment;
-    "owner()": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
-    "productCode(uint256)": FunctionFragment;
-    "productId(uint256)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
-    "tokenIdCount()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
@@ -103,10 +97,7 @@ export interface WineTrustTokenInterface extends utils.Interface {
     functionFragment: "hasRole",
     values: [BytesLike, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
@@ -119,25 +110,8 @@ export interface WineTrustTokenInterface extends utils.Interface {
     functionFragment: "mintBatch",
     values: [string, BigNumberish[], BigNumberish[], BytesLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "mintNFT",
-    values: [string, string, string, string]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "productCode",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "productId",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
     values: [BytesLike, string]
@@ -161,14 +135,6 @@ export interface WineTrustTokenInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenIdCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
@@ -213,19 +179,8 @@ export interface WineTrustTokenInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mintBatch", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "productCode",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "productId", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
     data: BytesLike
@@ -247,21 +202,12 @@ export interface WineTrustTokenInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenIdCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
     "ApprovalForAll(address,address,bool)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
@@ -274,7 +220,6 @@ export interface WineTrustTokenInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
@@ -295,14 +240,6 @@ export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 export type InitializedEvent = TypedEvent<[number], { version: number }>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  { previousOwner: string; newOwner: string }
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
 
 export type PausedEvent = TypedEvent<[string], { account: string }>;
 
@@ -367,13 +304,13 @@ export type UnpausedEvent = TypedEvent<[string], { account: string }>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface WineTrustToken extends BaseContract {
-  contractName: "WineTrustToken";
+export interface ERC1155PresetMinterPauserUpgradeable extends BaseContract {
+  contractName: "ERC1155PresetMinterPauserUpgradeable";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: WineTrustTokenInterface;
+  interface: ERC1155PresetMinterPauserUpgradeableInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -452,11 +389,7 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "initialize()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "initialize(string)"(
+    initialize(
       uri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -483,29 +416,11 @@ export interface WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    mintNFT(
-      account: string,
-      tokenMetadataHash: string,
-      _productId: string,
-      _productCode: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     pause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
-
-    productCode(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    productId(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     renounceRole(
       role: BytesLike,
@@ -548,18 +463,11 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    tokenIdCount(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -619,11 +527,7 @@ export interface WineTrustToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "initialize()"(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "initialize(string)"(
+  initialize(
     uri: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -650,29 +554,11 @@ export interface WineTrustToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  mintNFT(
-    account: string,
-    tokenMetadataHash: string,
-    _productId: string,
-    _productCode: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
   pause(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
-
-  productCode(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  productId(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   renounceRole(
     role: BytesLike,
@@ -715,18 +601,11 @@ export interface WineTrustToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   unpause(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -786,9 +665,7 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "initialize()"(overrides?: CallOverrides): Promise<void>;
-
-    "initialize(string)"(uri: string, overrides?: CallOverrides): Promise<void>;
+    initialize(uri: string, overrides?: CallOverrides): Promise<void>;
 
     isApprovedForAll(
       account: string,
@@ -812,25 +689,9 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mintNFT(
-      account: string,
-      tokenMetadataHash: string,
-      _productId: string,
-      _productCode: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
     pause(overrides?: CallOverrides): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
-
-    productCode(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    productId(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     renounceRole(
       role: BytesLike,
@@ -873,16 +734,9 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -899,15 +753,6 @@ export interface WineTrustToken extends BaseContract {
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
-
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -1046,11 +891,7 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "initialize()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "initialize(string)"(
+    initialize(
       uri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1077,32 +918,11 @@ export interface WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    mintNFT(
-      account: string,
-      tokenMetadataHash: string,
-      _productId: string,
-      _productCode: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     pause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
-
-    productCode(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    productId(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     renounceRole(
       role: BytesLike,
@@ -1145,18 +965,11 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    tokenIdCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1222,11 +1035,7 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "initialize()"(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "initialize(string)"(
+    initialize(
       uri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1253,35 +1062,11 @@ export interface WineTrustToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    mintNFT(
-      account: string,
-      tokenMetadataHash: string,
-      _productId: string,
-      _productCode: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     pause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    productCode(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    productId(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     renounceRole(
       role: BytesLike,
@@ -1324,19 +1109,12 @@ export interface WineTrustToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    tokenIdCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     uri(
-      id: BigNumberish,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

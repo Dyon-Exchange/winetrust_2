@@ -4,6 +4,7 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -19,24 +20,30 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface IWineTrustTokenInterface extends utils.Interface {
   contractName: "IWineTrustToken";
   functions: {
-    "contractURI()": FunctionFragment;
-    "mintNFT(address,string)": FunctionFragment;
+    "mintNFT(address,string,string,string)": FunctionFragment;
+    "productCode(uint256)": FunctionFragment;
+    "productId(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "contractURI",
-    values?: undefined
+    functionFragment: "mintNFT",
+    values: [string, string, string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "mintNFT",
-    values: [string, string]
+    functionFragment: "productCode",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "productId",
+    values: [BigNumberish]
   ): string;
 
+  decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "contractURI",
+    functionFragment: "productCode",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintNFT", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "productId", data: BytesLike): Result;
 
   events: {};
 }
@@ -69,52 +76,81 @@ export interface IWineTrustToken extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    contractURI(overrides?: CallOverrides): Promise<[string]>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
+      _productId: string,
+      _productCode: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-  };
 
-  contractURI(overrides?: CallOverrides): Promise<string>;
+    productCode(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    productId(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+  };
 
   mintNFT(
     account: string,
     tokenMetadataHash: string,
+    _productId: string,
+    _productCode: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  callStatic: {
-    contractURI(overrides?: CallOverrides): Promise<string>;
+  productCode(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  productId(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  callStatic: {
     mintNFT(
       account: string,
       tokenMetadataHash: string,
+      _productId: string,
+      _productCode: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    productCode(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    productId(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
-    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
+      _productId: string,
+      _productCode: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    productCode(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    productId(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     mintNFT(
       account: string,
       tokenMetadataHash: string,
+      _productId: string,
+      _productCode: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    productCode(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    productId(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

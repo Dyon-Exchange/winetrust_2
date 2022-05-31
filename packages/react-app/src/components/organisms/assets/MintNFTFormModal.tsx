@@ -215,7 +215,9 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
 
         const txHash = await wineTrustTokenAPI?.mintNFT(
           row.preAdvice.owner.ethAddress,
-          metadataHash
+          metadataHash,
+          row.product._id,
+          row.product.productCode.toString(),
         );
 
         if (!txHash) throw new Error("No Tx Hash returned");
@@ -245,14 +247,7 @@ const MintNFTFormModal = ({ isOpen, onClose, row }: MintNFTFormModalProps) => {
         });
       }
     },
-    [
-      onClose,
-      queryClient,
-      row._id,
-      row.preAdvice.owner.ethAddress,
-      toast,
-      wineTrustTokenAPI,
-    ]
+    [onClose, queryClient, row, toast, wineTrustTokenAPI]
   );
 
   // state for the confirm cancel modal
