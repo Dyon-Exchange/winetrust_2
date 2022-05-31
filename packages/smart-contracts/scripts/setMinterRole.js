@@ -10,10 +10,11 @@ const addresses = [
 
 async function main() {
   const WineTrustToken = await ethers.getContractFactory("WineTrustToken");
-  // const wtt = await WineTrustToken.attach("0x1D056e7576bf17Fc432c19633397393DE9b658A0");
-  // const wtt = await WineTrustToken.attach("0x00F97A0f0FB628fe638a0BD216Ef0EE35a1cA7C5");
+  // const wtt = await WineTrustToken.attach(
+  //   "0x04d723EC0c9f62d51CBB71AA6Bf4F34732051681"
+  // );
   const wtt = await WineTrustToken.attach(
-    "0x04d723EC0c9f62d51CBB71AA6Bf4F34732051681"
+    "0xC5C65c003a2f5e6F88ad40416F0185494e37fb02"
   );
 
   const MINTER_ROLE = await wtt.MINTER_ROLE();
